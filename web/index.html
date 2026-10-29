@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GridMedic</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Sinhala:wght@400;600&family=Noto+Sans+Tamil:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <span class="logo">⚡</span>
+      <div>
+        <h1>GridMedic</h1>
+        <p id="scenario-title">Outage triage from customer complaints</p>
+      </div>
+    </div>
+    <div class="clock">
+      <span class="label">Storm time</span>
+      <span id="clock">00:00</span>
+      <div class="progress"><div id="progress-bar"></div></div>
+    </div>
+    <div class="controls">
+      <button id="btn-start" class="primary">▶ Start storm</button>
+      <button id="btn-pause">❚❚ Pause</button>
+      <button id="btn-reset">↺ Reset</button>
+      <button id="btn-map" title="Build the grid model from a photo of a paper diagram">📄 Paper map</button>
+      <button id="btn-net" title="Simulate the storm cutting the network">📡 Online</button>
+      <select id="speed" title="Replay speed">
+        <option value="5">5×</option>
+        <option value="10" selected>10×</option>
+        <option value="20">20×</option>
+        <option value="40">40×</option>
+      </select>
+      <span id="mode" class="mode">mode</span>
+    </div>
+  </header>
+
+  <section class="stats">
+    <div class="stat"><span class="v" id="s-messages">0</span><span class="k">messages</span></div>
+    <div class="stat"><span class="v" id="s-dupes">0</span><span class="k">duplicates merged</span></div>
+    <div class="stat"><span class="v" id="s-junk">0</span><span class="k">junk filtered</span></div>
+    <div class="stat"><span class="v" id="s-langs">–</span><span class="k">languages</span></div>
+    <div class="stat good"><span class="v" id="s-located">0 / 4</span><span class="k">faults located</span></div>
+    <div class="stat good"><span class="v" id="s-hazard">–</span><span class="k">live wire made safe</span></div>
+    <div class="stat"><span class="v" id="s-notified">0</span><span class="k">customers sent restoration time</span></div>
+    <div class="stat good"><span class="v" id="s-custmin">–</span><span class="k">customer-hours saved vs first-call-first-served</span></div>
+    <div class="stat models" id="s-models"></div>
+  </section>
+
+  <main>
+    <div class="map-wrap">
+      <div id="map"></div>
+      <div id="offline-banner" hidden>📴 Network down · triage running on <b>Muse Glimmer</b> (open weights) on this laptop · calls queued: <span id="queued">0</span></div>
+    </div>
+    <aside>
+      <section class="panel" id="queue-panel">
+        <h2>Repair queue <small>ranked in code: safety, critical loads, customers</small></h2>
+        <ol id="queue"><li class="empty">Waiting for the storm…</li></ol>
+      </section>
+      <section class="panel" id="timeline-panel">
+        <h2>Agent timeline <small>which model did what</small></h2>
+        <ul id="timeline"></ul>
+      </section>
+      <section class="panel" id="feed-panel">
+        <h2>Incoming <small>calls · WhatsApp · SMS · crews</small></h2>
+        <ul id="feed"></ul>
+      </section>
+    </aside>
+  </main>
+
+  <dialog id="map-dialog">
+    <div class="dlg-head">
+      <h2>Paper map → grid model</h2>
+      <button id="dlg-close" aria-label="Close">✕</button>
+    </div>
+    <p class="dlg-sub">Many utilities without smart meters only have their feeder on paper. Photograph the single-line
+      diagram; Muse Spark reads every bus, line and protective device, and GridMedic scores it against the known feeder.</p>
+    <div class="dlg-body">
+      <img id="dlg-img" src="/media/diagrams/feeder1_sld.png" alt="Single-line diagram">
+      <div class="dlg-side">
+        <label class="upload">Use your own photo <input type="file" id="dlg-file" accept="image/*"></label>
+        <button id="dlg-run" class="primary">Digitise diagram</button>
+        <div id="dlg-result"></div>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

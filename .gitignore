@@ -23,3 +23,5 @@ dist/
 Thumbs.db
 .vscode/
 .idea/
+data/*.db
+!.env.example
