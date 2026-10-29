@@ -43,7 +43,7 @@ def main() -> None:
         for url in ENDPOINTS:
             try:
                 resp = httpx.post(url, data={"data": query(lat, lon, r)}, timeout=300,
-                                  headers={"User-Agent": "GridMedic-hackathon/0.1"})
+                                  headers={"User-Agent": "Relight-hackathon/0.1"})
                 resp.raise_for_status()
                 break
             except Exception as e:  # noqa: BLE001 - try the next mirror
@@ -51,7 +51,7 @@ def main() -> None:
         else:
             sys.exit(f"{name}: all Overpass endpoints failed")
         data = resp.json()
-        data["gridmedic_area"] = {"name": name, "lat": lat, "lon": lon, "radius_m": r}
+        data["relight_area"] = {"name": name, "lat": lat, "lon": lon, "radius_m": r}
         (out_dir / f"{name}.json").write_text(json.dumps(data), encoding="utf-8")
         kinds = {}
         for e in data["elements"]:

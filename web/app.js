@@ -1,4 +1,4 @@
-// GridMedic outage-operations console. Layout follows utility OMS practice: a network viewer, a
+// Relight outage-operations console. Layout follows utility OMS practice: a network viewer, a
 // sortable work agenda of outage events with an event-details pane, and a dock with the event log,
 // trouble calls, outbound messages and crews. Everything is driven by the server's WebSocket stream.
 

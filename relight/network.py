@@ -8,7 +8,7 @@ through the normally-open tie switch TS-1, so power can flow "backwards" up a se
 once it is closed.
 
 The same model serves two purposes: the physical truth of the simulated storm, and
-GridMedic's belief about the network (its located faults plus the device states it
+Relight's belief about the network (its located faults plus the device states it
 knows). Restoration plans are checked against the belief: a plan is blocked if any
 step would energise a section believed faulted or a section where a crew is working.
 """

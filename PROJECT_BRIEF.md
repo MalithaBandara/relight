@@ -1,15 +1,17 @@
-# GridMedic: Project Brief and Build Plan
+# Relight: Project Brief and Build Plan
+
+> Working title was GridMedic; renamed Relight on 30 Oct 2026 to keep it distinct from the earlier Jaseci-hackathon project of that name.
 
 29 Oct 2026 · Malitha
 
 ## Pitch and scope
 
-GridMedic is an outage-triage agent: when a storm hits, it turns a flood of customer complaints (calls, WhatsApp, SMS), feeder breaker trips, crew voice notes and damage photos into located faults on the grid, and tells dispatch who to send where first.
+Relight is an outage-triage agent: when a storm hits, it turns a flood of customer complaints (calls, WhatsApp, SMS), feeder breaker trips, crew voice notes and damage photos into located faults on the grid, and tells dispatch who to send where first.
 
 - **Theme:** Push the Frontier (energy; understanding and controlling a physical system).
 - **Track:** Indie. All code is new from Oct 26. The earlier Jaseci-hackathon GridMedic is a reference for the idea only: no reused code, built solo.
 - **Core input:** customer complaints. Most of the world's utilities have few or no smart meters (US ~72%, Latin America ~10%, and lower still across much of Asia and Africa), so complaints are how outages are found. Smart-meter data is an optional extra signal.
-- **The gap we own:** existing utility AI works from SCADA and smart-meter data or only handles customer comms. GridMedic turns messy, multilingual complaints and field reports into fault locations on the grid model.
+- **The gap we own:** existing utility AI works from SCADA and smart-meter data or only handles customer comms. Relight turns messy, multilingual complaints and field reports into fault locations on the grid model.
 
 ### Must ship
 
@@ -32,7 +34,7 @@ GridMedic is an outage-triage agent: when a storm hits, it turns a flood of cust
 
 ## The hackathon at a glance
 
-Meta Global AI Developer Hackathon 2026, run by Meta and Cerebral Valley: virtual, 10 days, $1M prize pool. Event page: <https://cerebralvalley.ai/e/meta-ai-developer-hackathon>. GridMedic is entered in the Indie track.
+Meta Global AI Developer Hackathon 2026, run by Meta and Cerebral Valley: virtual, 10 days, $1M prize pool. Event page: <https://cerebralvalley.ai/e/meta-ai-developer-hackathon>. Relight is entered in the Indie track.
 
 | Item | Detail |
 |---|---|
@@ -47,10 +49,10 @@ Meta Global AI Developer Hackathon 2026, run by Meta and Cerebral Valley: virtua
 
 ### Rules that shape the build
 
-- **New work only:** everything presented must be built during the event and this must be clear in the submission. Only the Startup track may build on existing products. GridMedic (Indie) is a fresh codebase; the earlier Jaseci-hackathon team version is not reused.
+- **New work only:** everything presented must be built during the event and this must be clear in the submission. Only the Startup track may build on existing products. Relight (Indie) is a fresh codebase; the earlier Jaseci-hackathon team version is not reused.
 - **One track** per person and per project.
 - **Must use Meta's models:** Muse Spark series, Muse Wonder, Muse Image, Muse Voice Transcribe and SAM 3.1 via Meta Model API; open weights Muse Glimmer and Muse Spark Open; Muse Code coding agent.
-- **Must fit a problem statement:** *Build for Your World* (bring Meta's models into your domain) or *Push the Frontier* (software, robotics, manufacturing, energy, materials; give a machine a new capability or better understand and control a physical system). GridMedic targets Push the Frontier.
+- **Must fit a problem statement:** *Build for Your World* (bring Meta's models into your domain) or *Push the Frontier* (software, robotics, manufacturing, energy, materials; give a machine a new capability or better understand and control a physical system). Relight targets Push the Frontier.
 - **Data privacy:** Contributor mode lets Meta train on your prompts and outputs; use Standard mode. Use only synthetic or public data.
 
 ### Judging process
@@ -70,15 +72,15 @@ Meta Global AI Developer Hackathon 2026, run by Meta and Cerebral Valley: virtua
 
 The organisers list generic or disallowed projects: AI medical advice, basic RAG apps, simple image analysers, simple "AI for Education" chatbots, job application screeners, nutrition coaches, personality analysers, sports analysers or coaches, and anything political or involving war.
 
-**How GridMedic stays clear:** it is not a chatbot over outage manuals (basic RAG) and photo analysis is one input among several, not the product (simple image analyser). The product is an agent that fuses many noisy inputs into decisions on a physical grid.
+**How Relight stays clear:** it is not a chatbot over outage manuals (basic RAG) and photo analysis is one input among several, not the product (simple image analyser). The product is an agent that fuses many noisy inputs into decisions on a physical grid.
 
-## Why GridMedic
+## Why Relight
 
-GridMedic scored highest of the ideas considered against the rubric (estimated ~7.8/10 weighted, vs ~6.2 for an AI tutor and ~8.3 for a riskier robot-from-video project), and sits in a theme the judges named explicitly: energy.
+Relight scored highest of the ideas considered against the rubric (estimated ~7.8/10 weighted, vs ~6.2 for an AI tutor and ~8.3 for a riskier robot-from-video project), and sits in a theme the judges named explicitly: energy.
 
 ### Existing tools and the gap
 
-| Tool | What it does | Gap vs GridMedic |
+| Tool | What it does | Gap vs Relight |
 |---|---|---|
 | IFS Resolve for Utilities | AI-assisted crew callout, mutual aid, field guidance (Feb 2026) | Dispatch layer; no published proof it cuts restoration time |
 | Databricks Dispatch Assistant | Prioritises restoration and crew dispatch | Data-platform analytics, no multimodal field input |
@@ -88,7 +90,7 @@ GridMedic scored highest of the ideas considered against the rubric (estimated ~
 | Lyzr | Agents over SCADA, AMI and OMS | Needs existing utility systems and smart meters |
 | Fieldproxy | Storm damage assessment from drone and satellite imagery | Imagery only |
 
-The commercial market proves the problem is worth money (good for Impact). Few tools turn multilingual customer complaints, crew voice notes and photos into fault locations on a grid model, and none target utilities without smart meters. That is GridMedic's gap.
+The commercial market proves the problem is worth money (good for Impact). Few tools turn multilingual customer complaints, crew voice notes and photos into fault locations on a grid model, and none target utilities without smart meters. That is Relight's gap.
 
 ### Why customer complaints are the core input
 
@@ -257,7 +259,7 @@ Check each dataset's licence before use; prefer research or open licences.
 
 The top 5 per track are ranked by judges watching the demo video live, so every feature is built to be seen in that video.
 
-| Criterion | Weight | How GridMedic scores |
+| Criterion | Weight | How Relight scores |
 |---|---|---|
 | Impact | 30% | Works without smart meters, so it fits most of the world's utilities; show time to locate all 4 faults vs manual call triage |
 | Use of Meta AI tooling | 25% | Multilingual voice and text complaints turned into grid evidence; SAM 3.1 tracking a line through drone video; offline Glimmer |
@@ -301,7 +303,7 @@ The top 5 per track are ranked by judges watching the demo video live, so every 
 
 ## Assessment
 
-GridMedic can make the Indie top 5 and is stronger than most submissions will be, but as first written it is not the favourite. Placement will depend mostly on execution and the video, not the idea.
+Relight can make the Indie top 5 and is stronger than most submissions will be, but as first written it is not the favourite. Placement will depend mostly on execution and the video, not the idea.
 
 **Strengths**
 
@@ -323,7 +325,7 @@ GridMedic can make the Indie top 5 and is stronger than most submissions will be
 - **Simplify the grid layer.** No power-flow solver is needed. Load the IEEE 34-bus topology as a tree (networkx); upstream tracing is walking up the tree.
 - **Give "confidence rising" a formula.** Score each candidate device with a probability that updates with every complaint, trip and photo.
 - **Build the agent's reasoning timeline early,** even roughly. It is what makes this look like an agent rather than a dashboard.
-- **Define an honest baseline:** e.g. "dispatch in order of first call vs GridMedic's ranked queue," measured as customer-hours without power and how long a live hazard waits for a crew. Get one quote from a real utility or distribution engineer for the video.
+- **Define an honest baseline:** e.g. "dispatch in order of first call vs Relight's ranked queue," measured as customer-hours without power and how long a live hazard waits for a crew. Get one quote from a real utility or distribution engineer for the video.
 - **Use public datasets** (TTPLA/InsPLAD) for damage photos rather than staged ones; keep the drone clip to about 10 seconds.
 
 ## Ways to surprise Meta with its models
@@ -332,7 +334,7 @@ The goal: have each model do something people don't expect from it, and prove it
 
 ### 1. Build the grid model from a photo of a paper map (Muse Spark)
 
-Many utilities without smart meters also have no digital grid map; their feeders exist only as paper single-line diagrams. Spark reads a scanned diagram (image or PDF) and outputs the feeder as a graph: buses, transformers, fuses, reclosers and their connections. GridMedic then runs on that graph.
+Many utilities without smart meters also have no digital grid map; their feeders exist only as paper single-line diagrams. Spark reads a scanned diagram (image or PDF) and outputs the feeder as a graph: buses, transformers, fuses, reclosers and their connections. Relight then runs on that graph.
 
 - **Proof:** draw or print the IEEE 34-bus diagram, photograph it, and score Spark's graph against the real topology (e.g. "33/33 connections correct").
 - **Why it surprises:** it removes the biggest barrier to using this at a real utility.

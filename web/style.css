@@ -1,4 +1,4 @@
-/* GridMedic control-room styling. Follows high-performance HMI practice: muted greys for normal
+/* Relight control-room styling. Follows high-performance HMI practice: muted greys for normal
    state, colour reserved for event states and alarms, dense tables in a fixed-width numeric font.
    Shared tokens are also used by customer.html. */
 :root {

@@ -10,7 +10,7 @@ service transformer every ~100 m of line.
 
 Only topology matters for fault location: when a device opens, every transformer
 downstream of it loses power. Tracing upstream from a group of complaining
-transformers to the device that explains them is the core of GridMedic.
+transformers to the device that explains them is the core of Relight.
 """
 
 from __future__ import annotations

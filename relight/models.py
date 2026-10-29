@@ -95,7 +95,7 @@ class ModelClient:
         def call():
             r = httpx.post(
                 f"{self.base}/asr/transcribe",
-                params={"sessionId": f"gridmedic-{int(time.time() * 1000)}"},
+                params={"sessionId": f"relight-{int(time.time() * 1000)}"},
                 headers=self.headers,
                 files={"request": (None, json.dumps(request), "application/json"),
                        "audio": (Path(audio_path).name, audio, "audio/wav")},
@@ -157,7 +157,7 @@ def parse_sam_records(text: str) -> list[dict]:
     """Parse SAM 3.1 special-token output: `<id><|box;x1=..;..|><|mask;..;data=H,W,<enc>payload|>`.
 
     Boxes are in source pixels. The mask payload is kept encoded (base85); box
-    geometry is enough for the measurements GridMedic makes.
+    geometry is enough for the measurements Relight makes.
     """
     records: list[dict] = []
     for line in text.splitlines():

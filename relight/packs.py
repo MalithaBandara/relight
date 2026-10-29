@@ -34,7 +34,7 @@ def network(sc: dict) -> tuple[Feeder, CustomerDB]:
         return _cache[key]
     if net["type"] == "ieee34":
         feeder = get_feeder()
-        db = CustomerDB(DATA_DIR / "gridmedic.db")
+        db = CustomerDB(DATA_DIR / "galle.db")
     else:
         from .osmnet import build_customers, build_spec
 

@@ -14,11 +14,11 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from gridmedic import config  # noqa: E402
-from gridmedic.customers import CustomerDB  # noqa: E402
-from gridmedic.extract import Extractor  # noqa: E402
-from gridmedic.models import ModelClient  # noqa: E402
-from gridmedic.scenario import load  # noqa: E402
+from relight import config  # noqa: E402
+from relight.customers import CustomerDB  # noqa: E402
+from relight.extract import Extractor  # noqa: E402
+from relight.models import ModelClient  # noqa: E402
+from relight.scenario import load  # noqa: E402
 
 FIELDS = ["street", "house_no", "symptom", "hazard", "junk"]
 

@@ -1,6 +1,6 @@
-# GridMedic
+# Relight
 
-Outage triage for utilities without smart meters. When a storm hits, GridMedic turns a flood of
+Outage triage for utilities without smart meters. When a storm hits, Relight turns a flood of
 customer complaints (calls, WhatsApp, SMS in English, Sinhala and Tamil), SCADA trips, crew voice
 notes and damage photos into located faults on the grid, and a ranked repair queue with crews
 assigned.
@@ -10,8 +10,20 @@ Entry for the Meta Global AI Developer Hackathon 2026, Indie track, theme **Push
 
 ## Built during the hackathon
 
-All code in this repository was written from Oct 29, 2026 onward, during the event. An earlier
-team project with the same name (Jaseci hackathon) inspired the idea; none of its code is reused.
+All code in this repository was written from Oct 29, 2026 onward, during the event.
+
+Relight grew out of an idea first explored in
+[GridMedic](https://github.com/MalithaBandara/gridmedic), an earlier team project built in Jac with
+Gemini at the Jaseci Labs AI Hackathon (17 Oct 2026). Relight is a new project with a new name and a new
+codebase; no code from GridMedic is reused. What is different:
+
+- written from scratch in Python, on Meta's models (Muse Spark, Voice Transcribe, SAM 3.1, Muse Glimmer)
+- a probabilistic fault tracer that asks customers the question that best separates two explanations
+- feeders generated from real OpenStreetMap roads and buildings, and three scenarios (Galle, Houston with
+  smart meters that fail mid-storm, Chennai at ~2,400 messages)
+- crew lifecycle with diagnosis changes from site reports, hidden faults found after restoration, and
+  safety-checked restoration switching across a tie to a second feeder
+- an outage-management console modelled on commercial OMS work agendas, and a customer portal
 
 ## How it works
 
@@ -23,19 +35,19 @@ Meta models read; deterministic code locates and decides.
 | Complaint to structured report (address, symptom, hazard, junk) in any language | Muse Spark (JSON schema output) |
 | Damage photos: what broke, how bad | Muse Spark (vision) |
 | Outline pole, conductor, tree; measure wire clearance | SAM 3.1 |
-| Place each complaint on its service transformer (account, caller ID, address, landmark) | code: [customers.py](gridmedic/customers.py) |
-| Which device opened or which line broke | code: [tracer.py](gridmedic/tracer.py), likelihood search over the feeder |
+| Place each complaint on its service transformer (account, caller ID, address, landmark) | code: [customers.py](relight/customers.py) |
+| Which device opened or which line broke | code: [tracer.py](relight/tracer.py), likelihood search over the feeder |
 | Ask a customer the question that best separates two explanations | code picks who; message sent in their language |
-| Priority and crew dispatch, vs a first-call-first-served baseline | code: [planner.py](gridmedic/planner.py) |
+| Priority and crew dispatch, vs a first-call-first-served baseline | code: [planner.py](relight/planner.py) |
 | Plain-language reason for each located fault, for the dispatcher | Muse Spark |
 | Restoration-time SMS to every customer who reported, in their language | Muse Spark |
 | Network down: keep triaging text messages on this laptop | Muse Glimmer (open weights, local server) |
 | Network back: review and correct the offline extractions, rebuild the evidence | Muse Spark |
-| Photo of a paper single-line diagram to the grid model, scored against the real feeder | Muse Spark: [diagram.py](gridmedic/diagram.py) |
+| Photo of a paper single-line diagram to the grid model, scored against the real feeder | Muse Spark: [diagram.py](relight/diagram.py) |
 | "BD <account>" breakdown SMS, the format customers already use | code only, no model call |
-| Located faults become incidents; crews dispatched by priority, travel and repair on the storm clock | code: [engine.py](gridmedic/engine.py) |
+| Located faults become incidents; crews dispatched by priority, travel and repair on the storm clock | code: [engine.py](relight/engine.py) |
 | Crew's on-site report confirms the diagnosis or changes it ("transformer fine, service wire down") | Muse Spark reads the report; code revises the incident |
-| Restoration switching around a located fault; plans that would energise a fault or a crew's work zone are blocked | code: [network.py](gridmedic/network.py); the operator approves |
+| Restoration switching around a located fault; plans that would energise a fault or a crew's work zone are blocked | code: [network.py](relight/network.py); the operator approves |
 | Customers still dark after a repair reveal a hidden second fault | code: unclaimed complaints go back to the tracer |
 | Customer portal: report in any language, check status, see the messages sent | `/customer` |
 
@@ -66,7 +78,7 @@ the pole-down outage that only shows once that repair is done.
 python -m venv .venv
 .venv/Scripts/pip install -r requirements.txt   # Windows; use .venv/bin/pip elsewhere
 cp .env.example .env                             # add MODEL_API_KEY for live Meta models
-.venv/Scripts/python -m uvicorn gridmedic.server:app --port 8000
+.venv/Scripts/python -m uvicorn relight.server:app --port 8000
 ```
 
 Open http://localhost:8000 and press **Start storm**.

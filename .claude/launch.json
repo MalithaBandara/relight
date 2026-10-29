@@ -2,9 +2,9 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "gridmedic",
+      "name": "relight",
       "runtimeExecutable": ".venv/Scripts/python.exe",
-      "runtimeArgs": ["-m", "uvicorn", "gridmedic.server:app", "--port", "8000"],
+      "runtimeArgs": ["-m", "uvicorn", "relight.server:app", "--port", "8000"],
       "port": 8000
     }
   ]

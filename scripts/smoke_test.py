@@ -1,4 +1,4 @@
-"""Check the Meta Model API key and each model GridMedic uses, one small call each.
+"""Check the Meta Model API key and each model Relight uses, one small call each.
 
 Usage:  python scripts/smoke_test.py [path/to/audio.wav] [path/to/photo.jpg]
 """
@@ -10,9 +10,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import httpx  # noqa: E402
 
-from gridmedic import config  # noqa: E402
-from gridmedic.extract import COMPLAINT_SCHEMA, COMPLAINT_SYSTEM  # noqa: E402
-from gridmedic.models import ModelClient  # noqa: E402
+from relight import config  # noqa: E402
+from relight.extract import COMPLAINT_SCHEMA, COMPLAINT_SYSTEM  # noqa: E402
+from relight.models import ModelClient  # noqa: E402
 
 
 def step(name, fn):

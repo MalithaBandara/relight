@@ -1,4 +1,4 @@
-"""Per-country details: names, number formats, languages and the messages GridMedic sends.
+"""Per-country details: names, number formats, languages and the messages Relight sends.
 
 The engine is the same everywhere; only these words and formats change. Customer names
 and numbers are synthetic. Non-English texts should be checked by a native speaker.

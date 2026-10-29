@@ -87,7 +87,7 @@ def _pick_node(pos, adj, center, radius, bearing_deg, frac=0.85):
 
 def build_spec(area: str, cfg: dict) -> dict:
     data = load(area)
-    a = data["gridmedic_area"]
+    a = data["relight_area"]
     center, radius = (a["lat"], a["lon"]), a["radius_m"]
     pos, adj = _road_graph(data, center, radius)
     root = _pick_node(pos, adj, center, radius, cfg.get("substation_bearing", 270))

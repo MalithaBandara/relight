@@ -1,6 +1,6 @@
 """FastAPI app: serves the map UI, the grid, and a WebSocket stream of the live triage.
 
-Run with:  python -m uvicorn gridmedic.server:app --reload
+Run with:  python -m uvicorn relight.server:app --reload
 """
 
 from __future__ import annotations
@@ -20,7 +20,7 @@ from .diagram import read_diagram, render_diagram, score
 from .engine import Engine, clock_str
 from .scenario import Replayer, load
 
-app = FastAPI(title="GridMedic")
+app = FastAPI(title="Relight")
 clients: set[WebSocket] = set()
 
 

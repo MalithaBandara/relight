@@ -1,6 +1,6 @@
 """Priority scoring and crew dispatch, both in plain code so every number is explainable.
 
-Also simulates the baseline a control room without GridMedic would follow: handle
+Also simulates the baseline a control room without Relight would follow: handle
 faults in the order the first call arrived, and send a troubleshooter to patrol
 each one before the right crew can be called, because nobody knows what broke.
 """
@@ -14,7 +14,7 @@ from .grid import haversine_m
 SPEED_KMH = 25
 ROAD_FACTOR = 1.3
 PATROL_MIN = 40  # baseline: time for a troubleshooter to find and diagnose an unknown fault
-NARROW_PATROL_MIN = 15  # GridMedic: patrol a located device zone when the damage type is still unknown
+NARROW_PATROL_MIN = 15  # Relight: patrol a located device zone when the damage type is still unknown
 
 # Sequential work steps per fault type: (skills needed, minutes on site, label)
 STEPS: dict[str, list[tuple[set[str], int, str]]] = {

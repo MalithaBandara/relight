@@ -16,9 +16,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from gridmedic import packs  # noqa: E402
-from gridmedic.config import SCENARIO_DIR  # noqa: E402
-from gridmedic.network import NetworkState, live_transformers  # noqa: E402
+from relight import packs  # noqa: E402
+from relight.config import SCENARIO_DIR  # noqa: E402
+from relight.network import NetworkState, live_transformers  # noqa: E402
 
 TEXT = {
     "us": {

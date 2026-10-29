@@ -44,7 +44,7 @@ KIND_TITLE = {"pole_down": "Pole down", "tree_on_line": "Tree on line", "live_wi
               "wire_down": "Wire down", "blown_fuse": "Blown fuse", "service_wire": "Service wire down",
               "unknown": "Outage, cause unknown"}
 
-EXPLAIN_SYSTEM = """You are the reasoning voice of GridMedic, an outage-triage agent for a distribution utility.
+EXPLAIN_SYSTEM = """You are the reasoning voice of Relight, an outage-triage agent for a distribution utility.
 Given the facts the fault tracer used, explain to the control-room dispatcher in at most two short
 sentences why this fault is located where it is and what to send. Plain language, no hedging, no lists."""
 NOTICE_SYSTEM = """Write a short SMS from an electricity utility's outage desk to a customer, in the requested
@@ -227,7 +227,7 @@ class Engine:
         self._out_now = sum(i["customers_out"] for i in self._active())
 
     def _tick_cmi(self, t: float) -> None:
-        """Customer minutes interrupted (as GridMedic sees the outage), the utility's standard measure."""
+        """Customer minutes interrupted (as Relight sees the outage), the utility's standard measure."""
         self.cmi += self._out_now * max(t - self.elapsed, 0) / 60
 
     def work_zones(self) -> dict[str, str]:
@@ -737,7 +737,7 @@ class Engine:
             else:
                 inc["plans"] = []
             inc["eta"] = self._eta(inc)
-        # What-if from the storm's start: GridMedic's ranked plan vs first-call-first-served.
+        # What-if from the storm's start: Relight's ranked plan vs first-call-first-served.
         crews = [Crew(c["id"], c["name"], c["skills"], *self.feeder.bus_pos[c["base"]]) for c in self.crews.values()]
         self.plan = schedule(jobs, crews)
         self.baseline = schedule(jobs, crews, baseline=True)

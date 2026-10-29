@@ -1,7 +1,7 @@
 """Scenario replay and the simulated physical world.
 
 The Replayer streams a scripted storm into the engine in (accelerated) real time.
-The World holds the physical truth GridMedic never sees directly: which sections are
+The World holds the physical truth Relight never sees directly: which sections are
 broken, which fuses blew, which service wires are down. It plays everyone outside
 the control room: customers answering the agent's questions, crews reporting what
 they find on site, and customers who are still dark after a repair (which is how a
@@ -98,7 +98,7 @@ class World:
         (self.state.open.discard if op == "close" else self.state.open.add)(dev)
 
     def match(self, inc: dict) -> dict | None:
-        """The real fault behind an incident GridMedic is working on."""
+        """The real fault behind an incident Relight is working on."""
         live = [f for f in self.faults.values() if not f["repaired"]]
         if inc.get("site_xf"):
             hit = [f for f in live if f.get("transformer") == inc["site_xf"]]
@@ -220,7 +220,7 @@ class Replayer:
         return f["id"]
 
     def restored(self, transformers: list[str], t: float) -> None:
-        """Customers who are still dark after GridMedic believes they are back will say so."""
+        """Customers who are still dark after Relight believes they are back will say so."""
         dark = self.world.still_dark(transformers)
         by_xf: dict[str, list] = {}
         for c in dark:

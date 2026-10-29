@@ -13,7 +13,7 @@ CACHE_DIR = ROOT / ".cache" / "model"
 SCENARIO_DIR = ROOT / "scenarios"
 MEDIA_DIR = ROOT / "media"
 WEB_DIR = ROOT / "web"
-DB_PATH = DATA_DIR / "gridmedic.db"
+DB_PATH = DATA_DIR / "galle.db"
 
 MODEL_API_KEY = os.getenv("MODEL_API_KEY", "").strip()
 META_API_BASE = os.getenv("META_API_BASE", "https://api.meta.ai/v1").rstrip("/")

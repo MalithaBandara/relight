@@ -1,7 +1,7 @@
 """Paper map to grid model: Muse Spark reads a photo of a single-line diagram.
 
 Many utilities that lack smart meters also lack a digital network model; the feeder
-exists only as a single-line diagram on paper. GridMedic photographs it and has Muse
+exists only as a single-line diagram on paper. Relight photographs it and has Muse
 Spark return the topology (buses, connections, protective devices), then scores the
 result against the known feeder so the accuracy is a number, not a claim.
 

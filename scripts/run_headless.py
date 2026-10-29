@@ -12,8 +12,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from gridmedic.engine import Engine  # noqa: E402
-from gridmedic.scenario import MAX_CLOCK_S, Replayer, load  # noqa: E402
+from relight.engine import Engine  # noqa: E402
+from relight.scenario import MAX_CLOCK_S, Replayer, load  # noqa: E402
 
 STEP_S = 30
 
@@ -68,7 +68,7 @@ async def main(name: str, show_timeline: bool, switching: bool) -> None:
         print(f"  {t['id']} {t['title']:<58} found={t['found']}  located "
               f"{clock_str(t['located_at']) if t['located_at'] is not None else '-'}  restored "
               f"{clock_str(t['restored_at']) if t['restored_at'] else '-'}")
-    print(f"\nWhat-if customer-minutes: GridMedic {s['plan']['customer_minutes']:,} vs first-call-first-served "
+    print(f"\nWhat-if customer-minutes: Relight {s['plan']['customer_minutes']:,} vs first-call-first-served "
           f"{s['baseline']['customer_minutes']:,}; live wire made safe after {s['plan']['hazard_wait_min']} vs "
           f"{s['baseline']['hazard_wait_min']} min")
     print(f"Still dark at the end: {c['customers_out']} customers (believed); "
