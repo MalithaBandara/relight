@@ -79,6 +79,17 @@ DEVICES: list[tuple[str, str, str, bool, str]] = [
     ("FUS-862", "fuse", "836-862", False, "Cinnamon Gardens Lane fuse"),
 ]
 
+# Remote-controlled switches the control room can operate. Sectionalising switches sit at the
+# upstream end of a section like a device; the tie switch joins this feeder's far end to a
+# neighbouring feeder (Feeder 2) and is normally open.
+# (switch_id, kind, section or bus, normally_open, label)
+SWITCHES: list[tuple[str, str, str, bool, str]] = [
+    ("SW-818", "switch", "818-820", False, "Temple Road sectionalising switch"),
+    ("SW-820", "switch", "820-822", False, "Pumping Station Road sectionalising switch"),
+    ("TS-1", "tie", "822", True, "Tie switch to Feeder 2"),
+]
+FEEDER2_BUS = "F2"  # Feeder 2 supply point, reached only through TS-1
+
 
 @dataclass
 class Section:
@@ -159,6 +170,17 @@ class Feeder:
         for did, kind, sid, scada, label in DEVICES:
             lat, lon = _move(*self.bus_pos[self.sections[sid].from_bus], self.sections[sid].heading, 8)
             self.devices[did] = Device(did, kind, sid, scada, label, lat, lon)
+        # Feeder 2 comes in beyond bus 822; TS-1 sits on the gap.
+        self.bus_pos[FEEDER2_BUS] = _move(*self.bus_pos["822"], 20, 260)
+        self.switches: dict[str, Device] = {}
+        for sid, kind, where, normally_open, label in SWITCHES:
+            if kind == "tie":
+                lat, lon = _move(*self.bus_pos[where], 20, 130)
+                self.switches[sid] = Device(sid, kind, where, True, label, lat, lon)
+            else:
+                lat, lon = _move(*self.bus_pos[self.sections[where].from_bus], self.sections[where].heading, 20)
+                self.switches[sid] = Device(sid, kind, where, True, label, lat, lon)
+        self.normally_open = {sid for sid, _, _, no, _ in SWITCHES if no}
         # Every service transformer is protected by its own drop-out fuse.
         for t in self.transformers.values():
             did = f"XF-{t.id[2:]}"
@@ -224,6 +246,22 @@ class Feeder:
                 "type": "Feature",
                 "geometry": {"type": "Point", "coordinates": [t.lon, t.lat]},
                 "properties": {"kind": "transformer", "id": t.id, "section": t.section, "kva": t.kva},
+            })
+        tie_bus = next(s.section for s in self.switches.values() if s.kind == "tie")
+        a, b = self.bus_pos[tie_bus], self.bus_pos[FEEDER2_BUS]
+        feats.append({
+            "type": "Feature",
+            "geometry": {"type": "LineString", "coordinates": [[a[1], a[0]], [b[1], b[0]]]},
+            "properties": {"kind": "tie_line", "id": "TIE-1", "street": "Feeder 2 tie"},
+        })
+        feats.append({
+            "type": "Feature", "geometry": {"type": "Point", "coordinates": [b[1], b[0]]},
+            "properties": {"kind": "feeder2", "id": FEEDER2_BUS, "label": "Feeder 2 (Karapitiya side)"},
+        })
+        for s in self.switches.values():
+            feats.append({
+                "type": "Feature", "geometry": {"type": "Point", "coordinates": [s.lon, s.lat]},
+                "properties": {"kind": s.kind, "id": s.id, "label": s.label, "scada": True},
             })
         for d in self.devices.values():
             if d.kind == "xfmr_fuse":

@@ -17,7 +17,7 @@ from pydantic import BaseModel
 from . import config
 from .customers import CustomerDB
 from .diagram import read_diagram, render_diagram, score
-from .engine import Engine
+from .engine import Engine, clock_str
 from .grid import get_feeder
 from .scenario import Replayer, load
 
@@ -35,14 +35,25 @@ async def broadcast(msg: dict) -> None:
 
 
 scenario = load()
-replayer: Replayer
-engine = Engine(scenario, broadcast, on_probe=lambda p: replayer.schedule_probe_reply(p))
-replayer = Replayer(scenario, engine.handle)
+engine = Engine(scenario, broadcast)
+lock = asyncio.Lock()  # one writer at a time: the replay, the operator, the customer portal
+
+
+async def handle(e: dict) -> None:
+    async with lock:
+        await engine.handle(e)
+
+
+replayer = Replayer(scenario, handle)
+engine.sim = replayer
 
 
 async def tick(clock: float) -> None:
-    await broadcast({"type": "clock", "elapsed": round(clock), "speed": replayer.speed,
-                     "running": replayer.running, "duration": scenario["duration_s"]})
+    async with lock:
+        await engine.advance(clock)
+    await broadcast({"type": "clock", "elapsed": round(clock), "clock": clock_str(clock), "speed": replayer.speed,
+                     "running": replayer.running, "duration": scenario["duration_s"], "timelapse": replayer.timelapse,
+                     "crews": engine.crew_positions()})
 
 
 class Control(BaseModel):
@@ -55,7 +66,7 @@ async def control(c: Control):
     if c.speed:
         replayer.speed = c.speed
     if c.action == "start" and not replayer.running:
-        replayer.task = asyncio.create_task(replayer.run(tick))
+        replayer.task = asyncio.create_task(replayer.run(tick, engine.busy))
     elif c.action == "pause":
         replayer.running = False
     elif c.action in ("offline", "online"):
@@ -69,6 +80,46 @@ async def control(c: Control):
         await broadcast({"type": "reset"})
     await tick(replayer.clock)
     return {"ok": True, "running": replayer.running, "speed": replayer.speed}
+
+
+class PlanChoice(BaseModel):
+    incident: str
+    plan: str
+
+
+@app.post("/api/plan")
+async def apply_plan(p: PlanChoice):
+    async with lock:
+        return await engine.apply_plan(p.incident, p.plan)
+
+
+@app.get("/api/customer")
+def customer(q: str):
+    return engine.customer_status(q)
+
+
+class Report(BaseModel):
+    text: str
+    who: str = ""  # account number or phone
+    language: str = "en"
+
+
+@app.post("/api/customer/report")
+async def customer_report(r: Report):
+    """A complaint typed live into the customer portal, processed like any other message."""
+    c = engine.db.by_account(r.who) or engine.db.by_phone(r.who)
+    n = sum(m["channel"] == "web" for m in engine.messages) + 1
+    e = {"t": max(replayer.clock, engine.elapsed), "type": "complaint", "id": f"W{n}", "channel": "web",
+         "language": r.language, "from": c.phone if c else (r.who or None), "text": r.text, "truth": {}}
+    await handle(e)
+    msg = next((m for m in reversed(engine.messages) if m["id"] == e["id"]), None)
+    return {"message": {k: v for k, v in (msg or {}).items() if k != "event"},
+            "status": engine.customer_status(c.account_no) if c else None}
+
+
+@app.get("/customer")
+def customer_page():
+    return FileResponse(config.WEB_DIR / "customer.html")
 
 
 @app.get("/api/grid")

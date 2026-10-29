@@ -23,9 +23,11 @@ STEPS: dict[str, list[tuple[set[str], int, str]]] = {
     "wire_down": [({"line"}, 90, "repair conductor")],
     "tree_on_line": [({"vegetation"}, 60, "clear tree"), ({"line"}, 90, "repair spans")],
     "blown_fuse": [({"troubleshooter"}, 20, "replace fuse")],
+    "service_wire": [({"line"}, 45, "repair service wire")],
     "unknown": [({"troubleshooter"}, NARROW_PATROL_MIN, "patrol located zone")],
 }
 SAFETY = {"live_wire": 1000, "wire_down": 200, "pole_down": 150, "tree_on_line": 100}
+AGE_PER_MIN = 2  # older faults climb, so a small one never waits forever
 CRITICAL = {"hospital": 400, "water": 300, "shelter": 150}
 
 
@@ -54,7 +56,7 @@ class Job:
     breakdown: dict[str, float] = field(default_factory=dict)
 
 
-def score(job: Job) -> None:
+def score(job: Job, now_s: float | None = None) -> None:
     b = {}
     if job.kind in SAFETY:
         b["safety"] = SAFETY[job.kind] if job.kind != "live_wire" or job.hazard_live else 200
@@ -64,6 +66,8 @@ def score(job: Job) -> None:
     b["customers out"] = round(job.customers_out * job.confidence, 1)
     total_min = sum(m for _, m, _ in STEPS.get(job.kind, STEPS["unknown"]))
     b["quick restore"] = round(job.customers_out * 20 / total_min, 1)
+    if now_s is not None:
+        b["waiting"] = round(AGE_PER_MIN * max(now_s - job.first_report_t, 0) / 60, 1)
     job.breakdown = b
     job.priority = round(sum(b.values()), 1)
 

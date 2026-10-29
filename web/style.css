@@ -53,6 +53,30 @@ header {
 .stat .v { font: 600 17px var(--mono); }
 .stat .k { color: var(--muted); font-size: 11px; white-space: nowrap; }
 .stat.good .v { color: var(--ok); }
+.stat.bad .v { color: var(--danger); }
+#timelapse { color: var(--accent); font-size: 12px; }
+.btn-link { color: var(--text); text-decoration: none; background: var(--panel-2); border: 1px solid var(--line); border-radius: 6px; padding: 6px 12px; }
+.chip.status { text-transform: uppercase; font-size: 10px; letter-spacing: .5px; }
+.chip.status.restored { border-color: var(--ok); color: var(--ok); }
+.chip.status.on.site, .chip.status.dispatched { border-color: var(--accent); color: var(--accent); }
+.chip.mind { border-color: var(--agent); color: var(--agent); }
+.chip.after { border-color: var(--voice); color: var(--voice); }
+#queue li.fault.restored { opacity: .55; border-left-color: var(--ok); }
+#queue li.suspect { border: 1px dashed var(--line); border-radius: 8px; padding: 6px 10px; margin-bottom: 6px; color: var(--muted); }
+.plans { margin: 6px 0 0 26px; display: flex; flex-direction: column; gap: 4px; }
+.plan { display: flex; gap: 8px; align-items: center; font-size: 12px; padding: 4px 8px; border-radius: 6px; border: 1px solid var(--line); background: var(--panel-2); }
+.plan.blocked { border-color: rgba(255, 77, 79, .6); }
+.plan.safe { border-color: rgba(61, 220, 151, .6); }
+.plan .tag { font-weight: 700; font-size: 10px; letter-spacing: .5px; }
+.plan.blocked .tag { color: var(--danger); }
+.plan.safe .tag { color: var(--ok); }
+.plan .txt { flex: 1; }
+.plan button { background: var(--ok); color: #04210f; border: 0; border-radius: 4px; padding: 3px 10px; font-weight: 600; cursor: pointer; }
+.history { margin: 4px 0 0 26px; font-size: 12px; color: var(--agent); }
+.switch-icon { width: 14px; height: 14px; border: 2px solid var(--ok); border-radius: 3px; background: var(--ok); }
+.switch-icon.open { background: transparent; border-color: #c5d3e3; }
+.crew-icon.moving { filter: drop-shadow(0 0 6px var(--accent)); }
+.hazard-icon.safe { animation: none; opacity: .45; filter: none; }
 .stat.models { flex-direction: row; flex-wrap: wrap; gap: 4px; align-items: center; min-width: 260px; }
 
 main { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) 460px; min-height: 0; }

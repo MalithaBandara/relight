@@ -26,7 +26,7 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass, field
 
-from .grid import Feeder
+from .grid import Feeder, haversine_m
 
 EPS = 0.003  # chance a customer with power reports an outage anyway
 HOUSEHOLDS_PER_SIGNAL = 5
@@ -234,7 +234,10 @@ class Tracer:
         off = [t for t in c.out if ev.probes.get(t) is False]
         if off:
             r.append(f"customer on {off[0]} confirmed their power is off")
-        outside_on = [t for t, v in ev.probes.items() if v and t not in c.out]
+        near = [self.feeder.transformers[t] for t in c.out]
+        outside_on = [t for t, v in ev.probes.items() if v and t not in c.out and any(
+            haversine_m((self.feeder.transformers[t].lat, self.feeder.transformers[t].lon), (x.lat, x.lon)) < 600
+            for x in near)]
         if outside_on:
             r.append(f"customer on {outside_on[0]} confirmed power is on next door")
         if silent and c.kind != "xfmr_fuse":

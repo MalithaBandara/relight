@@ -32,11 +32,19 @@ Meta models read; deterministic code locates and decides.
 | Network down: keep triaging text messages on this laptop | Muse Glimmer (open weights, local server) |
 | Network back: review and correct the offline extractions, rebuild the evidence | Muse Spark |
 | Photo of a paper single-line diagram to the grid model, scored against the real feeder | Muse Spark: [diagram.py](gridmedic/diagram.py) |
+| "BD <account>" breakdown SMS, the format customers already use | code only, no model call |
+| Located faults become incidents; crews dispatched by priority, travel and repair on the storm clock | code: [engine.py](gridmedic/engine.py) |
+| Crew's on-site report confirms the diagnosis or changes it ("transformer fine, service wire down") | Muse Spark reads the report; code revises the incident |
+| Restoration switching around a located fault; plans that would energise a fault or a crew's work zone are blocked | code: [network.py](gridmedic/network.py); the operator approves |
+| Customers still dark after a repair reveal a hidden second fault | code: unclaimed complaints go back to the tracer |
+| Customer portal: report in any language, check status, see the messages sent | `/customer` |
 
 The feeder is the IEEE 34-bus test feeder laid over Galle, Sri Lanka, with ~1,950 synthetic customers
 mapped to 94 service transformers. The demo storm ([scenarios/galle_storm.json](scenarios/galle_storm.json))
-has four faults: a pole down, a tree on the line, a blown transformer fuse found from complaints alone,
-and a live wire on the road.
+has six faults: a pole down, a tree on the line (isolated by switching so the water pumping station
+gets power back from Feeder 2), a blown transformer fuse found from complaints alone, a live wire on the
+road, a service wire that looks like a blown fuse until the crew arrives, and a blown fuse hidden behind
+the pole-down outage that only shows once that repair is done.
 
 ## Run it
 

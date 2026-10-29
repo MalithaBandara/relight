@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Outage Desk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Sinhala:wght@400;600&family=Noto+Sans+Tamil:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    body { overflow: auto; }
+    .portal { max-width: 920px; margin: 0 auto; padding: 24px 16px 48px; display: grid; gap: 16px; grid-template-columns: 1fr 1fr; }
+    .portal header { grid-column: 1 / -1; border: 0; background: none; padding: 0; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .card h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); }
+    .card input, .card textarea, .card select { background: var(--panel-2); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 9px 10px; font: inherit; }
+    .card textarea { min-height: 90px; resize: vertical; }
+    .card button { background: var(--accent); color: #1a1100; border: 0; border-radius: 8px; padding: 9px; font-weight: 600; cursor: pointer; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chips button { background: var(--panel-2); color: var(--text); border: 1px solid var(--line); font-weight: 400; font-size: 12px; padding: 4px 10px; }
+    .status-box { border-radius: 10px; padding: 12px; background: var(--panel-2); border: 1px solid var(--line); }
+    .status-box.outage { border-color: var(--danger); }
+    .status-box.restored { border-color: var(--ok); }
+    .big-state { font-size: 20px; font-weight: 700; }
+    .kv { display: grid; grid-template-columns: 120px 1fr; gap: 4px 10px; font-size: 13px; }
+    .kv span:nth-child(odd) { color: var(--muted); }
+    .sms { background: rgba(61, 220, 151, .07); border: 1px solid rgba(61, 220, 151, .4); border-radius: 10px; padding: 8px 10px; font-size: 13px; }
+    .muted { color: var(--muted); font-size: 12px; }
+    @media (max-width: 760px) { .portal { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="portal">
+    <header>
+      <div class="brand"><span class="logo">⚡</span><div><h1>Outage Desk</h1><p>Report a power cut or check your supply · English · සිංහල · தமிழ்</p></div></div>
+    </header>
+
+    <section class="card">
+      <h2>Report a problem</h2>
+      <input id="who" placeholder="Account number or mobile (optional)">
+      <textarea id="text" placeholder="Tell us what happened, in any language"></textarea>
+      <div class="chips">
+        <button data-t="කණුව ළඟ වයරයක් බිම වැටිලා ගිනි පුපුරු එනවා, Market Street 25" data-l="si" data-w="3622151132">සිංහල: wire on the road</button>
+        <button data-t="லேக் ரோட் 9, மின்சாரம் இல்லை. மரக்கிளை கம்பியில் விழுந்தது." data-l="ta" data-w="7929510258">தமிழ்: no power</button>
+        <button data-t="No power at 20 Hospital Road since the storm, is anyone coming?" data-l="en" data-w="4466799600">English: no power</button>
+      </div>
+      <select id="lang"><option value="en">English</option><option value="si">සිංහල</option><option value="ta">தமிழ்</option></select>
+      <button id="send">Send report</button>
+      <div id="sent"></div>
+    </section>
+
+    <section class="card">
+      <h2>Check my supply</h2>
+      <input id="q" placeholder="Account number or mobile">
+      <div class="chips">
+        <button data-q="4466799600">Hospital Road 20</button>
+        <button data-q="0086457035">Pumping Station Road 30</button>
+        <button data-q="7929510258">Lake Road 9</button>
+        <button data-q="6679981034">Hospital Road 100</button>
+      </div>
+      <button id="check">Check</button>
+      <div id="status"></div>
+    </section>
+    <p class="muted" style="grid-column: 1 / -1">Demo portal on fictional data. Every report goes through the same pipeline as calls, WhatsApp and SMS in the control room.</p>
+  </div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const badgeClass = (m) => m.startsWith("mock") ? "mock" : m.includes("Spark") ? "spark" : m.includes("Glimmer") ? "spark" : "code";
+
+document.querySelectorAll("[data-t]").forEach((b) => b.onclick = () => { $("#text").value = b.dataset.t; $("#lang").value = b.dataset.l; $("#who").value = b.dataset.w; });
+document.querySelectorAll("[data-q]").forEach((b) => b.onclick = () => { $("#q").value = b.dataset.q; check(); });
+
+function renderStatus(r) {
+  if (!r || !r.found) return `<div class="status-box">No account found for that number.</div>`;
+  const s = r.status, c = r.customer;
+  let head = "";
+  if (s.state === "outage") head = `<div class="big-state" style="color:var(--danger)">Power cut: ${esc(s.fault)}</div>
+      <div class="kv"><span>Crew</span><span>${esc(s.crew || "being assigned")} (${esc(s.crew_status)})</span>
+      <span>Back around</span><span>${esc(s.eta || "–")}</span><span>Reference</span><span>${esc(s.incident)}</span></div>`;
+  else if (s.state === "restored") head = `<div class="big-state" style="color:var(--ok)">Power restored at ${esc(s.at)}</div>`;
+  else if (s.state === "reported") head = `<div class="big-state">Report received, locating the fault</div>`;
+  else head = `<div class="big-state">No known outage at your address</div>`;
+  const sms = r.notices.map((n) => `<div class="sms">📩 ${esc(n.text)}</div>`).join("");
+  return `<div class="status-box ${s.state}">${head}
+    <div class="kv" style="margin-top:8px"><span>Name</span><span>${esc(c.name)}</span><span>Address</span><span>${esc(c.address)}</span>
+    <span>Account</span><span>${esc(c.account)}</span></div></div>${sms ? `<div class="muted">Messages we sent you</div>${sms}` : ""}`;
+}
+
+async function check() {
+  const r = await (await fetch(`/api/customer?q=${encodeURIComponent($("#q").value)}`)).json();
+  $("#status").innerHTML = renderStatus(r);
+}
+$("#check").onclick = check;
+
+$("#send").onclick = async () => {
+  if (!$("#text").value.trim()) return;
+  $("#sent").innerHTML = `<span class="muted">Reading your message…</span>`;
+  const r = await (await fetch("/api/customer/report", {
+    method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text: $("#text").value, who: $("#who").value, language: $("#lang").value }),
+  })).json();
+  const m = r.message, f = m.fields || {};
+  $("#sent").innerHTML = `<div class="status-box">
+    <span class="badge ${badgeClass(m.model)}">${esc(m.model)}</span>
+    <div class="kv" style="margin-top:8px"><span>Understood as</span><span>${esc(f.summary_en)}</span>
+    <span>Symptom</span><span>${esc((f.symptom || "").replace("_", " "))}</span>
+    <span>Hazard</span><span>${esc((f.hazard || "").replace("_", " "))}</span>
+    <span>Placed at</span><span>${esc(m.location ? (m.location.street ? m.location.street + " " + (m.location.house_no || "") : m.location.method) : "–")} ${m.location && m.location.transformer ? "· " + esc(m.location.transformer) : ""}</span>
+    <span>Status</span><span>${esc(m.status)}${m.incident ? " · linked to " + esc(m.incident) : ""}</span></div></div>
+    ${r.status ? renderStatus(r.status) : ""}`;
+};
+</script>
+</body>
+</html>

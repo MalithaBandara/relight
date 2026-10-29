@@ -7,13 +7,15 @@ stands in for the model output, and the result is flagged so the UI can say so.
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 
 from .models import ModelClient
 
 SYMPTOMS = ["no_power", "partial_power", "flicker", "power_on", "none"]
 HAZARDS = ["none", "live_wire", "wire_down", "pole_down", "tree_on_line", "fire", "transformer_bang"]
-DAMAGE = ["none", "live_wire", "wire_down", "pole_down", "tree_on_line", "blown_fuse", "transformer_failure", "other"]
+DAMAGE = ["none", "live_wire", "wire_down", "pole_down", "tree_on_line", "blown_fuse", "transformer_failure",
+          "service_wire", "other"]
 
 COMPLAINT_SCHEMA = {
     "type": "object",
@@ -52,14 +54,22 @@ CREW_SCHEMA = {
         "landmark": {"type": ["string", "null"]},
         "damage": {"type": "string", "enum": DAMAGE},
         "energised": {"type": "boolean", "description": "True if the crew says the conductor is live/arcing"},
+        "device_ok": {"type": "boolean",
+                      "description": "True if the crew says the device they were sent to (transformer, fuse, line) is healthy"},
+        "house_from": {"type": ["integer", "null"], "description": "First house number without supply, if a range is given"},
+        "house_to": {"type": ["integer", "null"], "description": "Last house number without supply, if a range is given"},
         "crew_needs": {"type": "array", "items": {"type": "string", "enum": ["line", "bucket_truck", "vegetation", "troubleshooter"]}},
         "summary_en": {"type": "string"},
     },
-    "required": ["street", "house_no", "landmark", "damage", "energised", "crew_needs", "summary_en"],
+    "required": ["street", "house_no", "landmark", "damage", "energised", "device_ok", "house_from", "house_to",
+                 "crew_needs", "summary_en"],
 }
 
 CREW_SYSTEM = """You read field reports from electricity utility patrol crews in Galle, Sri Lanka.
-Extract where the damage is, what it is, whether the line is still energised, and which crews are needed:
+Extract where the damage is, what it is, whether the line is still energised, whether the device the crew was
+sent to is actually healthy (device_ok), the house range left without supply, and which crews are needed.
+damage: service_wire is a low-voltage wire from the street to houses; blown_fuse is a transformer drop-out fuse.
+Crews:
 line (line crew), bucket_truck (aerial lift for pole/conductor work), vegetation (tree removal),
 troubleshooter (single technician, e.g. to replace a fuse)."""
 
@@ -94,6 +104,8 @@ class Extractor:
         out = self._call(COMPLAINT_SYSTEM, text, COMPLAINT_SCHEMA, "Complaint")
         if out is not None:
             return Extraction(out, self.label)
+        if not truth:
+            return Extraction(_keyword_fields(text, language), "mock (keywords)", mock=True)
         return Extraction({
             "language": language,
             "account_no": truth.get("account_no"),
@@ -112,9 +124,31 @@ class Extractor:
         if out is not None:
             return Extraction(out, self.label)
         needs = {"pole_down": ["line", "bucket_truck"], "tree_on_line": ["vegetation", "line"],
-                 "blown_fuse": ["troubleshooter"], "live_wire": ["line"]}.get(truth.get("damage"), [])
+                 "blown_fuse": ["troubleshooter"], "live_wire": ["line"], "service_wire": ["line"]}.get(truth.get("damage"), [])
         return Extraction({
             "street": truth.get("street"), "house_no": truth.get("house_no"), "landmark": truth.get("landmark"),
             "damage": truth.get("damage", "other"), "energised": truth.get("damage") == "live_wire",
-            "crew_needs": needs, "summary_en": text,
+            "device_ok": bool(truth.get("device_ok")), "house_from": truth.get("house_from"),
+            "house_to": truth.get("house_to"), "crew_needs": needs, "summary_en": text,
         }, "mock (ground truth)", mock=True)
+
+
+def _keyword_fields(text: str, language: str) -> dict:
+    """Last-resort reading of an unlabelled message (mock mode, e.g. typed live into the portal)."""
+    t = text.lower()
+    hazard = "none"
+    for words, h in ((("spark", "ගිනි", "தீப்பொறி"), "live_wire"), (("pole", "කණු", "கம்ப"), "pole_down"),
+                     (("tree", "ගහ", "மரம்"), "tree_on_line"), (("wire", "වයර", "கம்பி"), "wire_down")):
+        if any(re.search(rf"\b{w}", t) if w.isascii() else w in t for w in words):
+            hazard = h
+            break
+    m = (re.search(r"(\d{1,3})\s*,?\s*([A-Za-z][A-Za-z ]+?(?:road|rd|street|st|lane|mawatha))\b", text, re.I)
+         or re.search(r"([A-Za-z][A-Za-z ]+?(?:road|rd|street|st|lane))\s*,?\s*(?:no\.?\s*)?(\d{1,3})", text, re.I))
+    street = house = None
+    if m:
+        a, b = m.group(1), m.group(2)
+        house, street = (int(a), b) if a.isdigit() else (int(b), a)
+    acct = re.search(r"\b\d{10}\b", text)
+    return {"language": language, "account_no": acct.group(0) if acct else None,
+            "street": street.strip() if street else None, "house_no": house, "landmark": None if street else text,
+            "symptom": "no_power", "hazard": hazard, "cause_hint": None, "is_junk": False, "summary_en": text}

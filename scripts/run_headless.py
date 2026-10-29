@@ -1,6 +1,8 @@
-"""Replay a scenario instantly (no UI) and print what GridMedic concluded.
+"""Replay a scenario instantly (no UI), let the crews work it through, and print the outcome.
 
-Usage:  python scripts/run_headless.py [--timeline]
+Usage:  python scripts/run_headless.py [--timeline] [--no-switching]
+
+By default the operator approves every safe switching plan as soon as it is offered.
 """
 
 import asyncio
@@ -10,47 +12,67 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from gridmedic.engine import Engine  # noqa: E402
-from gridmedic.scenario import Replayer, load  # noqa: E402
+from gridmedic.engine import Engine, clock_str  # noqa: E402
+from gridmedic.scenario import MAX_CLOCK_S, Replayer, load  # noqa: E402
+
+STEP_S = 30
 
 
-async def main(show_timeline: bool) -> None:
+async def main(show_timeline: bool, switching: bool) -> None:
     sc = load()
 
     async def quiet(_msg):
         pass
 
-    replayer: Replayer
-    engine = Engine(sc, quiet, on_probe=lambda p: replayer.schedule_probe_reply(p))
+    engine = Engine(sc, quiet)
     replayer = Replayer(sc, engine.handle)
-    while replayer.queue:
-        _, _, e = heapq.heappop(replayer.queue)
-        await engine.handle(e)
+    engine.sim = replayer
+    clock = 0.0
+    while clock < MAX_CLOCK_S:
+        if replayer.queue and replayer.queue[0][0] <= clock:
+            _, _, e = heapq.heappop(replayer.queue)
+            await replayer.deliver(e)
+            continue
+        if not replayer.queue and clock >= sc["duration_s"] and not engine.busy():
+            break
+        clock += STEP_S
+        await engine.advance(clock)
+        if switching:
+            for inc in engine.incidents:
+                for p in inc["plans"]:
+                    if p["safe"] and p["customers"] and not inc["switching"] and inc["status"] != "restored":
+                        await engine.apply_plan(inc["id"], p["id"])
 
     if show_timeline:
         for x in engine.timeline:
-            print(f"{x['t']:>5}s  [{x['model']}] {x['title']}  {x['detail'][:110]}")
+            print(f"{x['clock']}  [{x['model']}] {x['title']}  {x['detail'][:120]}")
         print()
     s = engine.snapshot()
-    print(f"mode={s['mode']}  messages={s['counts']['messages']}  duplicates={s['counts']['duplicates']}  "
-          f"junk={s['counts']['junk']}  languages={s['counts']['languages']}")
-    print("\nRepair queue:")
-    for f in s["faults"]:
-        d = f["dispatch"]
-        crews = ", ".join(f"{st['crew']}:{st['task']}" for st in d["steps"])
-        print(f"  {f['priority']:>7}  {f['title']:<22} {f['device']:<14} conf {f['confidence']:.2f}  "
-              f"{f['customers_out']:>4} cust  restore +{d['restore_min']} min  [{crews}]")
+    c = s["counts"]
+    print(f"mode={s['mode']}  messages={c['messages']}  duplicates={c['duplicates']}  junk={c['junk']}  "
+          f"BD SMS={c['bd_sms']}  languages={c['languages']}  notified={c['notified']}  end={s['clock']}")
+    print("\nIncidents:")
+    for i in sorted(engine.incidents, key=lambda i: i["located_at"]):
+        flags = (" MIND-CHANGED" if i["mind_changed"] else "") + (" AFTER-RESTORE" if i["after_restore"] else "") + \
+                (f" switched {len(i['switching'])} ops" if i["switching"] else "")
+        print(f"  {i['id']} {i['title']:<20} {i['label']:<38} located {clock_str(i['located_at'])} "
+              f"restored {clock_str(i['restored_at']) if i['restored_at'] else '-'}{flags}")
+        for h in i["history"]:
+            print(f"       ↺ {h['before']} -> {h['after']}")
     print("\nAgent questions:")
     for p in s["probes"]:
-        print(f"  {p['id']} t={p['t']} {p['fault']} vs {p['rival']} -> ask {p['street']} {p['house_no']} "
-              f"({p['transformer']}, {p['language']}): {p['answer']}")
+        print(f"  {p['id']} {clock_str(p['t'])} {p['fault']} vs {p['rival']} -> {p['street']} {p['house_no']}: {p['answer']}")
     print("\nAgainst ground truth:")
     for t in s["truth"]:
-        print(f"  {t['id']} {t['title']:<48} found={t['found']}  located at t={t['located_at']}")
-    print(f"\nCustomer-minutes: GridMedic {s['plan']['customer_minutes']:,} vs first-call-first-served "
-          f"{s['baseline']['customer_minutes']:,}; live wire made safe after "
-          f"{s['plan']['hazard_wait_min']} vs {s['baseline']['hazard_wait_min']} min")
+        print(f"  {t['id']} {t['title']:<58} found={t['found']}  located "
+              f"{clock_str(t['located_at']) if t['located_at'] is not None else '-'}  restored "
+              f"{clock_str(t['restored_at']) if t['restored_at'] else '-'}")
+    print(f"\nWhat-if customer-minutes: GridMedic {s['plan']['customer_minutes']:,} vs first-call-first-served "
+          f"{s['baseline']['customer_minutes']:,}; live wire made safe after {s['plan']['hazard_wait_min']} vs "
+          f"{s['baseline']['hazard_wait_min']} min")
+    print(f"Still dark at the end: {c['customers_out']} customers (believed); "
+          f"world says {len(replayer.world.still_dark(list(engine.feeder.transformers)))}")
 
 
 if __name__ == "__main__":
-    asyncio.run(main("--timeline" in sys.argv))
+    asyncio.run(main("--timeline" in sys.argv, "--no-switching" not in sys.argv))
