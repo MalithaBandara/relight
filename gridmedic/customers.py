@@ -15,7 +15,7 @@ from dataclasses import dataclass
 from difflib import SequenceMatcher
 
 from .config import DATA_DIR, DB_PATH
-from .grid import _move, get_feeder
+from .grid import Feeder, _move, get_feeder
 
 SEED = 34
 CUSTOMERS_PER_TRANSFORMER = (16, 26)
@@ -59,9 +59,7 @@ class Customer:
     critical: str | None
 
 
-def build_database(path=DB_PATH) -> None:
-    feeder = get_feeder()
-    rng = random.Random(SEED)
+def create_database(path) -> sqlite3.Connection:
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     if path.exists():
         path.unlink()
@@ -77,6 +75,14 @@ def build_database(path=DB_PATH) -> None:
         CREATE TABLE landmarks (name TEXT, aliases TEXT, transformer_id TEXT, lat REAL, lon REAL, critical TEXT);
         """
     )
+    return con
+
+
+def build_database(path=DB_PATH, feeder: Feeder | None = None) -> None:
+    """Galle: customers spread along each IEEE section, numbered house by house along the street."""
+    feeder = feeder or get_feeder()
+    rng = random.Random(SEED)
+    con = create_database(path)
 
     house_counter: dict[str, int] = {}
     used_accounts: set[str] = set()
@@ -89,8 +95,8 @@ def build_database(path=DB_PATH) -> None:
         for i in range(n):
             offset = (i + 0.5) * sec.length_m / n
             side = 1 if i % 2 else -1
-            lat, lon = _move(*feeder.bus_pos[sec.from_bus], sec.heading, offset)
-            lat, lon = _move(lat, lon, sec.heading + 90 * side, rng.uniform(15, 45))
+            lat, lon = feeder.point_on_section(sid, offset)
+            lat, lon = _move(lat, lon, feeder.bearing_at(sid, offset) + 90 * side, rng.uniform(15, 45))
             nearest = min(xfmrs, key=lambda t: abs(t.offset_m - offset))
             house_counter[sec.street] = house_counter.get(sec.street, 0) + 1
             while (acct := f"{rng.randint(0, 9_999_999_999):010d}") in used_accounts:
@@ -125,9 +131,9 @@ def build_database(path=DB_PATH) -> None:
 class CustomerDB:
     """Read-only lookups used to place complaints on the grid."""
 
-    def __init__(self, path=DB_PATH) -> None:
+    def __init__(self, path=DB_PATH, build=None) -> None:
         if not path.exists():
-            build_database(path)
+            (build or build_database)(path)
         self.con = sqlite3.connect(path, check_same_thread=False)
         self.con.row_factory = sqlite3.Row
         self.streets = [r[0] for r in self.con.execute("SELECT DISTINCT street FROM customers")]

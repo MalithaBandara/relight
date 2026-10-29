@@ -39,7 +39,21 @@ Meta models read; deterministic code locates and decides.
 | Customers still dark after a repair reveal a hidden second fault | code: unclaimed complaints go back to the tracer |
 | Customer portal: report in any language, check status, see the messages sent | `/customer` |
 
-The feeder is the IEEE 34-bus test feeder laid over Galle, Sri Lanka, with ~1,950 synthetic customers
+Three scenarios run on the same engine (pick one in the header):
+
+| Scenario | Network | Customers | What it shows |
+|---|---|---|---|
+| Galle, Sri Lanka | IEEE 34-bus test feeder laid over Galle | 1,951 | The full story: no smart meters, Sinhala/Tamil/English, safe switching, the agent changing its mind, a hidden fault |
+| Houston, USA | Generated from real OpenStreetMap roads and buildings (Spring Branch) | 3,044 | Smart meters send last-gasp messages until the meter network fails mid-storm; English/Spanish |
+| Chennai, India | Generated from real OpenStreetMap roads and buildings (Velachery) | 24,559 | Scale: ~2,400 messages in 30 minutes in English/Tamil/Hindi, re-traced every 15 s |
+
+For Houston and Chennai the line runs along real streets (a shortest-path tree over the road network
+from the substation), customers sit in real buildings, and landmarks are real facilities shown under
+generic names ("Hospital on <street>"). The electrical network, customers and accounts are synthetic.
+Map data © OpenStreetMap contributors (ODbL), cached in `data/osm/`; refresh with
+`scripts/fetch_osm.py`, and regenerate those storms with `scripts/make_storm.py`.
+
+The Galle feeder is the IEEE 34-bus test feeder laid over Galle, Sri Lanka, with ~1,950 synthetic customers
 mapped to 94 service transformers. The demo storm ([scenarios/galle_storm.json](scenarios/galle_storm.json))
 has six faults: a pole down, a tree on the line (isolated by switching so the water pumping station
 gets power back from Feeder 2), a blown transformer fuse found from complaints alone, a live wire on the
@@ -61,10 +75,10 @@ Without an API key the app runs in **mock mode**: cached model responses are rep
 not cached falls back to the scenario's labelled ground truth (tagged `mock` in the UI). With a key,
 every model response is cached in `.cache/model/`, so replays are free and repeatable.
 
-Headless replay with a summary against ground truth:
+Headless replay with a summary against ground truth (`galle_storm`, `houston_hurricane` or `chennai_cyclone`):
 
 ```bash
-.venv/Scripts/python scripts/run_headless.py --timeline
+.venv/Scripts/python scripts/run_headless.py houston_hurricane --timeline
 ```
 
 Other scripts:

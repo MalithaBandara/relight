@@ -136,55 +136,114 @@ def haversine_m(a: tuple[float, float], b: tuple[float, float]) -> float:
     return 2 * 6_371_000 * math.asin(math.sqrt(h))
 
 
+def bearing(a: tuple[float, float], b: tuple[float, float]) -> float:
+    dy = b[0] - a[0]
+    dx = (b[1] - a[1]) * math.cos(math.radians(a[0]))
+    return math.degrees(math.atan2(dx, dy)) % 360
+
+
+def polyline_length(coords: list[tuple[float, float]]) -> float:
+    return sum(haversine_m(coords[i], coords[i + 1]) for i in range(len(coords) - 1))
+
+
+def ieee34_spec(origin: tuple[float, float] = ORIGIN) -> dict:
+    """The IEEE 34-bus feeder as a network spec, drawn from `origin` with the headings above."""
+    buses = {"800": origin}
+    sections = []
+    for frm, to, ft, heading, street in SECTIONS:
+        # Regulators and the in-line transformer (10 ft) stay as short stubs.
+        length = 120 + 3 * math.sqrt(ft) if ft > 10 else 15
+        buses[to] = _move(*buses[frm], heading, length)
+        sections.append({"id": f"{frm}-{to}", "from": frm, "to": to, "coords": [buses[frm], buses[to]],
+                         "street": street})
+    return {
+        "root": "800", "buses": buses, "sections": sections, "devices": DEVICES, "switches": SWITCHES,
+        "feeder2": {"bus": FEEDER2_BUS, "pos": _move(*buses["822"], 20, 260), "label": "Feeder 2 (Karapitiya side)"},
+        "substation_label": "Wakwella substation (bus 800)",
+    }
+
+
 class Feeder:
-    def __init__(self) -> None:
-        self.bus_pos: dict[str, tuple[float, float]] = {"800": ORIGIN}
+    """A radial distribution feeder built from a network spec (IEEE test feeder or generated from real roads)."""
+
+    def __init__(self, spec: dict | None = None) -> None:
+        spec = spec or ieee34_spec()
+        self.root = spec["root"]
+        self.substation_label = spec.get("substation_label", "Substation")
+        self.bus_pos: dict[str, tuple[float, float]] = {k: tuple(v) for k, v in spec["buses"].items()}
         self.sections: dict[str, Section] = {}
         self.children: dict[str, list[str]] = {}  # bus -> downstream section ids
         self.parent_section: dict[str, str] = {}  # bus -> section feeding it
-        for frm, to, ft, heading, street in SECTIONS:
-            # Regulators and the in-line transformer (10 ft) stay as short stubs.
-            length = 120 + 3 * math.sqrt(ft) if ft > 10 else 15
-            start = self.bus_pos[frm]
-            end = _move(*start, heading, length)
-            self.bus_pos[to] = end
-            sid = f"{frm}-{to}"
-            self.sections[sid] = Section(sid, frm, to, length, heading, street, [start, end])
-            self.children.setdefault(frm, []).append(sid)
-            self.parent_section[to] = sid
+        for s in spec["sections"]:
+            coords = [tuple(c) for c in s["coords"]]
+            length = max(polyline_length(coords), 1.0)
+            sec = Section(s["id"], s["from"], s["to"], length, bearing(coords[0], coords[-1]), s["street"], coords)
+            self.sections[sec.id] = sec
+            self.children.setdefault(sec.from_bus, []).append(sec.id)
+            self.parent_section[sec.to_bus] = sec.id
 
+        spacing = spec.get("transformer_spacing", TRANSFORMER_SPACING_M)
         self.transformers: dict[str, Transformer] = {}
         n = 0
         for sec in self.sections.values():
-            count = int(sec.length_m // TRANSFORMER_SPACING_M)
+            count = int(sec.length_m // spacing)
             for i in range(count):
                 offset = (i + 0.5) * sec.length_m / count
-                lat, lon = _move(*self.bus_pos[sec.from_bus], sec.heading, offset)
+                lat, lon = self.point_on_section(sec.id, offset)
                 # Pole-mounted transformers sit beside the line, alternating sides.
-                lat, lon = _move(lat, lon, sec.heading + (90 if i % 2 else -90), 12)
+                lat, lon = _move(lat, lon, self.bearing_at(sec.id, offset) + (90 if i % 2 else -90), 12)
                 n += 1
                 tid = f"T-{n:03d}"
                 self.transformers[tid] = Transformer(tid, sec.id, offset, lat, lon, 100 if n % 3 else 160)
 
         self.devices: dict[str, Device] = {}
-        for did, kind, sid, scada, label in DEVICES:
-            lat, lon = _move(*self.bus_pos[self.sections[sid].from_bus], self.sections[sid].heading, 8)
+        for did, kind, sid, scada, label in spec["devices"]:
+            lat, lon = self.point_on_section(sid, 8)
             self.devices[did] = Device(did, kind, sid, scada, label, lat, lon)
-        # Feeder 2 comes in beyond bus 822; TS-1 sits on the gap.
-        self.bus_pos[FEEDER2_BUS] = _move(*self.bus_pos["822"], 20, 260)
+        f2 = spec.get("feeder2")
+        self.feeder2_bus = f2["bus"] if f2 else None
+        self.feeder2_label = f2["label"] if f2 else ""
+        if f2:
+            self.bus_pos[f2["bus"]] = tuple(f2["pos"])
         self.switches: dict[str, Device] = {}
-        for sid, kind, where, normally_open, label in SWITCHES:
+        for sid, kind, where, normally_open, label in spec["switches"]:
             if kind == "tie":
-                lat, lon = _move(*self.bus_pos[where], 20, 130)
-                self.switches[sid] = Device(sid, kind, where, True, label, lat, lon)
+                a, b = self.bus_pos[where], self.bus_pos[self.feeder2_bus]
+                lat, lon = (a[0] + b[0]) / 2, (a[1] + b[1]) / 2
             else:
-                lat, lon = _move(*self.bus_pos[self.sections[where].from_bus], self.sections[where].heading, 20)
-                self.switches[sid] = Device(sid, kind, where, True, label, lat, lon)
-        self.normally_open = {sid for sid, _, _, no, _ in SWITCHES if no}
+                lat, lon = self.point_on_section(where, 20)
+            self.switches[sid] = Device(sid, kind, where, True, label, lat, lon)
+        self.normally_open = {sid for sid, _, _, no, _ in spec["switches"] if no}
         # Every service transformer is protected by its own drop-out fuse.
         for t in self.transformers.values():
             did = f"XF-{t.id[2:]}"
             self.devices[did] = Device(did, "xfmr_fuse", t.section, False, f"Transformer {t.id} fuse", t.lat, t.lon)
+
+    # ---- geometry ---------------------------------------------------------
+
+    def _walk(self, section_id: str, offset_m: float) -> tuple[int, float]:
+        """Index of the polyline segment containing `offset_m`, and the distance into it."""
+        coords = self.sections[section_id].coords
+        d = min(max(offset_m, 0.0), self.sections[section_id].length_m)
+        for i in range(len(coords) - 1):
+            seg = haversine_m(coords[i], coords[i + 1])
+            if d <= seg or i == len(coords) - 2:
+                return i, min(d, seg)
+            d -= seg
+        return 0, 0.0
+
+    def point_on_section(self, section_id: str, offset_m: float) -> tuple[float, float]:
+        coords = self.sections[section_id].coords
+        i, d = self._walk(section_id, offset_m)
+        seg = haversine_m(coords[i], coords[i + 1]) or 1.0
+        k = d / seg
+        return (coords[i][0] + (coords[i + 1][0] - coords[i][0]) * k,
+                coords[i][1] + (coords[i + 1][1] - coords[i][1]) * k)
+
+    def bearing_at(self, section_id: str, offset_m: float) -> float:
+        coords = self.sections[section_id].coords
+        i, _ = self._walk(section_id, offset_m)
+        return bearing(coords[i], coords[i + 1])
 
     # ---- topology queries -------------------------------------------------
 
@@ -204,6 +263,9 @@ class Feeder:
             by.setdefault(t.section, []).append(t.id)
         return by
 
+    def transformers_on(self, section_id: str) -> list[str]:
+        return self._transformers_by_section.get(section_id, [])
+
     @cached_property
     def downstream(self) -> dict[str, frozenset[str]]:
         """Device id -> transformers that lose power when it opens."""
@@ -212,9 +274,7 @@ class Feeder:
             if d.kind == "xfmr_fuse":
                 out[d.id] = frozenset({"T-" + d.id[3:]})
             else:
-                out[d.id] = frozenset(
-                    t for sid in self.sections_below(d.section) for t in self._transformers_by_section.get(sid, [])
-                )
+                out[d.id] = frozenset(t for sid in self.sections_below(d.section) for t in self.transformers_on(sid))
         return out
 
     def upstream_devices(self, transformer_id: str) -> list[str]:
@@ -228,10 +288,6 @@ class Feeder:
                 chain.append(device_at[sid])
             sid = self.parent_section.get(self.sections[sid].from_bus)
         return chain
-
-    def point_on_section(self, section_id: str, offset_m: float) -> tuple[float, float]:
-        sec = self.sections[section_id]
-        return _move(*self.bus_pos[sec.from_bus], sec.heading, min(max(offset_m, 0), sec.length_m))
 
     def to_geojson(self) -> dict:
         feats = []
@@ -247,17 +303,19 @@ class Feeder:
                 "geometry": {"type": "Point", "coordinates": [t.lon, t.lat]},
                 "properties": {"kind": "transformer", "id": t.id, "section": t.section, "kva": t.kva},
             })
-        tie_bus = next(s.section for s in self.switches.values() if s.kind == "tie")
-        a, b = self.bus_pos[tie_bus], self.bus_pos[FEEDER2_BUS]
-        feats.append({
-            "type": "Feature",
-            "geometry": {"type": "LineString", "coordinates": [[a[1], a[0]], [b[1], b[0]]]},
-            "properties": {"kind": "tie_line", "id": "TIE-1", "street": "Feeder 2 tie"},
-        })
-        feats.append({
-            "type": "Feature", "geometry": {"type": "Point", "coordinates": [b[1], b[0]]},
-            "properties": {"kind": "feeder2", "id": FEEDER2_BUS, "label": "Feeder 2 (Karapitiya side)"},
-        })
+        for tie in (s for s in self.switches.values() if s.kind == "tie"):
+            a, b = self.bus_pos[tie.section], self.bus_pos[self.feeder2_bus]
+            feats.append({
+                "type": "Feature",
+                "geometry": {"type": "LineString", "coordinates": [[a[1], a[0]], [b[1], b[0]]]},
+                "properties": {"kind": "tie_line", "id": f"TIE-{tie.id}", "street": "Feeder 2 tie"},
+            })
+        if self.feeder2_bus:
+            b = self.bus_pos[self.feeder2_bus]
+            feats.append({
+                "type": "Feature", "geometry": {"type": "Point", "coordinates": [b[1], b[0]]},
+                "properties": {"kind": "feeder2", "id": self.feeder2_bus, "label": self.feeder2_label},
+            })
         for s in self.switches.values():
             feats.append({
                 "type": "Feature", "geometry": {"type": "Point", "coordinates": [s.lon, s.lat]},
@@ -278,6 +336,7 @@ _feeder: Feeder | None = None
 
 
 def get_feeder() -> Feeder:
+    """The Galle IEEE 34-bus feeder (used where only the main scenario makes sense, e.g. the paper map)."""
     global _feeder
     if _feeder is None:
         _feeder = Feeder()

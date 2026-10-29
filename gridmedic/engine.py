@@ -23,9 +23,9 @@ from typing import Any, Awaitable, Callable
 import httpx
 
 from . import config
-from .customers import CustomerDB
 from .extract import Extraction, Extractor
-from .grid import get_feeder, haversine_m
+from . import packs
+from .grid import haversine_m
 from .models import ModelClient
 from .network import NetworkState, live_transformers, restoration_plans
 from .planner import STEPS, Crew, Job, schedule, score
@@ -39,25 +39,7 @@ SPEED_KMH = 25
 ROAD_FACTOR = 1.3
 REVIEW_FIELDS = ["street", "house_no", "symptom", "hazard", "is_junk"]
 SECTION_KINDS = {"pole_down", "tree_on_line", "live_wire", "wire_down"}
-BD_SMS = re.compile(r"^\s*BD\s*(\d{10})\s*$", re.I)
-START_HOUR = 15  # the storm hits at 15:00
-
-QUESTION = {
-    "en": "Outage desk: we are locating a fault near you. Is the power on at your home right now? Reply YES or NO.",
-    "si": "විදුලි දෝෂ අංශය: ඔබේ ප්‍රදේශයේ දෝෂයක් සොයමින් සිටිමු. දැන් ඔබේ නිවසේ විදුලිය තිබේද? ඔව් හෝ නැත ලෙස පිළිතුරු දෙන්න.",
-    "ta": "மின் தடை பிரிவு: உங்கள் பகுதியில் ஒரு கோளாறைக் கண்டறிகிறோம். இப்போது உங்கள் வீட்டில் மின்சாரம் உள்ளதா? ஆம் அல்லது இல்லை என்று பதிலளிக்கவும்.",
-}
-NOTICE = {
-    "en": "Outage desk: we have found the fault affecting your supply ({kind}). A crew is assigned. Estimated restoration around {eta}.",
-    "si": "විදුලි දෝෂ අංශය: ඔබේ සැපයුමට බලපාන දෝෂය සොයාගෙන ඇත ({kind}). කණ්ඩායමක් යොදවා ඇත. විදුලිය නැවත ලැබීමට ආසන්න වේලාව {eta}.",
-    "ta": "மின் தடை பிரிவு: உங்கள் மின் விநியோகத்தை பாதித்த கோளாறு கண்டறியப்பட்டது ({kind}). குழு அனுப்பப்பட்டுள்ளது. மின்சாரம் மீண்டும் வர சுமார் {eta}.",
-}
-RESTORED = {
-    "en": "Outage desk: power has been restored in your area. If you are still without power, reply to this message.",
-    "si": "විදුලි දෝෂ අංශය: ඔබේ ප්‍රදේශයට විදුලිය නැවත ලබා දී ඇත. තවමත් විදුලිය නැත්නම් මෙම පණිවිඩයට පිළිතුරු දෙන්න.",
-    "ta": "மின் தடை பிரிவு: உங்கள் பகுதிக்கு மின்சாரம் மீண்டும் வழங்கப்பட்டுள்ளது. இன்னும் மின்சாரம் இல்லையெனில் இந்த செய்திக்கு பதிலளிக்கவும்.",
-}
-LANG_NAME = {"en": "English", "si": "Sinhala", "ta": "Tamil"}
+LANG_NAME = {"en": "English", "si": "Sinhala", "ta": "Tamil", "es": "Spanish", "hi": "Hindi"}
 KIND_TITLE = {"pole_down": "Pole down", "tree_on_line": "Tree on line", "live_wire": "Live wire on road",
               "wire_down": "Wire down", "blown_fuse": "Blown fuse", "service_wire": "Service wire down",
               "unknown": "Outage, cause unknown"}
@@ -72,20 +54,22 @@ estimated restoration time exactly as provided. One or two sentences, polite, no
 Broadcast = Callable[[dict], Awaitable[None]]
 
 
-def clock_str(t: float) -> str:
-    m = int(START_HOUR * 60 + t // 60)
+def clock_str(t: float, start_hour: int = 15) -> str:
+    m = int(start_hour * 60 + t // 60)
     return f"{(m // 60) % 24:02d}:{m % 60:02d}"
 
 
 class Engine:
     def __init__(self, scenario: dict, broadcast: Broadcast) -> None:
-        self.feeder = get_feeder()
-        self.db = CustomerDB()
+        self.feeder, self.db = packs.network(scenario)
+        self.pack, self.loc = packs.pack(scenario), packs.locale(scenario)
+        self.sms_code = re.compile(self.loc["sms_code"], re.I)
+        self.sms_model = f"Code ({self.loc['sms_label']}, no AI)"
         self.client = ModelClient()
-        self.extractor = Extractor(self.client)
         # Muse Glimmer served locally (vLLM / llama.cpp, OpenAI-compatible); always "live" because it is local.
+        self.extractor = Extractor(self.client, hint=self.loc["hint"])
         self.glimmer = Extractor(ModelClient(mode="live"), model=config.GLIMMER_MODEL, base=config.GLIMMER_BASE,
-                                 label="Muse Glimmer (offline)")
+                                 label="Muse Glimmer (offline)", hint=self.loc["hint"])
         self.customers = self.db.counts_by_transformer()
         self.tracer = Tracer(self.feeder, self.customers)
         self.critical = self.db.critical_by_transformer()
@@ -94,8 +78,14 @@ class Engine:
         self.sim = None  # the simulated world (Replayer): answers questions, plays crews and customers
         self.reset()
 
+    def clock(self, t: float) -> str:
+        return clock_str(t, self.pack["start_hour"])
+
     def reset(self) -> None:
         self.elapsed = 0.0
+        self._last_trace = -1e9
+        self._dirty = False
+        self._quiet: Counter = Counter()
         self.offline = False
         self.queued: list[dict] = []
         self.messages: list[dict] = []
@@ -113,6 +103,10 @@ class Engine:
         self.plan: dict = {}
         self.baseline: dict = {}
         self.model_calls: Counter = Counter()
+        meters = self.pack.get("smart_meters")
+        self.ami: list[tuple[float, str, str]] = []  # (time, account, transformer) last gasps
+        self.ami_ok = bool(meters)
+        self.meter_cov = meters["coverage"] if meters else 0.0
         self.crews = {c["id"]: {"id": c["id"], "name": c["name"], "skills": set(c["skills"]), "base": c["base"],
                                 "lat": self.feeder.bus_pos[c["base"]][0], "lon": self.feeder.bus_pos[c["base"]][1],
                                 "status": "idle", "incident": None, "step": None}
@@ -121,13 +115,24 @@ class Engine:
 
     # ---- helpers ------------------------------------------------------------
 
-    async def log(self, model: str, title: str, detail: str = "", ref: str | None = None) -> None:
-        entry = {"t": round(self.elapsed), "clock": clock_str(self.elapsed), "model": model, "title": title,
-                 "detail": detail, "ref": ref}
-        self.timeline.append(entry)
-        if not model.startswith(("Code", "SCADA", "Agent", "mock", "Network", "Crew", "Operator")):
+    def _count(self, model: str) -> None:
+        if not model.startswith(("Code", "SCADA", "Agent", "mock", "Network", "Crew", "Operator", "Smart")):
             for m in model.split(" + "):
                 self.model_calls[m] += 1
+
+    async def note(self, model: str, title: str, detail: str = "", ref: str | None = None) -> None:
+        """Per-message log line; in quiet (high-volume) scenarios only counted, then summarised."""
+        if self.pack.get("quiet_messages"):
+            self._count(model)
+            self._quiet[title.split(": ", 1)[-1].split(" ->")[0].split(" (")[0]] += 1
+            return
+        await self.log(model, title, detail, ref)
+
+    async def log(self, model: str, title: str, detail: str = "", ref: str | None = None) -> None:
+        entry = {"t": round(self.elapsed), "clock": self.clock(self.elapsed), "model": model, "title": title,
+                 "detail": detail, "ref": ref}
+        self.timeline.append(entry)
+        self._count(model)
         await self.broadcast({"type": "timeline", "entry": entry})
 
     def _locate(self, fields: dict, sender: str | None) -> dict:
@@ -238,6 +243,14 @@ class Engine:
         self.languages: dict[str, str] = {}
         for m in self.messages:
             self._apply(m)
+        if self.meter_cov:
+            self.ev.meter_counts = {t: round(n * self.meter_cov) for t, n in self.customers.items()}
+            # A silent meter only means "power on" once last-gasp traffic has settled for a minute.
+            self.ev.ami_ok = self.ami_ok and self.elapsed - max((t for t, _, _ in self.ami), default=-999) >= 60
+            claimed = {t for i in self._active() for t in i["out"]}
+            for t, acct, xf in self.ami:
+                if xf not in claimed and self.restored_at.get(xf, -1) < t:
+                    self.ev.meters.setdefault(xf, set()).add(acct)
         for h in self.hazards:
             h["safe"] = h["id"] in safe
 
@@ -305,7 +318,27 @@ class Engine:
             await self._crew_note(event)
         elif kind == "drone":
             await self._drone(event)
-        await self.recompute()
+        elif kind == "ami":
+            await self._ami(event)
+        elif kind == "ami_status":
+            self.ami_ok = event["ok"]
+            await self.log("Smart meters", "Meter network down" if not event["ok"] else "Meter network back",
+                           (event.get("detail", "") + "; locating from complaints and field reports only")
+                           if not event["ok"] else "")
+        urgent = kind in ("scada", "crew_note", "ami_status") or event.get("probe_reply") or event.get("channel") == "web"
+        if urgent or self.elapsed - self._last_trace >= self.pack.get("retrace_s", 0):
+            await self.recompute()
+        else:
+            self._dirty = True
+
+    async def _ami(self, e: dict) -> None:
+        xfs = Counter()
+        for acct in e["accounts"]:
+            if c := self.db.by_account(acct):
+                self.ami.append((e["t"], acct, c.transformer_id))
+                xfs[c.transformer_id] += 1
+        await self.log("Smart meters", f"{len(e['accounts'])} last-gasp messages",
+                       f"from {len(xfs)} transformers: " + ", ".join(f"{t} ({n})" for t, n in xfs.most_common(6)))
 
     async def _scada(self, e: dict) -> None:
         dev = self.feeder.devices[e["device"]]
@@ -330,12 +363,12 @@ class Engine:
         return e["text"]
 
     async def _extract(self, text: str, e: dict) -> Extraction:
-        if m := BD_SMS.match(text):
+        if m := self.sms_code.match(text):
             # The utility's breakdown SMS code needs no model at all.
             return Extraction({"language": "en", "account_no": m.group(1), "street": None, "house_no": None,
                                "landmark": None, "symptom": "no_power", "hazard": "none", "cause_hint": None,
                                "is_junk": False, "summary_en": f"Breakdown SMS for account {m.group(1)}"},
-                              "Code (BD SMS, no AI)")
+                              self.sms_model)
         ex = self.glimmer if self.offline else self.extractor
         out = await asyncio.to_thread(ex.complaint, text, e.get("truth", {}), e.get("language", "en"))
         if out.mock and self.offline:
@@ -349,7 +382,7 @@ class Engine:
         msg = {"id": e["id"], "t": e["t"], "channel": e["channel"], "language": f.get("language") or e.get("language"),
                "from": e.get("from"), "text": text, "fields": f, "model": ext.model, "photo": e.get("photo"),
                "probe_reply": e.get("probe_reply"), "followup": e.get("followup"), "event": e}
-        await self.log(ext.model, f"{e['id']}: {f['symptom'].replace('_', ' ')}"
+        await (self.log if f["hazard"] != "none" else self.note)(ext.model, f"{e['id']}: {f['symptom'].replace('_', ' ')}"
                        + (f", hazard {f['hazard'].replace('_', ' ')}" if f["hazard"] != "none" else "")
                        + (" (junk)" if f["is_junk"] else ""), f.get("summary_en", "")[:160], e["id"])
         if not f["is_junk"]:
@@ -361,17 +394,17 @@ class Engine:
         self._apply(msg)
         loc = msg.get("location") or {}
         if msg["status"] == "duplicate":
-            await self.log("Code", f"{e['id']}: duplicate of {msg['dup_of']}",
+            await self.note("Code", f"{e['id']}: duplicate of {msg['dup_of']}",
                            f"same {'account' if loc.get('account') else 'sender'}", e["id"])
         elif msg["status"] == "new":
             xf = loc.get("transformer")
             owner = f" -> {msg['incident']}" if msg.get("incident") else ""
-            await self.log("Code", f"{e['id']}: located by {loc['method']}{owner}",
+            await self.note("Code", f"{e['id']}: located by {loc['method']}{owner}",
                            f"{loc.get('street', '')} {loc.get('house_no') or ''} -> transformer {xf}" if xf else "",
                            e["id"])
             if xf and xf in self.restored_at and not msg.get("incident") and f["symptom"] == "no_power":
                 await self.log("Agent", f"{e['id']}: still dark after restoration",
-                               f"transformer {xf} was restored at {clock_str(self.restored_at[xf])}; "
+                               f"transformer {xf} was restored at {self.clock(self.restored_at[xf])}; "
                                "looking for a second fault", e["id"])
             if e.get("probe_reply") and xf:
                 on = f["symptom"] == "power_on"
@@ -544,7 +577,34 @@ class Engine:
         # A single transformer out on its own is most often its drop-out fuse.
         return "blown_fuse" if cand_kind == "xfmr_fuse" else "unknown"
 
+    async def _merge_into(self, L) -> dict | None:
+        """The same physical fault seen again: widen the open incident (e.g. the fuse above a break blew)."""
+        c = L.candidate
+        for inc in self._active():
+            mine = set(inc["out"])
+            if not mine or len(mine & c.out) < 0.5 * min(len(mine), len(c.out)):
+                continue
+            if c.out > mine and c.kind != "xfmr_fuse":
+                inc.update(cand=c.id, label=c.label, zone=sorted(set(inc["zone"]) | c.zone),
+                           devices=sorted(set(inc["devices"]) | ({c.id} if c.id in self.feeder.devices else set())))
+                if c.id in self.config_open:
+                    self.scada_owner[c.id] = inc["id"]
+                await self.log("Code", f"{inc['id']} widened to {c.label}",
+                               "more of the area is dark than the first explanation covered", inc["id"])
+            for m in self.messages:
+                xf = (m.get("location") or {}).get("transformer")
+                if m.get("incident") is None and xf in c.out and m["channel"] != "crew" and not m.get("probe_reply"):
+                    m["incident"] = inc["id"]
+                    inc["reports"].append(m["id"])
+            for d in L.damage:
+                self.damage_owner[id(d)] = inc["id"]
+            self._refresh_outages()
+            return inc
+        return None
+
     async def _open_incident(self, L) -> dict:
+        if (merged := await self._merge_into(L)) is not None:
+            return merged
         c = L.candidate
         iid = f"I{len(self.incidents) + 1}"
         kind = self._fault_kind(L.damage, c.kind)
@@ -615,6 +675,11 @@ class Engine:
         inc["steps"] = done + new
 
     async def recompute(self) -> None:
+        self._last_trace, self._dirty = self.elapsed, False
+        if self._quiet:
+            q, self._quiet = self._quiet, Counter()
+            await self.log("Code", f"Processed {sum(v for k, v in q.items() if k.startswith(('no power', 'partial', 'flicker', 'none', 'power on')))} messages",
+                           ", ".join(f"{k}: {v}" for k, v in q.most_common(6)))
         self._rebuild()
         located = self.tracer.locate(self.ev, self.elapsed)
         suspects = []
@@ -702,7 +767,7 @@ class Engine:
             if inc["status"] == "located":
                 inc["status"] = "dispatched"
             await self.log("Code", f"Dispatched {crew['name']} to {inc['id']}: {step['task']}",
-                           f"{inc['title']} at {inc['label']}; arrives {clock_str(step['arrive_t'])} "
+                           f"{inc['title']} at {inc['label']}; arrives {self.clock(step['arrive_t'])} "
                            f"({travel / 60:.0f} min drive)", inc["id"])
 
     def _next_transition(self, until: float):
@@ -746,9 +811,19 @@ class Engine:
                     await self.log("Crew", "Live wire made safe", "area cordoned; the hazard no longer ranks first",
                                    inc["id"])
                 if all(s["status"] == "done" for s in inc["steps"]):
-                    if inc["kind"] == "unknown":
+                    if inc["kind"] == "unknown" and any(d in self.config_open for d in inc["devices"]) \
+                            and inc.setdefault("patrols", 1) < 3:
+                        inc["patrols"] += 1
+                        inc["steps"].append({"skills": ["troubleshooter"], "minutes": 30, "status": "pending",
+                                             "crew": None, "task": f"patrol located zone ({inc['patrols']})"})
+                        inc["site_reported"] = False
+                        await self.log("Crew", f"{inc['id']}: nothing found yet, device still locked out",
+                                       "extending the patrol", inc["id"])
+                    elif inc["kind"] == "unknown":
                         inc["status"], inc["restored_at"] = "restored", self.elapsed
                         await self.log("Crew", f"{inc['id']} closed: patrol found no damage", inc["label"], inc["id"])
+                        if self.sim:  # anyone still dark will call again, which reopens the search
+                            self.sim.restored(list(inc["out"]), self.elapsed)
                     else:
                         await self._complete(inc)
             changed = True
@@ -756,7 +831,9 @@ class Engine:
             self._score_and_plan()
             await self._dispatch()
         self.elapsed = max(self.elapsed, until)
-        if changed:
+        if self._dirty and self.elapsed - self._last_trace >= self.pack.get("retrace_s", 0):
+            await self.recompute()
+        elif changed:
             await self.broadcast({"type": "state", "state": self.snapshot(include_log=False)})
 
     async def _switch(self, op: str, dev: str, why: str) -> None:
@@ -795,10 +872,10 @@ class Engine:
                            or (m.get("location") or {}).get("account") in accounts)]
         by_lang: dict[str, list[str]] = {}
         for m in recipients:
-            by_lang.setdefault(m["language"] if m["language"] in RESTORED else "en", []).append(m["from"])
+            by_lang.setdefault(m["language"] if m["language"] in self.loc["restored"] else "en", []).append(m["from"])
         for lang, to in by_lang.items():
             notice = {"id": f"U{len(self.notices) + 1}", "t": round(self.elapsed), "fault": inc["id"],
-                      "language": lang, "text": RESTORED[lang], "to": sorted(set(to)), "model": "Code (template)",
+                      "language": lang, "text": self.loc["restored"][lang], "to": sorted(set(to)), "model": "Code (template)",
                       "kind": "restored"}
             self.notices.append(notice)
             await self.broadcast({"type": "notice", "notice": notice})
@@ -856,7 +933,7 @@ class Engine:
         """Tell every customer who reported this fault when their power should be back, in their language."""
         if inc["eta"] is None:
             return
-        eta = clock_str(inc["eta"])
+        eta = self.clock(inc["eta"])
         recipients = [m for m in self.messages if m.get("status") == "new" and m["id"] in inc["reports"]
                       and m["channel"] != "crew" and m.get("from") and m["from"] not in inc["notified"]]
         if not recipients:
@@ -864,7 +941,7 @@ class Engine:
         first = not inc["notified"]
         by_lang: dict[str, list[str]] = {}
         for m in recipients:
-            by_lang.setdefault(m["language"] if m["language"] in NOTICE else "en", []).append(m["from"])
+            by_lang.setdefault(m["language"] if m["language"] in self.loc["notice"] else "en", []).append(m["from"])
             inc["notified"].append(m["from"])
         for lang, to in by_lang.items():
             kind = KIND_TITLE[inc["kind"]].lower()
@@ -877,7 +954,7 @@ class Engine:
                 except Exception:  # noqa: BLE001
                     text = None
             if not text:
-                text, model = NOTICE[lang].format(kind=kind, eta=eta), "mock (template)"
+                text, model = self.loc["notice"][lang].format(kind=kind, eta=eta), "mock (template)"
             notice = {"id": f"U{len(self.notices) + 1}", "t": round(self.elapsed), "fault": inc["id"], "language": lang,
                       "text": text.strip(), "to": sorted(set(to)), "model": model, "kind": "eta"}
             self.notices.append(notice)
@@ -914,7 +991,7 @@ class Engine:
             lang = langs[-1] if langs else "en"
             probe = {"id": f"Q{len(self.probes) + 1}", "t": round(self.elapsed), "fault": c.id, "rival": alt.id,
                      "transformer": target, "to": who.phone, "name": who.name, "street": who.street,
-                     "house_no": who.house_no, "language": lang, "text": QUESTION.get(lang, QUESTION["en"]),
+                     "house_no": who.house_no, "language": lang, "text": self.loc["question"].get(lang, self.loc["question"]["en"]),
                      "answer": None, "lat": who.lat, "lon": who.lon}
             self.probes.append(probe)
             only = c.id if target in c.out else alt.id
@@ -938,14 +1015,14 @@ class Engine:
             crew = next((self.crews[s["crew"]]["name"] for s in active["steps"]
                          if s["status"] in ("enroute", "onsite") and s.get("crew")), None)
             status = {"state": "outage", "fault": active["title"], "incident": active["id"], "crew": crew,
-                      "crew_status": active["status"], "eta": clock_str(active["eta"]) if active["eta"] else None}
+                      "crew_status": active["status"], "eta": self.clock(active["eta"]) if active["eta"] else None}
         elif c.transformer_id in self.restored_at:
-            status = {"state": "restored", "at": clock_str(self.restored_at[c.transformer_id])}
+            status = {"state": "restored", "at": self.clock(self.restored_at[c.transformer_id])}
         else:
             reported = any((m.get("location") or {}).get("account") == c.account_no for m in self.messages)
             status = {"state": "reported" if reported else "no_known_outage"}
         notices = [n for n in self.notices if c.phone in n["to"]]
-        mine = [{"id": m["id"], "clock": clock_str(m["t"]), "text": m["text"]} for m in self.messages
+        mine = [{"id": m["id"], "clock": self.clock(m["t"]), "text": m["text"]} for m in self.messages
                 if (m.get("location") or {}).get("account") == c.account_no]
         return {"found": True, "customer": {"name": c.name, "account": c.account_no, "phone": c.phone,
                                             "address": f"{c.house_no} {c.street}", "transformer": c.transformer_id},
@@ -989,7 +1066,8 @@ class Engine:
         live = live_transformers(self.feeder, self.belief())
         dead = set(self.feeder.transformers) - live
         s = {
-            "elapsed": self.elapsed, "clock": clock_str(self.elapsed), "mode": self.client.mode,
+            "elapsed": self.elapsed, "clock": self.clock(self.elapsed), "mode": self.client.mode,
+            "scenario": self.scenario["id"], "start_hour": self.pack["start_hour"],
             "offline": self.offline,
             "incidents": [_public_inc(i) for i in sorted(self.incidents, key=lambda i: (i["status"] == "restored",
                                                                                          -i["priority"]))],
@@ -1000,11 +1078,12 @@ class Engine:
                 "messages": len(self.messages),
                 "duplicates": sum(m.get("status") == "duplicate" for m in self.messages),
                 "junk": sum(m.get("status") == "junk" for m in self.messages),
-                "bd_sms": sum(m["model"].startswith("Code (BD") for m in self.messages),
+                "bd_sms": sum(m["model"] == self.sms_model for m in self.messages),
                 "languages": dict(Counter(m["language"] for m in self.messages)),
                 "model_calls": dict(self.model_calls),
                 "notified": sum(len(n["to"]) for n in self.notices),
                 "queued": len(self.queued),
+                "meter_msgs": len(self.ami), "ami": (None if not self.meter_cov else self.ami_ok),
                 "customers_out": sum(self.customers.get(t, 0) for t in dead)
                 + sum(len(i["dead_customers"]) for i in self._active()),
                 "incidents_open": len(self._active()),

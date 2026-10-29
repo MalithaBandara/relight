@@ -15,10 +15,9 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from . import config
-from .customers import CustomerDB
+from . import packs
 from .diagram import read_diagram, render_diagram, score
 from .engine import Engine, clock_str
-from .grid import get_feeder
 from .scenario import Replayer, load
 
 app = FastAPI(title="GridMedic")
@@ -34,8 +33,6 @@ async def broadcast(msg: dict) -> None:
             clients.discard(ws)
 
 
-scenario = load()
-engine = Engine(scenario, broadcast)
 lock = asyncio.Lock()  # one writer at a time: the replay, the operator, the customer portal
 
 
@@ -44,14 +41,33 @@ async def handle(e: dict) -> None:
         await engine.handle(e)
 
 
-replayer = Replayer(scenario, handle)
-engine.sim = replayer
+def open_scenario(name: str) -> None:
+    """Build the engine and simulated world for one scenario (network and customers are cached)."""
+    global scenario, engine, replayer
+    scenario = load(name)
+    engine = Engine(scenario, broadcast)
+    replayer = Replayer(scenario, handle)
+    engine.sim = replayer
+
+
+def list_scenarios() -> list[dict]:
+    out = []
+    for p in sorted(config.SCENARIO_DIR.glob("*.json")):
+        sc = json.loads(p.read_text(encoding="utf-8"))
+        pk = packs.pack(sc)
+        out.append({"id": p.stem, "title": sc["title"], "country": packs.locale(sc)["country"],
+                    "smart_meters": bool(pk.get("smart_meters")), "network": pk["network"]["type"]})
+    order = {"galle_storm": 0, "houston_hurricane": 1, "chennai_cyclone": 2}
+    return sorted(out, key=lambda s: order.get(s["id"], 9))
+
+
+open_scenario("galle_storm")
 
 
 async def tick(clock: float) -> None:
     async with lock:
         await engine.advance(clock)
-    await broadcast({"type": "clock", "elapsed": round(clock), "clock": clock_str(clock), "speed": replayer.speed,
+    await broadcast({"type": "clock", "elapsed": round(clock), "clock": engine.clock(clock), "speed": replayer.speed,
                      "running": replayer.running, "duration": scenario["duration_s"], "timelapse": replayer.timelapse,
                      "crews": engine.crew_positions()})
 
@@ -59,6 +75,27 @@ async def tick(clock: float) -> None:
 class Control(BaseModel):
     action: str  # start | pause | reset | speed | offline | online
     speed: float | None = None
+
+
+class ScenarioChoice(BaseModel):
+    id: str
+
+
+@app.get("/api/scenarios")
+def scenarios():
+    return {"current": scenario["id"], "scenarios": list_scenarios()}
+
+
+@app.post("/api/scenario")
+async def choose_scenario(c: ScenarioChoice):
+    if c.id not in {s["id"] for s in list_scenarios()}:
+        return {"ok": False}
+    replayer.running = False
+    await asyncio.sleep(0.2)
+    async with lock:
+        await asyncio.to_thread(open_scenario, c.id)
+    await broadcast({"type": "scenario", "id": c.id})
+    return {"ok": True}
 
 
 @app.post("/api/control")
@@ -124,16 +161,21 @@ def customer_page():
 
 @app.get("/api/grid")
 def grid():
-    db = CustomerDB()
-    feeder = get_feeder()
+    feeder, db = engine.feeder, engine.db
+    pk = packs.pack(scenario)
     return {
+        "id": scenario["id"],
         "geojson": feeder.to_geojson(),
         "landmarks": db.landmarks,
         "crews": [{**c, "lat": feeder.bus_pos[c["base"]][0], "lon": feeder.bus_pos[c["base"]][1]}
                   for c in scenario["crews"]],
-        "substation": feeder.bus_pos["800"],
+        "substation": feeder.bus_pos[feeder.root],
+        "substation_label": feeder.substation_label,
         "customers": db.counts_by_transformer(),
         "title": scenario["title"],
+        "country": packs.locale(scenario)["country"],
+        "network": pk["network"]["type"],
+        "start_hour": pk["start_hour"],
         "duration": scenario["duration_s"],
     }
 

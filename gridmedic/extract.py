@@ -35,11 +35,10 @@ COMPLAINT_SCHEMA = {
                  "cause_hint", "is_junk", "summary_en"],
 }
 
-COMPLAINT_SYSTEM = """You triage messages sent to an electricity utility in Galle, Sri Lanka during a storm.
-Messages arrive as transcribed phone calls, WhatsApp and SMS, in English, Sinhala (script or romanised
-"Singlish") or Tamil. Extract exactly what the sender says; never invent an address.
-- street: transliterate to the English street name used locally (රෝහල පාර / ஹாஸ்பிடல் ரோட் -> Hospital Road,
-  ටෙම්පල් පාර -> Temple Road, සිනමන් ගාඩන්ස් පටුමග -> Cinnamon Gardens Lane, මාර්කට් වීදිය -> Market Street).
+COMPLAINT_SYSTEM = """You triage messages sent during a storm to {hint}
+Messages arrive as transcribed phone calls, chat messages, SMS and web reports. Extract exactly what the
+sender says; never invent an address.
+- street: the street name as used locally, in English letters.
 - symptom: no_power (fully off), partial_power (dim lights, half power, low voltage), flicker,
   power_on (sender says their power is on), none (no supply information).
 - hazard: anything dangerous to the public: live_wire (sparking or energised wire), wire_down, pole_down,
@@ -65,7 +64,7 @@ CREW_SCHEMA = {
                  "crew_needs", "summary_en"],
 }
 
-CREW_SYSTEM = """You read field reports from electricity utility patrol crews in Galle, Sri Lanka.
+CREW_SYSTEM = """You read field reports from the field crews of {hint}
 Extract where the damage is, what it is, whether the line is still energised, whether the device the crew was
 sent to is actually healthy (device_ok), the house range left without supply, and which crews are needed.
 damage: service_wire is a low-voltage wire from the street to houses; blown_fuse is a transformer drop-out fuse.
@@ -84,8 +83,10 @@ class Extraction:
 
 class Extractor:
     def __init__(self, client: ModelClient, model: str | None = None, base: str | None = None,
-                 label: str = "Muse Spark") -> None:
+                 label: str = "Muse Spark", hint: str = "an electricity utility.") -> None:
         self.client, self.model, self.base, self.label = client, model, base, label
+        self.complaint_system = COMPLAINT_SYSTEM.format(hint=hint)
+        self.crew_system = CREW_SYSTEM.format(hint=hint)
         self.last_error: str | None = None
         self.enabled = True  # False skips the model entirely (e.g. local server not running)
 
@@ -101,7 +102,7 @@ class Extractor:
             return None
 
     def complaint(self, text: str, truth: dict, language: str) -> Extraction:
-        out = self._call(COMPLAINT_SYSTEM, text, COMPLAINT_SCHEMA, "Complaint")
+        out = self._call(self.complaint_system, text, COMPLAINT_SCHEMA, "Complaint")
         if out is not None:
             return Extraction(out, self.label)
         if not truth:
@@ -120,7 +121,7 @@ class Extractor:
         }, "mock (ground truth)", mock=True)
 
     def crew_note(self, text: str, truth: dict) -> Extraction:
-        out = self._call(CREW_SYSTEM, text, CREW_SCHEMA, "CrewReport")
+        out = self._call(self.crew_system, text, CREW_SCHEMA, "CrewReport")
         if out is not None:
             return Extraction(out, self.label)
         needs = {"pole_down": ["line", "bucket_truck"], "tree_on_line": ["vegetation", "line"],

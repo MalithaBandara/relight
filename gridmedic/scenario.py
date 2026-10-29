@@ -17,8 +17,7 @@ import json
 import time
 
 from .config import SCENARIO_DIR
-from .customers import CustomerDB
-from .grid import get_feeder
+from . import packs
 from .network import NetworkState, live_transformers
 
 PROBE_REPLY_DELAY_S = 45
@@ -26,17 +25,6 @@ FOLLOWUP_DELAYS_S = (120, 210, 330)
 TIMELAPSE_SPEED = 240  # after the last scripted event, crews work through the night quickly
 MAX_CLOCK_S = 10 * 3600
 
-REPLY = {
-    True: {"en": "Yes, our power is on.", "si": "ඔව්, අපේ ගෙදර විදුලිය තියෙනවා.",
-           "ta": "ஆம், எங்கள் வீட்டில் மின்சாரம் உள்ளது."},
-    False: {"en": "No, we have no power here either.", "si": "නැහැ, අපිටත් විදුලිය නැහැ.",
-            "ta": "இல்லை, எங்களுக்கும் மின்சாரம் இல்லை."},
-}
-FOLLOWUP = {
-    "en": "The neighbours have power again but our house is still dark. {street} {house}.",
-    "si": "අසල්වැසියන්ට විදුලිය ආවා, අපිට තවම නැහැ. {street} {house}.",
-    "ta": "பக்கத்து வீடுகளுக்கு மின்சாரம் வந்துவிட்டது, எங்களுக்கு இன்னும் இல்லை. {street} {house}.",
-}
 SITE_REPORT = {
     "pole_down": "On site at {street} near number {house}. Concrete pole snapped, conductors down across the road. "
                  "Starting pole replacement.",
@@ -60,7 +48,8 @@ CONTRADICT = {
 def load(name: str = "galle_storm") -> dict:
     """Load a scenario and resolve each sender's phone and account from the customer database."""
     sc = json.loads((SCENARIO_DIR / f"{name}.json").read_text(encoding="utf-8"))
-    db = CustomerDB()
+    sc.setdefault("id", name)
+    _, db = packs.network(sc)
     for e in sc["events"]:
         if e["type"] != "complaint":
             continue
@@ -83,8 +72,7 @@ class World:
     """Physical truth of the storm: faults, device states, who actually has power."""
 
     def __init__(self, sc: dict) -> None:
-        self.feeder = get_feeder()
-        self.db = CustomerDB()
+        self.feeder, self.db = packs.network(sc)
         self.faults = {f["id"]: dict(f) for f in sc["faults"]}
         self.state = NetworkState(open=set(self.feeder.normally_open))
         for f in self.faults.values():
@@ -97,6 +85,8 @@ class World:
                                               if lo <= c.house_no <= hi}
             elif "transformer" in f:
                 self.state.dead_transformers.add(f["transformer"])
+            if f.get("open_device"):
+                self.state.open.add(f["open_device"])  # a fuse that blew (reclosers open by SCADA event)
 
     def live(self) -> set[str]:
         return live_transformers(self.feeder, self.state)
@@ -118,6 +108,15 @@ class World:
         hit = [f for f in live if f.get("section") in zone]
         if hit:
             return hit[0]
+        # A patrol walks the whole stretch below the suspected device or line section.
+        cand = inc.get("cand", "")
+        dev = self.feeder.devices.get(cand)
+        start = dev.section if dev and dev.kind != "xfmr_fuse" else cand[5:] if cand.startswith("LINE-") else None
+        if start in self.feeder.sections:
+            below = set(self.feeder.sections_below(start))
+            hit = [f for f in live if f.get("section") in below]
+            if hit:
+                return hit[0]
         out = set(inc.get("out", []))
         hit = [f for f in live if f.get("transformer") in out and not f.get("hidden")]
         return hit[0] if hit else None
@@ -150,6 +149,7 @@ class World:
         f = self.faults[fault_id]
         f["repaired"] = True
         self.state.faulted.discard(f.get("section"))
+        self.state.open.discard(f.get("open_device"))
         if f["kind"] == "service_wire":
             lo, hi = f["houses"]
             self.state.dead_customers -= {c.account_no for c in self.db.customers_on(f["transformer"])
@@ -168,6 +168,8 @@ class Replayer:
     def __init__(self, scenario: dict, handle) -> None:
         self.sc = scenario
         self.handle = handle
+        self.loc = packs.locale(scenario)
+        self.langs = packs.pack(scenario)["languages"]
         self.speed = 10.0
         self.task: asyncio.Task | None = None
         self.reset()
@@ -192,7 +194,7 @@ class Replayer:
         on = self.world.has_power(c.account_no, c.transformer_id) if c else True
         lang = probe["language"]
         self.push({"t": probe["t"] + PROBE_REPLY_DELAY_S, "type": "complaint", "id": f"{probe['id']}-reply",
-                   "channel": "whatsapp", "language": lang, "from": probe["to"], "text": REPLY[on][lang],
+                   "channel": "whatsapp", "language": lang, "from": probe["to"], "text": self.loc["reply"][on][lang],
                    "probe_reply": probe["id"],
                    "truth": {"street": probe["street"], "house_no": probe["house_no"],
                              "symptom": "power_on" if on else "no_power", "hazard": "none"}})
@@ -225,11 +227,11 @@ class Replayer:
             by_xf.setdefault(c.transformer_id, []).append(c)
         for xf, cs in by_xf.items():
             for i, c in enumerate(cs[:: max(len(cs) // 3, 1)][:3]):
-                lang = ("en", "si", "ta")[i % 3]
+                lang = self.langs[i % len(self.langs)]
                 self.push({"t": t + FOLLOWUP_DELAYS_S[i], "type": "complaint", "id": f"C{100 + next(self._ids)}",
                            "channel": ("call", "whatsapp", "sms")[i % 3], "language": lang, "from": c.phone,
                            "followup": True,
-                           "text": FOLLOWUP[lang].format(street=c.street, house=c.house_no),
+                           "text": self.loc["followup"][lang].format(street=c.street, house=c.house_no),
                            "truth": {"street": c.street, "house_no": c.house_no, "symptom": "no_power",
                                      "hazard": "none"}})
 

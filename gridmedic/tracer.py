@@ -29,6 +29,8 @@ from dataclasses import dataclass, field
 from .grid import Feeder, haversine_m
 
 EPS = 0.003  # chance a customer with power reports an outage anyway
+METER_Q = 0.85  # chance a meter that loses power gets its last gasp through
+METER_EPS = 0.001  # false last gasps
 HOUSEHOLDS_PER_SIGNAL = 5
 ACCEPT_NATS = 1.0
 PRIORS = {"breaker": 0.004, "recloser": 0.02, "fuse": 0.02, "xfmr_fuse": 0.012, "line": 0.003}
@@ -67,6 +69,9 @@ class Evidence:
     scada_open: set[str] = field(default_factory=set)
     damage: list[Damage] = field(default_factory=list)
     report_ids: dict[str, list[str]] = field(default_factory=dict)  # transformer -> complaint ids
+    meters: dict[str, set[str]] = field(default_factory=dict)  # transformer -> meters that sent a last gasp
+    meter_counts: dict[str, int] = field(default_factory=dict)  # transformer -> smart meters installed
+    ami_ok: bool = True  # while the meter network works, a silent meter means power is on
 
 
 @dataclass
@@ -115,6 +120,21 @@ class Tracer:
             cid = f"LINE-{sid}"
             self.candidates[cid] = Candidate(cid, "line", f"Broken conductor on {sec.street} ({sid})", sid, out,
                                              frozenset({sid}), False, lat, lon)
+        # Candidates that would darken exactly the same customers are indistinguishable from complaints:
+        # keep one (a protective device before a bare line, the most downstream line otherwise) and let the
+        # crew on site say which it really is.
+        best: dict[frozenset[str], Candidate] = {}
+        rank = {"xfmr_fuse": 0, "fuse": 1, "recloser": 2, "breaker": 3, "line": 4}
+        for c in self.candidates.values():
+            cur = best.get(c.out)
+            if cur is None or (rank[c.kind], -len(feeder.sections_below(c.section))) < \
+                    (rank[cur.kind], -len(feeder.sections_below(cur.section))):
+                best[c.out] = c
+        for c in list(self.candidates.values()):
+            if best[c.out] is not c and c.kind == "line":
+                kept = best[c.out]
+                kept.zone = kept.zone | c.zone  # damage seen on the merged line still counts
+                del self.candidates[c.id]
 
     def _zone(self, section: str, protected: set[str]) -> list[str]:
         """Sections a device protects directly (stop at the next downstream device)."""
@@ -139,6 +159,11 @@ class Tracer:
             g = k * math.log(q / EPS) + silent * (math.log(1 - q) - math.log(1 - EPS))
             if t in ev.probes:
                 g += math.log(0.03 / 0.97) if ev.probes[t] else math.log(0.97 / 0.03)
+            if ev.meter_counts:
+                km, nm = len(ev.meters.get(t, ())), ev.meter_counts.get(t, 0)
+                g += km * math.log(METER_Q / METER_EPS)
+                if ev.ami_ok:  # meters that stayed silent are evidence of power, but only while they can talk
+                    g += max(nm - km, 0) * math.log((1 - METER_Q) / (1 - METER_EPS))
             gain[t] = g
         return gain
 
@@ -174,8 +199,9 @@ class Tracer:
         gain = self._per_transformer(ev, q)
         # Only candidates touching some evidence are worth trying.
         touched = set(ev.reports) | {d.section for d in ev.damage}
+        hot = set(ev.reports) | set(ev.meters)
         pool = [c for c in self.candidates.values()
-                if c.out & set(ev.reports) or c.id in ev.scada_open or c.zone & touched]
+                if c.out & hot or c.id in ev.scada_open or c.zone & touched]
         hyp: list[Candidate] = []
         base = self.score(hyp, ev, gain)
         # Greedy forward selection, with a backward pass after each addition so a broad
@@ -226,6 +252,9 @@ class Tracer:
         silent = [t for t in c.out if not ev.reports.get(t)]
         if n_rep:
             r.append(f"{n_rep} customers on {len(xf)} of its {len(c.out)} transformers report no power")
+        n_meter = sum(len(ev.meters.get(t, ())) for t in c.out)
+        if n_meter:
+            r.append(f"{n_meter} smart meters sent last-gasp messages")
         if c.id in ev.scada_open:
             r.append(f"SCADA: {c.id} locked out")
         if ev.partial and any(ev.partial.get(t) for t in c.out):

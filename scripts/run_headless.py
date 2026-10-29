@@ -1,6 +1,6 @@
 """Replay a scenario instantly (no UI), let the crews work it through, and print the outcome.
 
-Usage:  python scripts/run_headless.py [--timeline] [--no-switching]
+Usage:  python scripts/run_headless.py [scenario] [--timeline] [--no-switching]
 
 By default the operator approves every safe switching plan as soon as it is offered.
 """
@@ -12,19 +12,20 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from gridmedic.engine import Engine, clock_str  # noqa: E402
+from gridmedic.engine import Engine  # noqa: E402
 from gridmedic.scenario import MAX_CLOCK_S, Replayer, load  # noqa: E402
 
 STEP_S = 30
 
 
-async def main(show_timeline: bool, switching: bool) -> None:
-    sc = load()
+async def main(name: str, show_timeline: bool, switching: bool) -> None:
+    sc = load(name)
 
     async def quiet(_msg):
         pass
 
     engine = Engine(sc, quiet)
+    clock_str = engine.clock
     replayer = Replayer(sc, engine.handle)
     engine.sim = replayer
     clock = 0.0
@@ -75,4 +76,5 @@ async def main(show_timeline: bool, switching: bool) -> None:
 
 
 if __name__ == "__main__":
-    asyncio.run(main("--timeline" in sys.argv, "--no-switching" not in sys.argv))
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    asyncio.run(main(args[0] if args else "galle_storm", "--timeline" in sys.argv, "--no-switching" not in sys.argv))

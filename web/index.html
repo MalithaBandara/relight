@@ -15,6 +15,7 @@
       <span class="logo">⚡</span>
       <div>
         <h1>GridMedic</h1>
+        <select id="scenario" title="Scenario"></select>
         <p id="scenario-title">Outage triage from customer complaints</p>
       </div>
     </div>
@@ -46,9 +47,10 @@
     <div class="stat"><span class="v" id="s-messages">0</span><span class="k">messages</span></div>
     <div class="stat"><span class="v" id="s-dupes">0</span><span class="k">duplicates merged</span></div>
     <div class="stat"><span class="v" id="s-junk">0</span><span class="k">junk filtered</span></div>
-    <div class="stat"><span class="v" id="s-bd">0</span><span class="k">BD SMS (no AI)</span></div>
+    <div class="stat"><span class="v" id="s-bd">0</span><span class="k" id="s-bd-label">SMS codes (no AI)</span></div>
     <div class="stat"><span class="v" id="s-langs">–</span><span class="k">languages</span></div>
     <div class="stat bad"><span class="v" id="s-out">0</span><span class="k">customers without power</span></div>
+    <div class="stat" id="s-ami-box" hidden><span class="v" id="s-ami">–</span><span class="k">smart-meter network</span></div>
     <div class="stat good"><span class="v" id="s-located">0 / 6</span><span class="k">real faults diagnosed</span></div>
     <div class="stat good"><span class="v" id="s-hazard">–</span><span class="k">live wire made safe</span></div>
     <div class="stat"><span class="v" id="s-notified">0</span><span class="k">customers sent restoration time</span></div>

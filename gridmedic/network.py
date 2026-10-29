@@ -17,7 +17,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from .grid import FEEDER2_BUS, Feeder
+from .grid import Feeder
 
 REMOTE_KINDS = {"breaker", "recloser", "switch", "tie"}
 
@@ -47,40 +47,49 @@ def _heads(feeder: Feeder) -> dict[str, list[str]]:
     return heads
 
 
+def _graph(feeder: Feeder) -> dict[tuple[str, str], list[tuple[tuple[str, str], tuple[str, ...]]]]:
+    """Bus/section adjacency, built once per feeder: node -> [(neighbour, devices that must be closed)]."""
+    if "_graph" in feeder.__dict__:
+        return feeder.__dict__["_graph"]
+    heads = _heads(feeder)
+    adj: dict = {}
+
+    def link(a, b, devs=()):
+        adj.setdefault(a, []).append((b, tuple(devs)))
+        adj.setdefault(b, []).append((a, tuple(devs)))
+
+    for sid, sec in feeder.sections.items():
+        link(("bus", sec.from_bus), ("sec", sid), heads.get(sid, []))
+        link(("sec", sid), ("bus", sec.to_bus))
+    for s in feeder.switches.values():
+        if s.kind == "tie":
+            link(("bus", s.section), ("bus", feeder.feeder2_bus), [s.id])
+    feeder.__dict__["_graph"] = adj
+    return adj
+
+
 def live_sections(feeder: Feeder, st: NetworkState, ignore_faults: bool = False) -> set[str]:
     """Sections whose body is energised. With ignore_faults, faulted bodies conduct (used to ask
     'would this switching energise the fault?')."""
-    heads = feeder.__dict__.setdefault("_heads", _heads(feeder))
-    adj: dict[str, list[tuple[str, str | None]]] = {}  # node -> [(neighbour, device ids that must be closed)]
-
-    def link(a: str, b: str, devs: list[str] | None = None) -> None:
-        adj.setdefault(a, []).append((b, devs))
-        adj.setdefault(b, []).append((a, devs))
-
-    for sid, sec in feeder.sections.items():
-        link(f"bus:{sec.from_bus}", f"sec:{sid}", heads.get(sid, []))
-        link(f"sec:{sid}", f"bus:{sec.to_bus}", [])
-    for s in feeder.switches.values():
-        if s.kind == "tie":
-            link(f"bus:{s.section}", f"bus:{FEEDER2_BUS}", [s.id])
-
-    seen = {"bus:800", f"bus:{FEEDER2_BUS}"}
+    adj = _graph(feeder)
+    blocked = set() if ignore_faults else st.faulted
+    seen = {("bus", feeder.root)} | ({("bus", feeder.feeder2_bus)} if feeder.feeder2_bus else set())
     stack = list(seen)
     while stack:
         node = stack.pop()
-        for nxt, devs in adj.get(node, []):
-            if nxt in seen or any(d in st.open for d in devs or []):
+        for nxt, devs in adj.get(node, ()):
+            if nxt in seen or (devs and not st.open.isdisjoint(devs)):
                 continue
-            if nxt.startswith("sec:") and nxt[4:] in st.faulted and not ignore_faults:
+            if nxt[0] == "sec" and nxt[1] in blocked:
                 continue
             seen.add(nxt)
             stack.append(nxt)
-    return {n[4:] for n in seen if n.startswith("sec:")}
+    return {n[1] for n in seen if n[0] == "sec"}
 
 
 def live_transformers(feeder: Feeder, st: NetworkState) -> set[str]:
     live = live_sections(feeder, st)
-    return {t for t, x in feeder.transformers.items() if x.section in live and t not in st.dead_transformers}
+    return {t for s in live for t in feeder.transformers_on(s) if t not in st.dead_transformers}
 
 
 @dataclass

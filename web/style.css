@@ -55,6 +55,9 @@ header {
 .stat.good .v { color: var(--ok); }
 .stat.bad .v { color: var(--danger); }
 #timelapse { color: var(--accent); font-size: 12px; }
+#scenario { background: var(--panel-2); color: var(--text); border: 1px solid var(--line); border-radius: 6px; padding: 2px 6px; font: 600 12px var(--font); margin: 2px 0; }
+.stat.down .v { color: var(--danger); }
+.stat[hidden] { display: none; }
 .btn-link { color: var(--text); text-decoration: none; background: var(--panel-2); border: 1px solid var(--line); border-radius: 6px; padding: 6px 12px; }
 .chip.status { text-transform: uppercase; font-size: 10px; letter-spacing: .5px; }
 .chip.status.restored { border-color: var(--ok); color: var(--ok); }

@@ -16,7 +16,7 @@ const MODEL_CLASS = (m) => {
 };
 const badge = (m) => `<span class="badge ${MODEL_CLASS(m)}">${esc(m)}</span>`;
 const CHANNEL = { call: "📞", whatsapp: "💬", sms: "✉️", crew: "👷", web: "📱" };
-const START_MIN = 15 * 60;
+let START_MIN = 15 * 60;
 const clockOf = (t) => { const m = Math.floor(START_MIN + t / 60); return `${String(Math.floor(m / 60) % 24).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`; };
 
 const map = L.map("map", { zoomControl: true });
@@ -48,7 +48,11 @@ const crewMarkers = {};
 
 async function loadGrid() {
   grid = await (await fetch("/api/grid")).json();
-  $("#scenario-title").textContent = grid.title;
+  START_MIN = grid.start_hour * 60;
+  $("#scenario-title").textContent = `${grid.title} · ${grid.network === "osm" ? "feeder built on real OpenStreetMap roads" : "IEEE 34-bus test feeder"}`;
+  const list = await (await fetch("/api/scenarios")).json();
+  const FLAG = { "Sri Lanka": "🇱🇰", "United States": "🇺🇸", "India": "🇮🇳" };
+  $("#scenario").innerHTML = list.scenarios.map((s) => `<option value="${s.id}" ${s.id === list.current ? "selected" : ""}>${FLAG[s.country] || ""} ${esc(s.title)}${s.smart_meters ? " · smart meters" : ""}</option>`).join("");
   const bounds = [];
   for (const f of grid.geojson.features) {
     const p = f.properties;
@@ -87,7 +91,7 @@ async function loadGrid() {
       .addTo(layers.lines);
   }
   L.marker(grid.substation, { icon: L.divIcon({ className: "", html: `<div style="font-size:20px">🏭</div>`, iconSize: [20, 20] }) })
-    .bindTooltip("Wakwella substation (bus 800)", { className: "gm" }).addTo(layers.devices);
+    .bindTooltip(grid.substation_label, { className: "gm" }).addTo(layers.devices);
   map.fitBounds(bounds, { padding: [30, 30] });
   addLegend();
 }
@@ -96,7 +100,7 @@ function addLegend() {
   const legend = L.control({ position: "bottomleft" });
   legend.onAdd = () => {
     const d = L.DomUtil.create("div", "legend");
-    d.innerHTML = `<b>IEEE 34-bus feeder over Galle</b> · fictional data<br>
+    d.innerHTML = `<b>${grid.network === "osm" ? "Feeder on real OpenStreetMap roads" : "IEEE 34-bus test feeder over Galle"}</b> · fictional customers<br>
       <i style="background:#3ddc97"></i>transformer energised<br>
       <i style="background:#ff4d4f"></i>transformer out (GridMedic's belief)<br>
       <i style="background:#ffb020"></i>incident (ring = confidence)<br>
@@ -115,7 +119,13 @@ function renderStats(s) {
   $("#s-dupes").textContent = c.duplicates;
   $("#s-junk").textContent = c.junk;
   $("#s-bd").textContent = c.bd_sms;
-  $("#s-out").textContent = c.customers_out;
+  $("#s-out").textContent = c.customers_out.toLocaleString();
+  const amiBox = $("#s-ami-box");
+  amiBox.hidden = c.ami === null || c.ami === undefined;
+  if (!amiBox.hidden) {
+    $("#s-ami").textContent = c.ami ? `OK · ${c.meter_msgs} last gasps` : `DOWN · ${c.meter_msgs} received`;
+    amiBox.classList.toggle("down", !c.ami);
+  }
   $("#s-langs").textContent = Object.keys(c.languages).map((l) => l.toUpperCase()).join(" · ") || "–";
   const found = s.truth.filter((t) => t.found).length;
   $("#s-located").textContent = `${found} / ${s.truth.length}`;
@@ -377,6 +387,7 @@ function connect() {
         if (msg.crews) renderCrews(msg.crews);
         break;
       case "reset": resetUI(); fetch("/api/state").then((r) => r.json()).then(applyState); break;
+      case "scenario": location.reload(); break;
     }
   };
   ws.onclose = () => setTimeout(connect, 1000);
@@ -408,6 +419,9 @@ $("#dlg-run").onclick = async () => {
     ${s.missing.length ? `<div class="k">Missed: ${s.missing.map(esc).join(", ")}</div>` : ""}
     ${s.extra.length ? `<div class="k">Not on the feeder: ${s.extra.map(esc).join(", ")}</div>` : ""}`;
 };
+$("#scenario").onchange = () => fetch("/api/scenario", {
+  method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: $("#scenario").value }),
+});
 $("#btn-net").onclick = () => control($("#btn-net").dataset.offline ? "online" : "offline");
 
 loadGrid().then(connect);
