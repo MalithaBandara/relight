@@ -85,6 +85,8 @@ class Engine:
         self.elapsed = 0.0
         self._last_trace = -1e9
         self._dirty = False
+        self.cmi = 0.0
+        self._out_now = 0
         self._quiet: Counter = Counter()
         self.offline = False
         self.queued: list[dict] = []
@@ -222,6 +224,11 @@ class Engine:
             inc["out"] = sorted(alone - live)
             inc["customers_out"] = sum(self.customers.get(t, 0) for t in inc["out"]) + len(inc["dead_customers"])
             inc["critical"] = [x for t in inc["out"] for x in self.critical.get(t, [])]
+        self._out_now = sum(i["customers_out"] for i in self._active())
+
+    def _tick_cmi(self, t: float) -> None:
+        """Customer minutes interrupted (as GridMedic sees the outage), the utility's standard measure."""
+        self.cmi += self._out_now * max(t - self.elapsed, 0) / 60
 
     def work_zones(self) -> dict[str, str]:
         zones = {}
@@ -789,6 +796,7 @@ class Engine:
         changed = False
         while (tr := self._next_transition(until)) is not None:
             t, what, inc, step = tr
+            self._tick_cmi(t)
             self.elapsed = max(self.elapsed, t)
             crew = self.crews[step["crew"]]
             if what == "arrive":
@@ -830,6 +838,7 @@ class Engine:
             self._refresh_outages()
             self._score_and_plan()
             await self._dispatch()
+        self._tick_cmi(until)
         self.elapsed = max(self.elapsed, until)
         if self._dirty and self.elapsed - self._last_trace >= self.pack.get("retrace_s", 0):
             await self.recompute()
@@ -1087,6 +1096,12 @@ class Engine:
                 "customers_out": sum(self.customers.get(t, 0) for t in dead)
                 + sum(len(i["dead_customers"]) for i in self._active()),
                 "incidents_open": len(self._active()),
+                "cmi": round(self.cmi),
+                "served": sum(self.customers.values()),
+                "critical_out": sum(len(i["critical"]) for i in self._active()),
+                "calls": sum(m["channel"] not in ("crew",) and not m.get("probe_reply") for m in self.messages),
+                "crews": dict(Counter(c["status"] for c in self.crews.values())),
+                "hazards_open": sum(not h["safe"] for h in self.hazards),
                 "incidents_restored": len(self.incidents) - len(self._active()),
             },
         }
