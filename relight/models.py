@@ -153,6 +153,55 @@ class ModelClient:
         resp = self._cached("sam", key, call)
         return parse_sam_records(_response_text(resp)) if resp else None
 
+    def segment_video(self, video_path: Path, prompt: str) -> list[dict] | None:
+        """Text-prompted tracking through a clip. Records carry `frame` and the object `id` that persists across
+        frames. The `input_video` part mirrors `input_image`; its exact field name is unverified against the API.
+        """
+        data = Path(video_path).read_bytes()
+        mime = mimetypes.guess_type(str(video_path))[0] or "video/mp4"
+        key = {"prompt": prompt, "video_sha": hashlib.sha256(data).hexdigest()}
+
+        def call():
+            body = {
+                "model": config.SAM_MODEL,
+                "input": [{"role": "user", "content": [
+                    {"type": "input_text", "text": prompt},
+                    {"type": "input_video", "video_url": f"data:{mime};base64,{base64.b64encode(data).decode()}"},
+                ]}],
+                "metadata": {"include_confidence": "true"},
+            }
+            r = httpx.post(f"{self.base}/responses", json=body, headers=self.headers, timeout=TIMEOUT)
+            r.raise_for_status()
+            return r.json()
+
+        resp = self._cached("sam-video", key, call)
+        return parse_sam_records(_response_text(resp)) if resp else None
+
+    def spark_video_json(self, system: str, text: str, video_path: Path, schema: dict, name: str) -> dict | None:
+        """Spark watches a clip and answers in JSON. The `video_url` content part follows the OpenAI-compatible
+        image convention; unverified against the live API.
+        """
+        data = Path(video_path).read_bytes()
+        mime = mimetypes.guess_type(str(video_path))[0] or "video/mp4"
+        key = {"model": config.SPARK_MODEL, "system": system, "text": text, "schema": schema,
+               "video_sha": hashlib.sha256(data).hexdigest()}
+
+        def call():
+            body = {
+                "model": config.SPARK_MODEL,
+                "messages": [{"role": "system", "content": system}, {"role": "user", "content": [
+                    {"type": "text", "text": text},
+                    {"type": "video_url", "video_url": {"url": f"data:{mime};base64,{base64.b64encode(data).decode()}"}},
+                ]}],
+                "response_format": {"type": "json_schema", "json_schema": {"name": name, "schema": schema}},
+            }
+            r = httpx.post(f"{self.base}/chat/completions", json=body, headers=self.headers, timeout=TIMEOUT)
+            r.raise_for_status()
+            return r.json()
+
+        resp = self._cached("spark-video", key, call)
+        return json.loads(_strip_fences(resp["choices"][0]["message"]["content"])) if resp else None
+
 
 def _strip_fences(s: str) -> str:
     s = s.strip()

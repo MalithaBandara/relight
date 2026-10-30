@@ -2,6 +2,7 @@
  "note": "Voiced phone calls for galle_storm. Each entry turns the scenario complaint (C..) or crew report (N..) with that id into a call; crew reports keep their text unless `spoken` is given: `spoken` is what the caller says first (synthetic voice, fictional caller), `withheld` lists facts they only give when the agent asks, `voice`/`rate` pick the edge-tts voice. Audio: scripts/make_calls.py -> media/audio/calls/galle_storm/<id>.wav. Non-English lines need a native-speaker check.",
  "crews": {"CREW-L1": {"language": "en"}, "CREW-L2": {"language": "en"}, "CREW-V1": {"language": "si"},
            "CREW-T1": {"language": "si"}, "CREW-T2": {"language": "ta"}},
+ "videos": {"C24": {"file": "media/videos/tree_on_live_line.mp4", "damage": "tree_on_line"}},
  "calls": {
   "C01": {"voice": "en-IN-PrabhatNeural", "rate": "+4%", "withheld": ["street", "house_no", "account_no"],
           "spoken": "Hello? Hello, yes. The current is gone at my house. The whole road is dark, all the houses. Can you please check?"},

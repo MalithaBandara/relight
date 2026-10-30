@@ -34,6 +34,19 @@ and crews. Say what is damaged, how severe it is, whether it endangers the publi
 should be outlined to measure the damage (use short concrete noun phrases)."""
 
 
+VIDEO_SCHEMA = {
+    "type": "object",
+    "properties": {
+        **PHOTO_SCHEMA["properties"],
+        "at_seconds": {"type": "number", "description": "Time in the clip where the damage is clearest"},
+    },
+    "required": PHOTO_SCHEMA["required"] + ["at_seconds"],
+}
+VIDEO_SYSTEM = """You assess storm damage to electricity distribution lines from short videos sent by customers,
+crews and drone patrols. Say what is damaged, how severe it is, whether it endangers the public, when in the clip
+the damage is clearest, and which objects should be tracked through the clip (use short concrete noun phrases)."""
+
+
 def _clearance_m(records: dict[str, list[dict]]) -> float | None:
     poles = [r for r in records.get("utility pole", []) if r.get("box")]
     wires = [r for r in records.get("power line", []) if r.get("box")]
@@ -82,4 +95,38 @@ def analyse_photo(client: ModelClient, rel_path: str, truth_damage: str | None) 
     return {**{k: v for k, v in info.items() if k != "segment_prompts"}, "clearance_m": clearance,
             "objects": {p: [{"box": r["box"], "conf": r.get("conf")} for r in recs] for p, recs in records.items()},
             "image_size": next(((r["w"], r["h"]) for recs in records.values() for r in recs), None),
+            "models": models, "mock": models[0].startswith("mock"), "has_image": True}
+
+
+def analyse_video(client: ModelClient, rel_path: str, truth_damage: str | None, source: str = "customer") -> dict:
+    """A customer's or drone patrol's clip: Spark watches it and names the damage; SAM 3.1 tracks every pole and
+    wire through it, so code can say how many it followed. Same shape as analyse_photo plus `tracked`."""
+    path = config.ROOT / rel_path
+    mock = {"damage": truth_damage or "other", "severity": "high", "public_hazard": truth_damage == "live_wire",
+            "clearance_m": None, "objects": {}, "tracked": {}, "at_seconds": None, "kind": "video", "source": source}
+    if not path.exists():
+        return {**mock, "description": f"(video not added yet: {Path(rel_path).name})",
+                "models": ["mock (ground truth)"], "mock": True, "has_image": False}
+    who = "a drone patrolling the line" if source == "drone" else "a customer"
+    info = client.spark_video_json(VIDEO_SYSTEM, f"Assess the damage in this clip, filmed by {who}.", path,
+                                   VIDEO_SCHEMA, "DamageVideo")
+    models = ["Muse Spark"]
+    if info is None:
+        info = {k: v for k, v in mock.items() if k in VIDEO_SCHEMA["properties"]}
+        info.update(description="(mock) not analysed yet: Muse Spark and SAM 3.1 run once the API key is set",
+                    segment_prompts=[])
+        models = ["mock (ground truth)"]
+    prompts = list(dict.fromkeys(["utility pole", "power line"] + info.get("segment_prompts", [])))[:4]
+    tracked = {}
+    for p in prompts:
+        recs = client.segment_video(path, p)
+        if recs is None:
+            continue
+        ids = {r.get("id") for r in recs if r.get("id") is not None}
+        frames = {r["frame"] for r in recs if r.get("frame") is not None}
+        tracked[p] = {"objects": len(ids) or max((sum(r["frame"] == f for r in recs) for f in frames), default=0),
+                      "frames": len(frames)}
+    if tracked:
+        models.append("SAM 3.1")
+    return {**mock, **{k: v for k, v in info.items() if k != "segment_prompts"}, "tracked": tracked,
             "models": models, "mock": models[0].startswith("mock"), "has_image": True}

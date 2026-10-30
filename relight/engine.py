@@ -31,7 +31,7 @@ from .models import ModelClient
 from .network import NetworkState, live_transformers, restoration_plans
 from .planner import STEPS, Crew, Job, schedule, score
 from .tracer import Damage, Evidence, Tracer
-from .vision import analyse_photo
+from .vision import analyse_photo, analyse_video
 from . import voice
 
 LOCATED_AT = 0.8  # confidence at which a suspected fault becomes an incident
@@ -101,6 +101,7 @@ class Engine:
         self.scada_owner: dict[str, str] = {}  # locked-out device -> incident id
         self.probes: list[dict] = []
         self.notices: list[dict] = []
+        self.media: list[dict] = []  # analysed photos and videos, replayed to consoles that connect later
         self.incidents: list[dict] = []
         self.suspects: list[dict] = []
         self.located: list = []  # the tracer's latest result (the call agent asks about its open questions)
@@ -434,6 +435,7 @@ class Engine:
             loc = self._locate(f, e.get("from")) if not f["is_junk"] else None
         msg = {"id": e["id"], "t": e["t"], "channel": e["channel"], "language": f.get("language") or e.get("language"),
                "from": e.get("from"), "text": text, "fields": f, "model": ext.model, "photo": e.get("photo"),
+               "video": e.get("video"),
                "probe_reply": e.get("probe_reply"), "followup": e.get("followup"), "event": e}
         if call is not None:
             msg["call"] = call
@@ -476,28 +478,46 @@ class Engine:
             await self.log("Code", f"Hazard {h['id']}: {h['kind'].replace('_', ' ')} reported",
                            "public safety, ranked above every outage", e["id"])
         await self.broadcast({"type": "message", "message": _public(msg)})
-        if e.get("photo") and msg["status"] != "junk":
-            await self._photo(e["id"], e["photo"], loc, f["hazard"], 2.5, msg.get("incident"))
+        if msg["status"] != "junk":
+            # Mock mode labels the clip with the overlay's `media_damage`, else the message's own hazard.
+            truth = e.get("media_damage") or f["hazard"]
+            for field in ("photo", "video"):
+                if e.get(field):
+                    msg["media"] = await self._media(e["id"], e[field], loc or {}, truth, 2.5, msg.get("incident"),
+                                                     video=field == "video")
 
-    async def _photo(self, ref: str, path: str, loc: dict, truth_damage: str, strength: float,
-                     owner: str | None = None) -> None:
+    async def _media(self, ref: str, path: str, loc: dict, truth_damage: str, strength: float,
+                     owner: str | None = None, video: bool = False, source: str = "customer",
+                     caption: str | None = None) -> dict | None:
+        """A photo or clip from a customer, a crew or a drone patrol becomes located damage evidence."""
+        kind = "video" if video else "photo"
         try:
-            res = await asyncio.to_thread(analyse_photo, self.client, path, truth_damage)
+            res = (await asyncio.to_thread(analyse_video, self.client, path, truth_damage, source) if video
+                   else await asyncio.to_thread(analyse_photo, self.client, path, truth_damage))
         except Exception as err:  # noqa: BLE001
-            await self.log("Code", f"{ref}: photo analysis failed", str(err)[:160], ref)
-            return
+            await self.log("Code", f"{ref}: {kind} analysis failed", str(err)[:160], ref)
+            return None
         detail = res["description"]
         if res.get("clearance_m") is not None:
             detail += f" | wire clearance ~{res['clearance_m']} m"
-        await self.log(" + ".join(res["models"]), f"{ref}: photo shows {res['damage'].replace('_', ' ')}", detail, ref)
-        if d := self._damage(ref + "/photo", res["damage"], loc, strength):
+        if res.get("tracked"):
+            detail += " | tracked " + ", ".join(f"{v['objects']} × {p}" for p, v in res["tracked"].items())
+        what = "drone clip" if source == "drone" else kind
+        await self.log(" + ".join(res["models"]), f"{ref}: {what} shows {res['damage'].replace('_', ' ')}", detail, ref)
+        if d := self._damage(f"{ref}/{kind}", res["damage"], loc, strength):
             self.field_damage.append(d)
+            if owner is None and source == "drone":
+                owner = next((i["id"] for i in self._active() if d.section in i["zone"] or d.transformer in i["out"]),
+                             None)
             if owner:
                 self.damage_owner[id(d)] = owner
                 if inc := self._incident(owner):
                     inc["damage"].append(d)
-        await self.broadcast({"type": "photo", "ref": ref, "path": path, "analysis": res, "lat": loc.get("lat"),
-                              "lon": loc.get("lon")})
+        item = {"type": "drone" if source == "drone" else "photo", "ref": ref, "path": path, "analysis": res,
+                "lat": loc.get("lat"), "lon": loc.get("lon"), "caption": caption}
+        self.media.append(item)
+        await self.broadcast(item)
+        return res
 
     async def _crew_note(self, e: dict) -> None:
         """A crew reports by phone or radio; the agent reads back what it understood before anything changes."""
@@ -547,24 +567,15 @@ class Engine:
         self.messages.append(msg)
         self._apply(msg)
         await self.broadcast({"type": "message", "message": _public(msg)})
-        if e.get("photo"):
-            await self._photo(e["id"], e["photo"], loc, f["damage"], 3.0, msg.get("incident"))
+        for field in ("photo", "video"):
+            if e.get(field):
+                await self._media(e["id"], e[field], loc, f["damage"], 3.0, msg.get("incident"), video=field == "video")
 
     async def _drone(self, e: dict) -> None:
+        # Where the drone flew is known from its own GPS; the scenario gives that position as a street address.
         truth = e.get("truth", {})
-        loc = self._locate(truth, None)
-        exists = (config.ROOT / e["file"]).exists()
-        await self.log("SAM 3.1" if exists else "mock (ground truth)",
-                       f"{e['id']}: drone clip shows {truth.get('damage', 'damage').replace('_', ' ')}",
-                       e.get("caption", "") + ("" if exists else " (clip not added yet)"), e["id"])
-        if d := self._damage(e["id"], truth.get("damage", "other"), loc, 3.0):
-            self.field_damage.append(d)
-            owner = next((i for i in self._active() if d.section in i["zone"] or d.transformer in i["out"]), None)
-            if owner:
-                self.damage_owner[id(d)] = owner["id"]
-                owner["damage"].append(d)
-        await self.broadcast({"type": "drone", "ref": e["id"], "path": e["file"], "lat": loc.get("lat"),
-                              "lon": loc.get("lon"), "caption": e.get("caption")})
+        await self._media(e["id"], e["file"], self._locate(truth, None), truth.get("damage", "other"), 3.0,
+                          video=True, source="drone", caption=e.get("caption"))
 
     async def _site_findings(self, inc: dict, f: dict, loc: dict, e: dict) -> None:
         """A crew's report about an incident: confirm it, or change the diagnosis."""
@@ -1187,7 +1198,7 @@ class Engine:
         }
         if include_log:
             s["messages"] = [_public(m) for m in self.messages]
-            s["timeline"], s["notices"] = self.timeline, self.notices
+            s["timeline"], s["notices"], s["media"] = self.timeline, self.notices, self.media
         return s
 
 

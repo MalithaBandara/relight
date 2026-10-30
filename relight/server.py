@@ -6,6 +6,7 @@ Run with:  python -m uvicorn relight.server:app --reload
 from __future__ import annotations
 
 import asyncio
+import hashlib
 import json
 from pathlib import Path
 
@@ -140,6 +141,27 @@ class Report(BaseModel):
     text: str
     who: str = ""  # account number or phone
     language: str = "en"
+    media: str = ""  # path returned by /api/customer/upload
+
+
+UPLOAD_TYPES = {"image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp",
+                "video/mp4": ".mp4", "video/quicktime": ".mov", "video/webm": ".webm"}
+UPLOAD_MAX = 60 * 1024 * 1024
+
+
+@app.post("/api/customer/upload")
+async def customer_upload(file: UploadFile = File(...)):
+    """A photo or short video attached to a portal report; stored under media/uploads (git-ignored)."""
+    ext = UPLOAD_TYPES.get(file.content_type or "")
+    if ext is None:
+        return JSONResponse({"error": "Send a photo (JPG, PNG) or a video (MP4, MOV, WebM)."}, status_code=415)
+    data = await file.read(UPLOAD_MAX + 1)
+    if len(data) > UPLOAD_MAX:
+        return JSONResponse({"error": "That file is over 60 MB. Send a shorter video."}, status_code=413)
+    rel = f"media/uploads/{hashlib.sha256(data).hexdigest()[:16]}{ext}"
+    (config.ROOT / rel).parent.mkdir(parents=True, exist_ok=True)
+    (config.ROOT / rel).write_bytes(data)
+    return {"path": rel, "kind": "video" if ext in (".mp4", ".mov", ".webm") else "photo"}
 
 
 @app.post("/api/customer/report")
@@ -149,6 +171,9 @@ async def customer_report(r: Report):
     n = sum(m["channel"] == "web" for m in engine.messages) + 1
     e = {"t": max(replayer.clock, engine.elapsed), "type": "complaint", "id": f"W{n}", "channel": "web",
          "language": r.language, "from": c.phone if c else (r.who or None), "text": r.text, "truth": {}}
+    media = Path(r.media)
+    if len(media.parts) == 3 and media.parts[:2] == ("media", "uploads") and (config.ROOT / media).is_file():
+        e["video" if media.suffix in (".mp4", ".mov", ".webm") else "photo"] = media.as_posix()
     await handle(e)
     msg = next((m for m in reversed(engine.messages) if m["id"] == e["id"]), None)
     return {"message": {k: v for k, v in (msg or {}).items() if k != "event"},

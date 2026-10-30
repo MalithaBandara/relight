@@ -250,7 +250,8 @@ tr.fresh { animation: fresh 1.2s ease-out; }
 .legend .row { display: flex; align-items: center; gap: 6px; }
 .legend i.ln { display: inline-block; width: 18px; height: 0; border-top: 3px solid; }
 .legend i.sq { display: inline-block; width: 9px; height: 9px; transform: rotate(45deg); }
-.photo-pop img { max-width: 240px; border-radius: 4px; display: block; }
+.photo-pop img, .photo-pop video { width: 300px; max-width: 100%; border-radius: 4px; display: block; margin-bottom: 4px; background: #000; }
+.photo-pop video { max-height: 320px; }
 @keyframes blink { 50% { opacity: .45; } }
 
 /* ---------- paper-map dialog ---------- */

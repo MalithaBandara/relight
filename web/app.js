@@ -555,12 +555,23 @@ document.querySelectorAll("#layers input").forEach((cb) => cb.addEventListener("
   for (const l of [layers[cb.dataset.layer], ...extra]) cb.checked ? map.addLayer(l) : map.removeLayer(l);
 }));
 
+// Photos and videos from customers and crews, and drone patrol clips: a marker whose popup shows the media and
+// what the models made of it.
 function addPhoto(ph) {
   if (!ph.lat) return;
-  const a = ph.analysis;
-  const img = a.has_image ? `<img src="/${esc(ph.path)}" alt="Damage photo">` : "";
-  L.circleMarker([ph.lat, ph.lon], { radius: 5, color: "#3cc2a0", weight: 2, fillOpacity: 0 })
-    .bindPopup(`<div class="photo-pop">${img}<b>${esc(a.damage.replace("_", " "))}</b> · ${esc(a.severity)}<br>${esc(a.description)}${a.clearance_m != null ? `<br>Wire clearance ≈ ${a.clearance_m} m` : ""}<br>${a.models.map(badge).join(" ")}</div>`)
+  const a = ph.analysis, video = a.kind === "video", drone = a.source === "drone";
+  const media = !a.has_image ? "" : video
+    ? `<video src="/${esc(ph.path)}" controls muted playsinline preload="metadata"></video>`
+    : `<img src="/${esc(ph.path)}" alt="Damage photo">`;
+  const tracked = Object.entries(a.tracked || {}).map(([p, v]) => `${v.objects} × ${esc(p)}`).join(", ");
+  const head = drone ? `Drone patrol ${esc(ph.ref)}` : `${video ? "Video" : "Photo"} from ${esc(ph.ref)}`;
+  L.circleMarker([ph.lat, ph.lon], { radius: drone ? 7 : 5, color: drone ? "#4aa3df" : "#3cc2a0", weight: 2, fillOpacity: 0 })
+    .bindTooltip(head, { className: "gm" })
+    .bindPopup(`<div class="photo-pop">${media}<div class="sub">${head}${ph.caption ? ` · ${esc(ph.caption)}` : ""}</div>
+      <b>${esc(a.damage.replaceAll("_", " "))}</b> · ${esc(a.severity)}<br>${esc(a.description)}
+      ${a.clearance_m != null ? `<br>Wire clearance ≈ ${a.clearance_m} m` : ""}${tracked ? `<br>Tracked ${tracked}` : ""}
+      ${a.at_seconds != null && video ? `<br>Clearest at ${a.at_seconds} s` : ""}<br>${a.models.map(badge).join(" ")}</div>`,
+      { maxWidth: 340 })
     .addTo(layers.messages);
 }
 
@@ -604,13 +615,14 @@ function connect() {
         msg.state.messages.forEach(addMessage);
         (msg.state.notices || []).forEach((n) => addOutbound(n.kind === "restored" ? "Restored" : "ETR", n));
         msg.state.probes.forEach((p) => addOutbound("Question", { ...p, to: [] }));
+        (msg.state.media || []).forEach(addPhoto);
         applyState(msg.state);
         break;
       case "state": applyState(msg.state); break;
       case "timeline": addLog(msg.entry); break;
       case "message": addMessage(msg.message); break;
       case "probe": addOutbound("Question", { ...msg.probe, to: [] }); break;
-      case "photo": addPhoto(msg); break;
+      case "photo": case "drone": addPhoto(msg); break;
       case "call": {
         const m = agentCalls.get(msg.id) || s_messages.find((x) => x.id === msg.id);
         if (m) addAgentCall({ ...m, call: msg.call, incident: msg.incident || m.incident });

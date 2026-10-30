@@ -138,9 +138,12 @@ def _keyword_fields(text: str, language: str) -> dict:
     """Last-resort reading of an unlabelled message (mock mode, e.g. typed live into the portal)."""
     t = text.lower()
     hazard = "none"
-    for words, h in ((("spark", "chispa", "ගිනි", "தீப்பொறி", "चिंगारी"), "live_wire"),
+    # Tree words before pole words: "a branch on the pole" is vegetation; a fallen pole rarely mentions a tree.
+    for words, h in ((("spark", r"fire\b", "burning", "flame", "chispa", "fuego", "ගිනි", "தீப்பொறி", "தீ ",
+                       "चिंगारी", "आग"), "live_wire"),
+                     (("tree", "branch", "limb", "árbol", "arbol", "rama", "ගහ", "අත්ත", "மரம்", "மரக்கிளை", "पेड़",
+                       "डाल"), "tree_on_line"),
                      (("pole", "poste", "කණු", "கம்பம்", "खंभा"), "pole_down"),  # not கம்ப: கம்பி is a wire
-                     (("tree", "árbol", "arbol", "ගහ", "மரம்", "மரக்கிளை", "पेड़"), "tree_on_line"),
                      (("wire", "cable", "වයර", "கம்பி", "तार"), "wire_down")):
         if any(re.search(rf"\b{w}", t) if w.isascii() else w in t for w in words):
             hazard = h

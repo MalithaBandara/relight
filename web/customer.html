@@ -77,6 +77,23 @@
     .primary:not([aria-busy="true"]) .spinner { display: none; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    /* attach a photo or video */
+    .attach { display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 10px 12px; border: 1px dashed var(--line-2);
+      border-radius: 10px; color: var(--muted); font-size: 15px; cursor: pointer; transition: border-color .15s ease, background-color .15s ease; }
+    .attach:hover, .attach.drag { border-color: var(--lamp); background: var(--lamp-soft); color: var(--text); }
+    .attach:focus-within { outline: 2px solid var(--lamp); outline-offset: 2px; }
+    .attach input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+    .attach svg { width: 22px; height: 22px; flex: none; }
+    .attach.has-file { border-style: solid; color: var(--text); }
+    .attach .thumb { width: 64px; height: 48px; flex: none; border-radius: 6px; object-fit: cover; background: #000; }
+    .attach .name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .attach .remove { background: none; border: 1px solid var(--line-2); border-radius: 8px; padding: 4px 10px; font-size: 14px; cursor: pointer; }
+    .attach .remove:hover { border-color: var(--cut); color: var(--cut); }
+    .attach.has-file .add { display: none; }
+    .seen { display: grid; grid-template-columns: 96px 1fr; gap: 12px; align-items: start; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+    .seen img, .seen video { width: 96px; border-radius: 8px; background: #000; }
+    .seen b { display: block; }
+    .seen small { display: block; color: var(--muted); font-size: 14px; margin-top: 2px; }
     .hint { margin: 0; font-size: 14px; color: var(--muted); }
     .error { margin: 0; font-size: 14px; color: var(--cut); }
     .error:empty { display: none; }
@@ -178,6 +195,11 @@
       <label class="field">What happened?
         <textarea id="text" placeholder="For example: no power since the storm, a wire is down near the shop"></textarea>
       </label>
+      <label class="attach" id="attach">
+        <input type="file" id="file" accept="image/*,video/*">
+        <span class="add" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></span>
+        <span class="name" id="file-name">Add a photo or video of the damage (optional). Take it from a safe distance.</span>
+      </label>
       <div class="samples" id="report-samples" hidden>
         <span>Try a sample message</span>
         <div class="chips"></div>
@@ -237,6 +259,9 @@ const SAMPLES = {
       ["සිංහල: wire on the road", "si", "3622151132", "කණුව ළඟ වයරයක් බිම වැටිලා ගිනි පුපුරු එනවා, Market Street 25"],
       ["தமிழ்: no power", "ta", "7929510258", "லேக் ரோட் 9, மின்சாரம் இல்லை. மரக்கிளை கம்பியில் விழுந்தது."],
       ["English: no power", "en", "4466799600", "No power at 20 Hospital Road since the storm, is anyone coming?"],
+      ["English: tree on fire (video)", "en", "1113536496",
+        "A branch is burning on the power line near the temple, Temple Road 61. I sent a video.",
+        "/media/videos/tree_on_live_line.mp4"],
     ],
     check: [["Hospital Road 20", "4466799600"], ["Pumping Station Road 30", "0086457035"], ["Lake Road 9", "7929510258"],
       ["Hospital Road 100", "6679981034"]],
@@ -246,6 +271,9 @@ const SAMPLES = {
       ["Español: sparking wire", "es", "2119849850", "Hay un cable caído en la calle echando chispas frente al 1188 de Ronson Road."],
       ["Español: no power", "es", "8743137715", "Se fue la luz en el 1220 de Burkhart Road, toda la cuadra está oscura."],
       ["English: no power", "en", "8974935681", "No power at 1156 Voss Road since the hurricane. Is anyone coming?"],
+      ["English: limb on pole (video)", "en", "7130471034",
+        "A big limb is hanging on top of the pole outside 1432 Westview Drive. Video attached.",
+        "/media/videos/limb_on_pole.mp4"],
     ],
     check: [["Westview Drive 1436", "4906871794"], ["Ronson Road 1180", "5679186380"], ["Winningham Lane 1324", "1627393646"],
       ["Westview Drive 1044", "2232548699"]],
@@ -255,6 +283,9 @@ const SAMPLES = {
       ["தமிழ்: sparking wire", "ta", "8863767701", "Kannadasan street 18 அருகில் மின் கம்பி அறுந்து தீப்பொறி வருகிறது."],
       ["हिन्दी: no power", "hi", "4898754633", "VGP avenue 22 में कल रात से बिजली नहीं है।"],
       ["English: no current", "en", "9844385397", "No current at RajaLaxmi Nagar 1st main Road 9 since morning, any update?"],
+      ["தமிழ்: tree on fire (video)", "ta", "0546884417",
+        "Velachery Bypass Road 135 அருகில் மரத்தில் தீ பிடித்து மின் கம்பியில் பொறி வருகிறது. வீடியோ அனுப்பியுள்ளேன்.",
+        "/media/videos/indonesia_tree_explosion.mp4"],
     ],
     check: [["Hospital, Velachery Upper Flyover", "9000000032"], ["Brahmin Street 58", "9740072196"],
       ["A.G.S. Colony 2nd St, door 31", "3645110812"], ["VGP avenue 6", "3322360755"]],
@@ -268,8 +299,8 @@ fetch("/api/scenarios").then((r) => r.json()).then((list) => {
   $("#langs").textContent = `Report a power cut or check your supply · ${langs.map((l) => l[1]).join(" · ")}`;
   const s = SAMPLES[list.current];
   if (!s) return;
-  $("#report-samples .chips").innerHTML = s.report.map(([label, l, w, t]) =>
-    `<button class="chip" data-t="${esc(t)}" data-l="${l}" data-w="${w}">${esc(label)}</button>`).join("");
+  $("#report-samples .chips").innerHTML = s.report.map(([label, l, w, t, m]) =>
+    `<button class="chip" data-t="${esc(t)}" data-l="${l}" data-w="${w}" ${m ? `data-m="${m}"` : ""}>${esc(label)}</button>`).join("");
   $("#check-samples .chips").innerHTML = s.check.map(([label, q]) => `<button class="chip" data-q="${q}">${esc(label)}</button>`).join("");
   $("#report-samples").hidden = false;
   $("#check-samples").hidden = false;
@@ -282,11 +313,62 @@ async function getJSON(url, opts) {
 }
 function busy(btn, on) { btn.setAttribute("aria-busy", on ? "true" : "false"); btn.disabled = on; }
 
-$("#report-samples").addEventListener("click", (e) => {
+$("#report-samples").addEventListener("click", async (e) => {
   const b = e.target.closest("[data-t]");
   if (!b) return;
   $("#text").value = b.dataset.t; $("#lang").value = b.dataset.l; $("#who").value = b.dataset.w; $("#send-error").textContent = "";
+  setFile(null);
+  if (b.dataset.m) {  // a sample clip goes through the same upload as a customer's own file
+    try {
+      const blob = await (await fetch(b.dataset.m)).blob();
+      setFile(new File([blob], b.dataset.m.split("/").pop(), { type: blob.type || "video/mp4" }));
+    } catch { $("#send-error").textContent = "The sample video is not on this computer (see media/videos/CREDITS.md)."; }
+  }
 });
+
+// ---- photo or video attached to a report ----------------------------------------------------
+
+let attached = null;
+const MAX_MB = 60;
+
+function setFile(file) {
+  const box = $("#attach"), name = $("#file-name");
+  box.querySelectorAll(".thumb, .remove").forEach((x) => x.remove());
+  if (box.dataset.url) URL.revokeObjectURL(box.dataset.url);
+  attached = null;
+  box.classList.remove("has-file");
+  name.textContent = "Add a photo or video of the damage (optional). Take it from a safe distance.";
+  if (!file) { $("#file").value = ""; return; }
+  if (!/^(image|video)\//.test(file.type)) { $("#send-error").textContent = "Attach a photo or a video."; return; }
+  if (file.size > MAX_MB * 1024 * 1024) { $("#send-error").textContent = `That file is over ${MAX_MB} MB. Send a shorter video.`; return; }
+  attached = file;
+  const url = URL.createObjectURL(file);
+  box.dataset.url = url;
+  const thumb = file.type.startsWith("video/")
+    ? Object.assign(document.createElement("video"), { src: url, muted: true, playsInline: true, autoplay: true, loop: true })
+    : Object.assign(document.createElement("img"), { src: url, alt: "" });
+  thumb.className = "thumb";
+  box.insertBefore(thumb, name);
+  name.textContent = `${file.type.startsWith("video/") ? "Video" : "Photo"}: ${file.name} (${(file.size / 1048576).toFixed(1)} MB)`;
+  const rm = Object.assign(document.createElement("button"), { type: "button", className: "remove", textContent: "Remove" });
+  rm.onclick = (ev) => { ev.preventDefault(); setFile(null); };
+  box.append(rm);
+  box.classList.add("has-file");
+}
+
+$("#file").addEventListener("change", (e) => { $("#send-error").textContent = ""; setFile(e.target.files[0] || null); });
+for (const t of ["dragenter", "dragover"]) $("#attach").addEventListener(t, (e) => { e.preventDefault(); $("#attach").classList.add("drag"); });
+for (const t of ["dragleave", "drop"]) $("#attach").addEventListener(t, () => $("#attach").classList.remove("drag"));
+$("#attach").addEventListener("drop", (e) => { e.preventDefault(); if (e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]); });
+
+async function upload(file) {
+  const body = new FormData();
+  body.append("file", file);
+  const r = await fetch("/api/customer/upload", { method: "POST", body });
+  const out = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(out.error || "upload failed");
+  return out.path;
+}
 $("#check-samples").addEventListener("click", (e) => {
   const b = e.target.closest("[data-q]");
   if (b) { $("#q").value = b.dataset.q; check(); }
@@ -376,16 +458,37 @@ $("#q").addEventListener("keydown", (e) => { if (e.key === "Enter") check(); });
 
 // ---- report -----------------------------------------------------------------------------------
 
+function seen(m) {
+  const a = m.media, path = m.video || m.photo;
+  if (!a || !path) return "";
+  // Without a model nothing has looked at the file yet; say so rather than repeat the guess from the text.
+  const what = a.mock ? `${m.video ? "Video" : "Photo"} received, not analysed yet`
+    : a.damage === "none" ? "No damage seen" : `Shows ${human(a.damage)}`;
+  const tracked = Object.entries(a.tracked || {}).map(([p, v]) => `${v.objects} × ${p}`).join(", ");
+  const media = m.video ? `<video src="/${esc(path)}" muted playsinline autoplay loop></video>` : `<img src="/${esc(path)}" alt="">`;
+  return `<div class="seen">${media}<div><b>${what}${a.public_hazard && !a.mock ? " · danger to the public" : ""}</b>
+    <small>${esc(a.description)}</small>${tracked ? `<small>Followed ${esc(tracked)}</small>` : ""}
+    <small>${a.models.map((x) => `<span class="badge ${badgeClass(x)}">${esc(x)}</span>`).join(" ")}</small></div></div>`;
+}
+
 $("#send").onclick = async () => {
   const btn = $("#send");
   $("#send-error").textContent = "";
   if (!$("#text").value.trim()) { $("#send-error").textContent = "Tell us what happened first."; $("#text").focus(); return; }
   busy(btn, true);
-  btn.querySelector(".label").textContent = "Reading your message…";
   try {
+    let media = "";
+    if (attached) {
+      btn.querySelector(".label").textContent = `Sending your ${attached.type.startsWith("video/") ? "video" : "photo"}…`;
+      try { media = await upload(attached); } catch (err) {
+        $("#send-error").textContent = `${err.message === "upload failed" ? "The file did not go through." : err.message} Your report was not sent yet.`;
+        return;
+      }
+    }
+    btn.querySelector(".label").textContent = attached ? "Looking at it…" : "Reading your message…";
     const r = await getJSON("/api/customer/report", {
       method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: $("#text").value, who: $("#who").value, language: $("#lang").value }),
+      body: JSON.stringify({ text: $("#text").value, who: $("#who").value, language: $("#lang").value, media }),
     });
     const m = r.message, f = m.fields || {}, loc = m.location;
     const placed = loc ? (loc.street ? `${loc.street} ${loc.house_no || ""}` : loc.method) : "–";
@@ -400,7 +503,9 @@ $("#send").onclick = async () => {
         <h3>Thank you. Here is what we understood</h3>
         <dl class="kv reveal">${rows.map(([k, v], i) => `<dt style="--i:${i}">${k}</dt><dd style="--i:${i}">${v}</dd>`).join("")}
           <dt style="--i:5">Read by</dt><dd style="--i:5"><span class="badge ${badgeClass(m.model)}">${esc(m.model)}</span></dd></dl>
+        ${seen(m)}
       </div>`;
+    setFile(null);
     // Carry the reporter's account over to the status card so they can follow the repair.
     if (r.status && r.status.found) {
       $("#q").value = r.status.customer.account;

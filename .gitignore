@@ -28,3 +28,8 @@ data/*.db
 
 # Synthesised call-agent speech (regenerated on demand)
 media/audio/tts/
+
+# Third-party videos (not ours to redistribute; media/videos/CREDITS.md says how to fetch them) and portal uploads
+media/drone/*.mp4
+media/videos/*.mp4
+media/uploads/

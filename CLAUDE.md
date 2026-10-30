@@ -317,7 +317,8 @@ the first recloser's own zone, and guarantees at least two callers for small fau
 | POST | `/api/control` | `{"action": start|pause|reset|speed|offline|online, "speed": n}` |
 | POST | `/api/plan` | `{"incident": "I2", "plan": "isolate"}` operator approves a switching plan |
 | GET | `/api/customer?q=` | portal status by account or phone |
-| POST | `/api/customer/report` | `{"text", "who", "language"}` live complaint (processed like any other) |
+| POST | `/api/customer/upload` | multipart `file` (photo or video, max 60 MB) -> `{"path"}` under `media/uploads/` |
+| POST | `/api/customer/report` | `{"text", "who", "language", "media"}` live complaint (processed like any other) |
 | GET | `/api/call/{id}/{turn}.wav` | one line of an agent call: caller recording or synthesised speech |
 | POST | `/api/diagram` | digitise the paper diagram (optional image upload) and score it |
 | WS | `/ws` | snapshot on connect, then `state`, `timeline`, `message`, `probe`, `notice`, `photo`, `drone`, `scada`, `clock`, `reset`, `scenario`, `messages`, `network` |
@@ -433,8 +434,8 @@ Media
 - [ ] **Listen to the voiced calls** in the console and say which voices or lines sound wrong.
 - [x] Damage photos: nine from Wikimedia Commons, wired into all three scenarios (`media/photos/CREDITS.md`).
       Still missing: a blown-fuse photo for Galle's `crew_fuse.jpg`.
-- [ ] **Find one drone clip** (low, line-following, storm damage) and **confirm its licence** (options in
-      `media/CANDIDATES.md`).
+- [x] Drone clip and four customer videos (owner's choice, 2026-10-30): third-party clips, git-ignored, credited in
+      `media/videos/CREDITS.md`; `scripts/fetch_videos.py` downloads and trims them after a fresh clone.
 - [ ] If pole-tag reading is chosen: photograph a pole with a visible ID tag.
 - [ ] If realistic paper-to-grid is chosen: draw a pole-numbered feeder sketch and write one meter-reader
       ledger page, then photograph both.
@@ -506,6 +507,12 @@ Call agent and crew calls
 - [ ] Neighbour question: Spark reading the caller's yes/no about next door as a probe answer.
 - [ ] Voices: pronunciation of street names and numbers by each edge-tts voice; native-speaker check of
       every new Sinhala / Tamil / Spanish / Hindi line (agent, callers, crews, read-back words).
+
+Photos and videos (`vision.py`, `models.py`)
+- [ ] Spark on photos (`analyse_photo`) and SAM 3.1 boxes on the nine Commons photos; wire clearance numbers.
+- [ ] Spark watching a clip (`spark_video_json`: `video_url` content part, unverified) and SAM 3.1 tracking
+      (`segment_video`: `input_video` part, unverified); request size limits for a 7.6 MB drone clip.
+- [ ] Portal uploads from a phone (MOV from iPhone, large files) and the `seen` panel with real model output.
 
 ### 12.4 Order that saves the most time
 
