@@ -118,7 +118,7 @@ class ModelClient:
     # ---- Muse Voice Transcribe -------------------------------------------
 
     def transcribe(self, audio_path: Path, language_bias: list[str] | None = None) -> dict | None:
-        audio = Path(audio_path).read_bytes()
+        audio = _wav_16k(Path(audio_path).read_bytes())
         request = {"mode": "ENDPOINTING", "model": config.TRANSCRIBE_MODEL, "audioEncoding": "WAV"}
         if language_bias:
             request["languageBias"] = language_bias
@@ -210,6 +210,36 @@ class ModelClient:
 
         resp = self._cached("spark-video", key, call)
         return json.loads(_strip_fences(resp["choices"][0]["message"]["content"])) if resp else None
+
+
+def _wav_16k(data: bytes) -> bytes:
+    """Voice Transcribe takes mono 16-bit WAV at 16 or 24 kHz only. Phone calls are 8 kHz, so upsample them (the
+    audio keeps its phone-line bandwidth; only the container rate changes)."""
+    import io
+    import wave
+    with wave.open(io.BytesIO(data)) as w:
+        rate, channels, width, frames = w.getframerate(), w.getnchannels(), w.getsampwidth(), w.readframes(w.getnframes())
+    if rate in (16000, 24000) and channels == 1 and width == 2:
+        return data
+    import array
+    samples = array.array("h", frames)
+    if channels > 1:
+        samples = array.array("h", samples[::channels])
+    out = array.array("h")
+    step = rate / 16000  # linear interpolation onto the 16 kHz grid
+    n = len(samples)
+    for i in range(int(n / step)):
+        x = i * step
+        j = int(x)
+        a, b = samples[j], samples[min(j + 1, n - 1)]
+        out.append(int(a + (b - a) * (x - j)))
+    buf = io.BytesIO()
+    with wave.open(buf, "wb") as w:
+        w.setnchannels(1)
+        w.setsampwidth(2)
+        w.setframerate(16000)
+        w.writeframes(out.tobytes())
+    return buf.getvalue()
 
 
 def _strip_fences(s: str) -> str:

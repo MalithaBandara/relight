@@ -338,7 +338,16 @@ All writes to the engine go through one `asyncio.Lock` in `server.py` (replay, o
 
 ---
 
-## 8. Meta Model API facts (from Meta's docs; nothing has been called live yet)
+## 8. Meta Model API facts (from Meta's docs; checked live 2026-10-30 where marked)
+
+- **Checked live (2026-10-30):** Spark JSON-schema extraction (si, ta), Spark audio (`input_audio`, Sinhala),
+  Spark video (`video_url` data URL), SAM 3.1 image and video (`input_video`) all work with the request shapes in
+  `models.py`. Voice Transcribe rejects 8 kHz WAV ("expected mono s16le at 16000 or 24000 Hz"); `_wav_16k` upsamples
+  phone audio first. `languageBias` takes language names (`["Tamil", "English"]`); the response has `transcript`.
+  SAM 3.1 returned **413** for a 7.6 MB video (~10 MB base64): keep clips small (480p, 10 fps, ~3 MB).
+  Spark spends ~1,230 reasoning tokens per call (billed as output). Galle live run: 195 calls, 24 min, $1.13; the
+  2.9 MB drone clip then passed (Spark + SAM tracking 3 poles, 8 spans, the trunk; $0.12). Galle is cached live.
+  Houston and Chennai not run live yet (owner: skip for now; estimates ~$1.6–2 / 30 min and ~$9–10 / 2.5–3 h).
 
 - Base URL `https://api.meta.ai/v1`, header `Authorization: Bearer $MODEL_API_KEY`, OpenAI-compatible.
 - **Muse Spark** (`muse-spark-1.3`): `POST /chat/completions`, `response_format: {"type": "json_schema", ...}`;
