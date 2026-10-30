@@ -56,16 +56,20 @@ def _voice_calls(sc: dict, name: str) -> None:
     """Turn scripted complaints into voiced phone calls (scenarios/calls/<name>.json; audio by make_calls.py).
 
     Kept apart from the scenario so generated storms can be regenerated without losing the calls. `spoken` is what
-    the caller says first; `withheld` lists facts they only give when the agent asks.
+    the caller says first; `withheld` lists facts they only give when the agent asks. `photos` attaches a damage
+    photo to a message (media/photos/CREDITS.md lists where each comes from).
     """
     path = SCENARIO_DIR / "calls" / f"{name}.json"
     if not path.exists():
         return
     overlay = json.loads(path.read_text(encoding="utf-8"))
     calls = overlay["calls"]
+    photos = overlay.get("photos", {})
     for crew in sc["crews"]:  # the language each crew reports in
         crew.update(overlay.get("crews", {}).get(crew["id"], {}))
     for e in sc["events"]:
+        if e.get("id") in photos:
+            e["photo"] = photos[e["id"]]
         c = calls.get(e.get("id"))
         if not c or e["type"] not in ("complaint", "crew_note"):
             continue

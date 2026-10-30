@@ -558,7 +558,7 @@ document.querySelectorAll("#layers input").forEach((cb) => cb.addEventListener("
 function addPhoto(ph) {
   if (!ph.lat) return;
   const a = ph.analysis;
-  const img = a.mock ? "" : `<img src="/${esc(ph.path)}">`;
+  const img = a.has_image ? `<img src="/${esc(ph.path)}" alt="Damage photo">` : "";
   L.circleMarker([ph.lat, ph.lon], { radius: 5, color: "#3cc2a0", weight: 2, fillOpacity: 0 })
     .bindPopup(`<div class="photo-pop">${img}<b>${esc(a.damage.replace("_", " "))}</b> · ${esc(a.severity)}<br>${esc(a.description)}${a.clearance_m != null ? `<br>Wire clearance ≈ ${a.clearance_m} m` : ""}<br>${a.models.map(badge).join(" ")}</div>`)
     .addTo(layers.messages);

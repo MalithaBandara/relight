@@ -1,6 +1,7 @@
 {
  "note": "Voiced phone calls for houston_hurricane (see galle_storm.json for the format). Event ids are stable because make_storm.py uses fixed seeds. C212 calls from a number the utility does not know, so the agent has to ask for the address.",
  "crews": {"CREW-L2": {"language": "es"}, "CREW-V1": {"language": "es"}, "CREW-T2": {"language": "es"}},
+ "photos": {"C40": "media/photos/houston_tree_on_line.jpg", "C303": "media/photos/houston_wire_low.jpg"},
  "calls": {
   "C21": {"voice": "en-US-AndrewNeural", "rate": "+6%",
           "spoken": "Hi, yeah, the power's out at 1052 Huge Oaks Street. It went out with that big gust just now."},

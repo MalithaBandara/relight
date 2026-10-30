@@ -431,7 +431,10 @@ Accounts, keys and forms
 Media
 - [x] ~~Record calls~~: the owner cannot record; calls are synthetic voices (edge-tts), labelled as such.
 - [ ] **Listen to the voiced calls** in the console and say which voices or lines sound wrong.
-- [ ] **Choose and download** damage photos and one drone clip; **confirm their licences**.
+- [x] Damage photos: nine from Wikimedia Commons, wired into all three scenarios (`media/photos/CREDITS.md`).
+      Still missing: a blown-fuse photo for Galle's `crew_fuse.jpg`.
+- [ ] **Find one drone clip** (low, line-following, storm damage) and **confirm its licence** (options in
+      `media/CANDIDATES.md`).
 - [ ] If pole-tag reading is chosen: photograph a pole with a visible ID tag.
 - [ ] If realistic paper-to-grid is chosen: draw a pole-numbered feeder sketch and write one meter-reader
       ledger page, then photograph both.
@@ -462,7 +465,8 @@ Blocked until the owner provides something
 Can start now
 - [x] Call scripts in every language and the `media/audio/calls/` layout (scenarios/calls/*.json).
 - [x] Crew voice reports with read-back (synthetic audio; same pipeline as calls).
-- [ ] Find candidate public photo datasets and drone clips with their licences, for the owner to choose.
+- [x] Find candidate public photo datasets and drone clips with their licences, for the owner to choose
+      (`media/CANDIDATES.md`).
 - [x] Customer portal sample buttons for the Houston and Chennai scenarios (`SAMPLES` in `web/customer.html`).
 - [ ] Polish the console for recording (demo flow, click path, timing).
 - [ ] Shot list, voice-over script and on-screen captions for the video.

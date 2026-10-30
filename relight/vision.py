@@ -54,7 +54,7 @@ def analyse_photo(client: ModelClient, rel_path: str, truth_damage: str | None) 
     if not path.exists():
         return {"damage": truth_damage or "other", "severity": "high", "public_hazard": truth_damage == "live_wire",
                 "description": f"(photo not added yet: {Path(rel_path).name})", "clearance_m": None,
-                "objects": {}, "models": ["mock (ground truth)"], "mock": True}
+                "objects": {}, "models": ["mock (ground truth)"], "mock": True, "has_image": False}
     import base64
     import mimetypes
     mime = mimetypes.guess_type(str(path))[0] or "image/jpeg"
@@ -65,7 +65,8 @@ def analyse_photo(client: ModelClient, rel_path: str, truth_damage: str | None) 
     models = ["Muse Spark"]
     if info is None:
         info = {"damage": truth_damage or "other", "severity": "high", "public_hazard": truth_damage == "live_wire",
-                "description": "(mock) model output not cached", "segment_prompts": []}
+                "description": "(mock) not analysed yet: Muse Spark and SAM 3.1 run once the API key is set",
+                "segment_prompts": []}
         models = ["mock (ground truth)"]
     prompts = list(dict.fromkeys(["utility pole", "power line"] + info.get("segment_prompts", [])))[:4]
     records = {}
@@ -81,4 +82,4 @@ def analyse_photo(client: ModelClient, rel_path: str, truth_damage: str | None) 
     return {**{k: v for k, v in info.items() if k != "segment_prompts"}, "clearance_m": clearance,
             "objects": {p: [{"box": r["box"], "conf": r.get("conf")} for r in recs] for p, recs in records.items()},
             "image_size": next(((r["w"], r["h"]) for recs in records.values() for r in recs), None),
-            "models": models, "mock": models[0].startswith("mock")}
+            "models": models, "mock": models[0].startswith("mock"), "has_image": True}
