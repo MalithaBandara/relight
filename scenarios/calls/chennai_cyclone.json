@@ -1,5 +1,7 @@
 {
  "note": "Voiced phone calls for chennai_cyclone (see galle_storm.json for the format). Street names are spoken as written in the scenario (OpenStreetMap names).",
+ "crews": {"CREW-L1": {"language": "ta"}, "CREW-L2": {"language": "ta"}, "CREW-L3": {"language": "hi"},
+           "CREW-V1": {"language": "ta"}, "CREW-T2": {"language": "ta"}, "CREW-T3": {"language": "hi"}},
  "calls": {
   "C494": {"voice": "ta-IN-ValluvarNeural", "rate": "+6%",
            "spoken": "வணக்கம். Vijayanagar 1st Main Road, கதவு எண் 19. கரண்ட் இல்லை."},

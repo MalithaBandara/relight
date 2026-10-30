@@ -43,7 +43,181 @@ def _agent_en(desk: str, fire: str) -> dict:
         "sms_fallback": "Sorry, I could not understand the call. Please send a text message: {code} and your "
                         "account number.",
         "close": "Thank you for calling.",
+        # Crew reports by phone or radio, in the crew's language.
+        "readback": "Control here. Reading back: {summary}. Correct?",
+        "crew_changed": "Copy. I have changed the diagnosis to {kind} and replanned the work.",
+        "crew_logged": "Copy, logged against {incident}.",
+        "crew_unmatched": "Copy, logged. No open outage matches that location yet.",
+        "crew_text": "Sorry, the line is bad. Please send the report as a text message.",
     }
+
+
+_CREW_SI = {
+    "readback": "පාලන මැදිරියෙන්. නැවත කියවන්නම්: {summary}. හරිද?",
+    "crew_changed": "හරි. දෝෂය {kind} ලෙස වෙනස් කර වැඩ නැවත සැලසුම් කළා.",
+    "crew_logged": "හරි, {incident} යටතේ සටහන් කළා.",
+    "crew_unmatched": "හරි, සටහන් කළා. ඒ ස්ථානයට ගැළපෙන විදුලි බිඳවැටීමක් තවම නැහැ.",
+    "crew_text": "සමාවන්න, ලයින් එක පැහැදිලි නැහැ. කරුණාකර වාර්තාව කෙටි පණිවිඩයකින් එවන්න.",
+}
+_CREW_TA = {
+    "readback": "கட்டுப்பாட்டு அறை. திரும்பச் சொல்கிறேன்: {summary}. சரியா?",
+    "crew_changed": "சரி. கோளாறை {kind} என்று மாற்றி, வேலையை மீண்டும் திட்டமிட்டுள்ளேன்.",
+    "crew_logged": "சரி, {incident} இல் பதிவு செய்தேன்.",
+    "crew_unmatched": "சரி, பதிவு செய்தேன். அந்த இடத்துக்குப் பொருந்தும் மின் தடை இன்னும் இல்லை.",
+    "crew_text": "மன்னிக்கவும், லைன் தெளிவாக இல்லை. அறிக்கையை குறுஞ்செய்தியாக அனுப்புங்கள்.",
+}
+_CREW_ES = {
+    "readback": "Aquí control. Repito: {summary}. ¿Correcto?",
+    "crew_changed": "Entendido. Cambié el diagnóstico a {kind} y replanifiqué el trabajo.",
+    "crew_logged": "Entendido, registrado en {incident}.",
+    "crew_unmatched": "Entendido, registrado. Todavía no hay un apagón que coincida con ese lugar.",
+    "crew_text": "Disculpe, la línea está mala. Por favor envíe el reporte por mensaje de texto.",
+}
+_CREW_HI = {
+    "readback": "कंट्रोल रूम से। दोहरा रहा हूँ: {summary}। सही है?",
+    "crew_changed": "ठीक है। मैंने खराबी को {kind} में बदल दिया है और काम दोबारा तय किया है।",
+    "crew_logged": "ठीक है, {incident} में दर्ज कर लिया।",
+    "crew_unmatched": "ठीक है, दर्ज कर लिया। उस जगह से मिलती कोई बिजली कटौती अभी नहीं है।",
+    "crew_text": "माफ़ कीजिए, आवाज़ साफ़ नहीं है। कृपया रिपोर्ट SMS से भेजिए।",
+}
+
+# Words for the read-back of a crew report, built from Spark's structured reading.
+READBACK = {
+    "en": {"damage": {"pole_down": "pole down", "tree_on_line": "tree on the line", "live_wire": "live conductor down",
+                      "wire_down": "wire down", "blown_fuse": "blown transformer fuse",
+                      "transformer_failure": "failed transformer", "service_wire": "service wire down",
+                      "none": "no damage found", "other": "damage"},
+           "at": "{what} at {where}", "near": "{street} near number {house}", "here": "your location",
+           "live": "the line is live", "device_ok": "the device we sent you to is healthy",
+           "houses": "houses {a} to {b} without supply", "needs": "you need {list}", "and": " and ", "sep": "; ",
+           "crews": {"line": "a line crew", "bucket_truck": "a bucket truck", "vegetation": "the vegetation crew",
+                     "troubleshooter": "a troubleshooter"}},
+    "si": {"damage": {"pole_down": "කණුවක් වැටිලා", "tree_on_line": "ගසක් වයර් මත", "live_wire": "විදුලිය සහිත වයරයක් බිම",
+                      "wire_down": "වයරයක් බිම", "blown_fuse": "ට්‍රාන්ස්ෆෝමර් ෆියුස් එක පිච්චිලා",
+                      "transformer_failure": "ට්‍රාන්ස්ෆෝමරය අක්‍රියයි", "service_wire": "සර්විස් වයරය කැඩිලා",
+                      "none": "හානියක් නැහැ", "other": "හානියක්"},
+           "at": "{where}: {what}", "near": "{street} අංක {house} අසල", "here": "ඔබ සිටින තැන",
+           "live": "ලයින් එකේ විදුලිය තියෙනවා", "device_ok": "අපි ඔබව යැවූ උපකරණය හොඳ තත්ත්වයේ",
+           "houses": "නිවාස {a} සිට {b} දක්වා විදුලිය නැහැ", "needs": "ඔබට {list} අවශ්‍යයි", "and": " සහ ", "sep": "; ",
+           "crews": {"line": "ලයින් කණ්ඩායමක්", "bucket_truck": "බකට් ට්‍රක් එකක්", "vegetation": "ගස් කපන කණ්ඩායම",
+                     "troubleshooter": "තාක්ෂණ නිලධාරියෙක්"}},
+    "ta": {"damage": {"pole_down": "மின்கம்பம் விழுந்துள்ளது", "tree_on_line": "மரம் கம்பிகள் மேல் விழுந்துள்ளது",
+                      "live_wire": "மின்சாரம் உள்ள கம்பி கீழே கிடக்கிறது", "wire_down": "கம்பி கீழே கிடக்கிறது",
+                      "blown_fuse": "டிரான்ஸ்ஃபார்மர் ஃபியூஸ் போயிருக்கிறது",
+                      "transformer_failure": "டிரான்ஸ்ஃபார்மர் பழுதாகியுள்ளது",
+                      "service_wire": "சர்வீஸ் கம்பி அறுந்துள்ளது", "none": "சேதம் எதுவும் இல்லை", "other": "சேதம்"},
+           "at": "{where}: {what}", "near": "{street} {house} எண் அருகில்", "here": "நீங்கள் இருக்கும் இடம்",
+           "live": "லைனில் மின்சாரம் உள்ளது", "device_ok": "நாங்கள் அனுப்பிய சாதனம் சரியாக உள்ளது",
+           "houses": "{a} முதல் {b} வரையிலான வீடுகளுக்கு மின்சாரம் இல்லை", "needs": "உங்களுக்கு {list} தேவை",
+           "and": " மற்றும் ", "sep": "; ",
+           "crews": {"line": "லைன் குழு", "bucket_truck": "பக்கெட் லாரி", "vegetation": "மரம் வெட்டும் குழு",
+                     "troubleshooter": "தொழில்நுட்பர்"}},
+    "es": {"damage": {"pole_down": "poste caído", "tree_on_line": "árbol sobre la línea",
+                      "live_wire": "conductor energizado en el suelo", "wire_down": "cable caído",
+                      "blown_fuse": "fusible del transformador quemado", "transformer_failure": "transformador dañado",
+                      "service_wire": "acometida caída", "none": "sin daños", "other": "daños"},
+           "at": "{what} en {where}", "near": "{street}, cerca del número {house}", "here": "su ubicación",
+           "live": "la línea está energizada", "device_ok": "el equipo al que lo enviamos está bien",
+           "houses": "las casas del {a} al {b} sin servicio", "needs": "necesita {list}", "and": " y ", "sep": "; ",
+           "crews": {"line": "una cuadrilla de línea", "bucket_truck": "un camión canasta",
+                     "vegetation": "la cuadrilla de árboles", "troubleshooter": "un técnico"}},
+    "hi": {"damage": {"pole_down": "खंभा गिरा है", "tree_on_line": "पेड़ लाइन पर गिरा है",
+                      "live_wire": "करंट वाला तार नीचे गिरा है", "wire_down": "तार नीचे गिरा है",
+                      "blown_fuse": "ट्रांसफ़ॉर्मर का फ़्यूज़ उड़ गया है", "transformer_failure": "ट्रांसफ़ॉर्मर खराब है",
+                      "service_wire": "सर्विस तार टूटा है", "none": "कोई नुकसान नहीं", "other": "नुकसान"},
+           "at": "{where}: {what}", "near": "{street}, मकान नंबर {house} के पास", "here": "आपकी जगह",
+           "live": "लाइन में करंट है", "device_ok": "जिस उपकरण पर हमने भेजा था वह ठीक है",
+           "houses": "मकान {a} से {b} तक बिजली नहीं है", "needs": "आपको {list} चाहिए", "and": " और ", "sep": "; ",
+           "crews": {"line": "लाइन टीम", "bucket_truck": "बकेट ट्रक", "vegetation": "पेड़ काटने वाली टीम",
+                     "troubleshooter": "लाइनमैन"}},
+}
+
+# What a crew says on arrival (the World picks the template from the real fault), per language.
+SITE_REPORTS = {
+    "en": {
+        "pole_down": "On site at {street} near number {house}. Concrete pole snapped, conductors down across the road. "
+                     "Starting pole replacement.",
+        "tree_on_line": "On site at {street} near number {house}. A tree is lying across the conductors. "
+                        "Clearing it before the line work.",
+        "live_wire": "On site at {street} near number {house}. The conductor on the road is live. Area cordoned off, "
+                     "making it safe now.",
+        "blown_fuse": "On site at transformer {xf} on {street} near number {house}. The drop-out fuse is blown. "
+                      "Replacing it now.",
+        "service_wire": "On site at {street} near number {house}.",
+        "contradict_service_wire": "Transformer {xf} on {street} is fine, its fuses are intact. The service wire is "
+                                   "down at number {house} after a branch fell, so only houses {a} to {b} have no "
+                                   "supply. Need a line crew for the service wire.",
+        "contradict_blown_fuse": "The line is fine here. It is the drop-out fuse on transformer {xf} near {street} "
+                                 "number {house} that has blown.",
+        "nothing": "On site at {label}. No damage found here; the line looks healthy.",
+    },
+    "si": {
+        "pole_down": "{street} අංක {house} අසල ඉන්නවා. කොන්ක්‍රීට් කණුව කැඩිලා, වයර් පාර හරහා වැටිලා. කණුව මාරු කරන්න පටන් "
+                     "ගන්නවා.",
+        "tree_on_line": "{street} අංක {house} අසල ඉන්නවා. ලොකු ගහක් වයර් උඩට වැටිලා. ලයින් වැඩට කලින් ඒක අයින් කරනවා.",
+        "live_wire": "{street} අංක {house} අසල ඉන්නවා. පාරේ තියෙන වයරයේ විදුලිය තියෙනවා. ප්‍රදේශය වට කළා, දැන් ආරක්ෂිත කරනවා.",
+        "blown_fuse": "{street} අංක {house} අසල ට්‍රාන්ස්ෆෝමර් {xf} ළඟ ඉන්නවා. ඩ්‍රොප්-අවුට් ෆියුස් එක පිච්චිලා. දැන් මාරු "
+                      "කරනවා.",
+        "service_wire": "{street} අංක {house} අසල ඉන්නවා.",
+        "contradict_service_wire": "{street} ට්‍රාන්ස්ෆෝමර් {xf} හොඳින්, ෆියුස් හරි. අංක {house} ළඟ අත්තක් වැටිලා සර්විස් "
+                                   "වයරය කැඩිලා, ඒ නිසා නිවාස {a} සිට {b} දක්වා විතරයි විදුලිය නැත්තේ. සර්විස් වයරයට "
+                                   "ලයින් කණ්ඩායමක් ඕනේ.",
+        "contradict_blown_fuse": "මෙතන ලයින් එක හොඳින්. {street} අංක {house} ළඟ ට්‍රාන්ස්ෆෝමර් {xf} එකේ ඩ්‍රොප්-අවුට් ෆියුස් "
+                                 "එක තමයි පිච්චිලා තියෙන්නේ.",
+        "nothing": "{label} ළඟ ඉන්නවා. මෙතන හානියක් නැහැ, ලයින් එක හොඳින්.",
+    },
+    "ta": {
+        "pole_down": "{street} {house} எண் அருகில் இருக்கிறோம். கான்கிரீட் கம்பம் உடைந்து, கம்பிகள் சாலையின் குறுக்கே "
+                     "விழுந்துள்ளன. கம்பத்தை மாற்றத் தொடங்குகிறோம்.",
+        "tree_on_line": "{street} {house} எண் அருகில் இருக்கிறோம். ஒரு மரம் கம்பிகள் மேல் விழுந்துள்ளது. லைன் வேலைக்கு "
+                        "முன் அதை அகற்றுகிறோம்.",
+        "live_wire": "{street} {house} எண் அருகில் இருக்கிறோம். சாலையில் உள்ள கம்பியில் மின்சாரம் உள்ளது. பகுதியை "
+                     "மூடிவிட்டோம், இப்போது பாதுகாப்பாக்குகிறோம்.",
+        "blown_fuse": "{street} {house} எண் அருகில் டிரான்ஸ்ஃபார்மர் {xf} இல் இருக்கிறோம். டிராப்-அவுட் ஃபியூஸ் "
+                      "போயிருக்கிறது. இப்போது மாற்றுகிறோம்.",
+        "service_wire": "{street} {house} எண் அருகில் இருக்கிறோம்.",
+        "contradict_service_wire": "{street} இல் டிரான்ஸ்ஃபார்மர் {xf} சரியாக உள்ளது, ஃபியூஸ்கள் நன்றாக உள்ளன. {house} "
+                                   "எண் அருகில் கிளை விழுந்து சர்வீஸ் கம்பி அறுந்துள்ளது, அதனால் {a} முதல் {b} வரையிலான "
+                                   "வீடுகளுக்கு மட்டும் மின்சாரம் இல்லை. சர்வீஸ் கம்பிக்கு லைன் குழு வேண்டும்.",
+        "contradict_blown_fuse": "இங்கே லைன் சரியாக உள்ளது. {street} {house} எண் அருகில் உள்ள டிரான்ஸ்ஃபார்மர் {xf} இன் "
+                                 "டிராப்-அவுட் ஃபியூஸ்தான் போயிருக்கிறது.",
+        "nothing": "{label} இல் இருக்கிறோம். இங்கே சேதம் எதுவும் இல்லை; லைன் நன்றாக உள்ளது.",
+    },
+    "es": {
+        "pole_down": "En sitio en {street}, cerca del número {house}. El poste de concreto está quebrado y los "
+                     "conductores cruzan la calle. Empezamos a cambiar el poste.",
+        "tree_on_line": "En sitio en {street}, cerca del número {house}. Hay un árbol sobre los conductores. Lo "
+                        "quitamos antes del trabajo de línea.",
+        "live_wire": "En sitio en {street}, cerca del número {house}. El conductor en el suelo está energizado. "
+                     "Acordonamos el área y lo estamos asegurando.",
+        "blown_fuse": "En sitio en el transformador {xf} de {street}, cerca del número {house}. El fusible está "
+                      "quemado. Lo cambiamos ahora.",
+        "service_wire": "En sitio en {street}, cerca del número {house}.",
+        "contradict_service_wire": "El transformador {xf} de {street} está bien, los fusibles están intactos. La "
+                                   "acometida se cayó en el número {house} por una rama, así que solo las casas del {a} "
+                                   "al {b} están sin servicio. Necesitamos una cuadrilla de línea para la acometida.",
+        "contradict_blown_fuse": "La línea está bien aquí. El que se quemó es el fusible del transformador {xf}, "
+                                 "cerca del número {house} de {street}.",
+        "nothing": "En sitio en {label}. No encontramos daños; la línea se ve bien.",
+    },
+    "hi": {
+        "pole_down": "{street}, मकान नंबर {house} के पास पहुँच गए हैं। कंक्रीट का खंभा टूटा है, तार सड़क पर गिरे हैं। खंभा "
+                     "बदलना शुरू कर रहे हैं।",
+        "tree_on_line": "{street}, मकान नंबर {house} के पास पहुँच गए हैं। एक पेड़ तारों पर गिरा है। लाइन के काम से पहले उसे "
+                        "हटा रहे हैं।",
+        "live_wire": "{street}, मकान नंबर {house} के पास पहुँच गए हैं। सड़क पर पड़े तार में करंट है। इलाका घेर दिया है, अब "
+                     "सुरक्षित कर रहे हैं।",
+        "blown_fuse": "{street}, मकान नंबर {house} के पास ट्रांसफ़ॉर्मर {xf} पर हैं। ड्रॉप-आउट फ़्यूज़ उड़ गया है। अभी बदल "
+                      "रहे हैं।",
+        "service_wire": "{street}, मकान नंबर {house} के पास पहुँच गए हैं।",
+        "contradict_service_wire": "{street} पर ट्रांसफ़ॉर्मर {xf} ठीक है, फ़्यूज़ सही हैं। मकान नंबर {house} के पास टहनी "
+                                   "गिरने से सर्विस तार टूटा है, इसलिए सिर्फ़ मकान {a} से {b} तक बिजली नहीं है। सर्विस तार "
+                                   "के लिए लाइन टीम चाहिए।",
+        "contradict_blown_fuse": "यहाँ लाइन ठीक है। {street}, मकान नंबर {house} के पास ट्रांसफ़ॉर्मर {xf} का ड्रॉप-आउट "
+                                 "फ़्यूज़ उड़ा है।",
+        "nothing": "{label} पर पहुँच गए हैं। यहाँ कोई नुकसान नहीं मिला; लाइन ठीक है।",
+    },
+}
 
 
 AGENT_SI = {
@@ -163,6 +337,9 @@ AGENT_HI = {
     "close": "फोन करने के लिए धन्यवाद।",
 }
 
+for _agent, _crew in ((AGENT_SI, _CREW_SI), (AGENT_TA, _CREW_TA), (AGENT_ES, _CREW_ES), (AGENT_HI, _CREW_HI)):
+    _agent.update(_crew)
+
 # Hazards as the agent names them in "known_hazard" (already reported near the caller).
 HAZARD_NAMES = {
     "en": {"pole_down": "a fallen pole", "live_wire": "a live wire", "wire_down": "a fallen wire",
@@ -184,6 +361,7 @@ CALLER_EN = {
     "wire_down": "Yes, there's a wire on the ground.", "tree_on_line": "Yes, a tree has come down on the wires.",
     "fire": "Yes, something is burning near the pole.", "hazard_no": "No, I can't see anything like that.",
     "neighbour_on": "Yes, they have power.", "neighbour_off": "No, they're dark too.",
+    "readback_ok": "Correct.", "readback_wrong": "Negative. Again: {report}",
 }
 CALLER_SI = {
     "address": "අංක {house}, {street}.", "account": "මගේ ගිණුම් අංකය {account}.", "yes": "ඔව්.", "no": "නැහැ.",
@@ -191,6 +369,7 @@ CALLER_SI = {
     "wire_down": "ඔව්, වයරයක් බිම වැටිලා තියෙනවා.", "tree_on_line": "ඔව්, ගහක් වයර් උඩට වැටිලා.",
     "fire": "ඔව්, කණුව ළඟ මොකක්දෝ පිච්චෙනවා.", "hazard_no": "නැහැ, එහෙම දෙයක් පේන්නේ නැහැ.",
     "neighbour_on": "ඔව්, එයාලට විදුලිය තියෙනවා.", "neighbour_off": "නැහැ, එයාලටත් නැහැ.",
+    "readback_ok": "හරි.", "readback_wrong": "නැහැ. ආයෙත් කියන්නම්: {report}",
 }
 CALLER_TA = {
     "address": "{house}, {street}.", "account": "என் கணக்கு எண் {account}.", "yes": "ஆமாம்.", "no": "இல்லை.",
@@ -199,6 +378,7 @@ CALLER_TA = {
     "tree_on_line": "ஆமாம், ஒரு மரம் கம்பிகள் மேல் விழுந்திருக்கிறது.", "fire": "ஆமாம், கம்பத்துக்கு அருகில் ஏதோ எரிகிறது.",
     "hazard_no": "இல்லை, அப்படி எதுவும் தெரியவில்லை.",
     "neighbour_on": "ஆமாம், அவர்களுக்கு மின்சாரம் இருக்கிறது.", "neighbour_off": "இல்லை, அவர்களுக்கும் இல்லை.",
+    "readback_ok": "சரி.", "readback_wrong": "இல்லை. மீண்டும் சொல்கிறேன்: {report}",
 }
 CALLER_ES = {
     "address": "{house} {street}.", "account": "Mi número de cuenta es {account}.", "yes": "Sí.", "no": "No.",
@@ -206,6 +386,7 @@ CALLER_ES = {
     "wire_down": "Sí, hay un cable en el suelo.", "tree_on_line": "Sí, un árbol cayó sobre los cables.",
     "fire": "Sí, algo se está quemando cerca del poste.", "hazard_no": "No, no veo nada de eso.",
     "neighbour_on": "Sí, ellos tienen luz.", "neighbour_off": "No, ellos tampoco.",
+    "readback_ok": "Correcto.", "readback_wrong": "Negativo. Repito: {report}",
 }
 CALLER_HI = {
     "address": "मकान नंबर {house}, {street}।", "account": "मेरा खाता नंबर {account} है।", "yes": "हाँ।", "no": "नहीं।",
@@ -213,6 +394,7 @@ CALLER_HI = {
     "wire_down": "हाँ, एक तार ज़मीन पर पड़ा है।", "tree_on_line": "हाँ, एक पेड़ तारों पर गिरा है।",
     "fire": "हाँ, खंभे के पास कुछ जल रहा है।", "hazard_no": "नहीं, ऐसा कुछ नहीं दिख रहा।",
     "neighbour_on": "हाँ, उनके यहाँ बिजली है।", "neighbour_off": "नहीं, उनके यहाँ भी नहीं है।",
+    "readback_ok": "सही है।", "readback_wrong": "नहीं। फिर से: {report}",
 }
 
 SRI_LANKA = {
@@ -256,7 +438,8 @@ SRI_LANKA = {
     "voices": {"agent": {"en": "en-IN-NeerjaNeural", "si": "si-LK-ThiliniNeural", "ta": "ta-LK-SaranyaNeural"},
                "caller": {"en": ["en-IN-PrabhatNeural"],  # the only other Indian English voice is the agent's
                           "si": ["si-LK-SameeraNeural", "si-LK-ThiliniNeural"],
-                          "ta": ["ta-LK-KumarNeural", "ta-LK-SaranyaNeural"]}},
+                          "ta": ["ta-LK-KumarNeural", "ta-LK-SaranyaNeural"]},
+               "crew": {"en": ["en-IN-PrabhatNeural"], "ta": ["ta-IN-ValluvarNeural"], "hi": ["hi-IN-MadhurNeural"]}},
 }
 
 US = {
@@ -290,7 +473,9 @@ US = {
     "caller": {"en": {**CALLER_EN, "address": "{house} {street}."}, "es": CALLER_ES},
     "voices": {"agent": {"en": "en-US-AvaNeural", "es": "es-US-PalomaNeural"},
                "caller": {"en": ["en-US-AndrewNeural", "en-US-EmmaNeural", "en-US-BrianNeural"],
-                          "es": ["es-US-AlonsoNeural", "es-MX-DaliaNeural", "es-MX-JorgeNeural"]}},
+                          "es": ["es-US-AlonsoNeural", "es-MX-DaliaNeural", "es-MX-JorgeNeural"]},
+               "crew": {"en": ["en-US-GuyNeural", "en-US-ChristopherNeural", "en-US-RogerNeural"],
+                        "es": ["es-US-AlonsoNeural", "es-MX-JorgeNeural"]}},
     "first": ["James", "Maria", "Robert", "Linda", "Michael", "Ana", "David", "Jennifer", "Jose", "Patricia", "Daniel",
               "Rosa", "Kevin", "Emily", "Luis", "Sarah", "Minh", "Grace", "Carlos", "Ashley"],
     "last": ["Smith", "Garcia", "Johnson", "Martinez", "Nguyen", "Brown", "Hernandez", "Davis", "Lopez", "Wilson",
@@ -340,7 +525,8 @@ INDIA = {
     "voices": {"agent": {"en": "en-IN-NeerjaNeural", "ta": "ta-IN-PallaviNeural", "hi": "hi-IN-SwaraNeural"},
                "caller": {"en": ["en-IN-PrabhatNeural"],  # the only other Indian English voice is the agent's
                           "ta": ["ta-IN-ValluvarNeural", "ta-IN-PallaviNeural"],
-                          "hi": ["hi-IN-MadhurNeural", "hi-IN-SwaraNeural"]}},
+                          "hi": ["hi-IN-MadhurNeural", "hi-IN-SwaraNeural"]},
+               "crew": {"en": ["en-IN-PrabhatNeural"], "si": ["si-LK-SameeraNeural"], "ta": ["ta-LK-KumarNeural"]}},
     "first": ["Arun", "Lakshmi", "Karthik", "Priya", "Suresh", "Divya", "Rajesh", "Meena", "Vignesh", "Anitha",
               "Mohammed", "Fathima", "Ramesh", "Kavya", "Senthil", "Deepa", "Arjun", "Sangeetha", "Joseph", "Mary"],
     "last": ["Kumar", "Raman", "Subramanian", "Krishnan", "Iyer", "Natarajan", "Pillai", "Rajan", "Murugan", "Basha",

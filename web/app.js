@@ -368,10 +368,13 @@ const agentCalls = new Map();
 let selectedCall = null, player = null, playToken = 0;
 const LANG_NAME = { en: "English", si: "Sinhala", ta: "Tamil", es: "Spanish", hi: "Hindi" };
 const OUTCOME = { status_enroute: "crew en route", status_onsite: "crew on site", status_waiting: "crew to be assigned",
-  status_locating: "locating fault", status_restored_dark: "still dark after restoration", junk: "not an outage", sms_fallback: "asked for SMS" };
+  status_locating: "locating fault", status_restored_dark: "still dark after restoration", junk: "not an outage", sms_fallback: "asked for SMS",
+  crew_changed: "diagnosis changed", crew_logged: "logged", crew_unmatched: "no matching outage" };
+const WHO = { agent: "Agent", caller: "Caller", crew: "Crew" };
 
 function callOutcome(c) {
   const parts = c.acts.filter((a) => OUTCOME[a]).map((a) => OUTCOME[a]);
+  if (c.crew) parts.unshift(c.acts.filter((a) => a === "readback").length > 1 ? "read back, corrected" : "read back, confirmed");
   if (c.acts.includes("ask_neighbour")) parts.unshift("asked about next door");
   if (c.acts.includes("ask_address")) parts.unshift("asked address");
   return (c.escalated ? `<span class="outcome-urgent">URGENT</span> · ` : "") + esc(parts.join(" · "));
@@ -380,8 +383,9 @@ function callOutcome(c) {
 function agentRowHtml(m) {
   const loc = m.location || {};
   const voiced = m.call.turns.some((t) => t.audio);
-  return `<td class="mono">${clockOf(m.t)}</td><td class="lang">${esc(m.language)}</td>
-    <td>${loc.street ? esc(`${loc.street} ${loc.house_no || ""}`) : esc(loc.method || "–")}</td>
+  const where = loc.street ? esc(`${loc.street} ${loc.house_no || ""}`) : esc(loc.method || "–");
+  return `<td class="mono">${clockOf(m.t)}</td><td class="lang">${m.call.crew ? `crew ${esc(m.call.language)}` : esc(m.language)}</td>
+    <td>${m.call.crew ? `<b>${esc(m.call.crew)}</b> · ${where}` : where}</td>
     <td>${voiced ? `<span class="voiced-mark" title="Recorded caller (synthetic voice)">● voice</span>` : ""}</td>
     <td>${callOutcome(m.call)}</td><td class="mono">${esc(m.incident || "")}</td>`;
 }
@@ -397,7 +401,7 @@ function addAgentCall(m) {
     tb.prepend(tr);
     while (tb.children.length > MAX_ROWS) tb.lastChild.remove();
   }
-  tr.classList.toggle("voiced", m.call.turns.some((t) => t.audio));
+  tr.classList.toggle("voiced", m.call.turns.some((t) => t.audio) || !!m.call.crew);
   tr.classList.toggle("alarm", m.call.escalated);
   tr.classList.toggle("sel", selectedCall === m.id);
   tr.innerHTML = agentRowHtml(m);
@@ -409,14 +413,17 @@ function renderConvo() {
   const m = agentCalls.get(selectedCall);
   const box = $("#convo");
   if (!m) { box.innerHTML = `<div class="empty">Select a call to read it or listen.</div>`; return; }
-  const turns = m.call.turns.map((t, i) => `<div class="turn ${t.who}" data-i="${i}">
+  const turns = m.call.turns.map((t, i) => `<div class="turn who-${t.who}" data-i="${i}">
       <button class="play" data-play="${i}" title="Play this line">▶</button>
-      <div class="bubble"><span class="who">${t.who === "agent" ? "Agent" : "Caller"}</span>${badge(t.model)}
-        <div>${esc(t.text)}</div>${t.en && t.en !== t.text ? `<div class="en">${esc(t.en)}</div>` : ""}</div></div>`).join("");
+      <div class="bubble"><span class="who">${WHO[t.who] || t.who}</span>${badge(t.model)}
+        <div>${esc(t.text)}</div>${t.en && t.en !== t.text ? `<div class="en">${esc(t.en)}</div>` : ""}
+        ${t.rejected ? `<div class="en">Spark's wording dropped ${esc(t.rejected.join(", "))}; the checked template was spoken.</div>` : ""}</div></div>`).join("");
   box.innerHTML = `<div class="convo-head"><b>${esc(m.id)}</b><span class="lang">${esc(LANG_NAME[m.language] || m.language)}</span>
       <span class="sub">${clockOf(m.t)}${m.incident ? " · " + esc(m.incident) : ""}</span>
       <button class="btn" data-play="all" title="Play the whole call">▶ Play call</button></div>
-    <div class="convo-note">Synthetic voices, fictional caller. The agent's words are chosen by code from what the control room knows.</div>${turns}`;
+    <div class="convo-note">${m.call.crew
+      ? "Crew report by phone or radio, in the crew's language. Synthetic voices. Relight acts on a report only after the crew confirms the read-back."
+      : "Synthetic voices, fictional caller. Code decides what the agent says from what the control room knows; Muse Spark words it (facts checked), templates otherwise. Safety lines are fixed."}</div>${turns}`;
 }
 
 function stopAudio() {
@@ -458,6 +465,12 @@ $("#convo").addEventListener("pointerdown", async (ev) => {
   document.querySelectorAll(".turn.playing").forEach((x) => x.classList.remove("playing"));
 });
 $("#voiced-only").addEventListener("change", (ev) => $("#agentcalls").classList.toggle("voiced-only", ev.target.checked));
+
+function addMessage(m) {
+  if (m.channel !== "crew") return addCall(m);
+  s_messages.push(m);
+  if (m.call) addAgentCall(m);  // crew reports are calls too: read back by the agent
+}
 
 function addOutbound(kind, x) {
   prepend("outbound", `<td class="mono">${clockOf(x.t)}</td><td>${kind}</td><td class="lang">${esc(x.language)}</td>
@@ -521,14 +534,14 @@ function connect() {
       case "snapshot":
         resetUI();
         msg.state.timeline.slice(-MAX_ROWS).forEach(addLog);
-        msg.state.messages.forEach((m) => (m.channel === "crew" ? s_messages.push(m) : addCall(m)));
+        msg.state.messages.forEach(addMessage);
         (msg.state.notices || []).forEach((n) => addOutbound(n.kind === "restored" ? "Restored" : "ETR", n));
         msg.state.probes.forEach((p) => addOutbound("Question", { ...p, to: [] }));
         applyState(msg.state);
         break;
       case "state": applyState(msg.state); break;
       case "timeline": addLog(msg.entry); break;
-      case "message": if (msg.message.channel === "crew") s_messages.push(msg.message); else addCall(msg.message); break;
+      case "message": addMessage(msg.message); break;
       case "probe": addOutbound("Question", { ...msg.probe, to: [] }); break;
       case "photo": addPhoto(msg); break;
       case "call": {
@@ -537,7 +550,7 @@ function connect() {
         break;
       }
       case "notice": addOutbound(msg.notice.kind === "restored" ? "Restored" : "ETR", msg.notice); break;
-      case "messages": $("#calls").innerHTML = ""; layers.messages.clearLayers(); s_messages = []; msg.messages.forEach(addCall); break;
+      case "messages": $("#calls").innerHTML = ""; layers.messages.clearLayers(); s_messages = []; msg.messages.forEach(addMessage); break;
       case "clock":
         $("#clock").textContent = msg.clock;
         $("#timelapse").hidden = !msg.timelapse;

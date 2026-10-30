@@ -18,31 +18,14 @@ import time
 
 from .config import SCENARIO_DIR
 from . import packs
+from .locales import SITE_REPORTS
 from .network import NetworkState, live_transformers
 
 PROBE_REPLY_DELAY_S = 45
 FOLLOWUP_DELAYS_S = (120, 210, 330)
 TIMELAPSE_SPEED = 240  # after the last scripted event, crews work through the night quickly
 MAX_CLOCK_S = 10 * 3600
-
-SITE_REPORT = {
-    "pole_down": "On site at {street} near number {house}. Concrete pole snapped, conductors down across the road. "
-                 "Starting pole replacement.",
-    "tree_on_line": "On site at {street} near number {house}. A tree is lying across the conductors. "
-                    "Clearing it before the line work.",
-    "live_wire": "On site at {street} near number {house}. The conductor on the road is live. Area cordoned off, "
-                 "making it safe now.",
-    "blown_fuse": "On site at transformer {xf} on {street} near number {house}. The drop-out fuse is blown. "
-                  "Replacing it now.",
-    "service_wire": "On site at {street} near number {house}.",
-}
-CONTRADICT = {
-    "service_wire": "Transformer {xf} on {street} is fine, its fuses are intact. The service wire is down at "
-                    "number {house} after a branch fell, so only houses {a} to {b} have no supply. Need a line crew "
-                    "for the service wire.",
-    "blown_fuse": "The line is fine here. It is the drop-out fuse on transformer {xf} near {street} number {house} "
-                  "that has blown.",
-}
+CONTRADICTS = {"service_wire", "blown_fuse"}  # faults a crew can find instead of what it was sent to
 
 
 def load(name: str = "galle_storm") -> dict:
@@ -78,13 +61,19 @@ def _voice_calls(sc: dict, name: str) -> None:
     path = SCENARIO_DIR / "calls" / f"{name}.json"
     if not path.exists():
         return
-    calls = json.loads(path.read_text(encoding="utf-8"))["calls"]
+    overlay = json.loads(path.read_text(encoding="utf-8"))
+    calls = overlay["calls"]
+    for crew in sc["crews"]:  # the language each crew reports in
+        crew.update(overlay.get("crews", {}).get(crew["id"], {}))
     for e in sc["events"]:
         c = calls.get(e.get("id"))
-        if not c or e["type"] != "complaint":
+        if not c or e["type"] not in ("complaint", "crew_note"):
             continue
-        e.update(channel="call", audio=f"media/audio/calls/{name}/{e['id']}.wav",
-                 text=c["spoken"].replace("{account}", e.get("truth", {}).get("account_no") or ""))
+        e["audio"] = f"media/audio/calls/{name}/{e['id']}.wav"
+        if e["type"] == "complaint":
+            e["channel"] = "call"
+        if "spoken" in c:
+            e["text"] = c["spoken"].replace("{account}", e.get("truth", {}).get("account_no") or "")
         e.update({k: c[k] for k in ("voice", "rate", "withheld", "from") if k in c})
 
 
@@ -141,28 +130,28 @@ class World:
         hit = [f for f in live if f.get("transformer") in out and not f.get("hidden")]
         return hit[0] if hit else None
 
-    def site_report(self, inc: dict, crew: str) -> dict | None:
-        """What the crew sees on arrival, as a crew_note event (text plus labels for mock mode)."""
+    def site_report(self, inc: dict, crew: str, lang: str = "en") -> dict | None:
+        """What the crew sees on arrival, as a crew_note event in its language (text plus labels for mock mode)."""
+        words = SITE_REPORTS.get(lang, SITE_REPORTS["en"])
         f = self.match(inc)
         if f is None:
-            text = f"On site at {inc['label']}. No damage found here; the line looks healthy."
-            return {"type": "crew_note", "crew": crew, "language": "en", "text": text, "incident": inc["id"],
-                    "truth": {"damage": "none", "device_ok": True}}
+            return {"type": "crew_note", "crew": crew, "language": lang, "text": words["nothing"].format(
+                label=inc["label"]), "incident": inc["id"], "truth": {"damage": "none", "device_ok": True}}
         xf = f.get("transformer") or inc.get("site_xf") or ""
         vals = {"street": f["street"], "house": f.get("near_house", ""), "xf": xf,
                 "a": f.get("houses", ["", ""])[0], "b": f.get("houses", ["", ""])[1]}
         believed = inc["kind"]
-        if f["kind"] in CONTRADICT and believed not in ("unknown", f["kind"]):
-            text = CONTRADICT[f["kind"]].format(**vals)
+        if f["kind"] in CONTRADICTS and believed not in ("unknown", f["kind"]):
+            text = words[f"contradict_{f['kind']}"].format(**vals)
             device_ok = True
         else:
-            text = SITE_REPORT[f["kind"]].format(**vals)
+            text = words[f["kind"]].format(**vals)
             device_ok = False
         truth = {"street": f["street"], "house_no": f.get("near_house"), "damage": f["kind"],
                  "device_ok": device_ok, "truth_fault": f["id"]}
         if f["kind"] == "service_wire":
             truth["house_from"], truth["house_to"] = f["houses"]
-        return {"type": "crew_note", "crew": crew, "language": "en", "text": text, "incident": inc["id"],
+        return {"type": "crew_note", "crew": crew, "language": lang, "text": text, "incident": inc["id"],
                 "truth": truth}
 
     def repair(self, fault_id: str) -> None:
@@ -245,6 +234,14 @@ class Replayer:
         on = self.world.has_power(customer.account_no, customer.transformer_id)
         return self._words(e)["neighbour_on" if on else "neighbour_off"], on
 
+    def readback(self, e: dict, fields: dict) -> tuple[bool, str]:
+        """The crew hears the agent's read-back and confirms it, or corrects it if it got the facts wrong."""
+        truth, words = e.get("truth", {}), self._words(e)
+        wrong = [k for k in ("damage", "house_from", "house_to") if k in truth and fields.get(k) != truth[k]]
+        if bool(fields.get("device_ok")) != bool(truth.get("device_ok")):
+            wrong.append("device_ok")
+        return (False, words["readback_wrong"].format(report=e["text"])) if wrong else (True, words["readback_ok"])
+
     def sms_fallback(self, e: dict, t: float) -> None:
         """A caller the agent could not understand sends the breakdown SMS it asked for."""
         acct = e.get("truth", {}).get("account_no")
@@ -256,7 +253,8 @@ class Replayer:
                        "from": e.get("from"), "text": f"{code} {acct}", "truth": dict(e.get("truth", {}))})
 
     def crew_arrived(self, inc: dict, crew: str, t: float) -> None:
-        if (e := self.world.site_report(inc, crew)) is not None:
+        lang = next((c.get("language", "en") for c in self.sc["crews"] if c["name"] == crew), "en")
+        if (e := self.world.site_report(inc, crew, lang)) is not None:
             e["t"], e["id"] = t, f"R{next(self._ids)}"
             self.push(e)
 

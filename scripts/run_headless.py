@@ -2,7 +2,7 @@
 
 Usage:  python scripts/run_headless.py [scenario] [--timeline] [--no-switching] [--calls]
 
---calls prints every voiced call's conversation with the agent (all calls if none are voiced).
+--calls prints every voiced call and crew report with the agent's side (all calls if none are voiced).
 
 By default the operator approves every safe switching plan as soon as it is offered.
 """
@@ -52,7 +52,7 @@ async def main(name: str, show_timeline: bool, switching: bool, show_calls: bool
         print()
     if show_calls:
         calls = [m for m in engine.messages if "call" in m]
-        voiced = [m for m in calls if m["event"].get("audio")]
+        voiced = [m for m in calls if m["event"].get("audio") or m["channel"] == "crew"]
         for m in voiced or calls:
             print(f"--- {m['id']} {clock_str(m['t'])} [{m['language']}]" + (" ESCALATED" if m["call"]["escalated"] else ""))
             for turn in m["call"]["turns"]:
@@ -63,7 +63,8 @@ async def main(name: str, show_timeline: bool, switching: bool, show_calls: bool
     c = s["counts"]
     print(f"mode={s['mode']}  messages={c['messages']}  duplicates={c['duplicates']}  junk={c['junk']}  "
           f"BD SMS={c['bd_sms']}  languages={c['languages']}  notified={c['notified']}  end={s['clock']}")
-    print(f"calls answered by the agent={c['agent_calls']}  escalated={c['escalated']}  "
+    print(f"calls answered by the agent={c['agent_calls']}  crew reports read back={c['crew_calls']}  "
+          f"escalated={c['escalated']}  "
           f"asked next door={sum(1 for p in s['probes'] if p.get('via'))}")
     print("\nIncidents:")
     for i in sorted(engine.incidents, key=lambda i: i["located_at"]):

@@ -172,7 +172,8 @@ table.mini th { color: var(--muted); font-weight: 500; }
 .convo-note { color: var(--dim); font-size: 11px; margin-bottom: 8px; }
 .turn { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 6px; margin-bottom: 5px; }
 .bubble { padding: 4px 8px; border-radius: 3px; background: var(--panel-2); border-left: 2px solid var(--muted); }
-.turn.agent .bubble { border-left-color: var(--agent); }
+.turn.who-agent .bubble { border-left-color: var(--agent); }
+.turn.who-crew .bubble { border-left-color: var(--st-ons); }
 .turn.playing .bubble { box-shadow: 0 0 0 1px var(--voice); }
 .bubble .who { font-size: 10px; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); margin-right: 6px; }
 .bubble .en { color: var(--muted); font-size: 11px; }

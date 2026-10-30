@@ -32,6 +32,7 @@ from .network import NetworkState, live_transformers, restoration_plans
 from .planner import STEPS, Crew, Job, schedule, score
 from .tracer import Damage, Evidence, Tracer
 from .vision import analyse_photo
+from . import voice
 
 LOCATED_AT = 0.8  # confidence at which a suspected fault becomes an incident
 ASK_BELOW = 0.85  # confidence below which the agent asks a customer to disambiguate
@@ -374,7 +375,7 @@ class Engine:
         lang = e.get("language", "en")
         if not audio or not (config.ROOT / audio).exists():
             return e["text"], "mock (script)"
-        if lang in TRANSCRIBE_LANGS or e["type"] == "crew_note":
+        if lang in TRANSCRIBE_LANGS:
             bias = {"en": ["English"], "ta": ["Tamil", "English"], "hi": ["Hindi", "English"],
                     "es": ["Spanish", "English"]}.get(lang)
             try:
@@ -416,7 +417,8 @@ class Engine:
     async def _complaint(self, e: dict) -> None:
         text, heard_by = (await self._transcript(e)) if e["channel"] == "call" else (e["text"], None)
         # Every call is answered by the agent, except a caller's answer to one of its own questions.
-        call = self.agent.start(e, text, heard_by) if e["channel"] == "call" and not e.get("probe_reply") else None
+        call = (await self.agent.start(e, text, heard_by)) if e["channel"] == "call" and not e.get("probe_reply") \
+            else None
         if call is not None and text is None:
             await self.agent.not_understood(call, e, heard_by)
             return
@@ -435,6 +437,7 @@ class Engine:
                "probe_reply": e.get("probe_reply"), "followup": e.get("followup"), "event": e}
         if call is not None:
             msg["call"] = call
+            self.agent.gloss(call, f)
         await (self.log if f["hazard"] != "none" else self.note)(ext.model, f"{e['id']}: {f['symptom'].replace('_', ' ')}"
                        + (f", hazard {f['hazard'].replace('_', ' ')}" if f["hazard"] != "none" else "")
                        + (" (junk)" if f["is_junk"] else ""), f.get("summary_en", "")[:160], e["id"])
@@ -497,28 +500,50 @@ class Engine:
                               "lon": loc.get("lon")})
 
     async def _crew_note(self, e: dict) -> None:
-        text, _ = await self._transcript(e)
-        text = text if text is not None else e["text"]
+        """A crew reports by phone or radio; the agent reads back what it understood before anything changes."""
+        if not e.get("audio") and self.client.mode == "live" and not self.offline and voice.available():
+            # The World writes on-site reports as text; speak them so live mode really transcribes a voice.
+            try:
+                e["audio"] = (await voice.synthesize(e["text"], self.agent.crew_voice(e))).relative_to(
+                    config.ROOT).as_posix()
+            except Exception:  # noqa: BLE001
+                pass
+        text, heard_by = await self._transcript(e)
         ex = self.glimmer if self.offline else self.extractor
-        ext = await asyncio.to_thread(ex.crew_note, text, e.get("truth", {}))
+
+        async def read(t: str) -> Extraction:
+            return await asyncio.to_thread(ex.crew_note, t, e.get("truth", {}))
+
+        call = self.agent.crew_start(e, text if text is not None else "…", heard_by)
+        if text is None:  # no model could make out the call: the crew texts the report instead
+            await self.agent.crew_by_text(call, e)
+            text = e["text"]
+        ext = await self.agent.readback(call, e, await read(text), read)
         f = ext.fields
+        self.agent.gloss(call, f)
         loc = self._locate(f, None)
         await self.log(ext.model, f"{e['id']} ({e['crew']}): {f['damage'].replace('_', ' ')}"
                        + (", device is fine" if f.get("device_ok") else ""), f["summary_en"][:200], e["id"])
         msg = {"id": e["id"], "t": e["t"], "channel": "crew", "language": e.get("language", "en"),
                "from": e["crew"], "text": text, "fields": f, "model": ext.model, "location": loc, "status": "crew",
-               "event": e}
+               "event": e, "call": call}
         inc = self._incident(e.get("incident"))
         if inc is None:
             # A patrol report: give it to the open incident whose area it falls in, if any.
             xf = loc.get("transformer")
             inc = next((i for i in self._active() if xf and (xf in i["out"] or
                         self.feeder.transformers[xf].section in i["zone"])), None)
+        changes = len(inc["history"]) if inc else 0
         if inc:
             msg["incident"] = inc["id"]
             if d := self._damage(e["id"], f["damage"], loc, 4.0):
                 inc["damage"].append(d)
             await self._site_findings(inc, f, loc, e)
+        await self.agent.crew_ack(call, inc, bool(inc) and len(inc["history"]) > changes)
+        readbacks = [t["text"] for t in call["turns"] if t.get("act") == "readback"]
+        await self.log("Agent", f"{e['id']}: read back to {e['crew']}, "
+                        + ("corrected once, then confirmed" if len(readbacks) > 1 else "confirmed"),
+                        readbacks[-1], e["id"])
         self.messages.append(msg)
         self._apply(msg)
         await self.broadcast({"type": "message", "message": _public(msg)})
@@ -1152,7 +1177,8 @@ class Engine:
                 "served": sum(self.customers.values()),
                 "critical_out": sum(len(i["critical"]) for i in self._active()),
                 "calls": sum(m["channel"] not in ("crew",) and not m.get("probe_reply") for m in self.messages),
-                "agent_calls": sum("call" in m for m in self.messages),
+                "agent_calls": sum("call" in m and m["channel"] != "crew" for m in self.messages),
+                "crew_calls": sum("call" in m and m["channel"] == "crew" for m in self.messages),
                 "escalated": sum(m["call"]["escalated"] for m in self.messages if "call" in m),
                 "crews": dict(Counter(c["status"] for c in self.crews.values())),
                 "hazards_open": sum(not h["safe"] for h in self.hazards),

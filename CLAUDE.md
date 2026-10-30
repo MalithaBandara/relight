@@ -228,9 +228,15 @@ scenario JSON --> Replayer (clock) --> Engine.handle(event)
   probe reply, then re-trace), then the status (incident + crew state + ETR, restored-but-still-dark,
   or locating) and close. While calls are in progress the tracer's SMS question waits, so callers are asked
   first.
-- The agent's words are templates per act in `locales.py` (`agent`, `caller`, `HAZARD_NAMES`, `voices`);
-  code chooses the act. On voiced calls Spark may reword the status line (`REPLY_SYSTEM`); safety lines
-  are never reworded. Simulated callers answer via `Replayer.answer` / `neighbour` from the truth labels.
+- Code chooses the act and its facts; **Muse Spark words every non-fixed line** in the caller's language
+  (`CallAgent.say` -> `_spark`, `SPEAK_SYSTEM`). `facts_kept` rejects a Spark line that drops or changes any
+  number, time, street name or id from the template (turn model `Code (Spark line failed fact check)`,
+  `rejected` lists what was missing); then the template is spoken. No key / offline -> template
+  (`mock (template)`). `FIXED` acts (greeting with the automated-assistant disclosure, safety lines,
+  known-hazard warning, escalation, SMS fallback, close) are never sent to Spark. During a surge
+  (`quiet_messages`) only voiced calls use Spark. Templates live in `locales.py` (`agent`, `caller`,
+  `HAZARD_NAMES`, `READBACK`, `SITE_REPORTS`, `voices`). Simulated callers answer via `Replayer.answer` /
+  `neighbour` from the truth labels.
 - Voiced calls: `scenarios/calls/<scenario>.json` maps complaint ids to `spoken` (opening words),
   optional `withheld` (facts given only when asked; mock extraction hides them from the labels), `voice`,
   `rate`, `from` (unknown number). `scenario._voice_calls` applies it at load and sets `audio`.
@@ -240,6 +246,19 @@ scenario JSON --> Replayer (clock) --> Engine.handle(event)
   asks for the breakdown SMS and the World sends it (`sms_fallback`).
 - Agent speech is synthesised on demand by `GET /api/call/{id}/{turn}.wav` (edge-tts, cached). Meta has
   no text-to-speech model; the voice is Microsoft's, everything that decides is Meta models + code.
+- Crew reports are calls too (`_crew_note`): the crew's report is transcribed and extracted, the agent
+  reads it back (`crew_summary`, act `readback`), the World confirms or says "Negative. Again: ..." when
+  the extracted damage / device_ok / house range differ from the truth (then one re-extraction), and only
+  then `_site_findings` runs; the agent acknowledges (`crew_changed` / `crew_logged` / `crew_unmatched`).
+  Each crew reports in its own language, set per crew id in the calls overlay (`"crews": {"CREW-T1":
+  {"language": "si"}}`): Galle T1/V1 Sinhala, T2 Tamil, line crews English; Houston T2/L2/V1 Spanish;
+  Chennai Tamil and Hindi gangs, T1 English. Only the first crew on site files a report, so the
+  troubleshooters' languages are the ones heard. The World writes site reports from `SITE_REPORTS[lang]`;
+  the read-back is built from `READBACK[lang]` and worded by Spark. Sinhala crew audio goes to
+  `spark_listen`; if no model can read a crew's call, the agent asks for a text report (`crew_text`).
+  In live mode the World's text site reports are synthesised first so Voice Transcribe hears a real voice;
+  Galle's patrol notes N1-N4 have recorded audio (calls overlay).
+- Spark's English `summary_en` is shown under a caller's or crew's first words (`CallAgent.gloss`, live).
 
 ### 5.7 Scenario packs and locales
 - A scenario's `pack` block: `locale` (`sri_lanka` / `us` / `india`), `network` (`{"type": "ieee34"}` or
@@ -389,6 +408,9 @@ Done (mock mode, verified headless and in the browser):
 - AI call agent (2026-10-30, owner's choice): answers every call in en/si/ta/es/hi with context from engine
   state, safety lines, escalation, next-door questions; 18 synthetic voiced calls across the three
   scenarios; "Agent calls" console tab with per-line and whole-call playback. Mock mode only so far.
+- Crew reports by voice with read-back before acting (all crew reports; Galle patrol notes recorded);
+  crews in Sinhala, Tamil, Hindi, Spanish and English; Spark words every non-safety agent line with a
+  fact check (mock: templates). Untested live parts are listed in 12.3.
 
 ### 12.1 Who does what
 
@@ -439,7 +461,7 @@ Blocked until the owner provides something
 
 Can start now
 - [x] Call scripts in every language and the `media/audio/calls/` layout (scenarios/calls/*.json).
-- [ ] Crew voice notes as synthetic audio (same pipeline as calls), if wanted for the video.
+- [x] Crew voice reports with read-back (synthetic audio; same pipeline as calls).
 - [ ] Find candidate public photo datasets and drone clips with their licences, for the owner to choose.
 - [ ] Customer portal sample buttons for the Houston and Chennai scenarios (currently Galle only).
 - [ ] Polish the console for recording (demo flow, click path, timing).
@@ -461,7 +483,27 @@ Can start now
   consumer index the engine runs on, with SAM symbol overlay and a review screen for flagged items.
 - **Glimmer on-premise mode** through a hosted endpoint (no cascade work unless the owner asks).
 
-### 12.3 Order that saves the most time
+### 12.3 Built but untested (verify once the API key is in)
+
+Owner's rule (2026-10-30): build every feature in its intended form even when it cannot be tested yet, with a
+mock/template fallback, and list it here. Tick items off (or fix them) after live testing; add new ones.
+
+Call agent and crew calls
+- [ ] Spark wording of agent lines (`SPEAK_SYSTEM`): naturalness per language, how often `facts_kept`
+      rejects lines (Spark may write digits in local script or transliterate street names), latency per line.
+- [ ] `spark_listen` (Sinhala calls and Sinhala crews): request shape (`input_audio` content part) and
+      transcript quality; the SMS fallback (`not_understood`) and crew text fallback (`crew_by_text`).
+- [ ] Voice Transcribe on the synthetic 8 kHz phone WAVs (en/ta/es/hi): `languageBias` value format,
+      `ENDPOINTING` response field `transcript`, accuracy vs the scripted text.
+- [ ] Spark extraction of non-English and code-mixed crew reports (crew schema), and of a caller's
+      opening plus answers after the agent's questions (re-extraction).
+- [ ] Read-back correction path with real Spark misreads (only tested with a stand-in reading).
+- [ ] Live synthesis of the World's site reports before transcription (edge-tts latency in the loop).
+- [ ] Neighbour question: Spark reading the caller's yes/no about next door as a probe answer.
+- [ ] Voices: pronunciation of street names and numbers by each edge-tts voice; native-speaker check of
+      every new Sinhala / Tamil / Spanish / Hindi line (agent, callers, crews, read-back words).
+
+### 12.4 Order that saves the most time
 
 1. Owner: API key into `.env`; submit credit forms.
 2. Agent: live run and fixes; meanwhile the owner records audio from the scripts and picks media.
@@ -470,4 +512,5 @@ Can start now
 5. Nov 4: agent finalises README and checks; owner submits.
 
 When in doubt about scope, ask the owner. Do not remove features to save time; the owner prefers full
-scope and builds with AI agents.
+scope and builds with AI agents. Build features fully even when they cannot be tested yet, and record what
+still needs testing in 12.3.
