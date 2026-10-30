@@ -87,6 +87,13 @@ Without an API key the app runs in **mock mode**: cached model responses are rep
 not cached falls back to the scenario's labelled ground truth (tagged `mock` in the UI). With a key,
 every model response is cached in `.cache/model/`, so replays are free and repeatable.
 
+**Using your own Meta Model API key:** put it in `.env` as `MODEL_API_KEY=...` (get one at https://dev.meta.ai) and
+restart the server. Nothing else is needed. `.env` is git-ignored, so the key stays on your machine; never commit it.
+The author's machine has an extra local switch that holds back paid calls until the author approves them (`api_allowed` in
+`relight/config.py`); a fresh clone does not have it and calls the API normally.
+
+To fetch the third-party example videos (git-ignored): `pip install yt-dlp`, then `python scripts/fetch_videos.py`.
+
 Headless replay with a summary against ground truth (`galle_storm`, `houston_hurricane` or `chennai_cyclone`):
 
 ```bash

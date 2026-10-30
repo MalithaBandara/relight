@@ -28,6 +28,8 @@ def step(name, fn):
 def main() -> None:
     if not config.MODEL_API_KEY:
         sys.exit("MODEL_API_KEY is not set. Copy .env.example to .env and add your key.")
+    if not config.api_allowed():
+        sys.exit("API use is not allowed right now: the owner must write GO (see config.api_allowed).")
     client = ModelClient(mode="live")
     headers = {"Authorization": f"Bearer {config.MODEL_API_KEY}"}
 

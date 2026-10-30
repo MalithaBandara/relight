@@ -45,6 +45,17 @@ describing that earlier project.
   utility names in customer-facing text (templates say "Outage desk", not a utility's name); real
   facilities from OpenStreetMap appear only under generic names ("Hospital on <street>"); never claim
   how a specific real utility operates; label mock output as mock.
+- **No API calls without the owner's GO (owner's rule, 2026-10-30).** On the owner's machine no session may call the
+  Meta Model API (or Glimmer) unless the owner's latest message contains the word **GO** in capitals. Enforced, not
+  just written: the git-ignored marker `.claude/require_go` switches the rule on; `relight/models.py` then refuses every
+  live request unless `config.api_allowed()`; hooks in the git-ignored `.claude/settings.local.json` (script
+  `.claude/hooks/api_gate.py`) open the gate only for a turn whose owner message contains GO, close it when the turn
+  ends and at session start, and block tool calls that try to open it or remove the marker. Never try to work around
+  this. Without GO, work from the cache and mock mode, and ask the owner for GO (with a cost estimate) before anything
+  that needs the API. The owner can also run with `RELIGHT_ALLOW_API=1` set in their own shell (ignored in `.env`).
+  A fresh clone has no marker and no local hooks, so anyone else uses their own key in `.env` with no restriction.
+- **API key:** lives only in `.env` (git-ignored; `.env.example` has an empty key). The same hook refuses any tool
+  call that reads, writes or commits `.env`, so the key never enters a session or the repo. Only the owner edits it.
 - **Budget:** $150 Meta API credit. Partner credits (Baseten, Modal, Fireworks; $100 each) were applied
   for and cover **open-weights models only**. Never print, log or commit API keys.
 

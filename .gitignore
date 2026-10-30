@@ -33,3 +33,9 @@ media/audio/tts/
 media/drone/*.mp4
 media/videos/*.mp4
 media/uploads/
+
+# Owner-machine API restriction (see relight/config.py api_allowed): the marker that switches it on, the one-turn
+# permission file, and the local hooks that manage them. A fresh clone has none of these, so it is not restricted.
+.claude/require_go
+.claude/api_go
+.claude/settings.local.json

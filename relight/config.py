@@ -6,6 +6,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 ROOT = Path(__file__).resolve().parent.parent
+# Read before .env is loaded, so the override can only come from the owner's own shell, never from a file.
+_ALLOW_FROM_SHELL = os.environ.get("RELIGHT_ALLOW_API") == "1"
 load_dotenv(ROOT / ".env")
 
 DATA_DIR = ROOT / "data"
@@ -26,3 +28,16 @@ GLIMMER_MODEL = os.getenv("GLIMMER_MODEL", "muse-glimmer")
 # "live" calls the Meta Model API; "mock" replays cached responses and falls back to
 # the scenario's labelled ground truth. Defaults to live when a key is present.
 MODEL_MODE = os.getenv("MODEL_MODE", "live" if MODEL_API_KEY else "mock")
+
+# Owner's rule (2026-10-30): on the owner's machine no paid model request goes out unless the owner allowed it.
+# The rule is switched on by REQUIRE_GO, a git-ignored marker that exists only there, so anyone who clones the repo
+# calls the API normally with their own key. Where it is on, a coding-agent session gets permission only for a turn
+# in which the owner wrote GO (hooks in the git-ignored .claude/settings.local.json create API_GATE for that turn and
+# remove it afterwards), or the owner runs with RELIGHT_ALLOW_API=1 in their own shell. Cached responses replay
+# either way, so demos and regression runs keep working.
+REQUIRE_GO = ROOT / ".claude" / "require_go"
+API_GATE = ROOT / ".claude" / "api_go"
+
+
+def api_allowed() -> bool:
+    return not REQUIRE_GO.exists() or _ALLOW_FROM_SHELL or API_GATE.exists()

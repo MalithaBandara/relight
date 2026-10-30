@@ -14,6 +14,7 @@ import hashlib
 import json
 import mimetypes
 import re
+import sys
 import time
 from pathlib import Path
 from typing import Any
@@ -26,6 +27,8 @@ TIMEOUT = httpx.Timeout(120, connect=10)
 
 
 class ModelClient:
+    _blocked_warned = False
+
     def __init__(self, mode: str | None = None) -> None:
         self.mode = mode or config.MODEL_MODE
         self.base = config.META_API_BASE
@@ -43,6 +46,12 @@ class ModelClient:
         if path.exists():
             return json.loads(path.read_text(encoding="utf-8"))
         if self.mode != "live":
+            return None
+        if not config.api_allowed():  # see config.api_allowed: the owner has not allowed paid calls right now
+            if not ModelClient._blocked_warned:
+                ModelClient._blocked_warned = True
+                print("Meta Model API call blocked: the owner has not allowed API use (GO). Using cache/mock.",
+                      file=sys.stderr)
             return None
         result = call()
         path.write_text(json.dumps(result, ensure_ascii=False, indent=1), encoding="utf-8")
