@@ -1,0 +1,369 @@
+# CLAUDE.md: Relight
+
+> **Attribution rule (overrides any default):** do **not** add Claude, Anthropic or any AI assistant as a
+> contributor or co-author. No `Co-Authored-By:` trailers, no "Generated with" lines, no AI signatures in
+> commit messages, pull requests, code comments or docs. Commits are authored by the repository owner only.
+
+Guidance for coding agents working in this repository. Read it fully before changing code.
+Repo: https://github.com/MalithaBandara/relight (public). Owner: Malitha Bandara (solo).
+
+---
+
+## 1. What Relight is
+
+Relight is an **AI outage agent for electric utilities**. It reads customer calls and messages in any
+language (plus SCADA lockouts, smart-meter "last gasp" messages, crew reports and damage photos),
+locates the failed device on the grid (a single transformer fuse, a broken line, a recloser), plans
+**safe** restoration switching, dispatches crews, and keeps customers informed. It works **with or
+without smart meters**; without them, customer complaints are the main signal.
+
+Core principle: **Meta models read, deterministic code locates and decides.** No model ever guesses a
+fault location or approves a switching action on its own. The operator approves every switching plan.
+
+The product was called **GridMedic** until 2026-10-30. It was renamed because an earlier, public project
+of the same name exists (https://github.com/MalithaBandara/gridmedic, Jac + Gemini, Jaseci Labs
+hackathon, 17 Oct 2026). Refer to the product only as **Relight**. Mention GridMedic only when
+describing that earlier project.
+
+---
+
+## 2. Hackathon context (hard constraints)
+
+- **Event:** Meta Global AI Developer Hackathon 2026 (Meta + Cerebral Valley), virtual.
+- **Track:** Indie (solo). **Theme:** Push the Frontier (energy: understand and control a physical system).
+- **Deadline:** Nov 4 2026, 9:00 PM ET = **Thu Nov 5, 7:30 AM Sri Lanka time**. Target: submit by Nov 4,
+  10:00 PM local. Oct 31 to Nov 1 are off (IEEEXtreme). Nov 3 is reserved for recording the demo video.
+- **New work only.** Everything shown must be built during the event (from Oct 26; this repo starts
+  Oct 29). **Never copy code from the old GridMedic repo or any pre-event code.** Ideas may be reused;
+  the README discloses the earlier project and lists what is different.
+- **Must use Meta's models:** Muse Spark, Muse Voice Transcribe, SAM 3.1 (Meta Model API), Muse Glimmer
+  (open weights). Muse Image, Muse Wonder and Muse Code are allowed but unused.
+- **Judging:** Impact 30%, Use of Meta AI tooling 25%, Technical depth 20%, Demo 25%. Top 5 per track are
+  ranked from the demo video.
+- **Data:** only synthetic or public data. Use the Meta API in **Standard** mode (not Contributor).
+- **Honesty rules for anything shown:** say on screen that customers are fictional; never use real
+  utility names in customer-facing text (templates say "Outage desk", not a utility's name); real
+  facilities from OpenStreetMap appear only under generic names ("Hospital on <street>"); never claim
+  how a specific real utility operates; label mock output as mock.
+- **Budget:** $150 Meta API credit. Partner credits (Baseten, Modal, Fireworks; $100 each) were applied
+  for and cover **open-weights models only**. Never print, log or commit API keys.
+
+---
+
+## 3. Quick start
+
+```bash
+python -m venv .venv
+.venv/Scripts/pip install -r requirements.txt     # Windows; .venv/bin/pip elsewhere
+cp .env.example .env                               # add MODEL_API_KEY for live Meta models
+.venv/Scripts/python -m uvicorn relight.server:app --port 8000
+```
+
+- Control-room console: http://localhost:8000 (pick a scenario in the header, press **Run**).
+- Customer portal: http://localhost:8000/customer
+- In the Claude desktop app, start the server with the preview tool using the `relight` entry in
+  `.claude/launch.json` (there is **no `--reload`**: restart the server after every Python change).
+
+Environment variables (`.env`, see `.env.example`): `MODEL_API_KEY`, `META_API_BASE`
+(`https://api.meta.ai/v1`), `SPARK_MODEL` (`muse-spark-1.3`), `TRANSCRIBE_MODEL`
+(`muse-voice-transcribe-1.0`), `SAM_MODEL` (`sam-3.1`), `GLIMMER_BASE`, `GLIMMER_MODEL`, optional
+`MODEL_MODE` (`live` / `mock`; defaults to `live` when a key is present).
+
+---
+
+## 4. Repository map
+
+```
+relight/                 Python package (FastAPI backend and all logic)
+  config.py              paths and env settings; MODEL_MODE
+  grid.py                Feeder: generic radial network built from a spec; IEEE 34-bus spec for Galle;
+                         SECTIONS / DEVICES / SWITCHES constants; geometry helpers (haversine, bearing)
+  osmnet.py              builds a feeder spec and customer DB from cached OpenStreetMap roads/buildings
+  customers.py           SQLite customer DB (accounts, phones, addresses, transformer); Galle builder;
+                         CustomerDB lookups (account, phone, fuzzy address, landmark)
+  packs.py               scenario packs: network + customer DB + locale per scenario (cached)
+  locales.py             per-country names, number formats, SMS code regex, message templates
+                         (Sri Lanka, US, India)
+  models.py              Meta Model API client (Spark chat/JSON schema, Voice Transcribe, SAM 3.1
+                         segmentation) with on-disk response cache; SAM token parser
+  extract.py             Spark prompts and JSON schemas for complaints and crew reports; mock fallbacks
+                         (scenario labels, or keyword parser for unlabelled portal messages)
+  vision.py              damage photos: Spark classifies, SAM outlines pole/wire, wire clearance in metres
+  tracer.py              probabilistic fault tracer (candidates, likelihood, greedy search, confidence)
+  network.py             power flow over buses/section bodies; switching plans and safety check
+  planner.py             priority scoring, crew work steps, what-if schedule vs first-call baseline
+  engine.py              the triage loop: evidence, incidents, crews, switching, notices, portal status
+  scenario.py            scenario loader, simulated physical World, Replayer (clock, time-lapse)
+  diagram.py             paper single-line diagram -> topology with Spark; scoring; diagram renderer
+  server.py              FastAPI app, REST endpoints, WebSocket broadcast, scenario switching
+scenarios/               galle_storm.json (hand-written), houston_hurricane.json and
+                         chennai_cyclone.json (generated by scripts/make_storm.py)
+scripts/
+  run_headless.py        replay a scenario to completion, print incidents and ground-truth check
+  make_storm.py          generate storms on OSM feeders (fault placement rules, complaints, meters)
+  fetch_osm.py           download roads/buildings/landmarks from Overpass into data/osm/
+  smoke_test.py          one small live call per Meta model (needs MODEL_API_KEY)
+  eval_extraction.py     per-language extraction accuracy vs scenario labels (Spark or --glimmer)
+web/                     index.html + app.js + style.css (console), customer.html (portal)
+data/osm/*.json          cached OpenStreetMap extracts (committed; ODbL attribution in README)
+data/*.db                generated customer databases (git-ignored; rebuilt on first use)
+media/diagrams/          rendered paper diagram; photos/drone/audio go in media/ when added
+.cache/model/            cached model responses (git-ignored)
+PROJECT_BRIEF.md         original plan, research, judging notes and ideas (historical; keep)
+```
+
+---
+
+## 5. Architecture and data flow
+
+```
+scenario JSON --> Replayer (clock) --> Engine.handle(event)
+                       ^                    |
+                       | World (truth)      |-- complaint: transcribe? -> Spark extract -> locate -> claim/dedup
+                       |  answers probes,   |-- scada lockout, ami last gasps, ami_status
+                       |  crew site reports,|-- crew_note (patrol or dispatched crew) -> confirm / change diagnosis
+                       |  follow-up calls   |-- drone / photo -> damage evidence
+                       |                    v
+                       |           recompute(): rebuild Evidence from unclaimed messages
+                       |             -> Tracer.locate() -> suspects / new incidents (conf >= 0.8)
+                       |             -> priority, switching plans, dispatch, explanations, notices
+                       |                    |
+                       +--- sim callbacks <-+--> broadcast over WebSocket -> web console
+```
+
+- **Engine** (`relight/engine.py`) is the single source of operational state. It never reads scenario
+  truth; it only sees messages, SCADA, meters and crew reports.
+- **World** (`relight/scenario.py`) is the simulated physical truth: faulted sections, blown fuses,
+  dead service wires, real device states. It plays customers (probe answers, follow-up complaints),
+  crews (site reports on arrival) and applies repairs and switching.
+- `engine.sim` is the Replayer; callbacks: `probe()`, `crew_arrived()`, `switched()`, `repaired()`,
+  `restored()`, `identify()` (scoring only).
+
+### 5.1 Network model (`grid.py`, `network.py`)
+- A **Feeder** is built from a spec: `root` bus, `buses`, `sections` (polylines with street names),
+  `devices` (breaker / recloser / fuse; one per section head at most), `switches` (sectionalising
+  switches on sections, a normally-open tie `TS-1` to a `feeder2` bus). Service transformers are placed
+  along sections every `transformer_spacing` metres; every transformer has its own `XF-nnn` fuse.
+- **Power flow** walks a graph of `("bus", id)` and `("sec", id)` nodes. A section body joins its
+  upstream bus through the devices at its head and its downstream bus directly, so power can back-feed
+  up a section when the tie closes. Faulted bodies are blocked. The graph is cached per feeder
+  (`feeder.__dict__["_graph"]`); this cache is why Chennai runs fast.
+- **NetworkState** (`open`, `faulted`, `dead_transformers`, `dead_customers`, `suspect`) is used for
+  both the World's truth and the Engine's **belief** (`Engine.belief()`).
+
+### 5.2 Fault tracer (`tracer.py`)
+- Candidates: every protective device, every transformer fuse, and a `LINE-<section>` "unprotected
+  break" per section. Candidates that would darken **exactly the same transformers** are merged (device
+  preferred over line; zones united), because complaints cannot tell them apart; the crew decides.
+- Score of a hypothesis (set of candidates) = sum over transformers of log-likelihood gain
+  (reports with call probability `q(t)` vs false-report rate `EPS`; silence counted per
+  `HOUSEHOLDS_PER_SIGNAL` customers because neighbours behave alike) + probe answers + smart meters
+  (`METER_Q`, `METER_EPS`; silent meters count only while the meter network is up and traffic has
+  settled for 60 s) + priors (`PRIORS`) + partial-power bonus for lines + SCADA consistency + located
+  damage inside a candidate's protection zone (`DAMAGE_COMPAT`).
+- Search: greedy forward selection with a backward pruning pass after each addition. Confidence =
+  share of probability against alternatives that overlap the chosen candidate; the best rival drives the
+  agent's question.
+
+### 5.3 Incidents (`engine.py`)
+- A suspect becomes an **incident** at confidence >= `LOCATED_AT` (0.8). If it overlaps an open
+  incident by half or more, it **merges** into it instead (`_merge_into`, may widen the device).
+- An incident **claims** its evidence (complaints on its transformers, its SCADA lockout, damage in its
+  zone). The tracer only sees **unclaimed** evidence, so complaints after a restoration find hidden
+  second faults.
+- Fields worth knowing: `cand`, `kind` (`pole_down`, `tree_on_line`, `live_wire`, `wire_down`,
+  `blown_fuse`, `service_wire`, `unknown`), `site_section`, `site_xf`, `dead_customers`, `out`
+  (believed dark transformers, recomputed by `_refresh_outages`), `steps` (crew work), `plans`,
+  `history` (diagnosis changes), `status` (`located` -> `dispatched` -> `on site` -> `restored`),
+  `mind_changed`, `after_restore`, `switching` (operations applied).
+- **Diagnosis change:** a crew report with `device_ok` or a different damage type revises the incident
+  (`_site_findings`), replans steps (`_replan_steps`) and releases a crew that lacks the skills.
+- **Patrol finds nothing:** if the device is still locked out, the patrol is extended (max 3); if the
+  incident is closed while customers are still dark, the World makes them call back.
+
+### 5.4 Crews and restoration
+- `planner.STEPS` defines sequential work per kind (e.g. live wire: make safe with any crew, then line
+  repair; tree: vegetation then line). `_dispatch` sends the nearest idle crew with the right skills to
+  the next pending step of the highest-priority incident. `advance(until)` processes arrivals and
+  finished work in time order and accumulates customer minutes interrupted (`cmi`).
+- `_complete`: undo switching (tie switches first, never parallel feeders), close the incident's
+  device, recompute live transformers, send "power restored" notices, tell the World (follow-ups).
+
+### 5.5 Switching safety (`network.restoration_plans`, `check_plan`)
+- Offered per incident with a known faulted section: reclose the device, close the tie, and
+  "isolate then restore" (open the nearest switch above and below the fault, close the device, close
+  the tie). Each plan is simulated step by step against the **belief**; it is **blocked** if a step newly
+  energises a believed-faulted section, a zone whose fault is not pinned down yet (`suspect`), or a
+  section where a crew is on site. Only plans that restore this incident's customers (or blocked
+  shortcuts that would hit its fault) are shown. The operator approves via `POST /api/plan`.
+- **Never** let code auto-apply plans in the live server. Only `scripts/run_headless.py` auto-approves,
+  to exercise the path.
+
+### 5.6 Messages and models
+- Complaint path: `_transcript` (Voice Transcribe if `audio` exists) -> `_extract` (SMS code regex
+  first: `BD`/`OUT`/`PWR <10-digit account>` needs no model; else Spark, or Glimmer when offline) ->
+  `_locate` (account, address, caller ID, landmark, street) -> `_claim` -> `_apply` (dedup by account
+  or sender; hazards; evidence).
+- Mock mode: if a model call is not cached (or there is no key), extractors return the scenario's
+  `truth` labels, labelled `mock (ground truth)`; unlabelled portal text uses `_keyword_fields`
+  (`mock (keywords)`). Explanations and notices fall back to templates (`mock (template)`).
+- Every model response is cached in `.cache/model/` keyed by a request hash: replays are free and
+  deterministic. Changing a prompt changes the key.
+- Offline mode (`set_offline`): text goes to Glimmer (`GLIMMER_BASE`, checked once for reachability),
+  calls queue; on reconnect Spark reviews Glimmer's extractions and evidence is rebuilt.
+
+### 5.7 Scenario packs and locales
+- A scenario's `pack` block: `locale` (`sri_lanka` / `us` / `india`), `network` (`{"type": "ieee34"}` or
+  `{"type": "osm", "area": ..., transformer_spacing, reclosers, ...}`), `languages`, `start_hour`,
+  optional `smart_meters` (`coverage`, `delay_s`, `network_fail_t`), `quiet_messages`, `retrace_s`.
+- `packs.network(sc)` builds and caches `(Feeder, CustomerDB)` per area. OSM customer DBs live in
+  `data/<area>.db`; Galle's in `data/galle.db`. **Delete the `.db` file after changing network or
+  customer-generation settings**, or lookups will not match the feeder.
+- High-volume scenarios (`retrace_s` > 0) re-trace at most every N seconds of storm time and summarise
+  per-message log lines ("Processed N messages").
+
+---
+
+## 6. The three scenarios and the regression baseline
+
+| Scenario | Network | Customers | Messages | Faults | Shows |
+|---|---|---|---|---|---|
+| `galle_storm` | IEEE 34-bus over Galle (hand-tuned) | 1,951 | ~69 | 6 | full story: Sinhala/Tamil/English, BD SMS, probe question, Lake Road diagnosis change, Temple Road isolate-and-tie switching, hidden fuse after restoration |
+| `houston_hurricane` | OSM, Spring Branch, Houston | 3,044 | ~221 | 7 | smart meters until the meter network fails at t=600 s; English/Spanish; hidden fault; service-wire twist |
+| `chennai_cyclone` | OSM, Velachery, Chennai | 24,559 | ~2,400 | 9 | scale; English/Tamil/Hindi; PWR SMS codes; quiet logging; re-trace every 15 s |
+
+**Before every commit that touches `relight/` or `scenarios/`, run all three and check every real fault
+is found and everyone is restored:**
+
+```bash
+.venv/Scripts/python scripts/run_headless.py galle_storm
+.venv/Scripts/python scripts/run_headless.py houston_hurricane
+.venv/Scripts/python scripts/run_headless.py chennai_cyclone
+```
+
+Expected: Galle 6/6 `found=True`, Houston 7/7, Chennai 9/9, and the last line
+`Still dark at the end: 0 customers (believed); world says 0`. Chennai takes about 15 s; if it takes
+minutes, something reintroduced per-call graph rebuilding or per-event re-tracing.
+Use `--timeline` to see the full event log; `--no-switching` to skip auto-approval.
+
+Regenerating generated scenarios (deterministic seeds):
+```bash
+.venv/Scripts/python scripts/make_storm.py houston_hurricane chennai_cyclone
+```
+`make_storm.py` keeps separate faults apart (no overlapping dark areas unless `hidden`), requires
+customers behind each fault, puts the switch-zone tree on the main run between `SW-1` and `SW-2` inside
+the first recloser's own zone, and guarantees at least two callers for small faults.
+
+---
+
+## 7. Server API
+
+| Method | Path | Purpose |
+|---|---|---|
+| GET | `/` | console (`web/index.html`) |
+| GET | `/customer` | customer portal |
+| GET | `/api/grid` | feeder GeoJSON, landmarks, crews, customers per transformer, scenario metadata |
+| GET | `/api/state` | full engine snapshot |
+| GET | `/api/scenarios` | list scenarios; current one |
+| POST | `/api/scenario` | `{"id": ...}` switch scenario (stops replay, rebuilds engine; clients reload) |
+| POST | `/api/control` | `{"action": start|pause|reset|speed|offline|online, "speed": n}` |
+| POST | `/api/plan` | `{"incident": "I2", "plan": "isolate"}` operator approves a switching plan |
+| GET | `/api/customer?q=` | portal status by account or phone |
+| POST | `/api/customer/report` | `{"text", "who", "language"}` live complaint (processed like any other) |
+| POST | `/api/diagram` | digitise the paper diagram (optional image upload) and score it |
+| WS | `/ws` | snapshot on connect, then `state`, `timeline`, `message`, `probe`, `notice`, `photo`, `drone`, `scada`, `clock`, `reset`, `scenario`, `messages`, `network` |
+
+All writes to the engine go through one `asyncio.Lock` in `server.py` (replay, operator, portal).
+
+---
+
+## 8. Meta Model API facts (from Meta's docs; nothing has been called live yet)
+
+- Base URL `https://api.meta.ai/v1`, header `Authorization: Bearer $MODEL_API_KEY`, OpenAI-compatible.
+- **Muse Spark** (`muse-spark-1.3`): `POST /chat/completions`, `response_format: {"type": "json_schema", ...}`;
+  accepts text, image, video, audio, PDF; Spark always reasons. Pricing ~$1.25 / M input, $4.25 / M output.
+- **Voice Transcribe** (`muse-voice-transcribe-1.0`): `POST /asr/transcribe?sessionId=...`, multipart
+  `request` (JSON: mode, model, audioEncoding, optional `languageBias` list) + `audio` (WAV). 25 languages
+  including Tamil, Hindi, Spanish, English. **Not Sinhala** (Sinhala arrives as text). Realtime
+  WebSocket: `wss://api.meta.ai/v1/asr/realtime`.
+- **SAM 3.1** (`sam-3.1`): `POST /responses` with `input_text` (short noun phrase) + `input_image`
+  (URL or base64 data URL) or `input_video`. Output is special-token text:
+  `<|box;x1=..;y1=..;x2=..;y2=..;w=..;h=..;c=..|><|mask;x=0;y=0;data=H,W,<enc>payload|>`, video lines
+  prefixed `<Nf>`. Boxes are in source pixels; mask payload is base85 (not decoded yet; only boxes are
+  used). `metadata.include_confidence: "true"` adds `c=`.
+- **Muse Glimmer**: open weights, ~30B dense (plus ~1.8B vision encoder), text + image in; BF16 ~60 GB,
+  Meta's quantised build under 20 GB. Not on the session laptop; the owner's RTX 5070 Ti (16 GB) needs a
+  ~3-bit GGUF fully on GPU via llama.cpp `llama-server`, or a hosted endpoint (partner credits).
+  Positioned as an optional on-premise mode, not a headline feature.
+- Re-check docs at https://dev.meta.ai/docs/ before relying on any field above.
+
+---
+
+## 9. Conventions
+
+- **Python 3.12**, standard library + FastAPI/uvicorn/httpx/python-dotenv/Pillow only. Keep dependencies
+  minimal; pin new ones in `requirements.txt`.
+- Style matches the existing code: type hints, `from __future__ import annotations`, module docstrings
+  that explain *why*, short comments only where the reason is not obvious, 120-character lines.
+- Keep logic deterministic and explainable. Models produce structured evidence; code decides. Every
+  timeline entry is tagged with the model or `Code` / `Agent` / `Crew` / `Operator` / `SCADA` /
+  `Smart meters` that produced it; preserve that tagging (the UI and the "AI usage" counter rely on it).
+- Model calls go through `ModelClient` (caching, mock fallback). Wrap calls so a failure degrades to mock
+  instead of crashing a storm (`Extractor._call` pattern).
+- Front end: plain HTML/CSS/JS, Leaflet 1.9.4 from unpkg, no build step. Console styling follows
+  high-performance HMI practice (muted greys; colour only for event states and alarms); keep it that
+  way. Re-render tables only when their HTML changes, and use delegated `pointerdown` handlers for
+  buttons inside re-rendered panes (the storm re-renders often).
+- Map data: OSM tiles are darkened in CSS; cite "(c) OpenStreetMap contributors" (ODbL).
+- User-facing text: plain language, no hype. Non-English templates (Sinhala, Tamil, Hindi, Spanish)
+  should be checked by native speakers before the video.
+
+---
+
+## 10. Environment gotchas (Windows)
+
+- Shells: Git Bash and PowerShell 5.1. Large inline Python in a Bash heredoc has failed with quoting
+  errors; write helper scripts to a file (scratchpad) and run them instead.
+- The preview server keeps `data/*.db` open: stop it before deleting databases.
+- `uvicorn` runs without `--reload`; restart after Python edits (front-end files are served fresh).
+- Use `PYTHONIOENCODING=utf-8` when printing Sinhala/Tamil to the console.
+- Kill long runs with the task-stop tool, not `taskkill`.
+
+---
+
+## 11. Git
+
+- Branch: `main`, remote `origin` = `MalithaBandara/relight`. Commit only when the owner asks.
+- Commit messages: imperative subject, body explaining what and why. **No co-author trailers or AI
+  attribution of any kind** (see the rule at the top).
+- Never commit `.env`, `.cache/`, `data/*.db`, `.venv/`. `data/osm/*.json` and
+  `media/diagrams/feeder1_sld.png` are committed on purpose.
+
+---
+
+## 12. Status and open work (as of 2026-10-30)
+
+Done (mock mode, verified headless and in the browser):
+- multilingual complaint pipeline, dedup, junk, SMS codes, landmarks
+- probabilistic tracer with agent questions; incidents with claim/merge; hidden faults after restoration
+- crew lifecycle, diagnosis change from site reports, patrol extension, call-backs
+- safety-checked restoration switching with operator approval; customer minutes interrupted
+- smart meters with meter-network failure (Houston); scale (Chennai, ~2,400 messages in ~15 s)
+- OMS-style console (work agenda, event details, event log, trouble calls, outbound, crews);
+  customer portal; paper-diagram digitisation (scored, not yet wired into the engine)
+
+Not done / next:
+1. **Live Meta API run:** add `MODEL_API_KEY`, run `scripts/smoke_test.py`, fix request formats, run all
+   scenarios live, run `scripts/eval_extraction.py` for per-language accuracy.
+2. **Media:** damage photos (TTPLA/InsPLAD, check licences), one drone clip, recorded calls and crew
+   voice notes; then SAM mask decoding and drone video tracking.
+3. **Unique Meta uses under consideration:** pole-tag reading from customer photos (Spark + SAM); live
+   call copilot (realtime Voice Transcribe + Spark next-question); drone damage assessment (SAM video);
+   realistic paper-to-grid (hand-drawn pole-numbered sketch + meter-reader route book -> network and
+   consumer index that the engine runs on).
+4. Glimmer: optional on-premise mode via a hosted endpoint if partner credits arrive; no cascade work
+   unless the owner asks.
+5. Demo video (Nov 3) and submission checklist in `PROJECT_BRIEF.md`.
+
+When in doubt about scope, ask the owner. Do not remove features to save time; the owner prefers full
+scope and builds with AI agents.
