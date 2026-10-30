@@ -352,18 +352,77 @@ Done (mock mode, verified headless and in the browser):
 - OMS-style console (work agenda, event details, event log, trouble calls, outbound, crews);
   customer portal; paper-diagram digitisation (scored, not yet wired into the engine)
 
-Not done / next:
-1. **Live Meta API run:** add `MODEL_API_KEY`, run `scripts/smoke_test.py`, fix request formats, run all
-   scenarios live, run `scripts/eval_extraction.py` for per-language accuracy.
-2. **Media:** damage photos (TTPLA/InsPLAD, check licences), one drone clip, recorded calls and crew
-   voice notes; then SAM mask decoding and drone video tracking.
-3. **Unique Meta uses under consideration:** pole-tag reading from customer photos (Spark + SAM); live
-   call copilot (realtime Voice Transcribe + Spark next-question); drone damage assessment (SAM video);
-   realistic paper-to-grid (hand-drawn pole-numbered sketch + meter-reader route book -> network and
-   consumer index that the engine runs on).
-4. Glimmer: optional on-premise mode via a hosted endpoint if partner credits arrive; no cascade work
-   unless the owner asks.
-5. Demo video (Nov 3) and submission checklist in `PROJECT_BRIEF.md`.
+### 12.1 Who does what
+
+**Agents must never** sign in to any account, create or handle API keys or tokens, submit forms, accept
+terms, apply for credits, create hosted endpoints, or submit the hackathon entry on the owner's behalf.
+Agents also must not pick which optional features to build: the owner decides (ask, then build).
+If a task below is owner-only, say what is needed and stop; do not work around it.
+
+#### Owner only (agents cannot do these)
+
+Accounts, keys and forms
+- [ ] Get the **Meta Model API key** and put it in `.env` as `MODEL_API_KEY=...` (never paste it in chat).
+- [ ] Submit the **partner credit forms** (Baseten, Modal, Fireworks); answers are drafted.
+- [ ] If credits arrive: **create the hosted Glimmer endpoint** in the partner dashboard and put its URL /
+      key in `.env` (`GLIMMER_BASE`, `GLIMMER_MODEL`).
+- [ ] **Submit on Cerebral Valley** by Nov 4, 10:00 PM Sri Lanka time (hard deadline Nov 5, 7:30 AM).
+
+Media
+- [ ] **Record calls** (English, Tamil) and **crew voice notes** from the agent-written scripts; save as WAV.
+- [ ] **Choose and download** damage photos and one drone clip; **confirm their licences**.
+- [ ] If pole-tag reading is chosen: photograph a pole with a visible ID tag.
+- [ ] If realistic paper-to-grid is chosen: draw a pole-numbered feeder sketch and write one meter-reader
+      ledger page, then photograph both.
+
+Checks and decisions
+- [ ] **Native-speaker check** of Sinhala, Tamil, Hindi and Spanish messages and templates.
+- [ ] **Decide which optional features to build** (shortlist in 12.2).
+
+Video
+- [ ] **Record the screen and the voice-over, and edit** to 2–3 minutes (Nov 3), from the agent's shot list
+      and script.
+
+#### Agent tasks
+
+Blocked until the owner provides something
+- [ ] *(needs `MODEL_API_KEY`)* Run `scripts/smoke_test.py`; fix request-format mismatches with the real API.
+- [ ] *(needs `MODEL_API_KEY`)* Run all three scenarios live; keep the regression baseline (section 6) green.
+- [ ] *(needs `MODEL_API_KEY`)* Run `scripts/eval_extraction.py`; put per-language accuracy in the README.
+- [ ] *(needs `MODEL_API_KEY`)* Look up Voice Transcribe pricing; keep a running cost estimate under $150.
+- [ ] *(needs photos)* Run the photo path live; finish SAM 3.1 mask decoding for wire clearance.
+- [ ] *(needs a drone clip)* Drone damage assessment with SAM 3.1 video tracking.
+- [ ] *(needs recordings)* Wire `audio` paths into the scenarios and test Voice Transcribe end to end.
+- [ ] *(needs the Glimmer endpoint)* Point `GLIMMER_BASE` at it and run the eval once with `--glimmer`.
+- [ ] *(needs the owner's feature choice)* Build the chosen optional features (12.2).
+
+Can start now
+- [ ] Write call / crew voice-note scripts in every language, and the `media/` file layout they go into.
+- [ ] Find candidate public photo datasets and drone clips with their licences, for the owner to choose.
+- [ ] Customer portal sample buttons for the Houston and Chennai scenarios (currently Galle only).
+- [ ] Polish the console for recording (demo flow, click path, timing).
+- [ ] Shot list, voice-over script and on-screen captions for the video.
+- [ ] README: architecture diagram, "which Meta model does what", screenshots; accuracy table once
+      measured.
+- [ ] Submission description text and the final pre-submission checklist (links, public repo, theme
+      "Push the Frontier").
+
+### 12.2 Optional features (owner chooses; agent builds)
+
+- **Pole-tag reading** from customer photos (SAM finds the plate, Spark reads the ID) → exact asset.
+- **Live call copilot:** realtime Voice Transcribe + live field filling + Spark's suggested next question.
+- **Drone damage assessment:** SAM 3.1 video tracking of poles and conductors; sag and broken-pole counts.
+- **Realistic paper-to-grid:** hand-drawn pole-numbered sketch + meter-reader ledger → network and
+  consumer index the engine runs on, with SAM symbol overlay and a review screen for flagged items.
+- **Glimmer on-premise mode** through a hosted endpoint (no cascade work unless the owner asks).
+
+### 12.3 Order that saves the most time
+
+1. Owner: API key into `.env`; submit credit forms.
+2. Agent: live run and fixes; meanwhile the owner records audio from the scripts and picks media.
+3. Owner chooses optional features; agent builds them.
+4. Nov 3: agent prepares the shot list and script; owner records and edits.
+5. Nov 4: agent finalises README and checks; owner submits.
 
 When in doubt about scope, ask the owner. Do not remove features to save time; the owner prefers full
 scope and builds with AI agents.
