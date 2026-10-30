@@ -64,8 +64,28 @@ def load(name: str = "galle_storm") -> dict:
                 truth["account_no"] = cust.account_no
             e.setdefault("from", cust.phone)
             e["text"] = e["text"].replace("{account}", cust.account_no)
+    _voice_calls(sc, name)
     sc["events"].sort(key=lambda e: e["t"])
     return sc
+
+
+def _voice_calls(sc: dict, name: str) -> None:
+    """Turn scripted complaints into voiced phone calls (scenarios/calls/<name>.json; audio by make_calls.py).
+
+    Kept apart from the scenario so generated storms can be regenerated without losing the calls. `spoken` is what
+    the caller says first; `withheld` lists facts they only give when the agent asks.
+    """
+    path = SCENARIO_DIR / "calls" / f"{name}.json"
+    if not path.exists():
+        return
+    calls = json.loads(path.read_text(encoding="utf-8"))["calls"]
+    for e in sc["events"]:
+        c = calls.get(e.get("id"))
+        if not c or e["type"] != "complaint":
+            continue
+        e.update(channel="call", audio=f"media/audio/calls/{name}/{e['id']}.wav",
+                 text=c["spoken"].replace("{account}", e.get("truth", {}).get("account_no") or ""))
+        e.update({k: c[k] for k in ("voice", "rate", "withheld", "from") if k in c})
 
 
 class World:
@@ -198,6 +218,42 @@ class Replayer:
                    "probe_reply": probe["id"],
                    "truth": {"street": probe["street"], "house_no": probe["house_no"],
                              "symptom": "power_on" if on else "no_power", "hazard": "none"}})
+
+    def _words(self, e: dict) -> dict:
+        return self.loc["caller"].get(e.get("language"), self.loc["caller"]["en"])
+
+    def answer(self, e: dict, kind: str) -> str:
+        """A caller's true answer to the call agent's question (yes / address / hazard)."""
+        words, truth = self._words(e), e.get("truth", {})
+        if kind == "address":
+            if truth.get("street") and truth.get("house_no"):
+                return words["address"].format(house=truth["house_no"], street=truth["street"])
+            if truth.get("account_no"):
+                return words["account"].format(account=truth["account_no"])
+            return words["no"]
+        if kind == "hazard":
+            h = truth.get("hazard", "none")
+            if h not in words:
+                return words["hazard_no"]
+            f = next((f for f in self.world.faults.values() if f["kind"] == h and f.get("street") == truth.get("street")
+                      and f.get("near_house")), None)
+            return words[h].format(house=f["near_house"] if f else truth.get("house_no", ""))
+        return words["yes"]
+
+    def neighbour(self, e: dict, customer) -> tuple[str, bool]:
+        """Does the house next door have power? The caller can see their lights."""
+        on = self.world.has_power(customer.account_no, customer.transformer_id)
+        return self._words(e)["neighbour_on" if on else "neighbour_off"], on
+
+    def sms_fallback(self, e: dict, t: float) -> None:
+        """A caller the agent could not understand sends the breakdown SMS it asked for."""
+        acct = e.get("truth", {}).get("account_no")
+        if not acct and (c := self.world.db.by_phone(e.get("from") or "")):
+            acct = c.account_no
+        if acct:
+            code = self.loc["sms_label"].split()[0]
+            self.push({"t": t + 60, "type": "complaint", "id": f"{e['id']}-sms", "channel": "sms", "language": "en",
+                       "from": e.get("from"), "text": f"{code} {acct}", "truth": dict(e.get("truth", {}))})
 
     def crew_arrived(self, inc: dict, crew: str, t: float) -> None:
         if (e := self.world.site_report(inc, crew)) is not None:

@@ -1,0 +1,15 @@
+{
+ "note": "Voiced phone calls for houston_hurricane (see galle_storm.json for the format). Event ids are stable because make_storm.py uses fixed seeds. C212 calls from a number the utility does not know, so the agent has to ask for the address.",
+ "calls": {
+  "C21": {"voice": "en-US-AndrewNeural", "rate": "+6%",
+          "spoken": "Hi, yeah, the power's out at 1052 Huge Oaks Street. It went out with that big gust just now."},
+  "C24": {"voice": "en-US-EmmaNeural", "rate": "+6%", "withheld": ["street", "house_no", "account_no"],
+          "spoken": "Hey, the lights just went out at my place. The whole house is dark."},
+  "C136": {"voice": "es-US-AlonsoNeural", "rate": "+8%",
+           "spoken": "Hola, buenas noches. Le llamo porque no hay electricidad en el 1132 de Moritz Drive desde la tormenta."},
+  "C212": {"voice": "es-MX-DaliaNeural", "rate": "+8%", "withheld": ["street", "house_no", "account_no"], "from": "7130000000",
+           "spoken": "Hola, se fue la luz en mi casa. ¿Saben cuándo va a volver?"},
+  "C303": {"voice": "en-US-BrianNeural", "rate": "+14%",
+           "spoken": "There's a power line down and sparking in front of 1132 Ronson Road! It's right across the sidewalk!"}
+ }
+}

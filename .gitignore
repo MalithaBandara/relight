@@ -25,3 +25,6 @@ Thumbs.db
 .idea/
 data/*.db
 !.env.example
+
+# Synthesised call-agent speech (regenerated on demand)
+media/audio/tts/

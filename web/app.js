@@ -355,11 +355,109 @@ function addCall(m) {
     <td>${loc.street ? esc(`${loc.street} ${loc.house_no || ""}`) : esc(loc.method || "–")}${loc.transformer ? ` <span class="sub">${esc(loc.transformer)}</span>` : ""}</td>
     <td>${badge(m.model)}</td><td class="status-${m.status}">${esc(m.status === "duplicate" ? `dup ${m.dup_of}` : m.status)}</td><td class="mono">${esc(m.incident || "")}</td>`,
   f.hazard && f.hazard !== "none" ? "alarm" : "");
+  if (m.call) addAgentCall(m);
   if (loc.lat && m.status !== "junk" && m.status !== "duplicate") {
     L.circleMarker([loc.lat, loc.lon], { radius: 2.5, color: f.hazard && f.hazard !== "none" ? "#e5484d" : "#c9d2dc", weight: 0, fillOpacity: 0.75 })
       .bindTooltip(`${m.id}: ${esc(f.summary_en || m.text)}`, { className: "gm" }).addTo(layers.messages);
   }
 }
+
+// ---- agent calls: every call the agent answered, with the conversation and its audio ---------------
+
+const agentCalls = new Map();
+let selectedCall = null, player = null, playToken = 0;
+const LANG_NAME = { en: "English", si: "Sinhala", ta: "Tamil", es: "Spanish", hi: "Hindi" };
+const OUTCOME = { status_enroute: "crew en route", status_onsite: "crew on site", status_waiting: "crew to be assigned",
+  status_locating: "locating fault", status_restored_dark: "still dark after restoration", junk: "not an outage", sms_fallback: "asked for SMS" };
+
+function callOutcome(c) {
+  const parts = c.acts.filter((a) => OUTCOME[a]).map((a) => OUTCOME[a]);
+  if (c.acts.includes("ask_neighbour")) parts.unshift("asked about next door");
+  if (c.acts.includes("ask_address")) parts.unshift("asked address");
+  return (c.escalated ? `<span class="outcome-urgent">URGENT</span> · ` : "") + esc(parts.join(" · "));
+}
+
+function agentRowHtml(m) {
+  const loc = m.location || {};
+  const voiced = m.call.turns.some((t) => t.audio);
+  return `<td class="mono">${clockOf(m.t)}</td><td class="lang">${esc(m.language)}</td>
+    <td>${loc.street ? esc(`${loc.street} ${loc.house_no || ""}`) : esc(loc.method || "–")}</td>
+    <td>${voiced ? `<span class="voiced-mark" title="Recorded caller (synthetic voice)">● voice</span>` : ""}</td>
+    <td>${callOutcome(m.call)}</td><td class="mono">${esc(m.incident || "")}</td>`;
+}
+
+function addAgentCall(m) {
+  agentCalls.set(m.id, m);
+  const tb = $("#agentcalls");
+  let tr = tb.querySelector(`tr[data-call="${CSS.escape(m.id)}"]`);
+  if (!tr) {
+    tr = document.createElement("tr");
+    tr.dataset.call = m.id;
+    tr.className = "fresh";
+    tb.prepend(tr);
+    while (tb.children.length > MAX_ROWS) tb.lastChild.remove();
+  }
+  tr.classList.toggle("voiced", m.call.turns.some((t) => t.audio));
+  tr.classList.toggle("alarm", m.call.escalated);
+  tr.classList.toggle("sel", selectedCall === m.id);
+  tr.innerHTML = agentRowHtml(m);
+  $("#agent-count").textContent = agentCalls.size;
+  if (selectedCall === m.id) renderConvo();
+}
+
+function renderConvo() {
+  const m = agentCalls.get(selectedCall);
+  const box = $("#convo");
+  if (!m) { box.innerHTML = `<div class="empty">Select a call to read it or listen.</div>`; return; }
+  const turns = m.call.turns.map((t, i) => `<div class="turn ${t.who}" data-i="${i}">
+      <button class="play" data-play="${i}" title="Play this line">▶</button>
+      <div class="bubble"><span class="who">${t.who === "agent" ? "Agent" : "Caller"}</span>${badge(t.model)}
+        <div>${esc(t.text)}</div>${t.en && t.en !== t.text ? `<div class="en">${esc(t.en)}</div>` : ""}</div></div>`).join("");
+  box.innerHTML = `<div class="convo-head"><b>${esc(m.id)}</b><span class="lang">${esc(LANG_NAME[m.language] || m.language)}</span>
+      <span class="sub">${clockOf(m.t)}${m.incident ? " · " + esc(m.incident) : ""}</span>
+      <button class="btn" data-play="all" title="Play the whole call">▶ Play call</button></div>
+    <div class="convo-note">Synthetic voices, fictional caller. The agent's words are chosen by code from what the control room knows.</div>${turns}`;
+}
+
+function stopAudio() {
+  playToken++;
+  if (player) { player.pause(); player = null; }
+  document.querySelectorAll(".turn.playing").forEach((x) => x.classList.remove("playing"));
+}
+
+function playLine(id, i, token) {
+  return new Promise((done) => {
+    if (token !== playToken) return done(false);
+    document.querySelectorAll(".turn.playing").forEach((x) => x.classList.remove("playing"));
+    const el = document.querySelector(`#convo .turn[data-i="${i}"]`);
+    if (el) el.classList.add("playing");
+    player = new Audio(`/api/call/${encodeURIComponent(id)}/${i}.wav`);
+    player.onended = () => done(true);
+    player.onerror = () => done(true);  // no voice for this line: carry on with the text
+    player.play().catch(() => done(true));
+  });
+}
+
+$("#agentcalls").addEventListener("pointerdown", (ev) => {
+  const tr = ev.target.closest("tr[data-call]");
+  if (!tr) return;
+  stopAudio();
+  selectedCall = tr.dataset.call;
+  document.querySelectorAll("#agentcalls tr.sel").forEach((x) => x.classList.remove("sel"));
+  tr.classList.add("sel");
+  renderConvo();
+});
+$("#convo").addEventListener("pointerdown", async (ev) => {
+  const b = ev.target.closest("[data-play]");
+  if (!b || !selectedCall) return;
+  stopAudio();
+  const token = playToken, id = selectedCall;
+  const m = agentCalls.get(id);
+  const lines = b.dataset.play === "all" ? m.call.turns.map((_, i) => i) : [Number(b.dataset.play)];
+  for (const i of lines) if (!(await playLine(id, i, token))) return;
+  document.querySelectorAll(".turn.playing").forEach((x) => x.classList.remove("playing"));
+});
+$("#voiced-only").addEventListener("change", (ev) => $("#agentcalls").classList.toggle("voiced-only", ev.target.checked));
 
 function addOutbound(kind, x) {
   prepend("outbound", `<td class="mono">${clockOf(x.t)}</td><td>${kind}</td><td class="lang">${esc(x.language)}</td>
@@ -403,7 +501,12 @@ function applyState(s) {
 }
 
 function resetUI() {
-  for (const id of ["log", "calls", "outbound"]) document.getElementById(id).innerHTML = "";
+  for (const id of ["log", "calls", "outbound", "agentcalls"]) document.getElementById(id).innerHTML = "";
+  stopAudio();
+  agentCalls.clear();
+  selectedCall = null;
+  $("#agent-count").textContent = "";
+  renderConvo();
   layers.messages.clearLayers();
   s_messages = [];
   history.length = 0;
@@ -428,6 +531,11 @@ function connect() {
       case "message": if (msg.message.channel === "crew") s_messages.push(msg.message); else addCall(msg.message); break;
       case "probe": addOutbound("Question", { ...msg.probe, to: [] }); break;
       case "photo": addPhoto(msg); break;
+      case "call": {
+        const m = agentCalls.get(msg.id) || s_messages.find((x) => x.id === msg.id);
+        if (m) addAgentCall({ ...m, call: msg.call, incident: msg.incident || m.incident });
+        break;
+      }
       case "notice": addOutbound(msg.notice.kind === "restored" ? "Restored" : "ETR", msg.notice); break;
       case "messages": $("#calls").innerHTML = ""; layers.messages.clearLayers(); s_messages = []; msg.messages.forEach(addCall); break;
       case "clock":

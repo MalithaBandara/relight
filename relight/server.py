@@ -10,12 +10,13 @@ import json
 from pathlib import Path
 
 from fastapi import FastAPI, File, UploadFile, WebSocket, WebSocketDisconnect
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from . import config
 from . import packs
+from . import voice
 from .diagram import read_diagram, render_diagram, score
 from .engine import Engine, clock_str
 from .scenario import Replayer, load
@@ -152,6 +153,22 @@ async def customer_report(r: Report):
     msg = next((m for m in reversed(engine.messages) if m["id"] == e["id"]), None)
     return {"message": {k: v for k, v in (msg or {}).items() if k != "event"},
             "status": engine.customer_status(c.account_no) if c else None}
+
+
+@app.get("/api/call/{msg_id}/{turn}.wav")
+async def call_audio(msg_id: str, turn: int):
+    """One line of an agent call as audio: the caller's recording, or speech synthesised on first request."""
+    m = next((m for m in engine.messages if m["id"] == msg_id and "call" in m), None)
+    if m is None or not 0 <= turn < len(m["call"]["turns"]):
+        return JSONResponse({"error": "no such call line"}, status_code=404)
+    line = m["call"]["turns"][turn]
+    if line.get("audio") and (config.ROOT / line["audio"]).exists():
+        return FileResponse(config.ROOT / line["audio"], media_type="audio/wav")
+    try:
+        path = await voice.synthesize(line["text"], m["call"]["voices"][line["who"]])
+    except Exception as err:  # noqa: BLE001 - no edge-tts / ffmpeg / network: the console shows text only
+        return JSONResponse({"error": str(err)[:200]}, status_code=503)
+    return FileResponse(path, media_type="audio/wav")
 
 
 @app.get("/customer")

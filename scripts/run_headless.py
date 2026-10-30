@@ -1,6 +1,8 @@
 """Replay a scenario instantly (no UI), let the crews work it through, and print the outcome.
 
-Usage:  python scripts/run_headless.py [scenario] [--timeline] [--no-switching]
+Usage:  python scripts/run_headless.py [scenario] [--timeline] [--no-switching] [--calls]
+
+--calls prints every voiced call's conversation with the agent (all calls if none are voiced).
 
 By default the operator approves every safe switching plan as soon as it is offered.
 """
@@ -18,7 +20,7 @@ from relight.scenario import MAX_CLOCK_S, Replayer, load  # noqa: E402
 STEP_S = 30
 
 
-async def main(name: str, show_timeline: bool, switching: bool) -> None:
+async def main(name: str, show_timeline: bool, switching: bool, show_calls: bool) -> None:
     sc = load(name)
 
     async def quiet(_msg):
@@ -48,10 +50,21 @@ async def main(name: str, show_timeline: bool, switching: bool) -> None:
         for x in engine.timeline:
             print(f"{x['clock']}  [{x['model']}] {x['title']}  {x['detail'][:120]}")
         print()
+    if show_calls:
+        calls = [m for m in engine.messages if "call" in m]
+        voiced = [m for m in calls if m["event"].get("audio")]
+        for m in voiced or calls:
+            print(f"--- {m['id']} {clock_str(m['t'])} [{m['language']}]" + (" ESCALATED" if m["call"]["escalated"] else ""))
+            for turn in m["call"]["turns"]:
+                gloss = f"  ({turn['en']})" if turn.get("en") and turn["en"] != turn["text"] else ""
+                print(f"  {turn['who']:>6} [{turn['model']}]: {turn['text']}{gloss}")
+        print()
     s = engine.snapshot()
     c = s["counts"]
     print(f"mode={s['mode']}  messages={c['messages']}  duplicates={c['duplicates']}  junk={c['junk']}  "
           f"BD SMS={c['bd_sms']}  languages={c['languages']}  notified={c['notified']}  end={s['clock']}")
+    print(f"calls answered by the agent={c['agent_calls']}  escalated={c['escalated']}  "
+          f"asked next door={sum(1 for p in s['probes'] if p.get('via'))}")
     print("\nIncidents:")
     for i in sorted(engine.incidents, key=lambda i: i["located_at"]):
         flags = (" MIND-CHANGED" if i["mind_changed"] else "") + (" AFTER-RESTORE" if i["after_restore"] else "") + \
@@ -77,4 +90,5 @@ async def main(name: str, show_timeline: bool, switching: bool) -> None:
 
 if __name__ == "__main__":
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
-    asyncio.run(main(args[0] if args else "galle_storm", "--timeline" in sys.argv, "--no-switching" not in sys.argv))
+    asyncio.run(main(args[0] if args else "galle_storm", "--timeline" in sys.argv, "--no-switching" not in sys.argv,
+                     "--calls" in sys.argv))

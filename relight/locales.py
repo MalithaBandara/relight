@@ -6,6 +6,215 @@ and numbers are synthetic. Non-English texts should be checked by a native speak
 
 from __future__ import annotations
 
+
+# ---- the call agent's lines and the simulated callers' answers -------------------------------------
+# The agent chooses what to say in code (act); these are its fixed words per act. Safety lines are never
+# rewritten by a model. {kind} stays in English inside non-English lines, as in the SMS notices.
+
+def _agent_en(desk: str, fire: str) -> dict:
+    return {
+        "greet": f"{desk}. You are speaking with an automated assistant. Please tell me your address or account "
+                 "number, and what is happening.",
+        "confirm_address": "I have your address as {address}. Is that where the power is out?",
+        "ask_address": "I could not find your address. Please tell me your house number and street, or your "
+                       "account number.",
+        "ask_hazard": "Can you see any fallen poles, wires or trees near you? Please do not go near them.",
+        "known_hazard": "We already have a report of {what} near you. Please keep away from it and treat any wires "
+                        "as live.",
+        "ask_neighbour": "One quick question to help us find the fault: do the houses at {address} have power "
+                         "right now?",
+        "safety_live": "Please stay at least ten metres away from the wire and keep others away. Treat it as live. "
+                       "We are sending a crew to make it safe.",
+        "safety_down": "Please keep away from the fallen pole and wires, and treat them as live.",
+        "safety_fire": fire,
+        "escalate": "I have flagged this to our control room as urgent.",
+        "status_enroute": "We know about this outage ({kind}). A crew is on the way. Estimated restoration around "
+                          "{eta}.",
+        "status_onsite": "We know about this outage ({kind}). A crew is working on it now. Estimated restoration "
+                         "around {eta}.",
+        "status_waiting": "We know about this outage ({kind}). A crew will be assigned shortly. Estimated "
+                          "restoration around {eta}.",
+        "status_locating": "Thank you, your report is recorded. We are locating the fault and will send you a text "
+                           "with the restoration time.",
+        "status_restored_dark": "Our records show power was restored in your area at {at}. I have recorded that "
+                                "your house is still without power; we are checking for a second fault.",
+        "repeat": "You already reported this at {at}, thank you.",
+        "junk": "This line is for power outages only. For anything else, please call during office hours.",
+        "sms_fallback": "Sorry, I could not understand the call. Please send a text message: {code} and your "
+                        "account number.",
+        "close": "Thank you for calling.",
+    }
+
+
+AGENT_SI = {
+    "greet": "විදුලි බිඳවැටීම් අංශයයි. ඔබ කතා කරන්නේ ස්වයංක්‍රීය සහායකයෙකු සමඟයි. කරුණාකර ඔබේ ලිපිනය හෝ ගිණුම් අංකය, "
+             "සහ සිදු වූ දේ කියන්න.",
+    "confirm_address": "මා සතුව ඇති ඔබේ ලිපිනය {address}. විදුලිය නැත්තේ එතැනද?",
+    "ask_address": "ඔබේ ලිපිනය සොයාගත නොහැකි විය. කරුණාකර නිවසේ අංකය සහ පාර, නැත්නම් ගිණුම් අංකය කියන්න.",
+    "ask_hazard": "ඔබ අසල කැඩුණු කණු, වැටුණු වයර් හෝ ගස් පේනවාද? කරුණාකර ඒවා අසලට යන්න එපා.",
+    "known_hazard": "ඔබ අසල {what} ගැන අපට දැනටමත් වාර්තාවක් ලැබී ඇත. කරුණාකර ඒ අසලට යන්න එපා, වයර්වල විදුලිය ඇති බව "
+                    "සලකන්න.",
+    "ask_neighbour": "දෝෂය සොයා ගැනීමට එක ප්‍රශ්නයක්: {address} නිවෙස්වල දැන් විදුලිය තිබේද?",
+    "safety_live": "කරුණාකර වයරයෙන් අවම වශයෙන් මීටර් දහයක් ඈතින් සිටින්න, අනෙක් අයවත් ඈත් කරන්න. එහි විදුලිය ඇති බව "
+                   "සලකන්න. එය ආරක්ෂිත කිරීමට කණ්ඩායමක් එවනවා.",
+    "safety_down": "කරුණාකර වැටුණු කණුව සහ වයර් අසලට යන්න එපා. ඒවායේ විදුලිය ඇති බව සලකන්න.",
+    "safety_fire": "ගින්නක් තිබේ නම්, වහාම ගිනි නිවන සේවයට අමතන්න.",
+    "escalate": "මෙය හදිසි ලෙස අපේ පාලන මැදිරියට දැනුම් දුන්නා.",
+    "status_enroute": "මෙම විදුලි බිඳවැටීම ගැන අපි දන්නවා ({kind}). කණ්ඩායමක් එමින් සිටිනවා. විදුලිය නැවත ලැබීමට ආසන්න "
+                      "වේලාව {eta}.",
+    "status_onsite": "මෙම විදුලි බිඳවැටීම ගැන අපි දන්නවා ({kind}). කණ්ඩායමක් දැන් එහි වැඩ කරනවා. විදුලිය නැවත ලැබීමට "
+                     "ආසන්න වේලාව {eta}.",
+    "status_waiting": "මෙම විදුලි බිඳවැටීම ගැන අපි දන්නවා ({kind}). ඉක්මනින් කණ්ඩායමක් යොදවනවා. විදුලිය නැවත ලැබීමට "
+                      "ආසන්න වේලාව {eta}.",
+    "status_locating": "ස්තූතියි, ඔබේ පැමිණිල්ල සටහන් කළා. අපි දෝෂය සොයමින් සිටිනවා, විදුලිය ලැබෙන වේලාව කෙටි "
+                       "පණිවිඩයකින් දන්වනවා.",
+    "status_restored_dark": "අපේ වාර්තා අනුව ඔබේ ප්‍රදේශයට {at} ට විදුලිය ලබා දුන්නා. ඔබේ නිවසට තවමත් විදුලිය නැති බව "
+                            "සටහන් කළා; අපි තවත් දෝෂයක් සොයනවා.",
+    "repeat": "ඔබ මෙය {at} ට දැනටමත් දැනුම් දුන්නා, ස්තූතියි.",
+    "junk": "මෙම ඇමතුම් අංකය විදුලි බිඳවැටීම් සඳහා පමණයි. වෙනත් කරුණු සඳහා කාර්යාල වේලාවේ අමතන්න.",
+    "sms_fallback": "සමාවන්න, ඇමතුම තේරුම් ගත නොහැකි විය. කරුණාකර {code} සහ ඔබේ ගිණුම් අංකය කෙටි පණිවිඩයක් ලෙස එවන්න.",
+    "close": "ඇමතුවාට ස්තූතියි.",
+}
+
+AGENT_TA = {
+    "greet": "மின் தடை பிரிவு. நீங்கள் ஒரு தானியங்கி உதவியாளருடன் பேசுகிறீர்கள். உங்கள் முகவரி அல்லது கணக்கு எண்ணையும், "
+             "என்ன நடந்தது என்பதையும் சொல்லுங்கள்.",
+    "confirm_address": "உங்கள் முகவரி {address} என்று எங்களிடம் உள்ளது. அங்கேதான் மின்சாரம் இல்லையா?",
+    "ask_address": "உங்கள் முகவரியைக் கண்டுபிடிக்க முடியவில்லை. வீட்டு எண்ணும் தெருவும், அல்லது கணக்கு எண்ணைச் சொல்லுங்கள்.",
+    "ask_hazard": "உங்கள் அருகில் விழுந்த மின்கம்பம், கம்பிகள் அல்லது மரங்கள் ஏதாவது தெரிகிறதா? தயவுசெய்து அவற்றின் அருகில் "
+                  "போகாதீர்கள்.",
+    "known_hazard": "உங்கள் அருகில் {what} பற்றி ஏற்கனவே தகவல் வந்துள்ளது. தயவுசெய்து அதன் அருகில் போகாதீர்கள்; கம்பிகளில் "
+                    "மின்சாரம் இருப்பதாகவே கருதுங்கள்.",
+    "ask_neighbour": "கோளாறைக் கண்டுபிடிக்க ஒரு கேள்வி: {address} வீடுகளில் இப்போது மின்சாரம் இருக்கிறதா?",
+    "safety_live": "தயவுசெய்து அந்தக் கம்பியிலிருந்து குறைந்தது பத்து மீட்டர் தள்ளி இருங்கள், மற்றவர்களையும் தள்ளி வையுங்கள். "
+                   "அதில் மின்சாரம் இருப்பதாகவே கருதுங்கள். அதைப் பாதுகாப்பாக்க குழுவை அனுப்புகிறோம்.",
+    "safety_down": "தயவுசெய்து விழுந்த கம்பம் மற்றும் கம்பிகளின் அருகில் போகாதீர்கள். அவற்றில் மின்சாரம் இருப்பதாகவே "
+                   "கருதுங்கள்.",
+    "safety_fire": "தீ இருந்தால், உடனே தீயணைப்புத் துறையை அழையுங்கள்.",
+    "escalate": "இதை அவசரமாக எங்கள் கட்டுப்பாட்டு அறைக்குத் தெரிவித்துள்ளேன்.",
+    "status_enroute": "இந்த மின் தடை எங்களுக்குத் தெரியும் ({kind}). குழு வந்துகொண்டிருக்கிறது. மின்சாரம் மீண்டும் வர "
+                      "சுமார் {eta}.",
+    "status_onsite": "இந்த மின் தடை எங்களுக்குத் தெரியும் ({kind}). குழு இப்போது அங்கே வேலை செய்கிறது. மின்சாரம் மீண்டும் "
+                     "வர சுமார் {eta}.",
+    "status_waiting": "இந்த மின் தடை எங்களுக்குத் தெரியும் ({kind}). விரைவில் ஒரு குழு அனுப்பப்படும். மின்சாரம் மீண்டும் "
+                      "வர சுமார் {eta}.",
+    "status_locating": "நன்றி, உங்கள் புகார் பதிவு செய்யப்பட்டது. கோளாறைக் கண்டறிந்து வருகிறோம்; மின்சாரம் வரும் நேரத்தை "
+                       "குறுஞ்செய்தியில் அனுப்புவோம்.",
+    "status_restored_dark": "எங்கள் பதிவுகளின்படி உங்கள் பகுதிக்கு {at} மணிக்கு மின்சாரம் வழங்கப்பட்டது. உங்கள் வீட்டில் "
+                            "இன்னும் மின்சாரம் இல்லை என்று பதிவு செய்துள்ளேன்; வேறு கோளாறு உள்ளதா என்று பார்க்கிறோம்.",
+    "repeat": "நீங்கள் இதை ஏற்கனவே {at} மணிக்குத் தெரிவித்துள்ளீர்கள், நன்றி.",
+    "junk": "இந்த எண் மின் தடைகளுக்கு மட்டுமே. மற்ற விஷயங்களுக்கு அலுவலக நேரத்தில் அழையுங்கள்.",
+    "sms_fallback": "மன்னிக்கவும், அழைப்பைப் புரிந்துகொள்ள முடியவில்லை. {code} மற்றும் உங்கள் கணக்கு எண்ணை குறுஞ்செய்தியாக "
+                    "அனுப்புங்கள்.",
+    "close": "அழைத்ததற்கு நன்றி.",
+}
+
+AGENT_ES = {
+    "greet": "Equipo de apagones. Le atiende un asistente automático. Dígame su dirección o número de cuenta, y qué "
+             "está pasando.",
+    "confirm_address": "Tengo su dirección como {address}. ¿Es ahí donde no hay luz?",
+    "ask_address": "No encontré su dirección. Dígame el número de casa y la calle, o su número de cuenta.",
+    "ask_hazard": "¿Ve algún poste, cable o árbol caído cerca de usted? Por favor, no se acerque.",
+    "known_hazard": "Ya tenemos un reporte de {what} cerca de usted. Por favor, no se acerque y trate los cables como "
+                    "si tuvieran corriente.",
+    "ask_neighbour": "Una pregunta para ubicar la falla: ¿las casas de {address} tienen luz ahora mismo?",
+    "safety_live": "Por favor, manténgase al menos a diez metros del cable y aleje a los demás. Trátelo como si tuviera "
+                   "corriente. Enviamos una cuadrilla para asegurarlo.",
+    "safety_down": "Por favor, no se acerque al poste ni a los cables caídos, y trátelos como si tuvieran corriente.",
+    "safety_fire": "Si hay fuego, llame al 911 ahora.",
+    "escalate": "Marqué su llamada como urgente para nuestro centro de control.",
+    "status_enroute": "Sabemos de este apagón ({kind}). Una cuadrilla va en camino. Restablecimiento estimado: {eta}.",
+    "status_onsite": "Sabemos de este apagón ({kind}). Una cuadrilla está trabajando ahí ahora. Restablecimiento "
+                     "estimado: {eta}.",
+    "status_waiting": "Sabemos de este apagón ({kind}). Pronto asignaremos una cuadrilla. Restablecimiento estimado: "
+                      "{eta}.",
+    "status_locating": "Gracias, su reporte quedó registrado. Estamos ubicando la falla y le enviaremos un mensaje con "
+                       "la hora estimada.",
+    "status_restored_dark": "Según nuestros registros, la luz volvió a su zona a las {at}. Registré que su casa sigue "
+                            "sin luz; estamos buscando otra falla.",
+    "repeat": "Usted ya lo reportó a las {at}, gracias.",
+    "junk": "Esta línea es solo para apagones. Para otros temas, llame en horario de oficina.",
+    "sms_fallback": "Lo siento, no pude entender la llamada. Por favor envíe un mensaje de texto con {code} y su "
+                    "número de cuenta.",
+    "close": "Gracias por llamar.",
+}
+
+AGENT_HI = {
+    "greet": "बिजली शिकायत केंद्र। आप एक स्वचालित सहायक से बात कर रहे हैं। कृपया अपना पता या खाता नंबर बताइए, और क्या हुआ है।",
+    "confirm_address": "आपका पता हमारे पास {address} है। क्या वहीं बिजली नहीं है?",
+    "ask_address": "आपका पता नहीं मिला। कृपया मकान नंबर और गली, या अपना खाता नंबर बताइए।",
+    "ask_hazard": "क्या आपके पास कोई गिरा हुआ खंभा, तार या पेड़ दिख रहा है? कृपया उसके पास मत जाइए।",
+    "known_hazard": "आपके पास {what} की सूचना हमें पहले ही मिल चुकी है। कृपया उसके पास मत जाइए और तारों में करंट मानकर चलिए।",
+    "ask_neighbour": "खराबी ढूंढने के लिए एक सवाल: क्या {address} के घरों में अभी बिजली है?",
+    "safety_live": "कृपया तार से कम से कम दस मीटर दूर रहिए और दूसरों को भी दूर रखिए। उसमें करंट मानकर चलिए। उसे सुरक्षित "
+                   "करने के लिए टीम भेज रहे हैं।",
+    "safety_down": "कृपया गिरे हुए खंभे और तारों के पास मत जाइए। उनमें करंट मानकर चलिए।",
+    "safety_fire": "अगर आग लगी है, तो तुरंत फायर ब्रिगेड को फोन कीजिए।",
+    "escalate": "मैंने इसे तुरंत हमारे कंट्रोल रूम को भेज दिया है।",
+    "status_enroute": "हमें इस बिजली कटौती की जानकारी है ({kind})। टीम रास्ते में है। बिजली लगभग {eta} तक लौटेगी।",
+    "status_onsite": "हमें इस बिजली कटौती की जानकारी है ({kind})। टीम अभी वहाँ काम कर रही है। बिजली लगभग {eta} तक लौटेगी।",
+    "status_waiting": "हमें इस बिजली कटौती की जानकारी है ({kind})। जल्द ही टीम भेजी जाएगी। बिजली लगभग {eta} तक लौटेगी।",
+    "status_locating": "धन्यवाद, आपकी शिकायत दर्ज हो गई है। हम खराबी ढूंढ रहे हैं और बिजली लौटने का समय SMS से भेजेंगे।",
+    "status_restored_dark": "हमारे रिकॉर्ड के अनुसार आपके इलाके में {at} बजे बिजली लौट आई थी। मैंने दर्ज कर लिया है कि आपके "
+                            "घर में अभी भी बिजली नहीं है; हम दूसरी खराबी देख रहे हैं।",
+    "repeat": "आपने यह {at} बजे पहले ही बता दिया था, धन्यवाद।",
+    "junk": "यह नंबर केवल बिजली कटौती के लिए है। दूसरे कामों के लिए दफ़्तर के समय में फोन कीजिए।",
+    "sms_fallback": "माफ़ कीजिए, कॉल समझ नहीं आई। कृपया {code} और अपना खाता नंबर SMS कीजिए।",
+    "close": "फोन करने के लिए धन्यवाद।",
+}
+
+# Hazards as the agent names them in "known_hazard" (already reported near the caller).
+HAZARD_NAMES = {
+    "en": {"pole_down": "a fallen pole", "live_wire": "a live wire", "wire_down": "a fallen wire",
+           "tree_on_line": "a tree on the lines", "fire": "a fire"},
+    "si": {"pole_down": "වැටුණු කණුවක්", "live_wire": "විදුලිය සහිත වයරයක්", "wire_down": "වැටුණු වයරයක්",
+           "tree_on_line": "වයර් මත වැටුණු ගසක්", "fire": "ගින්නක්"},
+    "ta": {"pole_down": "விழுந்த மின்கம்பம்", "live_wire": "மின்சாரம் உள்ள கம்பி", "wire_down": "விழுந்த கம்பி",
+           "tree_on_line": "கம்பிகள் மேல் விழுந்த மரம்", "fire": "தீ"},
+    "es": {"pole_down": "un poste caído", "live_wire": "un cable con corriente", "wire_down": "un cable caído",
+           "tree_on_line": "un árbol sobre los cables", "fire": "un incendio"},
+    "hi": {"pole_down": "गिरे हुए खंभे", "live_wire": "करंट वाले तार", "wire_down": "गिरे हुए तार",
+           "tree_on_line": "तारों पर गिरे पेड़", "fire": "आग"},
+}
+
+# What simulated callers say when the agent asks them something (the World picks the true answer).
+CALLER_EN = {
+    "address": "Number {house}, {street}.", "account": "My account number is {account}.", "yes": "Yes.", "no": "No.",
+    "pole_down": "Yes, a pole has fallen near number {house}.", "live_wire": "Yes, there's a wire down and it's sparking.",
+    "wire_down": "Yes, there's a wire on the ground.", "tree_on_line": "Yes, a tree has come down on the wires.",
+    "fire": "Yes, something is burning near the pole.", "hazard_no": "No, I can't see anything like that.",
+    "neighbour_on": "Yes, they have power.", "neighbour_off": "No, they're dark too.",
+}
+CALLER_SI = {
+    "address": "අංක {house}, {street}.", "account": "මගේ ගිණුම් අංකය {account}.", "yes": "ඔව්.", "no": "නැහැ.",
+    "pole_down": "ඔව්, අංක {house} ළඟ කණුවක් වැටිලා.", "live_wire": "ඔව්, වයරයක් බිම වැටිලා ගිනි පුපුරනවා.",
+    "wire_down": "ඔව්, වයරයක් බිම වැටිලා තියෙනවා.", "tree_on_line": "ඔව්, ගහක් වයර් උඩට වැටිලා.",
+    "fire": "ඔව්, කණුව ළඟ මොකක්දෝ පිච්චෙනවා.", "hazard_no": "නැහැ, එහෙම දෙයක් පේන්නේ නැහැ.",
+    "neighbour_on": "ඔව්, එයාලට විදුලිය තියෙනවා.", "neighbour_off": "නැහැ, එයාලටත් නැහැ.",
+}
+CALLER_TA = {
+    "address": "{house}, {street}.", "account": "என் கணக்கு எண் {account}.", "yes": "ஆமாம்.", "no": "இல்லை.",
+    "pole_down": "ஆமாம், {house} எண் வீட்டுக்கு அருகில் ஒரு மின்கம்பம் விழுந்திருக்கிறது.",
+    "live_wire": "ஆமாம், ஒரு கம்பி கீழே விழுந்து தீப்பொறி வருகிறது.", "wire_down": "ஆமாம், ஒரு கம்பி தரையில் கிடக்கிறது.",
+    "tree_on_line": "ஆமாம், ஒரு மரம் கம்பிகள் மேல் விழுந்திருக்கிறது.", "fire": "ஆமாம், கம்பத்துக்கு அருகில் ஏதோ எரிகிறது.",
+    "hazard_no": "இல்லை, அப்படி எதுவும் தெரியவில்லை.",
+    "neighbour_on": "ஆமாம், அவர்களுக்கு மின்சாரம் இருக்கிறது.", "neighbour_off": "இல்லை, அவர்களுக்கும் இல்லை.",
+}
+CALLER_ES = {
+    "address": "{house} {street}.", "account": "Mi número de cuenta es {account}.", "yes": "Sí.", "no": "No.",
+    "pole_down": "Sí, se cayó un poste cerca del {house}.", "live_wire": "Sí, hay un cable en el suelo echando chispas.",
+    "wire_down": "Sí, hay un cable en el suelo.", "tree_on_line": "Sí, un árbol cayó sobre los cables.",
+    "fire": "Sí, algo se está quemando cerca del poste.", "hazard_no": "No, no veo nada de eso.",
+    "neighbour_on": "Sí, ellos tienen luz.", "neighbour_off": "No, ellos tampoco.",
+}
+CALLER_HI = {
+    "address": "मकान नंबर {house}, {street}।", "account": "मेरा खाता नंबर {account} है।", "yes": "हाँ।", "no": "नहीं।",
+    "pole_down": "हाँ, मकान नंबर {house} के पास एक खंभा गिरा है।", "live_wire": "हाँ, एक तार नीचे गिरा है और चिंगारी निकल रही है।",
+    "wire_down": "हाँ, एक तार ज़मीन पर पड़ा है।", "tree_on_line": "हाँ, एक पेड़ तारों पर गिरा है।",
+    "fire": "हाँ, खंभे के पास कुछ जल रहा है।", "hazard_no": "नहीं, ऐसा कुछ नहीं दिख रहा।",
+    "neighbour_on": "हाँ, उनके यहाँ बिजली है।", "neighbour_off": "नहीं, उनके यहाँ भी नहीं है।",
+}
+
 SRI_LANKA = {
     "country": "Sri Lanka",
     "hint": ("an electricity utility in Galle, Sri Lanka. Messages arrive in English, Sinhala (script or romanised "
@@ -39,6 +248,15 @@ SRI_LANKA = {
         "si": "අසල්වැසියන්ට විදුලිය ආවා, අපිට තවම නැහැ. {street} {house}.",
         "ta": "பக்கத்து வீடுகளுக்கு மின்சாரம் வந்துவிட்டது, எங்களுக்கு இன்னும் இல்லை. {street} {house}.",
     },
+    "address": "{house}, {street}",
+    "agent": {"en": _agent_en("Outage desk", "If anything is on fire, call the fire service now."),
+              "si": AGENT_SI, "ta": AGENT_TA},
+    "caller": {"en": CALLER_EN, "si": CALLER_SI, "ta": CALLER_TA},
+    # Neural text-to-speech voices (edge-tts); there is no Sri Lankan English voice, Indian English is closest.
+    "voices": {"agent": {"en": "en-IN-NeerjaNeural", "si": "si-LK-ThiliniNeural", "ta": "ta-LK-SaranyaNeural"},
+               "caller": {"en": ["en-IN-PrabhatNeural"],  # the only other Indian English voice is the agent's
+                          "si": ["si-LK-SameeraNeural", "si-LK-ThiliniNeural"],
+                          "ta": ["ta-LK-KumarNeural", "ta-LK-SaranyaNeural"]}},
 }
 
 US = {
@@ -67,6 +285,12 @@ US = {
         "en": "The street got power back but my house is still out. {house} {street}.",
         "es": "La calle ya tiene luz pero mi casa sigue sin electricidad. {house} {street}.",
     },
+    "address": "{house} {street}",
+    "agent": {"en": _agent_en("Outage team", "If anything is on fire, call 911 now."), "es": AGENT_ES},
+    "caller": {"en": {**CALLER_EN, "address": "{house} {street}."}, "es": CALLER_ES},
+    "voices": {"agent": {"en": "en-US-AvaNeural", "es": "es-US-PalomaNeural"},
+               "caller": {"en": ["en-US-AndrewNeural", "en-US-EmmaNeural", "en-US-BrianNeural"],
+                          "es": ["es-US-AlonsoNeural", "es-MX-DaliaNeural", "es-MX-JorgeNeural"]}},
     "first": ["James", "Maria", "Robert", "Linda", "Michael", "Ana", "David", "Jennifer", "Jose", "Patricia", "Daniel",
               "Rosa", "Kevin", "Emily", "Luis", "Sarah", "Minh", "Grace", "Carlos", "Ashley"],
     "last": ["Smith", "Garcia", "Johnson", "Martinez", "Nguyen", "Brown", "Hernandez", "Davis", "Lopez", "Wilson",
@@ -109,6 +333,14 @@ INDIA = {
         "ta": "மற்ற வீடுகளுக்கு கரண்ட் வந்துவிட்டது, எங்கள் வீட்டில் இன்னும் இல்லை. {street}, கதவு எண் {house}.",
         "hi": "बाकी घरों में बिजली आ गई पर हमारे घर में अभी भी नहीं है। {street}, मकान नंबर {house}।",
     },
+    "address": "{house}, {street}",
+    "agent": {"en": _agent_en("Power outage desk", "If anything is on fire, call the fire service now."),
+              "ta": AGENT_TA, "hi": AGENT_HI},
+    "caller": {"en": {**CALLER_EN, "address": "Door number {house}, {street}."}, "ta": CALLER_TA, "hi": CALLER_HI},
+    "voices": {"agent": {"en": "en-IN-NeerjaNeural", "ta": "ta-IN-PallaviNeural", "hi": "hi-IN-SwaraNeural"},
+               "caller": {"en": ["en-IN-PrabhatNeural"],  # the only other Indian English voice is the agent's
+                          "ta": ["ta-IN-ValluvarNeural", "ta-IN-PallaviNeural"],
+                          "hi": ["hi-IN-MadhurNeural", "hi-IN-SwaraNeural"]}},
     "first": ["Arun", "Lakshmi", "Karthik", "Priya", "Suresh", "Divya", "Rajesh", "Meena", "Vignesh", "Anitha",
               "Mohammed", "Fathima", "Ramesh", "Kavya", "Senthil", "Deepa", "Arjun", "Sangeetha", "Joseph", "Mary"],
     "last": ["Kumar", "Raman", "Subramanian", "Krishnan", "Iyer", "Natarajan", "Pillai", "Rajan", "Murugan", "Basha",

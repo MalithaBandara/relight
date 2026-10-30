@@ -83,6 +83,29 @@ class ModelClient:
         resp = self._cached("spark", body, call)
         return resp["choices"][0]["message"]["content"] if resp else None
 
+    def spark_listen(self, audio_path: Path, language: str) -> str | None:
+        """Spark transcribes a call itself, for languages Voice Transcribe lacks (Sinhala).
+
+        Spark accepts audio input; the content-part shape below follows the OpenAI-compatible convention and has
+        not been checked against the live API yet.
+        """
+        audio = Path(audio_path).read_bytes()
+        system = f"Transcribe this phone call. It is in {language}; write it in {language}'s own script. " \
+                 "Return only the words spoken."
+        key = {"model": config.SPARK_MODEL, "system": system, "audio_sha": hashlib.sha256(audio).hexdigest()}
+
+        def call():
+            body = {"model": config.SPARK_MODEL, "messages": [
+                {"role": "system", "content": system},
+                {"role": "user", "content": [{"type": "input_audio", "input_audio": {
+                    "data": base64.b64encode(audio).decode(), "format": "wav"}}]}]}
+            r = httpx.post(f"{self.base}/chat/completions", json=body, headers=self.headers, timeout=TIMEOUT)
+            r.raise_for_status()
+            return r.json()
+
+        resp = self._cached("spark-audio", key, call)
+        return resp["choices"][0]["message"]["content"].strip() if resp else None
+
     # ---- Muse Voice Transcribe -------------------------------------------
 
     def transcribe(self, audio_path: Path, language_bias: list[str] | None = None) -> dict | None:

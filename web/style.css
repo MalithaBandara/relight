@@ -157,6 +157,28 @@ table.mini th { color: var(--muted); font-weight: 500; }
 .dock-body { position: relative; min-height: 0; }
 .dock-body .tab { position: absolute; inset: 0; display: none; }
 .dock-body .tab.on { display: block; }
+.tab-opt { margin-left: auto; display: flex; align-items: center; gap: 5px; padding: 0 12px; font-size: 11px; color: var(--muted); cursor: pointer; }
+/* ---------- agent calls ---------- */
+.dock-body .tab.agent-calls.on { display: grid; grid-template-columns: minmax(0, 1fr) minmax(340px, 46%); }
+#agentcalls tr { cursor: pointer; }
+#agentcalls tr.sel td { background: var(--panel-3); }
+#agentcalls.voiced-only tr:not(.voiced) { display: none; }
+.voiced-mark { color: var(--voice); font-size: 10px; }
+.outcome-urgent { color: var(--alarm); font-weight: 600; }
+.convo { overflow: auto; min-height: 0; border-left: 1px solid var(--line-2); padding: 8px 12px; }
+.convo .empty { color: var(--muted); padding: 18px 0; text-align: center; }
+.convo-head { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.convo-head b { font-family: var(--mono); }
+.convo-note { color: var(--dim); font-size: 11px; margin-bottom: 8px; }
+.turn { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 6px; margin-bottom: 5px; }
+.bubble { padding: 4px 8px; border-radius: 3px; background: var(--panel-2); border-left: 2px solid var(--muted); }
+.turn.agent .bubble { border-left-color: var(--agent); }
+.turn.playing .bubble { box-shadow: 0 0 0 1px var(--voice); }
+.bubble .who { font-size: 10px; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); margin-right: 6px; }
+.bubble .en { color: var(--muted); font-size: 11px; }
+.play { width: 20px; height: 20px; padding: 0; border-radius: 50%; border: 1px solid var(--line-2); background: var(--panel-2); color: var(--text); font-size: 8px; cursor: pointer; }
+.play:hover { border-color: var(--voice); }
+.convo-head .btn { height: 22px; font-size: 11px; }
 table.log td:nth-child(4) { white-space: normal; color: #aeb8c3; }
 td.msg { white-space: normal !important; max-width: 380px; }
 td.msg .en { color: var(--muted); font-size: 11px; }

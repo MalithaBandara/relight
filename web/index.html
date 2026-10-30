@@ -94,12 +94,18 @@
     <nav class="tabs" id="dock-tabs">
       <button data-tab="log" class="on">Event log</button>
       <button data-tab="calls">Trouble calls</button>
+      <button data-tab="agent">Agent calls<span class="count" id="agent-count"></span></button>
       <button data-tab="outbound">Outbound messages</button>
       <button data-tab="crews">Crews</button>
+      <label class="tab-opt" title="Calls with a recorded caller (synthetic voice)"><input type="checkbox" id="voiced-only"> Voiced calls only</label>
     </nav>
     <div class="dock-body">
       <div class="table-wrap tab on" data-tab="log"><table class="grid log"><thead><tr><th>Time</th><th>Source</th><th>Event</th><th>Detail</th></tr></thead><tbody id="log"></tbody></table></div>
       <div class="table-wrap tab" data-tab="calls"><table class="grid"><thead><tr><th>Time</th><th>Ch</th><th>Lang</th><th>Message</th><th>Read as</th><th>Located</th><th>Read by</th><th>Status</th><th>Event</th></tr></thead><tbody id="calls"></tbody></table></div>
+      <div class="tab agent-calls" data-tab="agent">
+        <div class="table-wrap"><table class="grid"><thead><tr><th>Time</th><th>Lang</th><th>Caller</th><th></th><th>Outcome</th><th>Event</th></tr></thead><tbody id="agentcalls"></tbody></table></div>
+        <div class="convo" id="convo"><div class="empty">Every call is answered by the agent in the caller's language. Select one to read it or listen.</div></div>
+      </div>
       <div class="table-wrap tab" data-tab="outbound"><table class="grid"><thead><tr><th>Time</th><th>Type</th><th>Lang</th><th>To</th><th>Message</th><th>Written by</th></tr></thead><tbody id="outbound"></tbody></table></div>
       <div class="table-wrap tab" data-tab="crews"><table class="grid"><thead><tr><th>Crew</th><th>Skills</th><th>Status</th><th>Event</th><th>Task</th></tr></thead><tbody id="crews"></tbody></table></div>
     </div>

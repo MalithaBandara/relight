@@ -1,0 +1,17 @@
+{
+ "note": "Voiced phone calls for chennai_cyclone (see galle_storm.json for the format). Street names are spoken as written in the scenario (OpenStreetMap names).",
+ "calls": {
+  "C494": {"voice": "ta-IN-ValluvarNeural", "rate": "+6%",
+           "spoken": "வணக்கம். Vijayanagar 1st Main Road, கதவு எண் 19. கரண்ட் இல்லை."},
+  "C1331": {"voice": "en-IN-PrabhatNeural", "rate": "+6%",
+            "spoken": "Hello, power cut in 1st Cross Street, Cross Street 1, house 190. Please send a lineman."},
+  "C1342": {"voice": "hi-IN-MadhurNeural", "rate": "+6%", "withheld": ["street", "house_no", "account_no"],
+            "spoken": "हेलो, नमस्ते। हमारे घर में बिजली नहीं है, तूफ़ान के बाद से।"},
+  "C2226": {"voice": "hi-IN-SwaraNeural", "rate": "+6%",
+            "spoken": "हेलो, नमस्ते। मैं 1st Cross Street, Cross Street 1 से बोल रही हूँ, मकान नंबर 229। तूफ़ान के बाद से बिजली नहीं है।"},
+  "C3429": {"voice": "ta-IN-PallaviNeural", "rate": "+8%",
+            "spoken": "Muthu Krishnan Street 13 அருகில் மின் கம்பம் விழுந்துவிட்டது. கரண்ட் இல்லை."},
+  "C3648": {"voice": "en-IN-PrabhatNeural", "rate": "+14%",
+            "spoken": "Wire fallen on the road and sparking near door number 16, A.G.S. Colony 2nd Street, Cross Street 1! Very dangerous!"}
+ }
+}

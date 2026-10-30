@@ -23,6 +23,7 @@ from typing import Any, Awaitable, Callable
 import httpx
 
 from . import config
+from .callagent import TRANSCRIBE_LANGS, CallAgent
 from .extract import Extraction, Extractor
 from . import packs
 from .grid import haversine_m
@@ -76,6 +77,7 @@ class Engine:
         self.scenario = scenario
         self.broadcast = broadcast
         self.sim = None  # the simulated world (Replayer): answers questions, plays crews and customers
+        self.agent = CallAgent(self, KIND_TITLE, LANG_NAME)
         self.reset()
 
     def clock(self, t: float) -> str:
@@ -100,6 +102,9 @@ class Engine:
         self.notices: list[dict] = []
         self.incidents: list[dict] = []
         self.suspects: list[dict] = []
+        self.located: list = []  # the tracer's latest result (the call agent asks about its open questions)
+        self._calls: list[dict] = []  # calls whose report is filed; the agent finishes them after the re-trace
+        self._questions: list = []  # located faults the tracer is still unsure about
         self.hazards: list[dict] = []
         self.restored_at: dict[str, float] = {}
         self.plan: dict = {}
@@ -337,6 +342,14 @@ class Engine:
             await self.recompute()
         else:
             self._dirty = True
+        await self._finish_calls()
+
+    async def _finish_calls(self) -> None:
+        if not self._calls:
+            return
+        while self._calls:
+            await self.agent.finish(self._calls.pop(0))
+        await self._maybe_ask(self._questions)  # whatever the callers could not answer goes out by SMS
 
     async def _ami(self, e: dict) -> None:
         xfs = Counter()
@@ -355,10 +368,15 @@ class Engine:
                        "locked out, needs a crew" if e["event"] == "lockout" else "")
         await self.broadcast({"type": "scada", "device": dev.id, "event": e["event"], "t": e["t"]})
 
-    async def _transcript(self, e: dict) -> str:
+    async def _transcript(self, e: dict) -> tuple[str | None, str]:
+        """What the caller (or crew) said, and who heard it. None if a live model could not make out the call."""
         audio = e.get("audio")
-        if audio and (config.ROOT / audio).exists():
-            bias = {"en": ["English"], "ta": ["Tamil", "English"], "si": ["English"]}.get(e.get("language"))
+        lang = e.get("language", "en")
+        if not audio or not (config.ROOT / audio).exists():
+            return e["text"], "mock (script)"
+        if lang in TRANSCRIBE_LANGS or e["type"] == "crew_note":
+            bias = {"en": ["English"], "ta": ["Tamil", "English"], "hi": ["Hindi", "English"],
+                    "es": ["Spanish", "English"]}.get(lang)
             try:
                 res = await asyncio.to_thread(self.client.transcribe, config.ROOT / audio, bias)
             except Exception as err:  # noqa: BLE001
@@ -366,8 +384,21 @@ class Engine:
                 await self.log("Code", f"{e['id']}: transcription failed, using text", str(err)[:160], e["id"])
             if res:
                 await self.log("Voice Transcribe", f"{e['id']}: call transcribed", res["transcript"][:160], e["id"])
-                return res["transcript"]
-        return e["text"]
+                return res["transcript"], "Voice Transcribe"
+            return e["text"], "mock (script)"
+        # Voice Transcribe has no Sinhala: Spark listens to the recording itself.
+        text = None
+        if not self.offline:
+            try:
+                text = await asyncio.to_thread(self.client.spark_listen, config.ROOT / audio, LANG_NAME.get(lang, lang))
+            except Exception:  # noqa: BLE001
+                text = None
+        if text:
+            await self.log("Muse Spark", f"{e['id']}: call heard by Spark",
+                           f"{LANG_NAME.get(lang, lang)} audio, which Voice Transcribe does not cover: {text[:120]}",
+                           e["id"])
+            return text, "Muse Spark"
+        return (None, "Muse Spark") if self.client.mode == "live" and not self.offline else (e["text"], "mock (script)")
 
     async def _extract(self, text: str, e: dict) -> Extraction:
         if m := self.sms_code.match(text):
@@ -383,22 +414,39 @@ class Engine:
         return out
 
     async def _complaint(self, e: dict) -> None:
-        text = (await self._transcript(e)) if e["channel"] == "call" else e["text"]
-        ext = await self._extract(text, e)
+        text, heard_by = (await self._transcript(e)) if e["channel"] == "call" else (e["text"], None)
+        # Every call is answered by the agent, except a caller's answer to one of its own questions.
+        call = self.agent.start(e, text, heard_by) if e["channel"] == "call" and not e.get("probe_reply") else None
+        if call is not None and text is None:
+            await self.agent.not_understood(call, e, heard_by)
+            return
+        # Mock mode reads the scenario's labels; a caller who only gives some facts when asked has the rest withheld.
+        withheld = set(e.get("withheld", ())) if call else set()
+        ext = await self._extract(text, {**e, "truth": {k: v for k, v in e.get("truth", {}).items() if k not in withheld}})
         f = ext.fields
+        loc = self._locate(f, e.get("from")) if not f["is_junk"] else None
+        if call is not None and loc is not None and (added := await self.agent.questions(call, e, f, loc)):
+            text = f"{text} {added}"
+            ext = await self._extract(text, e)
+            f = ext.fields
+            loc = self._locate(f, e.get("from")) if not f["is_junk"] else None
         msg = {"id": e["id"], "t": e["t"], "channel": e["channel"], "language": f.get("language") or e.get("language"),
                "from": e.get("from"), "text": text, "fields": f, "model": ext.model, "photo": e.get("photo"),
                "probe_reply": e.get("probe_reply"), "followup": e.get("followup"), "event": e}
+        if call is not None:
+            msg["call"] = call
         await (self.log if f["hazard"] != "none" else self.note)(ext.model, f"{e['id']}: {f['symptom'].replace('_', ' ')}"
                        + (f", hazard {f['hazard'].replace('_', ' ')}" if f["hazard"] != "none" else "")
                        + (" (junk)" if f["is_junk"] else ""), f.get("summary_en", "")[:160], e["id"])
-        if not f["is_junk"]:
-            msg["location"] = self._locate(f, e.get("from"))
+        if loc is not None:
+            msg["location"] = loc
             if not e.get("probe_reply"):
                 self._claim(msg)
         n_hazards = len(self.hazards)
         self.messages.append(msg)
         self._apply(msg)
+        if call is not None:
+            self._calls.append(msg)
         loc = msg.get("location") or {}
         if msg["status"] == "duplicate":
             await self.note("Code", f"{e['id']}: duplicate of {msg['dup_of']}",
@@ -449,7 +497,8 @@ class Engine:
                               "lon": loc.get("lon")})
 
     async def _crew_note(self, e: dict) -> None:
-        text = await self._transcript(e)
+        text, _ = await self._transcript(e)
+        text = text if text is not None else e["text"]
         ex = self.glimmer if self.offline else self.extractor
         ext = await asyncio.to_thread(ex.crew_note, text, e.get("truth", {}))
         f = ext.fields
@@ -549,6 +598,7 @@ class Engine:
                 await self._complaint(e)
         await self.broadcast({"type": "network", "offline": offline})
         await self.recompute()
+        await self._finish_calls()
 
     async def _reconcile(self) -> None:
         reviewed = corrected = 0
@@ -688,7 +738,7 @@ class Engine:
             await self.log("Code", f"Processed {sum(v for k, v in q.items() if k.startswith(('no power', 'partial', 'flicker', 'none', 'power on')))} messages",
                            ", ".join(f"{k}: {v}" for k, v in q.most_common(6)))
         self._rebuild()
-        located = self.tracer.locate(self.ev, self.elapsed)
+        located = self.located = self.tracer.locate(self.ev, self.elapsed)
         suspects = []
         opened = False
         for L in located:
@@ -704,7 +754,9 @@ class Engine:
                                           "confidence": round(L.alt_confidence, 3)} if L.alternative else None,
                           "lat": L.candidate.lat, "lon": L.candidate.lon, "transformers": sorted(L.candidate.out),
                           "reasons": L.reasons} for L in suspects if L.confidence < LOCATED_AT]
-        await self._maybe_ask(suspects)
+        self._questions = suspects
+        if not self._calls:  # a caller on the line is asked first (CallAgent._neighbour); SMS otherwise
+            await self._maybe_ask(suspects)
         self._refresh_outages()
         self._score_and_plan()
         await self._dispatch()
@@ -1100,6 +1152,8 @@ class Engine:
                 "served": sum(self.customers.values()),
                 "critical_out": sum(len(i["critical"]) for i in self._active()),
                 "calls": sum(m["channel"] not in ("crew",) and not m.get("probe_reply") for m in self.messages),
+                "agent_calls": sum("call" in m for m in self.messages),
+                "escalated": sum(m["call"]["escalated"] for m in self.messages if "call" in m),
                 "crews": dict(Counter(c["status"] for c in self.crews.values())),
                 "hazards_open": sum(not h["safe"] for h in self.hazards),
                 "incidents_restored": len(self.incidents) - len(self._active()),

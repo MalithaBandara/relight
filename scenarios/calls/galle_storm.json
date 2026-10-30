@@ -1,0 +1,19 @@
+{
+ "note": "Voiced phone calls for galle_storm. Each entry turns the scenario complaint with that id into a call: `spoken` is what the caller says first (synthetic voice, fictional caller), `withheld` lists facts they only give when the agent asks, `voice`/`rate` pick the edge-tts voice. Audio: scripts/make_calls.py -> media/audio/calls/galle_storm/<id>.wav. Non-English lines need a native-speaker check.",
+ "calls": {
+  "C01": {"voice": "en-IN-PrabhatNeural", "rate": "+4%", "withheld": ["street", "house_no", "account_no"],
+          "spoken": "Hello? Hello, yes. The current is gone at my house. The whole road is dark, all the houses. Can you please check?"},
+  "C02": {"voice": "si-LK-SameeraNeural", "rate": "+6%",
+          "spoken": "හලෝ, මම කතා කරන්නේ රෝහල පාරේ අංක 47 ඉඳන්. කරන්ට් නැහැ. ලොකු සද්දයක් ආවා, කණුවක් වැටිලා වගේ."},
+  "C03": {"voice": "en-IN-NeerjaExpressiveNeural", "rate": "+8%",
+          "spoken": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account {account}. We have lost mains power. The generator is running, but we need the power back urgently."},
+  "C05": {"voice": "ta-LK-KumarNeural", "rate": "+6%", "withheld": ["hazard"],
+          "spoken": "ஹலோ, வணக்கம். ஹாஸ்பிடல் ரோட், 75ஆம் இலக்கத்தில இருந்து கதைக்கிறன். கரண்ட் இல்லை."},
+  "C23": {"voice": "ta-LK-SaranyaNeural", "rate": "+4%",
+          "spoken": "வணக்கம். பம்பிங் ஸ்டேஷன் ரோட், 30ஆம் இலக்கம். எங்கள் வீட்டில் மின்சாரம் இல்லை."},
+  "C31": {"voice": "en-IN-PrabhatNeural", "rate": "+14%",
+          "spoken": "Hello! There are sparks and a wire lying on the road near the market on Market Street! People are walking past it, please come quickly!"},
+  "C40": {"voice": "en-IN-PrabhatNeural", "rate": "+2%",
+          "spoken": "Hi, my TV remote is not working. Can you send someone to look at it?"}
+ }
+}
