@@ -178,13 +178,9 @@
       <label class="field">What happened?
         <textarea id="text" placeholder="For example: no power since the storm, a wire is down near the shop"></textarea>
       </label>
-      <div class="samples" id="report-samples">
+      <div class="samples" id="report-samples" hidden>
         <span>Try a sample message</span>
-        <div class="chips">
-          <button class="chip" data-t="කණුව ළඟ වයරයක් බිම වැටිලා ගිනි පුපුරු එනවා, Market Street 25" data-l="si" data-w="3622151132">සිංහල: wire on the road</button>
-          <button class="chip" data-t="லேக் ரோட் 9, மின்சாரம் இல்லை. மரக்கிளை கம்பியில் விழுந்தது." data-l="ta" data-w="7929510258">தமிழ்: no power</button>
-          <button class="chip" data-t="No power at 20 Hospital Road since the storm, is anyone coming?" data-l="en" data-w="4466799600">English: no power</button>
-        </div>
+        <div class="chips"></div>
       </div>
       <div class="row">
         <select id="lang" aria-label="Language"><option value="en">English</option><option value="si">සිංහල</option><option value="ta">தமிழ்</option></select>
@@ -201,14 +197,9 @@
         <input id="q" placeholder="Account number or mobile" aria-label="Account number or mobile" inputmode="numeric">
         <button id="check" class="primary"><span class="spinner" aria-hidden="true"></span><span class="label">Check</span></button>
       </div>
-      <div class="samples" id="check-samples">
+      <div class="samples" id="check-samples" hidden>
         <span>Sample customers</span>
-        <div class="chips">
-          <button class="chip" data-q="4466799600">Hospital Road 20</button>
-          <button class="chip" data-q="0086457035">Pumping Station Road 30</button>
-          <button class="chip" data-q="7929510258">Lake Road 9</button>
-          <button class="chip" data-q="6679981034">Hospital Road 100</button>
-        </div>
+        <div class="chips"></div>
       </div>
       <p class="error" id="check-error" role="alert"></p>
       <div id="status" aria-live="polite"></div>
@@ -238,15 +229,50 @@ const ICON = {
   sms: `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg>`,
 };
 
-// Scenario-aware language list and samples: the sample customers exist only in the Galle storm.
+// Sample reports and customers per scenario. Accounts come from each scenario's customer database: report
+// samples are customers behind a fault who have not called yet, status samples cover the faults worth showing.
+const SAMPLES = {
+  galle_storm: {
+    report: [
+      ["සිංහල: wire on the road", "si", "3622151132", "කණුව ළඟ වයරයක් බිම වැටිලා ගිනි පුපුරු එනවා, Market Street 25"],
+      ["தமிழ்: no power", "ta", "7929510258", "லேக் ரோட் 9, மின்சாரம் இல்லை. மரக்கிளை கம்பியில் விழுந்தது."],
+      ["English: no power", "en", "4466799600", "No power at 20 Hospital Road since the storm, is anyone coming?"],
+    ],
+    check: [["Hospital Road 20", "4466799600"], ["Pumping Station Road 30", "0086457035"], ["Lake Road 9", "7929510258"],
+      ["Hospital Road 100", "6679981034"]],
+  },
+  houston_hurricane: {
+    report: [
+      ["Español: sparking wire", "es", "2119849850", "Hay un cable caído en la calle echando chispas frente al 1188 de Ronson Road."],
+      ["Español: no power", "es", "8743137715", "Se fue la luz en el 1220 de Burkhart Road, toda la cuadra está oscura."],
+      ["English: no power", "en", "8974935681", "No power at 1156 Voss Road since the hurricane. Is anyone coming?"],
+    ],
+    check: [["Westview Drive 1436", "4906871794"], ["Ronson Road 1180", "5679186380"], ["Winningham Lane 1324", "1627393646"],
+      ["Westview Drive 1044", "2232548699"]],
+  },
+  chennai_cyclone: {
+    report: [
+      ["தமிழ்: sparking wire", "ta", "8863767701", "Kannadasan street 18 அருகில் மின் கம்பி அறுந்து தீப்பொறி வருகிறது."],
+      ["हिन्दी: no power", "hi", "4898754633", "VGP avenue 22 में कल रात से बिजली नहीं है।"],
+      ["English: no current", "en", "9844385397", "No current at RajaLaxmi Nagar 1st main Road 9 since morning, any update?"],
+    ],
+    check: [["Hospital, Velachery Upper Flyover", "9000000032"], ["Brahmin Street 58", "9740072196"],
+      ["A.G.S. Colony 2nd St, door 31", "3645110812"], ["VGP avenue 6", "3322360755"]],
+  },
+};
+
 fetch("/api/scenarios").then((r) => r.json()).then((list) => {
   const sc = list.scenarios.find((s) => s.id === list.current);
   const langs = LANGS[sc && sc.country] || LANGS["Sri Lanka"];
   $("#lang").innerHTML = langs.map(([v, n]) => `<option value="${v}">${n}</option>`).join("");
   $("#langs").textContent = `Report a power cut or check your supply · ${langs.map((l) => l[1]).join(" · ")}`;
-  const galle = list.current === "galle_storm";
-  $("#report-samples").hidden = !galle;
-  $("#check-samples").hidden = !galle;
+  const s = SAMPLES[list.current];
+  if (!s) return;
+  $("#report-samples .chips").innerHTML = s.report.map(([label, l, w, t]) =>
+    `<button class="chip" data-t="${esc(t)}" data-l="${l}" data-w="${w}">${esc(label)}</button>`).join("");
+  $("#check-samples .chips").innerHTML = s.check.map(([label, q]) => `<button class="chip" data-q="${q}">${esc(label)}</button>`).join("");
+  $("#report-samples").hidden = false;
+  $("#check-samples").hidden = false;
 }).catch(() => {});
 
 async function getJSON(url, opts) {
@@ -256,10 +282,15 @@ async function getJSON(url, opts) {
 }
 function busy(btn, on) { btn.setAttribute("aria-busy", on ? "true" : "false"); btn.disabled = on; }
 
-document.querySelectorAll("[data-t]").forEach((b) => b.onclick = () => {
+$("#report-samples").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-t]");
+  if (!b) return;
   $("#text").value = b.dataset.t; $("#lang").value = b.dataset.l; $("#who").value = b.dataset.w; $("#send-error").textContent = "";
 });
-document.querySelectorAll("[data-q]").forEach((b) => b.onclick = () => { $("#q").value = b.dataset.q; check(); });
+$("#check-samples").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-q]");
+  if (b) { $("#q").value = b.dataset.q; check(); }
+});
 
 // ---- supply status, kept live while an account is on screen -----------------------------------
 

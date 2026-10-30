@@ -463,7 +463,7 @@ Can start now
 - [x] Call scripts in every language and the `media/audio/calls/` layout (scenarios/calls/*.json).
 - [x] Crew voice reports with read-back (synthetic audio; same pipeline as calls).
 - [ ] Find candidate public photo datasets and drone clips with their licences, for the owner to choose.
-- [ ] Customer portal sample buttons for the Houston and Chennai scenarios (currently Galle only).
+- [x] Customer portal sample buttons for the Houston and Chennai scenarios (`SAMPLES` in `web/customer.html`).
 - [ ] Polish the console for recording (demo flow, click path, timing).
 - [ ] Shot list, voice-over script and on-screen captions for the video.
 - [ ] README: architecture diagram, "which Meta model does what", screenshots; accuracy table once

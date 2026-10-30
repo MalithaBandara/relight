@@ -138,17 +138,21 @@ def _keyword_fields(text: str, language: str) -> dict:
     """Last-resort reading of an unlabelled message (mock mode, e.g. typed live into the portal)."""
     t = text.lower()
     hazard = "none"
-    for words, h in ((("spark", "ගිනි", "தீப்பொறி"), "live_wire"), (("pole", "කණු", "கம்ப"), "pole_down"),
-                     (("tree", "ගහ", "மரம்"), "tree_on_line"), (("wire", "වයර", "கம்பி"), "wire_down")):
+    for words, h in ((("spark", "chispa", "ගිනි", "தீப்பொறி", "चिंगारी"), "live_wire"),
+                     (("pole", "poste", "කණු", "கம்பம்", "खंभा"), "pole_down"),  # not கம்ப: கம்பி is a wire
+                     (("tree", "árbol", "arbol", "ගහ", "மரம்", "மரக்கிளை", "पेड़"), "tree_on_line"),
+                     (("wire", "cable", "වයර", "கம்பி", "तार"), "wire_down")):
         if any(re.search(rf"\b{w}", t) if w.isascii() else w in t for w in words):
             hazard = h
             break
-    m = (re.search(r"(\d{1,3})\s*,?\s*([A-Za-z][A-Za-z ]+?(?:road|rd|street|st|lane|mawatha))\b", text, re.I)
-         or re.search(r"([A-Za-z][A-Za-z ]+?(?:road|rd|street|st|lane))\s*,?\s*(?:no\.?\s*)?(\d{1,3})", text, re.I))
+    # House numbers run to four digits (US addresses); street names may contain ordinals ("1st Main Road").
+    suffix = r"(?:road|rd|street|st|lane|mawatha|drive|avenue)"
+    m = (re.search(rf"\b(\d{{1,4}})\b\s*,?\s*(?:de\s+)?([A-Za-z][A-Za-z ]+?{suffix})\b", text, re.I)
+         or re.search(rf"\b([A-Za-z][A-Za-z0-9. ]+?{suffix})\s*,?\s*(?:no\.?\s*)?(\d{{1,4}})\b", text, re.I))
     street = house = None
     if m:
         a, b = m.group(1), m.group(2)
-        house, street = (int(a), b) if a.isdigit() else (int(b), a)
+        house, street = (int(a), b) if a.isdigit() else (int(b), re.sub(r"^.*\b(?:at|in|near|on)\s+", "", a, flags=re.I))
     acct = re.search(r"\b\d{10}\b", text)
     return {"language": language, "account_no": acct.group(0) if acct else None,
             "street": street.strip() if street else None, "house_no": house, "landmark": None if street else text,
