@@ -32,9 +32,18 @@
   --agent: #3db7d4;
   --font: "IBM Plex Sans", "Noto Sans Sinhala", "Noto Sans Tamil", "Noto Sans Devanagari", system-ui, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --ease-out: cubic-bezier(.23, 1, .32, 1);
 }
 
 * { box-sizing: border-box; }
+html { color-scheme: dark; scrollbar-color: var(--line-2) transparent; }
+::selection { background: rgba(74, 163, 223, .35); }
+:focus-visible { outline: 1px solid var(--accent); outline-offset: 1px; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--line-2); border: 3px solid var(--panel); border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: var(--dim); }
+::-webkit-scrollbar-track, ::-webkit-scrollbar-corner { background: transparent; }
+.kpi .v, table.grid td.num, .fields b, #clock { font-variant-numeric: tabular-nums; }
 html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font: 13px/1.4 var(--font); }
 body.console { display: grid; grid-template-rows: 48px auto minmax(0, 1fr) 230px; overflow: hidden; }
 button, select, input { font: inherit; color: inherit; }
@@ -59,7 +68,13 @@ svg { fill: currentColor; }
 .controls, .status-area { display: flex; align-items: center; gap: 6px; }
 .btn { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; background: var(--panel-2); border: 1px solid var(--line-2); border-radius: 4px; cursor: pointer; text-decoration: none; font-size: 12px; }
 .btn svg { width: 13px; height: 13px; }
+.btn { transition: border-color .12s ease, background-color .12s ease, transform .1s var(--ease-out); }
 .btn:hover { border-color: var(--muted); }
+.btn:active { transform: scale(.97); }
+.btn.primary:hover { background: #3780b8; border-color: #3780b8; }
+.chip { transition: border-color .12s ease, background-color .12s ease; }
+.chip.ok:hover { border-color: var(--st-rest); background: rgba(63, 180, 124, .1); }
+#progress-bar { transition: width .5s linear; }
 .btn.primary { background: #2d6fa3; border-color: #2d6fa3; color: #fff; font-weight: 600; }
 .btn.ghost { background: transparent; }
 .chip { display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 11px; border: 1px solid var(--line-2); font-size: 11px; color: var(--muted); background: transparent; white-space: nowrap; }
@@ -133,7 +148,7 @@ table.grid tbody tr:hover { background: var(--panel-2); }
 .fields span { font-size: 10px; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); }
 .fields b { font: 500 13px var(--mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .section-t { font-size: 10px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); margin: 10px 0 4px; border-bottom: 1px solid var(--line); padding-bottom: 3px; }
-.explain { background: var(--panel-2); border-left: 2px solid var(--spark); padding: 6px 8px; font-size: 12.5px; }
+.explain { background: var(--panel-2); border: 1px solid rgba(93, 156, 236, .35); border-radius: 3px; padding: 6px 8px; font-size: 12.5px; }
 .reasons { margin: 0; padding-left: 16px; color: #b7c1cc; font-size: 12px; }
 .history { color: var(--agent); font-size: 12px; }
 .plan { display: grid; grid-template-columns: 62px 1fr auto; gap: 8px; align-items: center; padding: 5px 8px; margin-bottom: 4px; border: 1px solid var(--line-2); border-radius: 4px; font-size: 12px; background: var(--panel-2); }
@@ -142,7 +157,11 @@ table.grid tbody tr:hover { background: var(--panel-2); }
 .plan.blocked .tag { color: var(--alarm); }
 .plan.safe { border-color: rgba(63, 180, 124, .55); }
 .plan.safe .tag { color: var(--st-rest); }
-.plan button { background: var(--st-rest); color: #06150d; border: 0; border-radius: 3px; padding: 3px 10px; font-weight: 600; cursor: pointer; }
+.plan button { background: var(--st-rest); color: #06150d; border: 0; border-radius: 3px; padding: 3px 10px; font-weight: 600; cursor: pointer;
+  transition: background-color .12s ease, transform .1s var(--ease-out); }
+.plan button:hover { background: #4fc78d; }
+.plan button:active { transform: scale(.96); }
+.plan button:disabled { opacity: .6; cursor: progress; }
 .crit-list { color: var(--alarm); font-size: 12px; }
 table.mini { width: 100%; border-collapse: collapse; font-size: 11.5px; }
 table.mini td, table.mini th { padding: 2px 6px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
@@ -152,6 +171,7 @@ table.mini th { color: var(--muted); font-weight: 500; }
 .dock { display: grid; grid-template-rows: 30px minmax(0, 1fr); border-top: 1px solid var(--line-2); background: var(--panel); min-height: 0; }
 .tabs { display: flex; background: var(--panel-2); border-bottom: 1px solid var(--line); }
 .tabs button { background: none; border: 0; border-right: 1px solid var(--line); padding: 0 14px; font-size: 11px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); cursor: pointer; }
+.tabs button:hover { color: var(--text); }
 .tabs button.on { color: var(--text); background: var(--panel); box-shadow: inset 0 2px 0 var(--accent); }
 .tabs .count { font-family: var(--mono); color: var(--dim); margin-left: 4px; }
 .dock-body { position: relative; min-height: 0; }
@@ -264,7 +284,34 @@ dialog#map-dialog::backdrop { background: rgba(0, 0, 0, .6); }
   .dock { height: 320px; }
 }
 
-/* ---------- customer portal (customer.html) ---------- */
-.brand .logo { font-size: 22px; }
-.brand h1 { font-size: 18px; margin: 0; }
-.brand p { margin: 0; color: var(--muted); font-size: 12px; }
+/* ---------- motion ----------
+   Motion marks change, never decoration: a ring where a fault is first located or changes state, a green
+   ring where power comes back, a flash on agenda rows that changed. Routine actions (tabs, selection,
+   sorting) stay instant because operators repeat them all shift. */
+.ring { width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; border: 2px solid var(--st-pred); pointer-events: none;
+  animation: ring 1.4s var(--ease-out) forwards; }
+.ring.DISP { border-color: var(--st-disp); }
+.ring.ONS { border-color: var(--st-ons); }
+.ring.REST { border-color: var(--st-rest); width: 64px; height: 64px; margin: -32px 0 0 -32px; animation-duration: 1.8s; }
+.ring.twice { animation-iteration-count: 2; }
+@keyframes ring { from { transform: scale(.2); opacity: 1; } to { transform: scale(1); opacity: 0; } }
+#agenda tbody tr.changed .st { animation: stamp .5s var(--ease-out); }
+@keyframes stamp { 0% { transform: scale(1.35); box-shadow: 0 0 0 3px rgba(255, 255, 255, .25); } 100% { transform: none; box-shadow: none; } }
+.kpi .v.up { animation: tick-bad .9s ease-out; }
+.kpi .v.down { animation: tick-good .9s ease-out; }
+@keyframes tick-bad { from { text-shadow: 0 0 12px rgba(229, 72, 77, .7); } }
+@keyframes tick-good { from { color: var(--st-rest); } }
+#offline-banner:not([hidden]) { animation: drop .3s var(--ease-out); }
+@keyframes drop { from { opacity: 0; transform: translate(-50%, -8px); } }
+dialog#map-dialog[open] { animation: pop .22s var(--ease-out); }
+dialog#map-dialog[open]::backdrop { animation: fade .22s ease-out; }
+@keyframes pop { from { opacity: 0; transform: scale(.97); } }
+@keyframes fade { from { opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .ring { animation-name: fade-out; transform: none; }
+  @keyframes fade-out { from { opacity: 1; } to { opacity: 0; } }
+  #agenda tbody tr.changed .st, dialog#map-dialog[open], #offline-banner:not([hidden]) { animation: none; }
+  .ev-sym.hazard { animation: none; }
+  .btn:active, .plan button:active { transform: none; }
+}

@@ -3,113 +3,385 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#121110">
   <title>Outage Desk</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Sinhala:wght@400;600&family=Noto+Sans+Tamil:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;700&family=Noto+Sans+Sinhala:wght@400;600&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body { overflow: auto; }
-    .portal { max-width: 920px; margin: 0 auto; padding: 24px 16px 48px; display: grid; gap: 16px; grid-template-columns: 1fr 1fr; }
-    .portal header { grid-column: 1 / -1; border: 0; background: none; padding: 0; }
-    .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
-    .card h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); }
-    .card input, .card textarea, .card select { background: var(--panel-2); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 9px 10px; font: inherit; }
-    .card textarea { min-height: 90px; resize: vertical; }
-    .card button { background: var(--accent); color: #1a1100; border: 0; border-radius: 8px; padding: 9px; font-weight: 600; cursor: pointer; }
+    /* Customer portal. Written for someone at home in a power cut, often on a phone in a dark room:
+       a warm dark surface that is easy on the eyes and the battery, one lamp-amber accent, and motion
+       only where it explains progress: the restoration tracker fills, and the card lights up when
+       power is back. */
+    :root {
+      --night: #121110;
+      --surface: #1b1917;
+      --surface-2: #24211e;
+      --line: #35302a;
+      --line-2: #4a433b;
+      --text: #f0ebe4;
+      --muted: #aba196;
+      --lamp: #f2b544;
+      --lamp-ink: #1f1503;
+      --lamp-soft: rgba(242, 181, 68, .13);
+      --cut: #f07a6a;
+      --cut-soft: rgba(240, 122, 106, .12);
+      --spark: #8fb6f0;
+      --ease-out: cubic-bezier(.23, 1, .32, 1);
+      --font: "Atkinson Hyperlegible Next", "Noto Sans Sinhala", "Noto Sans Tamil", "Noto Sans Devanagari", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--night); color-scheme: dark; }
+    body { margin: 0; min-height: 100vh; background: var(--night); color: var(--text); font: 16px/1.5 var(--font);
+      -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; }
+    ::selection { background: var(--lamp); color: var(--lamp-ink); }
+    * { scrollbar-color: var(--line-2) transparent; }
+    button, input, select, textarea { font: inherit; color: inherit; }
+    :focus-visible { outline: 2px solid var(--lamp); outline-offset: 2px; }
+
+    .portal { max-width: 980px; margin: 0 auto; padding: 28px 16px 48px; display: grid; gap: 16px; grid-template-columns: 1fr 1fr; align-items: start; }
+    .masthead { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .masthead svg { width: 34px; height: 34px; flex: none; }
+    .masthead h1 { margin: 0; font-size: 24px; line-height: 1.15; letter-spacing: -.01em; }
+    .masthead p { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
+
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+    .card h2 { margin: 0; font-size: 19px; line-height: 1.25; letter-spacing: -.005em; }
+    .card .lede { margin: -6px 0 2px; color: var(--muted); font-size: 14px; }
+    label.field { display: flex; flex-direction: column; gap: 5px; font-size: 14px; color: var(--muted); }
+    input, textarea, select { background: var(--surface-2); border: 1px solid var(--line-2); border-radius: 10px; padding: 11px 12px; font-size: 16px; caret-color: var(--lamp);
+      transition: border-color .15s ease, background-color .15s ease; }
+    input::placeholder, textarea::placeholder { color: #988f83; }
+    input:hover, textarea:hover, select:hover { border-color: #5d554b; }
+    input:focus, textarea:focus, select:focus { border-color: var(--lamp); outline: none; background: #282420; }
+    textarea { min-height: 104px; resize: vertical; }
+    .row { display: flex; gap: 10px; }
+    .row > :first-child { flex: 1; min-width: 0; }
+
+    .samples { display: flex; flex-direction: column; gap: 6px; }
+    .samples > span { font-size: 13px; color: var(--muted); }
     .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-    .chips button { background: var(--panel-2); color: var(--text); border: 1px solid var(--line); font-weight: 400; font-size: 12px; padding: 4px 10px; }
-    .status-box { border-radius: 10px; padding: 12px; background: var(--panel-2); border: 1px solid var(--line); }
-    .status-box.outage { border-color: var(--danger); }
-    .status-box.restored { border-color: var(--ok); }
-    .big-state { font-size: 20px; font-weight: 700; }
-    .kv { display: grid; grid-template-columns: 120px 1fr; gap: 4px 10px; font-size: 13px; }
-    .kv span:nth-child(odd) { color: var(--muted); }
-    .sms { background: rgba(61, 220, 151, .07); border: 1px solid rgba(61, 220, 151, .4); border-radius: 10px; padding: 8px 10px; font-size: 13px; }
-    .muted { color: var(--muted); font-size: 12px; }
-    @media (max-width: 760px) { .portal { grid-template-columns: 1fr; } }
+    .chip { background: transparent; border: 1px solid var(--line-2); border-radius: 999px; padding: 6px 12px; font-size: 14px; cursor: pointer;
+      transition: border-color .15s ease, background-color .15s ease, transform .12s var(--ease-out); }
+    .chip:hover { border-color: var(--lamp); background: var(--lamp-soft); }
+    .chip:active { transform: scale(.96); }
+
+    .primary { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 0 18px;
+      background: var(--lamp); color: var(--lamp-ink); border: 0; border-radius: 10px; font-weight: 700; cursor: pointer;
+      transition: background-color .15s ease, transform .12s var(--ease-out), opacity .15s ease; }
+    .primary:hover { background: #f6c260; }
+    .primary:active { transform: scale(.97); }
+    .primary[aria-busy="true"] { cursor: progress; }
+    .primary[aria-busy="true"] .label { opacity: .75; }
+    .spinner { width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(31, 21, 3, .25); border-top-color: var(--lamp-ink); animation: spin .6s linear infinite; }
+    .primary:not([aria-busy="true"]) .spinner { display: none; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .hint { margin: 0; font-size: 14px; color: var(--muted); }
+    .error { margin: 0; font-size: 14px; color: var(--cut); }
+    .error:empty { display: none; }
+
+    /* ---- what we understood ---- */
+    .understood { border: 1px solid var(--line); border-radius: 12px; padding: 14px; background: var(--surface-2); }
+    .understood h3, .status h3 { margin: 0 0 8px; font-size: 15px; }
+    .kv { display: grid; grid-template-columns: minmax(96px, auto) 1fr; gap: 6px 14px; margin: 0; font-size: 15px; }
+    .kv dt { color: var(--muted); }
+    .kv dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+    .reveal > * { animation: rise .42s var(--ease-out) both; animation-delay: calc(var(--i, 0) * 45ms); }
+    @keyframes rise { from { opacity: 0; transform: translateY(6px); } }
+    .badge { display: inline-block; font-size: 12px; font-weight: 700; padding: 1px 7px; border-radius: 6px; color: #10151c; background: var(--spark); }
+    .badge.mock { background: transparent; color: var(--muted); border: 1px dashed var(--line-2); font-weight: 500; }
+    .badge.code { background: #b9b0a4; }
+
+    /* ---- supply status ---- */
+    .status { position: relative; overflow: hidden; isolation: isolate; border: 1px solid var(--line-2); border-radius: 12px; padding: 16px; background: var(--surface-2);
+      transition: border-color .4s ease; }
+    .status.outage { border-color: rgba(240, 122, 106, .55); }
+    .status.restored { border-color: rgba(242, 181, 68, .7); }
+    .state { display: flex; align-items: flex-start; gap: 10px; }
+    .state svg { width: 26px; height: 26px; flex: none; margin-top: 1px; }
+    .state b { display: block; font-size: 20px; line-height: 1.25; letter-spacing: -.01em; }
+    .state small { display: block; color: var(--muted); font-size: 14px; margin-top: 2px; }
+    .status.outage .state svg { color: var(--cut); }
+    .status.restored .state svg { color: var(--lamp); }
+    .status.restored .state b { color: #ffd88a; }
+    .status:not(.outage):not(.restored) .state svg { color: var(--muted); }
+
+    /* The authored moment: when power comes back, warm light spreads out from the bulb. */
+    .status::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0;
+      background: radial-gradient(120% 140% at 28px 28px, rgba(242, 181, 68, .30), rgba(242, 181, 68, .08) 45%, transparent 75%); }
+    .status.restored::before { opacity: 1; }
+    .status.relight::before { animation: relight 1.1s var(--ease-out) both; }
+    .status.relight .state svg { animation: glow 1.1s var(--ease-out) both; }
+    @keyframes relight { from { opacity: 1; clip-path: circle(0 at 28px 28px); } to { opacity: 1; clip-path: circle(160% at 28px 28px); } }
+    @keyframes glow { 0% { filter: drop-shadow(0 0 0 rgba(242, 181, 68, 0)); transform: scale(.85); }
+      40% { filter: drop-shadow(0 0 10px rgba(242, 181, 68, .9)); transform: scale(1.08); } 100% { filter: drop-shadow(0 0 4px rgba(242, 181, 68, .5)); transform: none; } }
+
+    /* restoration tracker */
+    .track { --p: 0; position: relative; display: grid; grid-template-columns: repeat(5, 1fr); margin: 18px 0 4px; padding: 0; list-style: none; }
+    .track::before, .track::after { content: ""; position: absolute; top: 7px; left: 10%; right: 10%; height: 2px; border-radius: 2px; }
+    .track::before { background: var(--line-2); }
+    .track::after { background: var(--lamp); transform-origin: left center; transform: scaleX(var(--p)); transition: transform .8s var(--ease-out); }
+    .track li { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; font-size: 13px; line-height: 1.25; color: var(--muted); padding: 0 2px; }
+    .track li i { position: relative; width: 16px; height: 16px; border-radius: 50%; background: var(--surface-2); border: 2px solid var(--line-2);
+      transition: background-color .3s ease, border-color .3s ease; transition-delay: var(--d, 0ms); }
+    .track li.done i { background: var(--lamp); border-color: var(--lamp); }
+    .track li.now { color: var(--text); font-weight: 700; }
+    .track li.now i { background: var(--night); border-color: var(--lamp); }
+    .track li.now i::after { content: ""; position: absolute; inset: 3px; border-radius: 50%; background: var(--lamp); }
+    .track li.now i::before { content: ""; position: absolute; inset: -6px; border-radius: 50%; border: 2px solid var(--lamp); opacity: 0; animation: beacon 2.2s var(--ease-out) infinite; }
+    .status.restored .track li.now i::before { animation: none; }
+    @keyframes beacon { 0% { opacity: .6; transform: scale(.6); } 70%, 100% { opacity: 0; transform: scale(1.35); } }
+
+    .facts { margin-top: 14px; }
+    .live { display: flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 13px; color: var(--muted); }
+    .live i { width: 7px; height: 7px; border-radius: 50%; background: var(--lamp); }
+
+    /* messages we sent */
+    .inbox { display: flex; flex-direction: column; gap: 8px; }
+    .inbox h3 { margin: 4px 0 0; font-size: 15px; }
+    .sms { display: flex; gap: 10px; padding: 10px 12px; border-radius: 12px 12px 12px 4px; background: #2a2622; font-size: 15px; }
+    .sms svg { width: 18px; height: 18px; flex: none; margin-top: 2px; color: var(--muted); }
+    .sms.arrive { animation: arrive .45s var(--ease-out) both; }
+    @keyframes arrive { from { opacity: 0; transform: translateY(10px) scale(.98); } }
+
+    .note { grid-column: 1 / -1; margin: 4px 0 0; font-size: 14px; color: var(--muted); max-width: 70ch; }
+
+    @media (max-width: 760px) {
+      .portal { grid-template-columns: 1fr; padding-top: 20px; }
+      .masthead h1 { font-size: 21px; }
+      .track li { font-size: 12px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .track::after { transition: none; }
+      .reveal > *, .sms.arrive { animation-name: fade; }
+      .status.relight::before { animation: fade .6s ease both; }
+      .status.relight .state svg { animation: none; }
+      .track li.now i::before { animation: none; }
+      @keyframes fade { from { opacity: 0; } }
+    }
   </style>
 </head>
 <body>
-  <div class="portal">
-    <header>
-      <div class="brand"><span class="logo">⚡</span><div><h1>Outage Desk</h1><p>Report a power cut or check your supply · English · සිංහල · தமிழ்</p></div></div>
+  <main class="portal">
+    <header class="masthead">
+      <svg viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="9" fill="#2a2521"/><path d="M18.5 6 10 19h6l-1.5 9L23 15h-6z" fill="#f2b544"/></svg>
+      <div><h1>Outage Desk</h1><p id="langs">Report a power cut or check your supply · English · සිංහල · தமிழ்</p></div>
     </header>
 
-    <section class="card">
-      <h2>Report a problem</h2>
-      <input id="who" placeholder="Account number or mobile (optional)">
-      <textarea id="text" placeholder="Tell us what happened, in any language"></textarea>
-      <div class="chips">
-        <button data-t="කණුව ළඟ වයරයක් බිම වැටිලා ගිනි පුපුරු එනවා, Market Street 25" data-l="si" data-w="3622151132">සිංහල: wire on the road</button>
-        <button data-t="லேக் ரோட் 9, மின்சாரம் இல்லை. மரக்கிளை கம்பியில் விழுந்தது." data-l="ta" data-w="7929510258">தமிழ்: no power</button>
-        <button data-t="No power at 20 Hospital Road since the storm, is anyone coming?" data-l="en" data-w="4466799600">English: no power</button>
+    <section class="card" aria-labelledby="report-h">
+      <h2 id="report-h">Report a problem</h2>
+      <p class="lede">Write in your own language. If a wire is down, stay well away from it.</p>
+      <label class="field">Account number or mobile (optional)
+        <input id="who" inputmode="numeric" autocomplete="tel">
+      </label>
+      <label class="field">What happened?
+        <textarea id="text" placeholder="For example: no power since the storm, a wire is down near the shop"></textarea>
+      </label>
+      <div class="samples" id="report-samples">
+        <span>Try a sample message</span>
+        <div class="chips">
+          <button class="chip" data-t="කණුව ළඟ වයරයක් බිම වැටිලා ගිනි පුපුරු එනවා, Market Street 25" data-l="si" data-w="3622151132">සිංහල: wire on the road</button>
+          <button class="chip" data-t="லேக் ரோட் 9, மின்சாரம் இல்லை. மரக்கிளை கம்பியில் விழுந்தது." data-l="ta" data-w="7929510258">தமிழ்: no power</button>
+          <button class="chip" data-t="No power at 20 Hospital Road since the storm, is anyone coming?" data-l="en" data-w="4466799600">English: no power</button>
+        </div>
       </div>
-      <select id="lang"><option value="en">English</option><option value="si">සිංහල</option><option value="ta">தமிழ்</option></select>
-      <button id="send">Send report</button>
-      <div id="sent"></div>
+      <div class="row">
+        <select id="lang" aria-label="Language"><option value="en">English</option><option value="si">සිංහල</option><option value="ta">தமிழ்</option></select>
+        <button id="send" class="primary"><span class="spinner" aria-hidden="true"></span><span class="label">Send report</span></button>
+      </div>
+      <p class="error" id="send-error" role="alert"></p>
+      <div id="sent" aria-live="polite"></div>
     </section>
 
-    <section class="card">
-      <h2>Check my supply</h2>
-      <input id="q" placeholder="Account number or mobile">
-      <div class="chips">
-        <button data-q="4466799600">Hospital Road 20</button>
-        <button data-q="0086457035">Pumping Station Road 30</button>
-        <button data-q="7929510258">Lake Road 9</button>
-        <button data-q="6679981034">Hospital Road 100</button>
+    <section class="card" aria-labelledby="check-h">
+      <h2 id="check-h">Check my supply</h2>
+      <p class="lede">See where the repair is and when power should be back.</p>
+      <div class="row">
+        <input id="q" placeholder="Account number or mobile" aria-label="Account number or mobile" inputmode="numeric">
+        <button id="check" class="primary"><span class="spinner" aria-hidden="true"></span><span class="label">Check</span></button>
       </div>
-      <button id="check">Check</button>
-      <div id="status"></div>
+      <div class="samples" id="check-samples">
+        <span>Sample customers</span>
+        <div class="chips">
+          <button class="chip" data-q="4466799600">Hospital Road 20</button>
+          <button class="chip" data-q="0086457035">Pumping Station Road 30</button>
+          <button class="chip" data-q="7929510258">Lake Road 9</button>
+          <button class="chip" data-q="6679981034">Hospital Road 100</button>
+        </div>
+      </div>
+      <p class="error" id="check-error" role="alert"></p>
+      <div id="status" aria-live="polite"></div>
     </section>
-    <p class="muted" style="grid-column: 1 / -1">Demo portal on fictional data. Every report goes through the same pipeline as calls, WhatsApp and SMS in the control room.</p>
-  </div>
+
+    <p class="note">Demo portal on fictional customers. Every report goes through the same pipeline as calls, WhatsApp and SMS in the control room.</p>
+  </main>
 
 <script>
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const badgeClass = (m) => m.startsWith("mock") ? "mock" : m.includes("Spark") ? "spark" : m.includes("Glimmer") ? "spark" : "code";
+const badgeClass = (m) => m.startsWith("mock") ? "mock" : /Spark|Glimmer/.test(m) ? "spark" : "code";
+const human = (s) => String(s || "").replace(/_/g, " ");
 
-document.querySelectorAll("[data-t]").forEach((b) => b.onclick = () => { $("#text").value = b.dataset.t; $("#lang").value = b.dataset.l; $("#who").value = b.dataset.w; });
+const LANGS = {
+  "Sri Lanka": [["en", "English"], ["si", "සිංහල"], ["ta", "தமிழ்"]],
+  "United States": [["en", "English"], ["es", "Español"]],
+  "India": [["en", "English"], ["ta", "தமிழ்"], ["hi", "हिन्दी"]],
+};
+const STAGES = ["Reported", "Fault found", "Crew on the way", "Crew at work", "Power back"];
+const STAGE_OF = { located: 1, dispatched: 2, "on site": 3 };
+const ICON = {
+  cut: `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/><path d="M4 4l16 16"/></svg>`,
+  bulb: `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.5a6.5 6.5 0 0 0-3.9 11.7V16.5h7.8v-2.3A6.5 6.5 0 0 0 12 2.5z"/><path d="M9.5 19h5M10.5 21.5h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+  search: `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>`,
+  ok: `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 10"/></svg>`,
+  sms: `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg>`,
+};
+
+// Scenario-aware language list and samples: the sample customers exist only in the Galle storm.
+fetch("/api/scenarios").then((r) => r.json()).then((list) => {
+  const sc = list.scenarios.find((s) => s.id === list.current);
+  const langs = LANGS[sc && sc.country] || LANGS["Sri Lanka"];
+  $("#lang").innerHTML = langs.map(([v, n]) => `<option value="${v}">${n}</option>`).join("");
+  $("#langs").textContent = `Report a power cut or check your supply · ${langs.map((l) => l[1]).join(" · ")}`;
+  const galle = list.current === "galle_storm";
+  $("#report-samples").hidden = !galle;
+  $("#check-samples").hidden = !galle;
+}).catch(() => {});
+
+async function getJSON(url, opts) {
+  const r = await fetch(url, opts);
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  return r.json();
+}
+function busy(btn, on) { btn.setAttribute("aria-busy", on ? "true" : "false"); btn.disabled = on; }
+
+document.querySelectorAll("[data-t]").forEach((b) => b.onclick = () => {
+  $("#text").value = b.dataset.t; $("#lang").value = b.dataset.l; $("#who").value = b.dataset.w; $("#send-error").textContent = "";
+});
 document.querySelectorAll("[data-q]").forEach((b) => b.onclick = () => { $("#q").value = b.dataset.q; check(); });
 
-function renderStatus(r) {
-  if (!r || !r.found) return `<div class="status-box">No account found for that number.</div>`;
-  const s = r.status, c = r.customer;
-  let head = "";
-  if (s.state === "outage") head = `<div class="big-state" style="color:var(--danger)">Power cut: ${esc(s.fault)}</div>
-      <div class="kv"><span>Crew</span><span>${esc(s.crew || "being assigned")} (${esc(s.crew_status)})</span>
-      <span>Back around</span><span>${esc(s.eta || "–")}</span><span>Reference</span><span>${esc(s.incident)}</span></div>`;
-  else if (s.state === "restored") head = `<div class="big-state" style="color:var(--ok)">Power restored at ${esc(s.at)}</div>`;
-  else if (s.state === "reported") head = `<div class="big-state">Report received, locating the fault</div>`;
-  else head = `<div class="big-state">No known outage at your address</div>`;
-  const sms = r.notices.map((n) => `<div class="sms">📩 ${esc(n.text)}</div>`).join("");
-  return `<div class="status-box ${s.state}">${head}
-    <div class="kv" style="margin-top:8px"><span>Name</span><span>${esc(c.name)}</span><span>Address</span><span>${esc(c.address)}</span>
-    <span>Account</span><span>${esc(c.account)}</span></div></div>${sms ? `<div class="muted">Messages we sent you</div>${sms}` : ""}`;
+// ---- supply status, kept live while an account is on screen -----------------------------------
+
+let watching = null, lastJSON = "", lastState = null, lastStage = 0, lastNotices = 0, poll = null;
+
+function stageOf(s) {
+  if (s.state === "restored") return 4;
+  if (s.state === "outage") return STAGE_OF[s.crew_status] ?? 1;
+  if (s.state === "reported") return 0;
+  return -1;
+}
+
+function headline(s) {
+  if (s.state === "outage") return { icon: ICON.cut, title: `Power cut: ${esc(s.fault)}`,
+    sub: s.eta ? `Expected back around ${esc(s.eta)}` : "We are working out when it will be back" };
+  if (s.state === "restored") return { icon: ICON.bulb, title: `Power restored at ${esc(s.at)}`, sub: "If you are still without power, report it and we will send someone." };
+  if (s.state === "reported") return { icon: ICON.search, title: "Report received, locating the fault", sub: "We are matching your report with others nearby." };
+  return { icon: ICON.ok, title: "No known outage at your address", sub: "If your power is off, report it and we will look into it." };
+}
+
+function renderStatus(r, fresh) {
+  if (!r || !r.found) return `<div class="status"><div class="state">${ICON.search}<div><b>No account found for that number</b><small>Check the number on your bill, or use the mobile number on your account.</small></div></div></div>`;
+  const s = r.status, c = r.customer, h = headline(s), stage = stageOf(s);
+  const track = stage < 0 ? "" : `<ol class="track" aria-label="Repair progress: ${esc(STAGES[stage])}">
+      ${STAGES.map((t, i) => `<li class="${i < stage || stage === 4 ? "done" : ""} ${i === stage ? "now" : ""}" style="--d:${Math.max(0, i - (fresh ? 0 : lastStage)) * 120}ms"><i></i><span>${t}</span></li>`).join("")}
+    </ol>`;
+  const crew = s.state === "outage" ? `<dt>Crew</dt><dd>${esc(s.crew || "being assigned")}</dd><dt>Reference</dt><dd>${esc(s.incident)}</dd>` : "";
+  const sms = r.notices.map((n, i) => `<div class="sms ${i >= lastNotices || fresh ? "arrive" : ""}" style="animation-delay:${fresh ? i * 60 : 0}ms">${ICON.sms}<span>${esc(n.text)}</span></div>`).join("");
+  return `<div class="status ${s.state}">
+      <div class="state">${h.icon}<div><b>${h.title}</b><small>${h.sub}</small></div></div>
+      ${track}
+      <dl class="kv facts">${crew}<dt>Name</dt><dd>${esc(c.name)}</dd><dt>Address</dt><dd>${esc(c.address)}</dd><dt>Account</dt><dd>${esc(c.account)}</dd></dl>
+      <div class="live"><i></i>Updates on its own while this page is open</div>
+    </div>
+    ${sms ? `<div class="inbox"><h3>Messages we sent you</h3>${sms}</div>` : ""}`;
+}
+
+function showStatus(r, fresh) {
+  const json = JSON.stringify(r);
+  if (!fresh && json === lastJSON) return;
+  const box = $("#status");
+  box.innerHTML = renderStatus(r, fresh);
+  const card = box.querySelector(".status");
+  const track = box.querySelector(".track");
+  const stage = r.found ? stageOf(r.status) : -1;
+  if (track) {
+    // Fill from where the customer last saw it (or from the start on a new lookup) to the current stage.
+    track.style.setProperty("--p", fresh ? 0 : lastStage / 4);
+    track.getBoundingClientRect();
+    requestAnimationFrame(() => track.style.setProperty("--p", Math.max(stage, 0) / 4));
+  }
+  if (card && r.found && r.status.state === "restored" && (fresh || lastState !== "restored")) card.classList.add("relight");
+  lastJSON = json;
+  lastState = r.found ? r.status.state : null;
+  lastStage = Math.max(stage, 0);
+  lastNotices = r.found ? r.notices.length : 0;
+}
+
+function watch(account) {
+  watching = account;
+  clearInterval(poll);
+  poll = setInterval(async () => {
+    if (document.hidden || !watching) return;
+    try { showStatus(await getJSON(`/api/customer?q=${encodeURIComponent(watching)}`), false); } catch { /* keep the last view */ }
+  }, 4000);
 }
 
 async function check() {
-  const r = await (await fetch(`/api/customer?q=${encodeURIComponent($("#q").value)}`)).json();
-  $("#status").innerHTML = renderStatus(r);
+  const q = $("#q").value.trim(), btn = $("#check");
+  $("#check-error").textContent = "";
+  if (!q) { $("#check-error").textContent = "Enter your account number or mobile number."; $("#q").focus(); return; }
+  busy(btn, true);
+  try {
+    const r = await getJSON(`/api/customer?q=${encodeURIComponent(q)}`);
+    showStatus(r, true);
+    if (r.found) watch(r.customer.account); else { watching = null; clearInterval(poll); }
+  } catch {
+    $("#check-error").textContent = "We could not reach the outage desk. Check your connection and try again.";
+  } finally { busy(btn, false); }
 }
 $("#check").onclick = check;
+$("#q").addEventListener("keydown", (e) => { if (e.key === "Enter") check(); });
+
+// ---- report -----------------------------------------------------------------------------------
 
 $("#send").onclick = async () => {
-  if (!$("#text").value.trim()) return;
-  $("#sent").innerHTML = `<span class="muted">Reading your message…</span>`;
-  const r = await (await fetch("/api/customer/report", {
-    method: "POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ text: $("#text").value, who: $("#who").value, language: $("#lang").value }),
-  })).json();
-  const m = r.message, f = m.fields || {};
-  $("#sent").innerHTML = `<div class="status-box">
-    <span class="badge ${badgeClass(m.model)}">${esc(m.model)}</span>
-    <div class="kv" style="margin-top:8px"><span>Understood as</span><span>${esc(f.summary_en)}</span>
-    <span>Symptom</span><span>${esc((f.symptom || "").replace("_", " "))}</span>
-    <span>Hazard</span><span>${esc((f.hazard || "").replace("_", " "))}</span>
-    <span>Placed at</span><span>${esc(m.location ? (m.location.street ? m.location.street + " " + (m.location.house_no || "") : m.location.method) : "–")} ${m.location && m.location.transformer ? "· " + esc(m.location.transformer) : ""}</span>
-    <span>Status</span><span>${esc(m.status)}${m.incident ? " · linked to " + esc(m.incident) : ""}</span></div></div>
-    ${r.status ? renderStatus(r.status) : ""}`;
+  const btn = $("#send");
+  $("#send-error").textContent = "";
+  if (!$("#text").value.trim()) { $("#send-error").textContent = "Tell us what happened first."; $("#text").focus(); return; }
+  busy(btn, true);
+  btn.querySelector(".label").textContent = "Reading your message…";
+  try {
+    const r = await getJSON("/api/customer/report", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: $("#text").value, who: $("#who").value, language: $("#lang").value }),
+    });
+    const m = r.message, f = m.fields || {}, loc = m.location;
+    const placed = loc ? (loc.street ? `${loc.street} ${loc.house_no || ""}` : loc.method) : "–";
+    const rows = [
+      ["Understood as", esc(f.summary_en)],
+      ["Problem", esc(human(f.symptom))],
+      ["Danger", esc(human(f.hazard))],
+      ["Placed at", `${esc(placed)}${loc && loc.transformer ? ` · ${esc(loc.transformer)}` : ""}`],
+      ["Status", `${esc(m.status)}${m.incident ? ` · linked to ${esc(m.incident)}` : ""}`],
+    ];
+    $("#sent").innerHTML = `<div class="understood">
+        <h3>Thank you. Here is what we understood</h3>
+        <dl class="kv reveal">${rows.map(([k, v], i) => `<dt style="--i:${i}">${k}</dt><dd style="--i:${i}">${v}</dd>`).join("")}
+          <dt style="--i:5">Read by</dt><dd style="--i:5"><span class="badge ${badgeClass(m.model)}">${esc(m.model)}</span></dd></dl>
+      </div>`;
+    // Carry the reporter's account over to the status card so they can follow the repair.
+    if (r.status && r.status.found) {
+      $("#q").value = r.status.customer.account;
+      showStatus(r.status, true);
+      watch(r.status.customer.account);
+    }
+  } catch {
+    $("#send-error").textContent = "Your report did not go through. Check your connection and send it again.";
+  } finally {
+    busy(btn, false);
+    btn.querySelector(".label").textContent = "Send report";
+  }
 };
 </script>
 </body>

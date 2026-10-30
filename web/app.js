@@ -32,6 +32,7 @@ const layers = {
   lines: L.layerGroup().addTo(map), xfmr: L.layerGroup().addTo(map), devices: L.layerGroup().addTo(map),
   messages: L.layerGroup().addTo(map), hazards: L.layerGroup().addTo(map), probes: L.layerGroup().addTo(map),
   dispatch: L.layerGroup().addTo(map), crews: L.layerGroup().addTo(map), events: L.layerGroup().addTo(map),
+  pulses: L.layerGroup().addTo(map),
 };
 const xfmrMarkers = {}, xfmrSection = {}, devKind = {}, sectionLines = {}, crewMarkers = {};
 let tieLine = null, grid = null, state = null, selected = null;
@@ -99,6 +100,52 @@ function addLegend() {
 
 function eventStatus(i) { return STATUS[i.status] || "PRED"; }
 
+// ---- change cues -------------------------------------------------------------------------------
+// Event markers are rebuilt on every state, so one-off cues live in their own layer and remove themselves.
+
+const seenStatus = new Map(), rowCue = new Map();
+let primed = false;
+
+function diffIncidents(s) {
+  const added = new Set(), changed = new Set();
+  for (const i of s.incidents) {
+    const st = eventStatus(i), before = seenStatus.get(i.id);
+    if (primed && before === undefined) added.add(i.id);
+    else if (primed && before !== st) changed.add(i.id);
+    seenStatus.set(i.id, st);
+    if (primed && (before === undefined || before !== st)) pulse(i, st, st === "REST" || (before === undefined && i.kind === "live_wire"));
+  }
+  primed = true;
+  return { added, changed };
+}
+
+function pulse(i, st, twice) {
+  const icon = L.divIcon({ className: "", html: `<div class="ring ${st}${twice ? " twice" : ""}"></div>`, iconSize: [0, 0] });
+  const m = L.marker([i.lat, i.lon], { icon, interactive: false, keyboard: false, zIndexOffset: 900 }).addTo(layers.pulses);
+  setTimeout(() => layers.pulses.removeLayer(m), 3800);
+}
+
+// Numbers count to their new value so a jump reads as a change, not a glitch.
+const shown = new Map();
+function countTo(el, value, cue = false) {
+  const from = shown.has(el) ? shown.get(el) : value;
+  shown.set(el, value);
+  if (from === value || matchMedia("(prefers-reduced-motion: reduce)").matches) { el.textContent = fmt(value); return; }
+  if (cue) {  // only for numbers whose direction matters to the operator (customers out, open events)
+    el.classList.remove("up", "down");
+    void el.offsetWidth;
+    el.classList.add(value > from ? "up" : "down");
+  }
+  const t0 = performance.now(), dur = 450;
+  const step = (now) => {
+    if (shown.get(el) !== value) return;  // a newer value took over
+    const k = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+    el.textContent = fmt(Math.round(from + (value - from) * e));
+    if (k < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
 function renderNetwork(s) {
   const dead = new Set(s.dead_transformers);
   const deadSections = new Set();
@@ -164,14 +211,14 @@ function renderCrewMarkers(crews) {
 function renderKpis(s) {
   const c = s.counts;
   const served = c.served || 1;
-  $("#k-out").textContent = fmt(c.customers_out);
+  countTo($("#k-out"), c.customers_out, true);
   $("#k-out-sub").textContent = `${(100 * c.customers_out / served).toFixed(1)}% of ${fmt(served)} served`;
   history.push([s.elapsed, c.customers_out]);
   if (history.length > 400) history.splice(0, history.length - 400);
   drawSpark();
-  $("#k-events").textContent = c.incidents_open;
+  countTo($("#k-events"), c.incidents_open, true);
   $("#k-events-sub").textContent = `${c.incidents_restored} restored · ${s.suspects.length} suspected`;
-  $("#k-calls").textContent = fmt(c.calls);
+  countTo($("#k-calls"), c.calls);
   $("#k-calls-sub").textContent = `${fmt(c.duplicates)} dup · ${c.junk} junk · ${fmt(c.bd_sms)} SMS codes`;
   $("#k-crit").textContent = c.critical_out;
   $("#k-crit").className = `v ${c.critical_out ? "bad" : ""}`;
@@ -181,7 +228,7 @@ function renderKpis(s) {
     ? `live wire safe in ${s.plan.hazard_wait_min} min (vs ${s.baseline.hazard_wait_min})` : "none reported";
   const cr = c.crews || {};
   $("#k-crews").textContent = `${cr.onsite || 0} · ${cr.enroute || 0} · ${cr.idle || 0}`;
-  $("#k-cmi").textContent = fmt(c.cmi);
+  countTo($("#k-cmi"), c.cmi);
   if (s.plan && s.plan.plan && s.plan.plan.length) {
     const saved = Math.round((s.baseline.customer_minutes - s.plan.customer_minutes) / 60);
     $("#k-cmi-sub").textContent = `plan saves ${fmt(saved)} customer-h vs first-call`;
@@ -225,7 +272,7 @@ function agendaRows(s) {
   });
 }
 
-function renderAgenda(s) {
+function renderAgenda(s, changes) {
   const rows = agendaRows(s).sort((a, b) => {
     if ((a.status === "restored") !== (b.status === "restored")) return a.status === "restored" ? 1 : -1;
     const va = a[sortKey], vb = b[sortKey];
@@ -240,7 +287,23 @@ function renderAgenda(s) {
       <td class="mono">${esc(i.crew)}</td><td class="mono">${i.status === "restored" ? "done" : i.eta ? clockOf(i.eta) : "–"}</td>
       <td class="num">${Math.round(i.confidence * 100)}%</td><td class="num">${Math.round(i.priority)}</td></tr>`).join("") + suspects.join("");
   const tb = $("#agenda tbody");
-  if (tb.dataset.html !== html) { tb.dataset.html = html; tb.innerHTML = html; }
+  const now = performance.now();
+  if (changes) {
+    for (const id of changes.added) rowCue.set(id, { cls: "fresh", t: now });
+    for (const id of changes.changed) rowCue.set(id, { cls: "changed", t: now });
+  }
+  if (tb.dataset.html !== html || changes?.added.size || changes?.changed.size) {
+    if (tb.dataset.html !== html) { tb.dataset.html = html; tb.innerHTML = html; }
+    // A re-render mid-cue resumes the animation where it was (negative delay) instead of restarting it.
+    for (const [id, cue] of rowCue) {
+      const age = now - cue.t;
+      if (age > 1600) { rowCue.delete(id); continue; }
+      const tr = tb.querySelector(`tr[data-id="${id}"]`);
+      if (!tr || tr.classList.contains(cue.cls)) continue;
+      tr.classList.add(cue.cls);
+      (cue.cls === "fresh" ? tr : tr.querySelector(".st")).style.animationDelay = `-${Math.round(age)}ms`;
+    }
+  }
   $("#agenda-sub").textContent = `${s.counts.incidents_open} open · ${s.counts.incidents_restored} restored`;
   document.querySelectorAll("#agenda th").forEach((th) => th.classList.toggle("sorted", th.dataset.sort === sortKey));
 }
@@ -507,7 +570,7 @@ function applyState(s) {
   state = s;
   if (s.clock) $("#clock").textContent = s.clock;
   renderKpis(s);
-  renderAgenda(s);
+  renderAgenda(s, diffIncidents(s));
   renderDetails(s);
   renderNetwork(s);
   renderCrewTable(s);
@@ -524,6 +587,10 @@ function resetUI() {
   s_messages = [];
   history.length = 0;
   selected = null;
+  seenStatus.clear();
+  rowCue.clear();
+  primed = false;
+  layers.pulses.clearLayers();
 }
 
 function connect() {
