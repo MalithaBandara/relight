@@ -79,6 +79,12 @@ class Engine:
         self.broadcast = broadcast
         self.sim = None  # the simulated world (Replayer): answers questions, plays crews and customers
         self.agent = CallAgent(self, KIND_TITLE, LANG_NAME)
+        # Live calls (console switch, off by default and in headless runs): voiced calls play out in real time on a
+        # realtime Voice Transcribe line, and with `handover` the ones the agent would escalate go to a human
+        # call-taker helped by the copilot. `lock` is the server's writer lock, which the copilot takes to file.
+        self.live_calls = False
+        self.handover = True
+        self.lock: asyncio.Lock | None = None
         self.reset()
 
     def clock(self, t: float) -> str:
@@ -106,6 +112,12 @@ class Engine:
         self.suspects: list[dict] = []
         self.located: list = []  # the tracer's latest result (the call agent asks about its open questions)
         self._calls: list[dict] = []  # calls whose report is filed; the agent finishes them after the re-trace
+        for line in self.agent.lines.values():  # live calls cut off by a reset
+            asyncio.ensure_future(line.close())
+        self.agent.lines.clear()
+        self.agent.live.clear()
+        self.parked: dict[str, dict] = {}  # live calls put through to a call-taker, not filed yet
+        self.copilots: dict = {}  # call id -> Copilot helping the call-taker on it
         self._questions: list = []  # located faults the tracer is still unsure about
         self.hazards: list[dict] = []
         self.restored_at: dict[str, float] = {}
@@ -416,10 +428,22 @@ class Engine:
         return out
 
     async def _complaint(self, e: dict) -> None:
-        text, heard_by = (await self._transcript(e)) if e["channel"] == "call" else (e["text"], None)
-        # Every call is answered by the agent, except a caller's answer to one of its own questions.
-        call = (await self.agent.start(e, text, heard_by)) if e["channel"] == "call" and not e.get("probe_reply") \
-            else None
+        # One live call at a time: while a call-taker is on a call the agent answers the others at once, since a
+        # live agent call holds the writer lock that the call-taker needs to file.
+        if (self.live_calls and e["channel"] == "call" and not e.get("probe_reply") and e.get("audio")
+                and self.sim is not None and not self.copilots):
+            # A live call: the agent greets, then hears the caller on the realtime line as they speak.
+            call = await self.agent.start(e, None, "")
+            text = await self.agent.hear(call, e["text"], "mock (script)", e.get("audio"))
+            heard_by = call["turns"][-1]["model"]
+            if heard_by.startswith("mock"):  # nothing listened live: the recorded call goes to the file endpoint
+                text, heard_by = await self._transcript(e)
+                call["turns"][-1].update(text=text or "…", model=heard_by)
+        else:
+            text, heard_by = (await self._transcript(e)) if e["channel"] == "call" else (e["text"], None)
+            # Every call is answered by the agent, except a caller's answer to one of its own questions.
+            call = (await self.agent.start(e, text, heard_by)) if e["channel"] == "call" and not e.get("probe_reply") \
+                else None
         if call is not None and text is None:
             await self.agent.not_understood(call, e, heard_by)
             return
@@ -428,11 +452,42 @@ class Engine:
         ext = await self._extract(text, {**e, "truth": {k: v for k, v in e.get("truth", {}).items() if k not in withheld}})
         f = ext.fields
         loc = self._locate(f, e.get("from")) if not f["is_junk"] else None
+        if (call is not None and call.get("live") and self.handover and self.lock is not None and loc is not None
+                and (why := self.agent.urgent(f, loc))):
+            await self._hand_over(e, call, text, why, ext, loc)
+            return
         if call is not None and loc is not None and (added := await self.agent.questions(call, e, f, loc)):
             text = f"{text} {added}"
             ext = await self._extract(text, e)
             f = ext.fields
             loc = self._locate(f, e.get("from")) if not f["is_junk"] else None
+        await self._file(e, call, text, ext, loc)
+
+    async def _hand_over(self, e: dict, call: dict, text: str, why: str, ext: Extraction, loc: dict) -> None:
+        """A hard live call goes to a human call-taker; the copilot helps, and the report is filed when they say."""
+        from .copilot import Copilot
+
+        await self.agent.transfer(call, e, why)
+        self.parked[e["id"]] = {"event": e, "call": call, "text": text, "why": why, "fields": ext.fields,
+                                "loc": loc, "model": ext.model}
+        cp = self.copilots[e["id"]] = Copilot(self, e["id"])
+        asyncio.ensure_future(cp.begin())
+
+    async def file_call(self, call_id: str, text: str, revealed: set[str]) -> dict:
+        """The call-taker files a handed-over call: read it like any call, place it, then re-trace."""
+        p = self.parked.pop(call_id)
+        e, call = p["event"], p["call"]
+        withheld = set(e.get("withheld", ())) - revealed
+        ext = await self._extract(text, {**e, "truth": {k: v for k, v in e.get("truth", {}).items() if k not in withheld}})
+        loc = self._locate(ext.fields, e.get("from")) if not ext.fields["is_junk"] else None
+        msg = await self._file(e, call, text, ext, loc)
+        await self.log("Operator", f"{call_id}: report filed by the call-taker", p["why"], call_id)
+        await self.recompute()
+        return msg
+
+    async def _file(self, e: dict, call: dict | None, text: str, ext: Extraction, loc: dict | None) -> dict:
+        """File a read and located report: dedup, claim, evidence, hazards, and the console's message row."""
+        f = ext.fields
         msg = {"id": e["id"], "t": e["t"], "channel": e["channel"], "language": f.get("language") or e.get("language"),
                "from": e.get("from"), "text": text, "fields": f, "model": ext.model, "photo": e.get("photo"),
                "video": e.get("video"),
@@ -450,8 +505,8 @@ class Engine:
         n_hazards = len(self.hazards)
         self.messages.append(msg)
         self._apply(msg)
-        if call is not None:
-            self._calls.append(msg)
+        if call is not None and not call.get("taker"):
+            self._calls.append(msg)  # the agent finishes the call after the re-trace; a call-taker finishes their own
         loc = msg.get("location") or {}
         if msg["status"] == "duplicate":
             await self.note("Code", f"{e['id']}: duplicate of {msg['dup_of']}",
@@ -485,6 +540,7 @@ class Engine:
                 if e.get(field):
                     msg["media"] = await self._media(e["id"], e[field], loc or {}, truth, 2.5, msg.get("incident"),
                                                      video=field == "video")
+        return msg
 
     async def _media(self, ref: str, path: str, loc: dict, truth_damage: str, strength: float,
                      owner: str | None = None, video: bool = False, source: str = "customer",
@@ -1166,6 +1222,9 @@ class Engine:
             "elapsed": self.elapsed, "clock": self.clock(self.elapsed), "mode": self.client.mode,
             "scenario": self.scenario["id"], "start_hour": self.pack["start_hour"],
             "offline": self.offline,
+            "live": {"calls": self.live_calls, "handover": self.handover,
+                     "in_progress": [{"id": c["id"], "call": c} for c in self.agent.live.values()],
+                     "copilots": [cp.state() for cp in self.copilots.values()]},
             "incidents": [_public_inc(i) for i in sorted(self.incidents, key=lambda i: (i["status"] == "restored",
                                                                                          -i["priority"]))],
             "suspects": self.suspects, "hazards": self.hazards, "probes": self.probes, "crews": crews,

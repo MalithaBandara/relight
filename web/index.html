@@ -35,6 +35,8 @@
       </select>
     </div>
     <div class="status-area">
+      <button id="btn-live" class="chip" title="Play voiced calls in real time, turn by turn, on a realtime Voice Transcribe line. The storm clock waits while the agent is on a call.">Live calls off</button>
+      <span id="oncall-chip" class="chip warn" hidden>On a live call</span>
       <button id="btn-net" class="chip ok" title="Simulate the storm cutting the network">Network online</button>
       <span id="ami-chip" class="chip" hidden></span>
       <span id="mode" class="chip">MOCK</span>
@@ -97,7 +99,8 @@
       <button data-tab="agent">Agent calls<span class="count" id="agent-count"></span></button>
       <button data-tab="outbound">Outbound messages</button>
       <button data-tab="crews">Crews</button>
-      <label class="tab-opt" title="Calls with a recorded caller (synthetic voice)"><input type="checkbox" id="voiced-only"> Voiced calls only</label>
+      <label class="tab-opt" title="On live calls, put calls the agent would escalate (live wire, fire, critical customer) through to you, with the copilot"><input type="checkbox" id="handover" checked> Hard live calls to me</label>
+      <label class="tab-opt tight" title="Calls with a recorded caller (synthetic voice)"><input type="checkbox" id="voiced-only"> Voiced calls only</label>
     </nav>
     <div class="dock-body">
       <div class="table-wrap tab on" data-tab="log"><table class="grid log"><thead><tr><th>Time</th><th>Source</th><th>Event</th><th>Detail</th></tr></thead><tbody id="log"></tbody></table></div>
@@ -110,6 +113,35 @@
       <div class="table-wrap tab" data-tab="crews"><table class="grid"><thead><tr><th>Crew</th><th>Skills</th><th>Status</th><th>Event</th><th>Task</th></tr></thead><tbody id="crews"></tbody></table></div>
     </div>
   </section>
+
+  <aside id="copilot" class="copilot" hidden aria-label="Call-taker copilot">
+    <div class="cp-head">
+      <span class="chip bad">Call-taker</span><b id="cp-id"></b><span id="cp-lang" class="lang"></span>
+      <span id="cp-why" class="sub"></span><span id="cp-listener"></span>
+      <button id="cp-hide" class="btn ghost" title="Hide (the call stays on the line)">✕</button>
+    </div>
+    <div class="cp-note">Synthetic voices, fictional caller. The agent put this call through to you. The copilot transcribes the
+      line live (who said what), fills the report as the caller speaks and suggests what to say next. You decide; nothing is
+      filed until you press File.</div>
+    <div class="cp-body">
+      <div class="cp-transcript" id="cp-transcript"></div>
+      <div class="cp-side">
+        <div class="section-t">Report, filling in live</div>
+        <table class="mini cp-fields" id="cp-fields"></table>
+        <div class="section-t">Say next</div>
+        <div id="cp-suggest" class="cp-suggest"></div>
+        <div id="cp-options" class="cp-options"></div>
+        <form id="cp-free" class="cp-free"><input id="cp-text" placeholder="Or type your own line…" autocomplete="off">
+          <button class="btn">Say</button></form>
+        <div class="cp-actions">
+          <button id="cp-mic" class="btn" title="Hold to speak into the call (needs the live realtime line)">● Hold to talk</button>
+          <button id="cp-file" class="btn primary">File report</button>
+          <button id="cp-end" class="btn">End call</button>
+        </div>
+        <div id="cp-msg" class="sub"></div>
+      </div>
+    </div>
+  </aside>
 
   <dialog id="map-dialog">
     <div class="dlg-head">

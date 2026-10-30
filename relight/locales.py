@@ -49,6 +49,9 @@ def _agent_en(desk: str, fire: str) -> dict:
         "crew_logged": "Copy, logged against {incident}.",
         "crew_unmatched": "Copy, logged. No open outage matches that location yet.",
         "crew_text": "Sorry, the line is bad. Please send the report as a text message.",
+        # Hard calls go to a human call-taker, who is helped by the live copilot.
+        "transfer": "I am putting you through to a control-room operator now. Please stay on the line.",
+        "ask_medical": "Is anyone at the address using medical equipment that needs power?",
     }
 
 
@@ -337,8 +340,21 @@ AGENT_HI = {
     "close": "फोन करने के लिए धन्यवाद।",
 }
 
-for _agent, _crew in ((AGENT_SI, _CREW_SI), (AGENT_TA, _CREW_TA), (AGENT_ES, _CREW_ES), (AGENT_HI, _CREW_HI)):
+# Hand-over to a human call-taker (live calls), and the copilot's question about medical equipment.
+_TAKE = {
+    "si": {"transfer": "මම දැන් ඔබව පාලන මැදිරියේ නිලධාරියෙකුට සම්බන්ධ කරනවා. කරුණාකර රැඳී සිටින්න.",
+           "ask_medical": "ඔබේ නිවසේ කවුරුහරි විදුලියෙන් ක්‍රියා කරන වෛද්‍ය උපකරණයක් භාවිතා කරනවාද?"},
+    "ta": {"transfer": "உங்களை இப்போது கட்டுப்பாட்டு அறை அலுவலரிடம் இணைக்கிறேன். தயவுசெய்து இணைப்பில் இருங்கள்.",
+           "ask_medical": "உங்கள் வீட்டில் யாராவது மின்சாரத்தில் இயங்கும் மருத்துவக் கருவியைப் பயன்படுத்துகிறார்களா?"},
+    "es": {"transfer": "Le comunico ahora con un operador del centro de control. Por favor no cuelgue.",
+           "ask_medical": "¿Alguien en el domicilio usa equipo médico que necesita electricidad?"},
+    "hi": {"transfer": "मैं आपको अभी कंट्रोल रूम के ऑपरेटर से जोड़ रही हूँ। कृपया लाइन पर बने रहिए।",
+           "ask_medical": "क्या घर में कोई ऐसा मेडिकल उपकरण इस्तेमाल करता है जिसे बिजली चाहिए?"},
+}
+for _lang, _agent, _crew in (("si", AGENT_SI, _CREW_SI), ("ta", AGENT_TA, _CREW_TA), ("es", AGENT_ES, _CREW_ES),
+                             ("hi", AGENT_HI, _CREW_HI)):
     _agent.update(_crew)
+    _agent.update(_TAKE[_lang])
 
 # Hazards as the agent names them in "known_hazard" (already reported near the caller).
 HAZARD_NAMES = {
@@ -362,6 +378,7 @@ CALLER_EN = {
     "fire": "Yes, something is burning near the pole.", "hazard_no": "No, I can't see anything like that.",
     "neighbour_on": "Yes, they have power.", "neighbour_off": "No, they're dark too.",
     "readback_ok": "Correct.", "readback_wrong": "Negative. Again: {report}",
+    "medical_yes": "Yes, someone here is on an oxygen machine.", "medical_no": "No, nobody here needs that.",
 }
 CALLER_SI = {
     "address": "අංක {house}, {street}.", "account": "මගේ ගිණුම් අංකය {account}.", "yes": "ඔව්.", "no": "නැහැ.",
@@ -370,6 +387,7 @@ CALLER_SI = {
     "fire": "ඔව්, කණුව ළඟ මොකක්දෝ පිච්චෙනවා.", "hazard_no": "නැහැ, එහෙම දෙයක් පේන්නේ නැහැ.",
     "neighbour_on": "ඔව්, එයාලට විදුලිය තියෙනවා.", "neighbour_off": "නැහැ, එයාලටත් නැහැ.",
     "readback_ok": "හරි.", "readback_wrong": "නැහැ. ආයෙත් කියන්නම්: {report}",
+    "medical_yes": "ඔව්, මෙහෙ කෙනෙක් ඔක්සිජන් යන්ත්‍රයක් පාවිච්චි කරනවා.", "medical_no": "නැහැ, එහෙම කවුරුත් නැහැ.",
 }
 CALLER_TA = {
     "address": "{house}, {street}.", "account": "என் கணக்கு எண் {account}.", "yes": "ஆமாம்.", "no": "இல்லை.",
@@ -379,6 +397,7 @@ CALLER_TA = {
     "hazard_no": "இல்லை, அப்படி எதுவும் தெரியவில்லை.",
     "neighbour_on": "ஆமாம், அவர்களுக்கு மின்சாரம் இருக்கிறது.", "neighbour_off": "இல்லை, அவர்களுக்கும் இல்லை.",
     "readback_ok": "சரி.", "readback_wrong": "இல்லை. மீண்டும் சொல்கிறேன்: {report}",
+    "medical_yes": "ஆமாம், இங்கே ஒருவர் ஆக்ஸிஜன் இயந்திரம் பயன்படுத்துகிறார்.", "medical_no": "இல்லை, அப்படி யாரும் இல்லை.",
 }
 CALLER_ES = {
     "address": "{house} {street}.", "account": "Mi número de cuenta es {account}.", "yes": "Sí.", "no": "No.",
@@ -387,6 +406,7 @@ CALLER_ES = {
     "fire": "Sí, algo se está quemando cerca del poste.", "hazard_no": "No, no veo nada de eso.",
     "neighbour_on": "Sí, ellos tienen luz.", "neighbour_off": "No, ellos tampoco.",
     "readback_ok": "Correcto.", "readback_wrong": "Negativo. Repito: {report}",
+    "medical_yes": "Sí, aquí alguien usa una máquina de oxígeno.", "medical_no": "No, nadie aquí necesita eso.",
 }
 CALLER_HI = {
     "address": "मकान नंबर {house}, {street}।", "account": "मेरा खाता नंबर {account} है।", "yes": "हाँ।", "no": "नहीं।",
@@ -395,6 +415,7 @@ CALLER_HI = {
     "fire": "हाँ, खंभे के पास कुछ जल रहा है।", "hazard_no": "नहीं, ऐसा कुछ नहीं दिख रहा।",
     "neighbour_on": "हाँ, उनके यहाँ बिजली है।", "neighbour_off": "नहीं, उनके यहाँ भी नहीं है।",
     "readback_ok": "सही है।", "readback_wrong": "नहीं। फिर से: {report}",
+    "medical_yes": "हाँ, यहाँ कोई ऑक्सीजन मशीन पर है।", "medical_no": "नहीं, ऐसा कोई नहीं है।",
 }
 
 SRI_LANKA = {
@@ -439,7 +460,8 @@ SRI_LANKA = {
                "caller": {"en": ["en-IN-PrabhatNeural"],  # the only other Indian English voice is the agent's
                           "si": ["si-LK-SameeraNeural", "si-LK-ThiliniNeural"],
                           "ta": ["ta-LK-KumarNeural", "ta-LK-SaranyaNeural"]},
-               "crew": {"en": ["en-IN-PrabhatNeural"], "ta": ["ta-IN-ValluvarNeural"], "hi": ["hi-IN-MadhurNeural"]}},
+               "crew": {"en": ["en-IN-PrabhatNeural"], "ta": ["ta-IN-ValluvarNeural"], "hi": ["hi-IN-MadhurNeural"]},
+               "taker": {"en": "en-GB-SoniaNeural", "si": "si-LK-SameeraNeural", "ta": "ta-LK-KumarNeural"}},
 }
 
 US = {
@@ -475,7 +497,8 @@ US = {
                "caller": {"en": ["en-US-AndrewNeural", "en-US-EmmaNeural", "en-US-BrianNeural"],
                           "es": ["es-US-AlonsoNeural", "es-MX-DaliaNeural", "es-MX-JorgeNeural"]},
                "crew": {"en": ["en-US-GuyNeural", "en-US-ChristopherNeural", "en-US-RogerNeural"],
-                        "es": ["es-US-AlonsoNeural", "es-MX-JorgeNeural"]}},
+                        "es": ["es-US-AlonsoNeural", "es-MX-JorgeNeural"]},
+               "taker": {"en": "en-US-JennyNeural", "es": "es-MX-DaliaNeural"}},
     "first": ["James", "Maria", "Robert", "Linda", "Michael", "Ana", "David", "Jennifer", "Jose", "Patricia", "Daniel",
               "Rosa", "Kevin", "Emily", "Luis", "Sarah", "Minh", "Grace", "Carlos", "Ashley"],
     "last": ["Smith", "Garcia", "Johnson", "Martinez", "Nguyen", "Brown", "Hernandez", "Davis", "Lopez", "Wilson",
@@ -526,7 +549,8 @@ INDIA = {
                "caller": {"en": ["en-IN-PrabhatNeural"],  # the only other Indian English voice is the agent's
                           "ta": ["ta-IN-ValluvarNeural", "ta-IN-PallaviNeural"],
                           "hi": ["hi-IN-MadhurNeural", "hi-IN-SwaraNeural"]},
-               "crew": {"en": ["en-IN-PrabhatNeural"], "si": ["si-LK-SameeraNeural"], "ta": ["ta-LK-KumarNeural"]}},
+               "crew": {"en": ["en-IN-PrabhatNeural"], "si": ["si-LK-SameeraNeural"], "ta": ["ta-LK-KumarNeural"]},
+               "taker": {"en": "en-IN-NeerjaExpressiveNeural", "ta": "ta-IN-ValluvarNeural", "hi": "hi-IN-MadhurNeural"}},
     "first": ["Arun", "Lakshmi", "Karthik", "Priya", "Suresh", "Divya", "Rajesh", "Meena", "Vignesh", "Anitha",
               "Mohammed", "Fathima", "Ramesh", "Kavya", "Senthil", "Deepa", "Arjun", "Sangeetha", "Joseph", "Mary"],
     "last": ["Kumar", "Raman", "Subramanian", "Krishnan", "Iyer", "Natarajan", "Pillai", "Rajan", "Murugan", "Basha",

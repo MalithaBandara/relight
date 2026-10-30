@@ -432,8 +432,8 @@ let selectedCall = null, player = null, playToken = 0;
 const LANG_NAME = { en: "English", si: "Sinhala", ta: "Tamil", es: "Spanish", hi: "Hindi" };
 const OUTCOME = { status_enroute: "crew en route", status_onsite: "crew on site", status_waiting: "crew to be assigned",
   status_locating: "locating fault", status_restored_dark: "still dark after restoration", junk: "not an outage", sms_fallback: "asked for SMS",
-  crew_changed: "diagnosis changed", crew_logged: "logged", crew_unmatched: "no matching outage" };
-const WHO = { agent: "Agent", caller: "Caller", crew: "Crew" };
+  crew_changed: "diagnosis changed", crew_logged: "logged", crew_unmatched: "no matching outage", transfer: "put through to call-taker" };
+const WHO = { agent: "Agent", caller: "Caller", crew: "Crew", taker: "Call-taker" };
 
 function callOutcome(c) {
   const parts = c.acts.filter((a) => OUTCOME[a]).map((a) => OUTCOME[a]);
@@ -476,18 +476,25 @@ function renderConvo() {
   const m = agentCalls.get(selectedCall);
   const box = $("#convo");
   if (!m) { box.innerHTML = `<div class="empty">Select a call to read it or listen.</div>`; return; }
-  const turns = m.call.turns.map((t, i) => `<div class="turn who-${t.who}" data-i="${i}">
-      <button class="play" data-play="${i}" title="Play this line">▶</button>
-      <div class="bubble"><span class="who">${WHO[t.who] || t.who}</span>${badge(t.model)}
-        <div>${esc(t.text)}</div>${t.en && t.en !== t.text ? `<div class="en">${esc(t.en)}</div>` : ""}
-        ${t.rejected ? `<div class="en">Spark's wording dropped ${esc(t.rejected.join(", "))}; the checked template was spoken.</div>` : ""}</div></div>`).join("");
+  const live = liveCalls.has(m.id);
   box.innerHTML = `<div class="convo-head"><b>${esc(m.id)}</b><span class="lang">${esc(LANG_NAME[m.language] || m.language)}</span>
       <span class="sub">${clockOf(m.t)}${m.incident ? " · " + esc(m.incident) : ""}</span>
-      <button class="btn" data-play="all" title="Play the whole call">▶ Play call</button></div>
+      ${live ? `<span class="chip oncall">LIVE</span>${badge(liveListener.get(m.id))}` : `<button class="btn" data-play="all" title="Play the whole call">▶ Play call</button>`}</div>
     <div class="convo-note">${m.call.crew
       ? "Crew report by phone or radio, in the crew's language. Synthetic voices. Relight acts on a report only after the crew confirms the read-back."
-      : "Synthetic voices, fictional caller. Code decides what the agent says from what the control room knows; Muse Spark words it (facts checked), templates otherwise. Safety lines are fixed."}</div>${turns}`;
+      : "Synthetic voices, fictional caller. Code decides what the agent says from what the control room knows; Muse Spark words it (facts checked), templates otherwise. Safety lines are fixed."}</div>${turnsHtml(m.call.turns, !live)}`;
 }
+
+// One conversation line; a line still being spoken shows the partial transcript as it is heard.
+function turnHtml(t, i, playable = true) {
+  const heard = t.partial !== undefined;
+  return `<div class="turn who-${t.who}" data-i="${i}">
+      ${playable ? `<button class="play" data-play="${i}" title="Play this line">▶</button>` : "<span></span>"}
+      <div class="bubble"><span class="who">${WHO[t.who] || t.who}</span>${badge(t.model)}${t.speaker ? `<span class="spk" title="Speaker label from Voice Transcribe diarization">speaker ${esc(t.speaker)}</span>` : ""}
+        <div class="${heard ? "partial" : ""}">${esc(heard ? t.partial : t.text)}</div>${!heard && t.en && t.en !== t.text ? `<div class="en">${esc(t.en)}</div>` : ""}
+        ${t.rejected ? `<div class="en">Spark's wording dropped ${esc(t.rejected.join(", "))}; the checked template was spoken.</div>` : ""}</div></div>`;
+}
+const turnsHtml = (turns, playable) => turns.map((t, i) => turnHtml(t, i, playable)).join("");
 
 function stopAudio() {
   playToken++;
@@ -528,6 +535,207 @@ $("#convo").addEventListener("pointerdown", async (ev) => {
   document.querySelectorAll(".turn.playing").forEach((x) => x.classList.remove("playing"));
 });
 $("#voiced-only").addEventListener("change", (ev) => $("#agentcalls").classList.toggle("voiced-only", ev.target.checked));
+
+// ---- live calls: a voiced call played in real time, its words shown as Voice Transcribe hears them ------------
+
+const liveCalls = new Map(), liveListener = new Map();
+let livePlayer = null;
+
+function liveMessage(id, call) {
+  const m = agentCalls.get(id) || s_messages.find((x) => x.id === id);
+  return { ...(m || { id, t: state ? state.elapsed : 0, language: call.language, location: {} }), call };
+}
+
+function liveStart(id, call, listener) {
+  liveCalls.set(id, call);
+  liveListener.set(id, listener || "mock (script)");
+  addAgentCall(liveMessage(id, call));
+  $("#oncall-chip").hidden = false;
+  // Follow the live call: open the Agent calls tab on it.
+  document.querySelector('#dock-tabs button[data-tab="agent"]').click();
+  stopAudio();
+  selectedCall = id;
+  document.querySelectorAll("#agentcalls tr").forEach((x) => x.classList.toggle("sel", x.dataset.call === id));
+  renderConvo();
+}
+
+function liveTurn(msg) {
+  const call = liveCalls.get(msg.id) || (copilots.get(msg.id) && copilotCall.get(msg.id));
+  if (!call) return;
+  const turn = msg.listening ? { ...msg.turn, partial: "" } : msg.turn;
+  call.turns[msg.i] = turn;
+  if (msg.listening || msg.speaking) playLive(msg.id, msg.i);  // the server paces the call by the same clip
+  if (liveCalls.has(msg.id)) addAgentCall(liveMessage(msg.id, call));
+  renderCopilotTranscript(msg.id);
+}
+
+function livePartial(msg) {
+  const call = liveCalls.get(msg.id) || copilotCall.get(msg.id);
+  const t = call && call.turns[msg.i];
+  if (!t || msg.final) return;
+  t.partial = msg.text;
+  if (msg.speaker) t.speaker = msg.speaker;
+  // Update just that line; the whole conversation is not re-rendered for every word.
+  for (const box of ["#convo", "#cp-transcript"]) {
+    const el = document.querySelector(`${box} .turn[data-i="${msg.i}"] .partial`);
+    if (el && (box === "#cp-transcript" ? cpOpen === msg.id : selectedCall === msg.id)) el.textContent = msg.text;
+  }
+}
+
+function liveEnd(id, call) {
+  liveCalls.delete(id);
+  $("#oncall-chip").hidden = liveCalls.size === 0;
+  addAgentCall(liveMessage(id, call));
+}
+
+function playLive(id, i) {
+  if (livePlayer) livePlayer.pause();
+  livePlayer = new Audio(`/api/call/${encodeURIComponent(id)}/${i}.wav`);
+  livePlayer.play().catch(() => {});  // no voice (or autoplay refused): the transcript still shows
+}
+
+function renderLiveSwitch(on, handover) {
+  const b = $("#btn-live");
+  b.textContent = on ? "Live calls on" : "Live calls off";
+  b.classList.toggle("ok", on);
+  b.dataset.on = on ? "1" : "";
+  $("#handover").checked = handover;
+}
+$("#btn-live").onclick = () => fetch("/api/control", { method: "POST", headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ action: "live_calls", on: !$("#btn-live").dataset.on }) });
+$("#handover").onchange = (ev) => fetch("/api/control", { method: "POST", headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ action: "handover", on: ev.target.checked }) });
+
+// ---- call-taker copilot: live transcript, the report filling in, and what to say next ----------------------
+
+const copilots = new Map(), copilotCall = new Map();
+let cpOpen = null;
+const FIELD_NAME = { eta: "Restoration", nearby: "Nearby", outage: "Outage", critical: "Critical" };
+const ACT_LABEL = { ask_hazard: "Ask about hazards", ask_address: "Ask the address", confirm_address: "Confirm address",
+  ask_medical: "Medical equipment?", ask_neighbour: "Next door?", safety_live: "Safety: live wire", safety_down: "Safety: fallen pole",
+  safety_fire: "Safety: fire", known_hazard: "Warn: hazard nearby", status_enroute: "Status", status_onsite: "Status",
+  status_waiting: "Status", status_locating: "Status", status_restored_dark: "Status", close: "Close the call" };
+
+function copilotUpdate(st, call) {
+  copilots.set(st.id, st);
+  if (call) copilotCall.set(st.id, call);
+  else if (!copilotCall.has(st.id)) {
+    const m = agentCalls.get(st.id);
+    copilotCall.set(st.id, liveCalls.get(st.id) || (m && m.call) || { turns: [] });
+  }
+  if (st.status === "ended") {
+    copilots.delete(st.id);
+    if (cpOpen === st.id) { $("#cp-msg").textContent = "Call ended."; setTimeout(() => { if (cpOpen === st.id) closeCopilot(); }, 2500); }
+    return;
+  }
+  if (!cpOpen || cpOpen === st.id) openCopilot(st.id);
+}
+
+function openCopilot(id) {
+  cpOpen = id;
+  $("#copilot").hidden = false;
+  renderCopilot();
+}
+function closeCopilot() { cpOpen = null; $("#copilot").hidden = true; }
+$("#cp-hide").onclick = closeCopilot;
+
+function renderCopilotTranscript(id) {
+  if (id !== cpOpen) return;
+  const call = copilotCall.get(id);
+  const box = $("#cp-transcript");
+  const atEnd = box.scrollHeight - box.scrollTop - box.clientHeight < 40;
+  box.innerHTML = turnsHtml(call ? call.turns : [], false);
+  if (atEnd) box.scrollTop = box.scrollHeight;
+}
+
+function renderCopilot() {
+  const st = copilots.get(cpOpen);
+  if (!st) return;
+  $("#cp-id").textContent = st.id;
+  $("#cp-lang").textContent = LANG_NAME[st.language] || st.language;
+  $("#cp-why").textContent = st.why;
+  $("#cp-listener").innerHTML = badge(st.listener);
+  renderCopilotTranscript(st.id);
+  $("#cp-fields").innerHTML = st.fields.map((f) => `<tr class="${f.live ? "live" : ""} ${f.changed ? "changed" : ""} ${f.name === "hazard" && f.value !== "none" ? "hazard" : ""}">
+    <td>${esc(FIELD_NAME[f.name] || f.name)}</td><td>${esc(f.value)}</td><td>${badge(f.by)}</td></tr>`).join("")
+    || `<tr><td colspan="3" class="sub">Listening…</td></tr>`;
+  const s = st.suggestion;
+  const box = $("#cp-suggest");
+  if (st.busy || !s) {
+    box.className = "cp-suggest waiting";
+    box.innerHTML = st.busy ? "On the line…" : "Thinking…";
+  } else if (s.act === "file") {
+    box.className = "cp-suggest";
+    box.innerHTML = `${badge(s.model)}<div class="why">${esc(s.why)}</div>`;
+  } else {
+    box.className = "cp-suggest";
+    box.innerHTML = `${badge(s.model)}<div class="say">${esc(s.say)}</div>${s.en && s.en !== s.say ? `<div class="en">${esc(s.en)}</div>` : ""}
+      <div class="why">Why: ${esc(s.why)}</div>${s.rejected ? `<div class="why">Spark's wording dropped ${esc(s.rejected.join(", "))}: template shown.</div>` : ""}
+      ${st.refining ? `<div class="why">Muse Spark is reading the call; you can say this now.</div>` : ""}
+      <button class="btn primary" data-say="${esc(s.act)}">Say it</button>`;
+  }
+  $("#cp-options").innerHTML = st.options.filter((o) => !s || o.act !== s.act)
+    .map((o) => `<button class="btn" data-say="${esc(o.act)}" title="${esc(o.why)}">${esc(ACT_LABEL[o.act] || o.act)}</button>`).join("");
+  const talking = st.status === "talking";
+  $("#cp-file").disabled = !talking || st.busy;
+  $("#cp-file").textContent = talking ? "File report" : `Filed${st.incident ? " → " + st.incident : ""}`;
+  $("#cp-file").classList.toggle("primary", talking && (!s || s.act === "file"));
+  $("#cp-mic").disabled = !st.mic;
+  $("#cp-mic").title = st.mic ? "Hold to speak into the call" : "The microphone needs the live realtime line (Meta API key and approval). Type your line instead.";
+  for (const el of document.querySelectorAll("#cp-free input, #cp-free button, #cp-options button, #cp-suggest button")) el.disabled = st.busy;
+}
+
+const cpPost = (body) => fetch("/api/copilot", { method: "POST", headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ id: cpOpen, ...body }) }).then((r) => r.json()).then((r) => { $("#cp-msg").textContent = r.ok ? "" : (r.error || ""); return r; });
+$("#copilot").addEventListener("pointerdown", (ev) => {
+  const b = ev.target.closest("[data-say]");
+  if (b && !b.disabled) cpPost({ action: "say", act: b.dataset.say });
+});
+$("#cp-free").onsubmit = (ev) => {
+  ev.preventDefault();
+  const text = $("#cp-text").value.trim();
+  if (text) { cpPost({ action: "say", text }); $("#cp-text").value = ""; }
+};
+$("#cp-file").onclick = () => cpPost({ action: "file" });
+$("#cp-end").onclick = () => cpPost({ action: "end" });
+
+// Microphone: 24 kHz mono 16-bit PCM in 80 ms frames, mixed into the call's realtime line on the server.
+let mic = null;
+async function micStart() {
+  if (mic || !cpOpen) return;
+  const sock = new WebSocket(`${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws/mic/${encodeURIComponent(cpOpen)}`);
+  sock.binaryType = "arraybuffer";
+  sock.onmessage = (ev) => { const m = JSON.parse(ev.data); if (m.error) { $("#cp-msg").textContent = m.error; micStop(); } };
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1, echoCancellation: true } });
+    const ctx = new AudioContext({ sampleRate: 24000 });
+    const worklet = `registerProcessor("pcm", class extends AudioWorkletProcessor {
+      constructor() { super(); this.buf = new Int16Array(1920); this.n = 0; }
+      process(inputs) { const ch = inputs[0][0]; if (!ch) return true;
+        for (let i = 0; i < ch.length; i++) { this.buf[this.n++] = Math.max(-1, Math.min(1, ch[i])) * 32767;
+          if (this.n === this.buf.length) { this.port.postMessage(this.buf.slice().buffer, []); this.n = 0; } }
+        return true; } });`;
+    await ctx.audioWorklet.addModule(URL.createObjectURL(new Blob([worklet], { type: "application/javascript" })));
+    const node = new AudioWorkletNode(ctx, "pcm");
+    node.port.onmessage = (ev) => { if (sock.readyState === 1) sock.send(ev.data); };
+    ctx.createMediaStreamSource(stream).connect(node);
+    mic = { sock, stream, ctx };
+    $("#cp-mic").classList.add("on");
+  } catch (err) {
+    $("#cp-msg").textContent = `Microphone unavailable: ${err.message}`;
+    sock.close();
+  }
+}
+function micStop() {
+  if (!mic) return;
+  mic.stream.getTracks().forEach((t) => t.stop());
+  mic.ctx.close();
+  mic.sock.close();
+  mic = null;
+  $("#cp-mic").classList.remove("on");
+}
+$("#cp-mic").addEventListener("pointerdown", micStart);
+for (const ev of ["pointerup", "pointerleave"]) $("#cp-mic").addEventListener(ev, micStop);
 
 function addMessage(m) {
   if (m.channel !== "crew") return addCall(m);
@@ -591,6 +799,11 @@ function resetUI() {
   for (const id of ["log", "calls", "outbound", "agentcalls"]) document.getElementById(id).innerHTML = "";
   stopAudio();
   agentCalls.clear();
+  liveCalls.clear();
+  copilots.clear();
+  copilotCall.clear();
+  closeCopilot();
+  $("#oncall-chip").hidden = true;
   selectedCall = null;
   $("#agent-count").textContent = "";
   renderConvo();
@@ -617,7 +830,15 @@ function connect() {
         msg.state.probes.forEach((p) => addOutbound("Question", { ...p, to: [] }));
         (msg.state.media || []).forEach(addPhoto);
         applyState(msg.state);
+        renderLiveSwitch(msg.state.live.calls, msg.state.live.handover);
+        msg.state.live.in_progress.forEach((c) => liveStart(c.id, c.call, null));
+        msg.state.live.copilots.forEach((st) => copilotUpdate(st));
         break;
+      case "live": renderLiveSwitch(msg.calls, msg.handover); break;
+      case "live_call": msg.event === "start" ? liveStart(msg.id, msg.call, msg.listener) : liveEnd(msg.id, msg.call); break;
+      case "live_turn": liveTurn(msg); break;
+      case "live_partial": livePartial(msg); break;
+      case "copilot": copilotUpdate(msg.state); break;
       case "state": applyState(msg.state); break;
       case "timeline": addLog(msg.entry); break;
       case "message": addMessage(msg.message); break;

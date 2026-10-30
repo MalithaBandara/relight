@@ -105,6 +105,9 @@ relight/                 Python package (FastAPI backend and all logic)
   planner.py             priority scoring, crew work steps, what-if schedule vs first-call baseline
   engine.py              the triage loop: evidence, incidents, crews, switching, notices, portal status
   callagent.py           AI call agent: answers every call in the caller's language from engine state
+  realtime.py            realtime Voice Transcribe line per live call (WebSocket, diarization, street keywords,
+                         per-utterance cache, paced mock)
+  copilot.py             call-taker copilot on hard live calls: live fields, Spark's next line, file/end
   voice.py               text to speech (edge-tts) with a phone-line filter; cached in media/audio/tts/
   scenario.py            scenario loader, simulated physical World, Replayer (clock, time-lapse)
   diagram.py             paper single-line diagram -> topology with Spark; scoring; diagram renderer
@@ -255,6 +258,30 @@ scenario JSON --> Replayer (clock) --> Engine.handle(event)
 - Sinhala audio: Voice Transcribe has no Sinhala, so `_transcript` asks Spark to listen
   (`ModelClient.spark_listen`, request shape unverified). If a live model cannot read the call, the agent
   asks for the breakdown SMS and the World sends it (`sms_fallback`).
+- **Live calls** (console "Live calls" switch, `engine.live_calls`; off by default and in headless runs): a voiced
+  call plays out in real time on one realtime Voice Transcribe line (`realtime.Line`): handshake with
+  `languageBias` and the feeder's street/landmark names as `keywords`, 24 kHz PCM in 80 ms frames paced at real
+  time (silence between turns), `DIARIZATION` mode; `speechStart`/`transcript`/`speaker`/`speechComplete` events
+  become `live_partial` / `live_turn` broadcasts. The agent's own lines are not sent (their words are known; in the
+  first live run their transcript arrived ~3.5 s late and was taken for the caller's next answer). A turn belongs
+  to whoever's audio was on the line at its `speechStart`; the diarization label is shown, not trusted (the agent
+  and caller got the same label "A"). What a live session heard per utterance is cached in `.cache/model/asr-rt-*.json` and replayed at the same
+  pace; without the API the script is paced out word by word (`mock (script)`), and the opening falls back to the
+  file endpoint's cached transcript. Sinhala: Spark listens after each utterance. The storm waits while the agent
+  is on a live call (the call runs inside `handle`, under the writer lock). `realtime.SPEED` speeds up mock
+  pacing for tests.
+- **Hand-over and copilot** (`engine.handover`, "Hard live calls to me"): a live call that `CallAgent.urgent`
+  flags (live wire, fire, critical customer) gets the fixed `transfer` line and is parked (`engine.parked`); a
+  `Copilot` (`engine.copilots`) runs outside the lock. Code reads partial transcripts at once (`_quick`: hazard
+  words, house + street, account), Spark reads each finished caller turn (`_read`), code places the caller and
+  shows customer, critical flag, transformer, incident, crew, ETR, hazards nearby. `_options` lists what is
+  still worth saying (safety, hazards, address, medical equipment `ask_medical`, the tracer's next-door question,
+  then status and close after filing); Spark picks and words one (`SUGGEST_SYSTEM`, same fact check, fixed lines
+  verbatim) with an English line and a reason. The call-taker clicks Say it / another option / types / holds the
+  mic (`/ws/mic/{id}`, mixed into the line; live only). `File report` -> `engine.file_call` (same reading,
+  placing, re-trace; withheld facts count as given once asked); `End call` files if needed and closes the line.
+  While a copilot is open, new calls are answered by the agent at once (a live agent call would hold the lock).
+  Simulated callers answer the copilot from the truth (`medical_yes` / `medical_no` from the critical flag).
 - Agent speech is synthesised on demand by `GET /api/call/{id}/{turn}.wav` (edge-tts, cached). Meta has
   no text-to-speech model; the voice is Microsoft's, everything that decides is Meta models + code.
 - Crew reports are calls too (`_crew_note`): the crew's report is transcribed and extracted, the agent
@@ -325,14 +352,16 @@ the first recloser's own zone, and guarantees at least two callers for small fau
 | GET | `/api/state` | full engine snapshot |
 | GET | `/api/scenarios` | list scenarios; current one |
 | POST | `/api/scenario` | `{"id": ...}` switch scenario (stops replay, rebuilds engine; clients reload) |
-| POST | `/api/control` | `{"action": start|pause|reset|speed|offline|online, "speed": n}` |
+| POST | `/api/control` | `{"action": start|pause|reset|speed|offline|online|live_calls|handover, "speed": n, "on": bool}` |
 | POST | `/api/plan` | `{"incident": "I2", "plan": "isolate"}` operator approves a switching plan |
+| POST | `/api/copilot` | `{"id": "C03", "action": say|file|end, "act"?, "text"?}` call-taker on a handed-over call |
 | GET | `/api/customer?q=` | portal status by account or phone |
 | POST | `/api/customer/upload` | multipart `file` (photo or video, max 60 MB) -> `{"path"}` under `media/uploads/` |
 | POST | `/api/customer/report` | `{"text", "who", "language", "media"}` live complaint (processed like any other) |
 | GET | `/api/call/{id}/{turn}.wav` | one line of an agent call: caller recording or synthesised speech |
 | POST | `/api/diagram` | digitise the paper diagram (optional image upload) and score it |
-| WS | `/ws` | snapshot on connect, then `state`, `timeline`, `message`, `probe`, `notice`, `photo`, `drone`, `scada`, `clock`, `reset`, `scenario`, `messages`, `network` |
+| WS | `/ws` | snapshot on connect, then `state`, `timeline`, `message`, `probe`, `notice`, `photo`, `drone`, `scada`, `clock`, `reset`, `scenario`, `messages`, `network`, `live`, `live_call`, `live_turn`, `live_partial`, `copilot` |
+| WS | `/ws/mic/{id}` | call-taker microphone: 24 kHz mono s16le frames, mixed into the call's realtime line |
 
 All writes to the engine go through one `asyncio.Lock` in `server.py` (replay, operator, portal).
 
@@ -357,7 +386,14 @@ All writes to the engine go through one `asyncio.Lock` in `server.py` (replay, o
   including Tamil, Hindi, Spanish, English, with code-switching. **Not Sinhala** (checked 2026-10-30; some
   third-party articles claim 70+ languages, Meta's page lists 25). Realtime WebSocket:
   `wss://api.meta.ai/v1/asr/realtime`. Speaker diarization: `mode: "DIARIZATION"` (file response has
-  `turns[]` with `speaker`; realtime sends `speaker` events). Pricing **$0.18 per hour** of audio, streaming
+  `turns[]` with `speaker`; realtime sends `speaker` events). Realtime protocol (Meta's reference, read
+  2026-10-30; **checked live 2026-10-30** on one English call, all as documented: handshake ~3 s, partials
+  every ~0.3 s, `speechComplete` ~3.5 s after the speech ends, `speaker` "A"): no auth header; first text frame `{"authorization": {"accessToken": "Bearer
+  KEY"}, "audioEncoding": "PCM_24KHZ"|"PCM_16KHZ", "model", "mode": PUSH_TO_TALK|ENDPOINTING|DIARIZATION,
+  "partialMode", "emitAudioProgress", "keywords", "languageBias"}` within 10 s; reply has `sessionId`; binary
+  80 ms PCM frames at real time (too slow or fast -> close 1008); end with `{"type": "endStream"}`; events
+  `transcript` (`final`), `speechStart`/`speechEnd`/`speechComplete` (`turnId`, `transcript`), `speaker`
+  (`label`), `audioProgress`, `error`. Pricing **$0.18 per hour** of audio, streaming
   or not, billed per whole second; failed and 429 requests are not billed.
 - **No text-to-speech or speech-to-speech model** exists on the Meta Model API (checked 2026-10-30).
 - **SAM 3.1** (`sam-3.1`): `POST /responses` with `input_text` (short noun phrase) + `input_image`
@@ -429,6 +465,9 @@ Done (mock mode, verified headless and in the browser):
 - AI call agent (2026-10-30, owner's choice): answers every call in en/si/ta/es/hi with context from engine
   state, safety lines, escalation, next-door questions; 18 synthetic voiced calls across the three
   scenarios; "Agent calls" console tab with per-line and whole-call playback. Mock mode only so far.
+- Realtime call agent and call-taker copilot (2026-10-30, owner's choice): "Live calls" switch plays voiced calls
+  in real time with partial transcripts; hard calls (live wire, fire, critical customer) go to a human call-taker
+  panel with live fields and suggested lines. Verified in mock mode (headless driver and browser); see 12.3.
 - Crew reports by voice with read-back before acting (all crew reports; Galle patrol notes recorded);
   crews in Sinhala, Tamil, Hindi, Spanish and English; Spark words every non-safety agent line with a
   fact check (mock: templates). Untested live parts are listed in 12.3.
@@ -499,10 +538,10 @@ Can start now
 ### 12.2 Optional features (owner chooses; agent builds)
 
 - **Pole-tag reading** from customer photos (SAM finds the plate, Spark reads the ID) → exact asset.
-- **AI call agent** (chosen and built, see 5.6a). Possible next step: realtime mode over the Voice
-  Transcribe WebSocket with diarization, so a call is handled turn by turn as it is spoken.
-- **Live call copilot:** realtime Voice Transcribe + live field filling + Spark's suggested next question,
-  for a human call-taker on the hard calls the agent escalates.
+- **AI call agent** (chosen and built, see 5.6a), with **realtime mode** over the Voice Transcribe WebSocket
+  with diarization (chosen and built 2026-10-30): calls handled turn by turn as they are spoken.
+- **Live call copilot** (chosen and built 2026-10-30, see 5.6a): realtime transcript, live field filling,
+  Spark's suggested next line, for a human call-taker on the hard calls the agent hands over.
 - **Drone damage assessment:** SAM 3.1 video tracking of poles and conductors; sag and broken-pole counts.
 - **Realistic paper-to-grid:** hand-drawn pole-numbered sketch + meter-reader ledger → network and
   consumer index the engine runs on, with SAM symbol overlay and a review screen for flagged items.
@@ -527,6 +566,32 @@ Call agent and crew calls
 - [ ] Neighbour question: Spark reading the caller's yes/no about next door as a probe answer.
 - [ ] Voices: pronunciation of street names and numbers by each edge-tts voice; native-speaker check of
       every new Sinhala / Tamil / Spanish / Hindi line (agent, callers, crews, read-back words).
+
+Realtime calls and copilot (`realtime.py`, `copilot.py`)
+- [x] Realtime WebSocket against the live API (2026-10-30): handshake with `keywords` (2 names), event shapes and
+      latencies as documented, transcript of C01 exact. Still open: 100 `keywords`, pacing over a long call.
+- [x] Live run 2026-10-30 of C01 (agent), C03 and C31 (hand-overs, copilot driven by its top suggestion): every
+      caller and call-taker utterance heard by realtime and attributed by `speechStart` time; Spark read the
+      realtime "nine zero zero ..." as account 9000000000; Spark's copilot choices sensible, no fact-check rejects.
+      Diarization gave everyone label "A" (labels shown, not trusted). Cost of the GO turns: ~$0.33 Spark (33 calls,
+      ~2,100 output tokens each) + ~30 min of line time (~$0.09).
+- [ ] Copilot latency: Spark takes ~20 s per call, so code's line is now shown at once and Spark's reading and
+      wording replace it when they arrive (measured live: ~10 s from the call-taker speaking to code's next line,
+      mostly the spoken audio). Not yet seen live: how often Spark's line lands before a human speaks; Spark
+      reasoning effort could be lowered if the API allows it (see https://dev.meta.ai/docs/reasoning).
+- [ ] Line noise: the realtime model produced a turn ("Yeah") while nobody was speaking; turns outside any
+      utterance are now ignored, and only real microphone audio becomes a call-taker turn. Watch for it again.
+- [ ] Test driver for live runs lives in the session scratchpad only (`live_test.py --tts --only=C01,C03,C31`);
+      move it to `scripts/` if more live runs are needed.
+- [ ] Cached realtime replays (`asr-rt-*`): pace and partials look right after one live run.
+- [ ] Copilot suggestions from Spark (`SUGGEST_SYSTEM`): choice quality, wording per language, fact-check rejects,
+      latency between the caller's last word and the next suggestion (Spark reasons ~1,200 tokens per call).
+- [ ] Microphone path: AudioWorklet at 24 kHz in Chrome, frames mixed into the line, the call-taker's speech
+      transcribed and answered; a real human voice on the line (owner cannot record: maybe skip in the video).
+- [ ] Sinhala live calls: Spark listening per utterance (latency) and the copilot reading Sinhala partials (code's
+      quick read only knows Latin-script street names).
+- [ ] Native-speaker check of the new lines: `transfer`, `ask_medical`, `medical_yes` / `medical_no` (si, ta, es, hi).
+- [ ] Call-taker voices (`voices.taker`): en-GB Sonia for Sri Lanka is a stand-in; Sameera / Kumar double as caller voices.
 
 Photos and videos (`vision.py`, `models.py`)
 - [ ] Spark on photos (`analyse_photo`) and SAM 3.1 boxes on the nine Commons photos; wire clearance numbers.

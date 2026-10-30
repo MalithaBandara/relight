@@ -50,6 +50,7 @@ def open_scenario(name: str) -> None:
     engine = Engine(scenario, broadcast)
     replayer = Replayer(scenario, handle)
     engine.sim = replayer
+    engine.lock = lock
 
 
 def list_scenarios() -> list[dict]:
@@ -75,8 +76,9 @@ async def tick(clock: float) -> None:
 
 
 class Control(BaseModel):
-    action: str  # start | pause | reset | speed | offline | online
+    action: str  # start | pause | reset | speed | offline | online | live_calls | handover
     speed: float | None = None
+    on: bool | None = None
 
 
 class ScenarioChoice(BaseModel):
@@ -110,6 +112,10 @@ async def control(c: Control):
         replayer.running = False
     elif c.action in ("offline", "online"):
         await engine.set_offline(c.action == "offline")
+    elif c.action in ("live_calls", "handover"):
+        # Live calls play voiced calls in real time (the storm waits while one is on the line).
+        setattr(engine, c.action, bool(c.on))
+        await broadcast({"type": "live", "calls": engine.live_calls, "handover": engine.handover})
     elif c.action == "reset":
         replayer.running = False
         if replayer.task:
@@ -180,17 +186,60 @@ async def customer_report(r: Report):
             "status": engine.customer_status(c.account_no) if c else None}
 
 
+class CopilotAction(BaseModel):
+    id: str
+    action: str  # say | file | end
+    act: str | None = None  # one of the copilot's options (say)
+    text: str | None = None  # the call-taker's own words (say)
+
+
+@app.post("/api/copilot")
+async def copilot(a: CopilotAction):
+    """The call-taker's buttons. Speaking takes seconds, so it runs in the background; state comes over /ws."""
+    cp = engine.copilots.get(a.id)
+    if cp is None:
+        return {"ok": False, "error": "no call-taker session for that call"}
+    if a.action == "say":
+        if cp.busy:
+            return {"ok": False, "error": "wait for the caller to finish"}
+        asyncio.create_task(cp.say(a.act, (a.text or "").strip() or None))
+        return {"ok": True}
+    if a.action == "file":
+        return await cp.file()
+    if a.action == "end":
+        return await cp.end()
+    return {"ok": False, "error": "unknown action"}
+
+
+@app.websocket("/ws/mic/{call_id}")
+async def mic(websocket: WebSocket, call_id: str):
+    """The call-taker's microphone: 24 kHz mono 16-bit PCM frames, mixed into the call's realtime line."""
+    await websocket.accept()
+    cp = engine.copilots.get(call_id)
+    try:
+        while True:
+            data = await websocket.receive_bytes()
+            if cp is None or not cp.mic(data):
+                await websocket.send_text(json.dumps({"error": "The microphone needs the live realtime line "
+                                                      "(Meta API key and approval); type your line instead."}))
+                await websocket.close()
+                return
+    except WebSocketDisconnect:
+        pass
+
+
 @app.get("/api/call/{msg_id}/{turn}.wav")
 async def call_audio(msg_id: str, turn: int):
     """One line of an agent call as audio: the caller's recording, or speech synthesised on first request."""
     m = next((m for m in engine.messages if m["id"] == msg_id and "call" in m), None)
-    if m is None or not 0 <= turn < len(m["call"]["turns"]):
+    call = m["call"] if m else engine.agent.live.get(msg_id)  # a live call still on the line
+    if call is None or not 0 <= turn < len(call["turns"]):
         return JSONResponse({"error": "no such call line"}, status_code=404)
-    line = m["call"]["turns"][turn]
+    line = call["turns"][turn]
     if line.get("audio") and (config.ROOT / line["audio"]).exists():
         return FileResponse(config.ROOT / line["audio"], media_type="audio/wav")
     try:
-        path = await voice.synthesize(line["text"], m["call"]["voices"][line["who"]])
+        path = await voice.synthesize(line["text"], call["voices"][line["who"]])
     except Exception as err:  # noqa: BLE001 - no edge-tts / ffmpeg / network: the console shows text only
         return JSONResponse({"error": str(err)[:200]}, status_code=503)
     return FileResponse(path, media_type="audio/wav")

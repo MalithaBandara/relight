@@ -200,6 +200,45 @@ table.mini th { color: var(--muted); font-weight: 500; }
 .play { width: 20px; height: 20px; padding: 0; border-radius: 50%; border: 1px solid var(--line-2); background: var(--panel-2); color: var(--text); font-size: 8px; cursor: pointer; }
 .play:hover { border-color: var(--voice); }
 .convo-head .btn { height: 22px; font-size: 11px; }
+.turn.who-taker .bubble { border-left-color: var(--st-pred); }
+.bubble .partial { color: var(--muted); }
+.bubble .partial::after { content: " ▍"; color: var(--voice); }
+.bubble .spk { font: 600 10px var(--mono); color: var(--voice); margin-left: 6px; }
+.tab-opt.tight { margin-left: 0; }
+.chip.live { cursor: pointer; }
+.chip.oncall { color: #0b0e11; background: var(--voice); border-color: var(--voice); }
+
+/* ---------- call-taker copilot ---------- */
+.copilot { position: fixed; top: 64px; right: 12px; bottom: 12px; width: min(760px, calc(100vw - 24px)); z-index: 1000;
+  display: grid; grid-template-rows: auto auto minmax(0, 1fr); background: var(--panel); border: 1px solid var(--line-2);
+  border-top: 2px solid var(--alarm); border-radius: 4px; box-shadow: 0 10px 40px rgba(0, 0, 0, .5); }
+.copilot[hidden] { display: none; }
+.cp-head { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--line); }
+.cp-head b { font-family: var(--mono); }
+.cp-head #cp-hide { margin-left: auto; height: 24px; }
+.cp-note { color: var(--dim); font-size: 11px; padding: 6px 12px; border-bottom: 1px solid var(--line); }
+.cp-body { display: grid; grid-template-columns: minmax(0, 1fr) 330px; min-height: 0; }
+.cp-transcript { overflow: auto; padding: 8px 12px; min-height: 0; }
+.cp-side { overflow: auto; padding: 8px 12px; border-left: 1px solid var(--line); display: flex; flex-direction: column; gap: 6px; }
+.cp-fields td { vertical-align: top; white-space: normal; }
+.cp-fields td:first-child { color: var(--muted); text-transform: capitalize; width: 80px; }
+.cp-fields tr.live td:nth-child(2) { color: var(--muted); font-style: italic; }
+.cp-fields tr.changed td:nth-child(2) { color: var(--st-pred); }
+.cp-fields tr.hazard td:nth-child(2) { color: var(--alarm); font-weight: 600; }
+.cp-suggest { padding: 8px; background: var(--panel-2); border: 1px solid var(--line-2); border-left: 2px solid var(--st-pred); border-radius: 3px; }
+.cp-suggest .say { font-size: 14px; margin: 3px 0; }
+.cp-suggest .en { color: var(--muted); font-size: 11px; }
+.cp-suggest .why { color: var(--dim); font-size: 11px; margin-top: 3px; }
+.cp-suggest .btn { margin-top: 6px; }
+.cp-suggest.waiting { color: var(--muted); }
+.cp-options { display: flex; flex-wrap: wrap; gap: 4px; }
+.cp-options .btn { height: 22px; font-size: 11px; padding: 0 7px; }
+.cp-free { display: flex; gap: 4px; }
+.cp-free input { flex: 1; min-width: 0; height: 26px; background: var(--panel-2); border: 1px solid var(--line-2); border-radius: 4px; color: var(--text); padding: 0 8px; font: inherit; }
+.cp-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+#cp-mic.on { border-color: var(--alarm); color: var(--alarm); }
+.copilot button:disabled { opacity: .45; cursor: default; }
+@media (max-width: 760px) { .cp-body { grid-template-columns: 1fr; } .cp-side { border-left: 0; border-top: 1px solid var(--line); } }
 table.log td:nth-child(4) { white-space: normal; color: #aeb8c3; }
 td.msg { white-space: normal !important; max-width: 380px; }
 td.msg .en { color: var(--muted); font-size: 11px; }

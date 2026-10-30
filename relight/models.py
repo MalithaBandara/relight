@@ -212,33 +212,47 @@ class ModelClient:
         return json.loads(_strip_fences(resp["choices"][0]["message"]["content"])) if resp else None
 
 
-def _wav_16k(data: bytes) -> bytes:
-    """Voice Transcribe takes mono 16-bit WAV at 16 or 24 kHz only. Phone calls are 8 kHz, so upsample them (the
-    audio keeps its phone-line bandwidth; only the container rate changes)."""
+def wav_pcm(data: bytes, rate_out: int) -> bytes:
+    """Raw mono 16-bit PCM at `rate_out` from a WAV file (linear interpolation; phone audio keeps its bandwidth)."""
+    import array
     import io
     import wave
     with wave.open(io.BytesIO(data)) as w:
         rate, channels, width, frames = w.getframerate(), w.getnchannels(), w.getsampwidth(), w.readframes(w.getnframes())
-    if rate in (16000, 24000) and channels == 1 and width == 2:
-        return data
-    import array
+    if width != 2:
+        raise ValueError("expected 16-bit WAV")
     samples = array.array("h", frames)
     if channels > 1:
         samples = array.array("h", samples[::channels])
+    if rate == rate_out:
+        return samples.tobytes()
     out = array.array("h")
-    step = rate / 16000  # linear interpolation onto the 16 kHz grid
+    step = rate / rate_out
     n = len(samples)
     for i in range(int(n / step)):
         x = i * step
         j = int(x)
         a, b = samples[j], samples[min(j + 1, n - 1)]
         out.append(int(a + (b - a) * (x - j)))
+    return out.tobytes()
+
+
+def _wav_16k(data: bytes) -> bytes:
+    """Voice Transcribe takes mono 16-bit WAV at 16 or 24 kHz only. Phone calls are 8 kHz, so upsample them (the
+    audio keeps its phone-line bandwidth; only the container rate changes)."""
+    import io
+    import wave
+    with wave.open(io.BytesIO(data)) as w:
+        rate, channels, width = w.getframerate(), w.getnchannels(), w.getsampwidth()
+    if rate in (16000, 24000) and channels == 1 and width == 2:
+        return data
+    out = wav_pcm(data, 16000)
     buf = io.BytesIO()
     with wave.open(buf, "wb") as w:
         w.setnchannels(1)
         w.setsampwidth(2)
         w.setframerate(16000)
-        w.writeframes(out.tobytes())
+        w.writeframes(out)
     return buf.getvalue()
 
 
