@@ -93,9 +93,9 @@ svg { fill: currentColor; }
 .kpi .v.good { color: var(--st-rest); }
 .kpi .s { font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .kpi.wide { padding-right: 132px; }
-.spark { position: absolute; right: 10px; top: 12px; width: 116px; height: 36px; }
-.spark path.area { fill: rgba(229, 72, 77, .15); }
-.spark path.line { fill: none; stroke: var(--alarm); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+svg.spark { position: absolute; right: 10px; top: 12px; width: 116px; height: 36px; }
+svg.spark path.area { fill: rgba(229, 72, 77, .15); }
+svg.spark path.line { fill: none; stroke: var(--alarm); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
 .badges { display: flex; flex-wrap: wrap; gap: 3px; margin: 3px 0; }
 
 /* ---------- workspace ---------- */

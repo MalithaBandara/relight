@@ -919,6 +919,7 @@ function renderModels() {
 }
 $("#btn-models").onclick = () => { renderModels(); $("#models-dialog").showModal(); };
 $("#models-close").onclick = () => $("#models-dialog").close();
+$("#models-dialog").addEventListener("click", (e) => { if (e.target.id === "models-dialog") e.target.close(); });  // backdrop click
 $("#k-models").parentElement.style.cursor = "pointer";
 $("#k-models").parentElement.title = "Open the Meta models panel";
 $("#k-models").parentElement.onclick = () => $("#btn-models").onclick();
