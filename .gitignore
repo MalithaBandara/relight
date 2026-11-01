@@ -39,3 +39,4 @@ media/uploads/
 .claude/require_go
 .claude/api_go
 .claude/settings.local.json
+media/overlays/

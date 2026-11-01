@@ -5,3 +5,5 @@ python-dotenv
 python-multipart
 pillow==13.0.0
 edge-tts==7.3.1  # call agent's voice (optional: without it calls show as text)
+
+meta-sam-parser==0.1.0  # Meta's decoder for SAM 3.1 mask payloads (pure Python; SAM License)

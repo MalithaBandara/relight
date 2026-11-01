@@ -278,7 +278,7 @@ class Copilot:
                                "report", "model": "Code"}
             return
         pick = self._template()
-        if not self.e.offline and not (self.options[0]["fixed"] and len(self.options) == 1):
+        if not (self.options[0]["fixed"] and len(self.options) == 1):
             pick = await self._spark({**pick, "model": "mock (template)"})
         self.suggestion = pick
 

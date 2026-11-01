@@ -117,11 +117,16 @@ class ModelClient:
 
     # ---- Muse Voice Transcribe -------------------------------------------
 
-    def transcribe(self, audio_path: Path, language_bias: list[str] | None = None) -> dict | None:
+    def transcribe(self, audio_path: Path, language_bias: list[str] | None = None,
+                   keywords: list[str] | None = None) -> dict | None:
+        """File transcription. `keywords` (street and landmark names) bias recognition towards those spellings; Meta's
+        docs say they do not guarantee an exact spelling. A request without keywords keeps its old cache key."""
         audio = _wav_16k(Path(audio_path).read_bytes())
         request = {"mode": "ENDPOINTING", "model": config.TRANSCRIBE_MODEL, "audioEncoding": "WAV"}
         if language_bias:
             request["languageBias"] = language_bias
+        if keywords:
+            request["keywords"] = list(dict.fromkeys(k for k in keywords if k))
         key = {"request": request, "audio_sha": hashlib.sha256(audio).hexdigest()}
 
         def call():
@@ -302,6 +307,7 @@ def parse_sam_records(text: str) -> list[dict]:
                 records.append(current)
             elif kind == "mask" and current is not None:
                 current["mask"] = kv.get("data")
+                current["mask_xy"] = (int(float(kv.get("x", 0))), int(float(kv.get("y", 0))))
         # Object ids precede each box token; attach them in order.
         ids = re.findall(r"(\d+)\s*<\|box", line)
         for rec, oid in zip([r for r in records if r["frame"] == frame][-len(ids):] if ids else [], ids):

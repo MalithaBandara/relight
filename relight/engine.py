@@ -20,7 +20,6 @@ import re
 from collections import Counter
 from typing import Any, Awaitable, Callable
 
-import httpx
 
 from . import config
 from .callagent import TRANSCRIBE_LANGS, CallAgent
@@ -31,7 +30,8 @@ from .models import ModelClient
 from .network import NetworkState, live_transformers, restoration_plans
 from .planner import STEPS, Crew, Job, schedule, score
 from .tracer import Damage, Evidence, Tracer
-from .vision import analyse_photo, analyse_video
+from .poles import PoleRegister
+from .vision import analyse_photo, analyse_video, read_pole_tag
 from . import voice
 
 LOCATED_AT = 0.8  # confidence at which a suspected fault becomes an incident
@@ -39,7 +39,6 @@ ASK_BELOW = 0.85  # confidence below which the agent asks a customer to disambig
 PROBE_GAP_S = 120
 SPEED_KMH = 25
 ROAD_FACTOR = 1.3
-REVIEW_FIELDS = ["street", "house_no", "symptom", "hazard", "is_junk"]
 SECTION_KINDS = {"pole_down", "tree_on_line", "live_wire", "wire_down"}
 LANG_NAME = {"en": "English", "si": "Sinhala", "ta": "Tamil", "es": "Spanish", "hi": "Hindi"}
 KIND_TITLE = {"pole_down": "Pole down", "tree_on_line": "Tree on line", "live_wire": "Live wire on road",
@@ -68,10 +67,7 @@ class Engine:
         self.sms_code = re.compile(self.loc["sms_code"], re.I)
         self.sms_model = f"Code ({self.loc['sms_label']}, no AI)"
         self.client = ModelClient()
-        # Muse Glimmer served locally (vLLM / llama.cpp, OpenAI-compatible); always "live" because it is local.
         self.extractor = Extractor(self.client, hint=self.loc["hint"])
-        self.glimmer = Extractor(ModelClient(mode="live"), model=config.GLIMMER_MODEL, base=config.GLIMMER_BASE,
-                                 label="Muse Glimmer (offline)", hint=self.loc["hint"])
         self.customers = self.db.counts_by_transformer()
         self.tracer = Tracer(self.feeder, self.customers)
         self.critical = self.db.critical_by_transformer()
@@ -97,8 +93,6 @@ class Engine:
         self.cmi = 0.0
         self._out_now = 0
         self._quiet: Counter = Counter()
-        self.offline = False
-        self.queued: list[dict] = []
         self.messages: list[dict] = []
         self.timeline: list[dict] = []
         self.field_damage: list[Damage] = []
@@ -108,6 +102,7 @@ class Engine:
         self.probes: list[dict] = []
         self.notices: list[dict] = []
         self.media: list[dict] = []  # analysed photos and videos, replayed to consoles that connect later
+        self._poles: PoleRegister | None = None
         self.incidents: list[dict] = []
         self.suspects: list[dict] = []
         self.located: list = []  # the tracer's latest result (the call agent asks about its open questions)
@@ -188,6 +183,17 @@ class Engine:
                     return {"account": None, "transformer": None, "lat": t.lat, "lon": t.lon,
                             "method": f"street only: {street}", "street_xf": t.id}
         return {"account": None, "transformer": None, "lat": None, "lon": None, "method": "not located"}
+
+    @property
+    def poles(self) -> PoleRegister:
+        """Pole tags of this feeder (built on first use: Chennai has thousands). Scenario aliases name poles by address."""
+        if self._poles is None:
+            reg = PoleRegister(self.feeder, self.pack.get("pole_prefix", "P"))
+            for a in self.pack.get("pole_aliases", []):
+                if (at := self._locate(a, None)).get("lat") is not None:
+                    reg.alias(a["tag"], reg.nearest(at["lat"], at["lon"]).id)
+            self._poles = reg
+        return self._poles
 
     def _damage(self, source: str, kind: str, loc: dict, strength: float) -> Damage | None:
         xf = loc.get("transformer") or loc.get("street_xf")
@@ -334,11 +340,6 @@ class Engine:
         if kind == "scada":
             await self._scada(event)
         elif kind == "complaint":
-            if self.offline and event["channel"] == "call":
-                self.queued.append(event)
-                await self.log("Network", f"{event['id']}: call recorded, queued for transcription",
-                               "Voice Transcribe is a cloud model; the network is down", event["id"])
-                return
             await self._complaint(event)
         elif kind == "crew_note":
             await self._crew_note(event)
@@ -402,17 +403,16 @@ class Engine:
             return e["text"], "mock (script)"
         # Voice Transcribe has no Sinhala: Spark listens to the recording itself.
         text = None
-        if not self.offline:
-            try:
-                text = await asyncio.to_thread(self.client.spark_listen, config.ROOT / audio, LANG_NAME.get(lang, lang))
-            except Exception:  # noqa: BLE001
-                text = None
+        try:
+            text = await asyncio.to_thread(self.client.spark_listen, config.ROOT / audio, LANG_NAME.get(lang, lang))
+        except Exception:  # noqa: BLE001
+            text = None
         if text:
             await self.log("Muse Spark", f"{e['id']}: call heard by Spark",
                            f"{LANG_NAME.get(lang, lang)} audio, which Voice Transcribe does not cover: {text[:120]}",
                            e["id"])
             return text, "Muse Spark"
-        return (None, "Muse Spark") if self.client.mode == "live" and not self.offline else (e["text"], "mock (script)")
+        return (None, "Muse Spark") if self.client.mode == "live" else (e["text"], "mock (script)")
 
     async def _extract(self, text: str, e: dict) -> Extraction:
         if m := self.sms_code.match(text):
@@ -421,11 +421,7 @@ class Engine:
                                "landmark": None, "symptom": "no_power", "hazard": "none", "cause_hint": None,
                                "is_junk": False, "summary_en": f"Breakdown SMS for account {m.group(1)}"},
                               self.sms_model)
-        ex = self.glimmer if self.offline else self.extractor
-        out = await asyncio.to_thread(ex.complaint, text, e.get("truth", {}), e.get("language", "en"))
-        if out.mock and self.offline:
-            out.model = "mock (Glimmer not running)"
-        return out
+        return await asyncio.to_thread(self.extractor.complaint, text, e.get("truth", {}), e.get("language", "en"))
 
     async def _complaint(self, e: dict) -> None:
         # One live call at a time: while a call-taker is on a call the agent answers the others at once, since a
@@ -539,12 +535,12 @@ class Engine:
             for field in ("photo", "video"):
                 if e.get(field):
                     msg["media"] = await self._media(e["id"], e[field], loc or {}, truth, 2.5, msg.get("incident"),
-                                                     video=field == "video")
+                                                     video=field == "video", truth_tag=e.get("media_pole_tag"))
         return msg
 
     async def _media(self, ref: str, path: str, loc: dict, truth_damage: str, strength: float,
                      owner: str | None = None, video: bool = False, source: str = "customer",
-                     caption: str | None = None) -> dict | None:
+                     caption: str | None = None, truth_tag: str | None = None) -> dict | None:
         """A photo or clip from a customer, a crew or a drone patrol becomes located damage evidence."""
         kind = "video" if video else "photo"
         try:
@@ -553,11 +549,16 @@ class Engine:
         except Exception as err:  # noqa: BLE001
             await self.log("Code", f"{ref}: {kind} analysis failed", str(err)[:160], ref)
             return None
+        if not video:
+            loc, strength = await self._pole_tag(ref, path, loc, strength, res, truth_tag)
         detail = res["description"]
         if res.get("clearance_m") is not None:
             detail += f" | wire clearance ~{res['clearance_m']} m"
         if res.get("tracked"):
             detail += " | tracked " + ", ".join(f"{v['objects']} × {p}" for p, v in res["tracked"].items())
+        if survey := res.get("survey"):
+            detail += (f" | survey: {survey['poles']['followed']} poles, {survey['wires']['followed']} wires followed"
+                       + "".join(f"; {f}" for f in survey["flags"]))
         what = "drone clip" if source == "drone" else kind
         await self.log(" + ".join(res["models"]), f"{ref}: {what} shows {res['damage'].replace('_', ' ')}", detail, ref)
         if d := self._damage(f"{ref}/{kind}", res["damage"], loc, strength):
@@ -575,9 +576,36 @@ class Engine:
         await self.broadcast(item)
         return res
 
+    async def _pole_tag(self, ref: str, path: str, loc: dict, strength: float, res: dict,
+                        truth_tag: str | None) -> tuple[dict, float]:
+        """A photo that shows a pole's number plate names an exact pole: the damage is placed there, with crew-level weight."""
+        try:
+            tag = await asyncio.to_thread(read_pole_tag, self.client, path, truth_tag)
+        except Exception as err:  # noqa: BLE001 - a failed read must not lose the photo
+            await self.log("Code", f"{ref}: pole tag read failed", str(err)[:160], ref)
+            return loc, strength
+        if tag is None:
+            return loc, strength
+        pole, how = self.poles.lookup(tag["tag"])
+        tag["match"] = how
+        if pole is not None:
+            tag["pole"] = {"id": pole.id, "section": pole.section, "street": self.feeder.sections[pole.section].street,
+                           "lat": pole.lat, "lon": pole.lon, "transformer": pole.transformer}
+        res["pole_tag"] = tag
+        if tag["tag"]:
+            where = (f"pole {pole.id} on {tag['pole']['street']} ({how})" if pole is not None
+                     else f"no pole matches ({how})")
+            await self.log(" + ".join(tag["models"]), f"{ref}: pole tag {tag['tag']}", where, ref)
+        if pole is None:
+            return loc, strength
+        loc = {**loc, "lat": pole.lat, "lon": pole.lon, "method": f"pole tag {pole.id}", "pole": pole.id}
+        if pole.transformer:
+            loc["transformer"] = pole.transformer
+        return loc, max(strength, 4.0)
+
     async def _crew_note(self, e: dict) -> None:
         """A crew reports by phone or radio; the agent reads back what it understood before anything changes."""
-        if not e.get("audio") and self.client.mode == "live" and not self.offline and voice.available():
+        if not e.get("audio") and self.client.mode == "live" and voice.available():
             # The World writes on-site reports as text; speak them so live mode really transcribes a voice.
             try:
                 e["audio"] = (await voice.synthesize(e["text"], self.agent.crew_voice(e))).relative_to(
@@ -585,10 +613,9 @@ class Engine:
             except Exception:  # noqa: BLE001
                 pass
         text, heard_by = await self._transcript(e)
-        ex = self.glimmer if self.offline else self.extractor
 
         async def read(t: str) -> Extraction:
-            return await asyncio.to_thread(ex.crew_note, t, e.get("truth", {}))
+            return await asyncio.to_thread(self.extractor.crew_note, t, e.get("truth", {}))
 
         call = self.agent.crew_start(e, text if text is not None else "…", heard_by)
         if text is None:  # no model could make out the call: the crew texts the report instead
@@ -625,7 +652,8 @@ class Engine:
         await self.broadcast({"type": "message", "message": _public(msg)})
         for field in ("photo", "video"):
             if e.get(field):
-                await self._media(e["id"], e[field], loc, f["damage"], 3.0, msg.get("incident"), video=field == "video")
+                await self._media(e["id"], e[field], loc, f["damage"], 3.0, msg.get("incident"), video=field == "video",
+                                  truth_tag=e.get("media_pole_tag"))
 
     async def _drone(self, e: dict) -> None:
         # Where the drone flew is known from its own GPS; the scenario gives that position as a street address.
@@ -665,54 +693,6 @@ class Engine:
                            f"{before} → {after}, from {e.get('crew')}'s report", inc["id"])
         self._refresh_outages()
         self._replan_steps(inc)
-
-    # ---- network outage: Glimmer offline, Spark reconciles afterwards -------------
-
-    async def set_offline(self, offline: bool) -> None:
-        if offline == self.offline:
-            return
-        self.offline = offline
-        if offline:
-            try:
-                httpx.get(f"{config.GLIMMER_BASE}/models", timeout=1.5).raise_for_status()
-                self.glimmer.enabled = True
-            except Exception:  # noqa: BLE001
-                self.glimmer.enabled = False
-            await self.log("Network", "Network down: switching to Muse Glimmer on this laptop",
-                           "text messages keep flowing through the open-weights model; calls queue for transcription"
-                           + ("" if self.glimmer.enabled else f" (no Glimmer server at {config.GLIMMER_BASE}: mock)"))
-        else:
-            await self.log("Network", "Network back: Muse Spark reviews the offline work",
-                           f"{len(self.queued)} queued calls to transcribe")
-            await self._reconcile()
-            queued, self.queued = self.queued, []
-            for e in queued:
-                await self._complaint(e)
-        await self.broadcast({"type": "network", "offline": offline})
-        await self.recompute()
-        await self._finish_calls()
-
-    async def _reconcile(self) -> None:
-        reviewed = corrected = 0
-        for m in self.messages:
-            if not m["model"].startswith(("Muse Glimmer", "mock (Glimmer")) or m["channel"] == "crew":
-                continue
-            e = m["event"]
-            ext = await asyncio.to_thread(self.extractor.complaint, m["text"], e.get("truth", {}), e.get("language", "en"))
-            reviewed += 1
-            diffs = [k for k in REVIEW_FIELDS if ext.fields.get(k) != m["fields"].get(k)]
-            if diffs:
-                corrected += 1
-                await self.log(ext.model, f"{m['id']}: corrected offline extraction",
-                               "; ".join(f"{k}: {m['fields'].get(k)} -> {ext.fields.get(k)}" for k in diffs), m["id"])
-                m["fields"] = ext.fields
-                if not ext.fields["is_junk"]:
-                    m["location"] = self._locate(ext.fields, m.get("from"))
-            m["model"] = f"{m['model']} ✓ {ext.model}"
-        self._rebuild()
-        await self.log("Code", f"Offline review: {reviewed} messages checked, {corrected} corrected",
-                       "evidence rebuilt from the corrected record")
-        await self.broadcast({"type": "messages", "messages": [_public(m) for m in self.messages]})
 
     # ---- locating: suspects become incidents ------------------------------------------
 
@@ -1069,11 +1049,10 @@ class Engine:
                  f"Crew findings: {inc['history'][-1]['after'] if inc['history'] else 'none yet'}. "
                  f"Work planned: {steps or 'none'}.")
         text, model = None, "Muse Spark"
-        if not self.offline:
-            try:
-                text = await asyncio.to_thread(self.client.spark_text, EXPLAIN_SYSTEM, facts)
-            except Exception:  # noqa: BLE001
-                text = None
+        try:
+            text = await asyncio.to_thread(self.client.spark_text, EXPLAIN_SYSTEM, facts)
+        except Exception:  # noqa: BLE001
+            text = None
         if not text:
             model = "mock (template)"
             why = (inc["history"][-1]["after"] + " (crew report)") if inc["history"] else (
@@ -1099,13 +1078,12 @@ class Engine:
         for lang, to in by_lang.items():
             kind = KIND_TITLE[inc["kind"]].lower()
             text, model = None, "Muse Spark"
-            if not self.offline:
-                try:
-                    text = await asyncio.to_thread(
-                        self.client.spark_text, NOTICE_SYSTEM,
-                        f"Language: {LANG_NAME[lang]}. Fault type: {kind}. Estimated restoration: {eta}.")
-                except Exception:  # noqa: BLE001
-                    text = None
+            try:
+                text = await asyncio.to_thread(
+                    self.client.spark_text, NOTICE_SYSTEM,
+                    f"Language: {LANG_NAME[lang]}. Fault type: {kind}. Estimated restoration: {eta}.")
+            except Exception:  # noqa: BLE001
+                text = None
             if not text:
                 text, model = self.loc["notice"][lang].format(kind=kind, eta=eta), "mock (template)"
             notice = {"id": f"U{len(self.notices) + 1}", "t": round(self.elapsed), "fault": inc["id"], "language": lang,
@@ -1221,7 +1199,6 @@ class Engine:
         s = {
             "elapsed": self.elapsed, "clock": self.clock(self.elapsed), "mode": self.client.mode,
             "scenario": self.scenario["id"], "start_hour": self.pack["start_hour"],
-            "offline": self.offline,
             "live": {"calls": self.live_calls, "handover": self.handover,
                      "in_progress": [{"id": c["id"], "call": c} for c in self.agent.live.values()],
                      "copilots": [cp.state() for cp in self.copilots.values()]},
@@ -1238,7 +1215,6 @@ class Engine:
                 "languages": dict(Counter(m["language"] for m in self.messages)),
                 "model_calls": dict(self.model_calls),
                 "notified": sum(len(n["to"]) for n in self.notices),
-                "queued": len(self.queued),
                 "meter_msgs": len(self.ami), "ami": (None if not self.meter_cov else self.ami_ok),
                 "customers_out": sum(self.customers.get(t, 0) for t in dead)
                 + sum(len(i["dead_customers"]) for i in self._active()),

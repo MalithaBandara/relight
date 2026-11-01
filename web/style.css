@@ -107,8 +107,6 @@ svg { fill: currentColor; }
 .layer-toggles input { accent-color: var(--accent); margin: 0; }
 .map-wrap { position: relative; min-height: 0; }
 #map { height: 100%; background: #0d1114; }
-#offline-banner { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); z-index: 1000; background: var(--alarm); color: #fff; padding: 6px 14px; border-radius: 4px; font-weight: 500; }
-#offline-banner[hidden] { display: none; }
 
 .agenda { display: grid; grid-template-rows: 30px minmax(0, 1fr) minmax(0, 1.25fr); min-height: 0; }
 .table-wrap { overflow: auto; min-height: 0; }
@@ -341,7 +339,6 @@ dialog#map-dialog::backdrop { background: rgba(0, 0, 0, .6); }
 .kpi .v.down { animation: tick-good .9s ease-out; }
 @keyframes tick-bad { from { text-shadow: 0 0 12px rgba(229, 72, 77, .7); } }
 @keyframes tick-good { from { color: var(--st-rest); } }
-#offline-banner:not([hidden]) { animation: drop .3s var(--ease-out); }
 @keyframes drop { from { opacity: 0; transform: translate(-50%, -8px); } }
 dialog#map-dialog[open] { animation: pop .22s var(--ease-out); }
 dialog#map-dialog[open]::backdrop { animation: fade .22s ease-out; }
@@ -351,7 +348,8 @@ dialog#map-dialog[open]::backdrop { animation: fade .22s ease-out; }
 @media (prefers-reduced-motion: reduce) {
   .ring { animation-name: fade-out; transform: none; }
   @keyframes fade-out { from { opacity: 1; } to { opacity: 0; } }
-  #agenda tbody tr.changed .st, dialog#map-dialog[open], #offline-banner:not([hidden]) { animation: none; }
+  #agenda tbody tr.changed .st, dialog#map-dialog[open] { animation: none; }
   .ev-sym.hazard { animation: none; }
   .btn:active, .plan button:active { transform: none; }
 }
+.photo-pop img.tag-crop { width: 140px; margin: 4px 0; }

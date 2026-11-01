@@ -36,8 +36,9 @@ describing that earlier project.
 - **New work only.** Everything shown must be built during the event (from Oct 26; this repo starts
   Oct 29). **Never copy code from the old GridMedic repo or any pre-event code.** Ideas may be reused;
   the README discloses the earlier project and lists what is different.
-- **Must use Meta's models:** Muse Spark, Muse Voice Transcribe, SAM 3.1 (Meta Model API), Muse Glimmer
-  (open weights). Muse Image, Muse Wonder and Muse Code are allowed but unused.
+- **Must use Meta's models:** Muse Spark, Muse Voice Transcribe, SAM 3.1 (Meta Model API). The rules also allow
+  open-weights Muse Glimmer, Muse Image, Muse Wonder and Muse Code; all are unused (Glimmer dropped 2026-11-01:
+  offline mode removed, it only did text extraction and the owner chose to spend the time on the Meta Model API models).
 - **Judging:** Impact 30%, Use of Meta AI tooling 25%, Technical depth 20%, Demo 25%. Top 5 per track are
   ranked from the demo video.
 - **Data:** only synthetic or public data. Use the Meta API in **Standard** mode (not Contributor).
@@ -46,7 +47,7 @@ describing that earlier project.
   facilities from OpenStreetMap appear only under generic names ("Hospital on <street>"); never claim
   how a specific real utility operates; label mock output as mock.
 - **No API calls without the owner's GO (owner's rule, 2026-10-30).** On the owner's machine no session may call the
-  Meta Model API (or Glimmer) unless the owner's latest message contains the word **GO** in capitals. Enforced, not
+  Meta Model API unless the owner's latest message contains the word **GO** in capitals. Enforced, not
   just written: the git-ignored marker `.claude/require_go` switches the rule on; `relight/models.py` then refuses every
   live request unless `config.api_allowed()`; hooks in the git-ignored `.claude/settings.local.json` (script
   `.claude/hooks/api_gate.py`) open the gate only for a turn whose owner message contains GO, close it when the turn
@@ -77,7 +78,7 @@ cp .env.example .env                               # add MODEL_API_KEY for live 
 
 Environment variables (`.env`, see `.env.example`): `MODEL_API_KEY`, `META_API_BASE`
 (`https://api.meta.ai/v1`), `SPARK_MODEL` (`muse-spark-1.3`), `TRANSCRIBE_MODEL`
-(`muse-voice-transcribe-1.0`), `SAM_MODEL` (`sam-3.1`), `GLIMMER_BASE`, `GLIMMER_MODEL`, optional
+(`muse-voice-transcribe-1.0`), `SAM_MODEL` (`sam-3.1`), optional
 `MODEL_MODE` (`live` / `mock`; defaults to `live` when a key is present).
 
 ---
@@ -99,7 +100,10 @@ relight/                 Python package (FastAPI backend and all logic)
                          segmentation) with on-disk response cache; SAM token parser
   extract.py             Spark prompts and JSON schemas for complaints and crew reports; mock fallbacks
                          (scenario labels, or keyword parser for unlabelled portal messages)
-  vision.py              damage photos: Spark classifies, SAM outlines pole/wire, wire clearance in metres
+  vision.py              damage photos: Spark classifies, SAM outlines pole/wire, wire clearance in metres;
+                         drone/clip survey (poles and wires followed, what lies across them); pole-tag reading
+  poles.py               pole register (a tagged pole every 45 m per section, synthetic) and tag lookup
+  masks.py               SAM 3.1 pixel masks (Meta's `meta-sam-parser`): lean, sag, pixel contact, outline overlays
   tracer.py              probabilistic fault tracer (candidates, likelihood, greedy search, confidence)
   network.py             power flow over buses/section bodies; switching plans and safety check
   planner.py             priority scoring, crew work steps, what-if schedule vs first-call baseline
@@ -117,10 +121,13 @@ scenarios/               galle_storm.json (hand-written), houston_hurricane.json
 scripts/
   run_headless.py        replay a scenario to completion, print incidents and ground-truth check (--calls)
   make_calls.py          synthesise the voiced callers in scenarios/calls/*.json -> media/audio/calls/
+  build_overlays.py      draw SAM outlines over clips and photos from the cache -> media/overlays/ (no API calls)
+  check_offline.py       checks that need no model call (fact check, realtime replay, uploads, masks, pole tags)
+  eval_keywords.py       Voice Transcribe with and without street-name `keywords` (needs GO)
   make_storm.py          generate storms on OSM feeders (fault placement rules, complaints, meters)
   fetch_osm.py           download roads/buildings/landmarks from Overpass into data/osm/
   smoke_test.py          one small live call per Meta model (needs MODEL_API_KEY)
-  eval_extraction.py     per-language extraction accuracy vs scenario labels (Spark or --glimmer)
+  eval_extraction.py     per-language extraction accuracy vs scenario labels (Spark; `--replay` scores cached engine readings)
 web/                     index.html + app.js + style.css (console), customer.html (portal)
 data/osm/*.json          cached OpenStreetMap extracts (committed; ODbL attribution in README)
 data/*.db                generated customer databases (git-ignored; rebuilt on first use)
@@ -220,7 +227,7 @@ scenario JSON --> Replayer (clock) --> Engine.handle(event)
 
 ### 5.6 Messages and models
 - Complaint path: `_transcript` (Voice Transcribe if `audio` exists) -> `_extract` (SMS code regex
-  first: `BD`/`OUT`/`PWR <10-digit account>` needs no model; else Spark, or Glimmer when offline) ->
+  first: `BD`/`OUT`/`PWR <10-digit account>` needs no model; else Spark) ->
   `_locate` (account, address, caller ID, landmark, street) -> `_claim` -> `_apply` (dedup by account
   or sender; hazards; evidence).
 - Mock mode: if a model call is not cached (or there is no key), extractors return the scenario's
@@ -228,8 +235,6 @@ scenario JSON --> Replayer (clock) --> Engine.handle(event)
   (`mock (keywords)`). Explanations and notices fall back to templates (`mock (template)`).
 - Every model response is cached in `.cache/model/` keyed by a request hash: replays are free and
   deterministic. Changing a prompt changes the key.
-- Offline mode (`set_offline`): text goes to Glimmer (`GLIMMER_BASE`, checked once for reachability),
-  calls queue; on reconnect Spark reviews Glimmer's extractions and evidence is rebuilt.
 
 ### 5.6a Call agent (`callagent.py`)
 - Every `channel: "call"` complaint (except answers to the agent's own questions) is answered by the agent.
@@ -245,7 +250,7 @@ scenario JSON --> Replayer (clock) --> Engine.handle(event)
 - Code chooses the act and its facts; **Muse Spark words every non-fixed line** in the caller's language
   (`CallAgent.say` -> `_spark`, `SPEAK_SYSTEM`). `facts_kept` rejects a Spark line that drops or changes any
   number, time, street name or id from the template (turn model `Code (Spark line failed fact check)`,
-  `rejected` lists what was missing); then the template is spoken. No key / offline -> template
+  `rejected` lists what was missing); then the template is spoken. No key -> template
   (`mock (template)`). `FIXED` acts (greeting with the automated-assistant disclosure, safety lines,
   known-hazard warning, escalation, SMS fallback, close) are never sent to Spark. During a surge
   (`quiet_messages`) only voiced calls use Spark. Templates live in `locales.py` (`agent`, `caller`,
@@ -352,7 +357,7 @@ the first recloser's own zone, and guarantees at least two callers for small fau
 | GET | `/api/state` | full engine snapshot |
 | GET | `/api/scenarios` | list scenarios; current one |
 | POST | `/api/scenario` | `{"id": ...}` switch scenario (stops replay, rebuilds engine; clients reload) |
-| POST | `/api/control` | `{"action": start|pause|reset|speed|offline|online|live_calls|handover, "speed": n, "on": bool}` |
+| POST | `/api/control` | `{"action": start|pause|reset|speed|live_calls|handover, "speed": n, "on": bool}` |
 | POST | `/api/plan` | `{"incident": "I2", "plan": "isolate"}` operator approves a switching plan |
 | POST | `/api/copilot` | `{"id": "C03", "action": say|file|end, "act"?, "text"?}` call-taker on a handed-over call |
 | GET | `/api/customer?q=` | portal status by account or phone |
@@ -401,10 +406,8 @@ All writes to the engine go through one `asyncio.Lock` in `server.py` (replay, o
   `<|box;x1=..;y1=..;x2=..;y2=..;w=..;h=..;c=..|><|mask;x=0;y=0;data=H,W,<enc>payload|>`, video lines
   prefixed `<Nf>`. Boxes are in source pixels; mask payload is base85 (not decoded yet; only boxes are
   used). `metadata.include_confidence: "true"` adds `c=`.
-- **Muse Glimmer**: open weights, ~30B dense (plus ~1.8B vision encoder), text + image in; BF16 ~60 GB,
-  Meta's quantised build under 20 GB. Not on the session laptop; the owner's RTX 5070 Ti (16 GB) needs a
-  ~3-bit GGUF fully on GPU via llama.cpp `llama-server`, or a hosted endpoint (partner credits).
-  Positioned as an optional on-premise mode, not a headline feature.
+- **Muse Glimmer** (not used): open weights (Apache 2.0), ~30B dense, text + image in; Q4_K_M GGUF ~15.6 GiB; hosted on
+  OpenRouter at $0.30 / $1.20 per M tokens (DeepInfra). Dropped 2026-11-01; the offline mode that used it was removed.
 - Re-check docs at https://dev.meta.ai/docs/ before relying on any field above.
 
 ---
@@ -482,10 +485,8 @@ If a task below is owner-only, say what is needed and stop; do not work around i
 #### Owner only (agents cannot do these)
 
 Accounts, keys and forms
-- [ ] Get the **Meta Model API key** and put it in `.env` as `MODEL_API_KEY=...` (never paste it in chat).
-- [ ] Submit the **partner credit forms** (Baseten, Modal, Fireworks); answers are drafted.
-- [ ] If credits arrive: **create the hosted Glimmer endpoint** in the partner dashboard and put its URL /
-      key in `.env` (`GLIMMER_BASE`, `GLIMMER_MODEL`).
+- [x] Get the **Meta Model API key** and put it in `.env` (done; verified 2026-11-01: mode is live, key set).
+- [x] ~~Partner credit forms~~ (Baseten, Modal, Fireworks): closed, and no longer needed (they only covered Glimmer, now dropped).
 - [ ] **Submit on Cerebral Valley** by Nov 4, 10:00 PM Sri Lanka time (hard deadline Nov 5, 7:30 AM).
 
 Media
@@ -495,7 +496,8 @@ Media
       Still missing: a blown-fuse photo for Galle's `crew_fuse.jpg`.
 - [x] Drone clip and four customer videos (owner's choice, 2026-10-30): third-party clips, git-ignored, credited in
       `media/videos/CREDITS.md`; `scripts/fetch_videos.py` downloads and trims them after a fresh clone.
-- [ ] If pole-tag reading is chosen: photograph a pole with a visible ID tag.
+- [ ] Pole-tag reading (chosen 2026-11-01): send a photo of a pole with a visible ID tag. The agent adds the tag to
+      the scenario's `pack.pole_aliases` (tag + street + house number) so the register finds it.
 - [ ] If realistic paper-to-grid is chosen: draw a pole-numbered feeder sketch and write one meter-reader
       ledger page, then photograph both.
 
@@ -510,16 +512,27 @@ Video
 #### Agent tasks
 
 Blocked until the owner provides something
-- [ ] *(needs `MODEL_API_KEY`)* Run `scripts/smoke_test.py`; fix request-format mismatches with the real API.
-- [ ] *(needs `MODEL_API_KEY`)* Run all three scenarios live; keep the regression baseline (section 6) green.
-- [ ] *(needs `MODEL_API_KEY`)* Run `scripts/eval_extraction.py`; put per-language accuracy in the README.
+- [x] Run `scripts/smoke_test.py`; fix request-format mismatches (done 2026-10-30, see section 8 "Checked live").
+- [ ] *(needs GO)* Run all three scenarios live: **Galle done 2026-10-30, Houston done 2026-11-01 (7/7, 0 dark, 184
+      Spark entries, 25 Spark-worded agent lines, 0 fact-check rejects; both cached); Chennai still mock**
+      (66 timeline entries are `mock (ground truth)`; it takes ~2.5-3 h, so run it in the owner's own shell with
+      `RELIGHT_ALLOW_API=1`). Keep the regression baseline green.
+- [x] Extraction accuracy measured 2026-11-01 for Galle and Houston with `scripts/eval_extraction.py <scenario>
+      --replay` (scores the engine's own cached Spark readings; free). Muse Spark vs scenario labels, fields right:
+      Galle (46 scored) street 89%, house_no 94%, symptom 94%, hazard 96%, junk 98% (en 29, si 11, ta 6; Sinhala is
+      the weakest: street 82%, symptom 82%); Houston (161 scored) street 97%, house_no 98%, symptom 99%, hazard 99%,
+      junk 100% (en 117, es 44). Not scored: SMS codes (no model) and complaints that made no message of their own.
+      Misses on calls are mostly facts the caller gave only later or that come from caller ID (labels hold them), and
+      the garbled Sinhala call C02. Put the table in the README. Not run for Chennai or without `--replay`
+      (that mode sends fresh requests: ~$2.6 for Galle+Houston; it refuses to score mock output).
+- Gate gotcha: GO opens the API only for the turn that carries it. A background task's completion notice starts a new
+  turn with the gate closed, so a long run must be polled in the foreground until it ends.
 - [ ] *(needs `MODEL_API_KEY`)* Keep a running cost estimate under $150 (Voice Transcribe is $0.18/h).
 - [ ] *(needs `MODEL_API_KEY`)* Run the voiced calls live: Voice Transcribe on en/ta/es/hi, Spark listening
       to the Sinhala call (`spark_listen` request shape), Spark rewording status lines; fix what breaks.
 - [ ] *(needs photos)* Run the photo path live; finish SAM 3.1 mask decoding for wire clearance.
-- [ ] *(needs a drone clip)* Drone damage assessment with SAM 3.1 video tracking.
+- [x] Drone damage assessment with SAM 3.1 video tracking (finished 2026-11-01, see 12.2).
 - [x] Wire `audio` paths into the scenarios (done with synthetic calls; live test is the task above).
-- [ ] *(needs the Glimmer endpoint)* Point `GLIMMER_BASE` at it and run the eval once with `--glimmer`.
 - [ ] *(needs the owner's feature choice)* Build the chosen optional features (12.2).
 
 Can start now
@@ -537,15 +550,31 @@ Can start now
 
 ### 12.2 Optional features (owner chooses; agent builds)
 
-- **Pole-tag reading** from customer photos (SAM finds the plate, Spark reads the ID) → exact asset.
+- **Pole-tag reading** (chosen and built 2026-11-01): `vision.read_pole_tag` has SAM 3.1 find the plate
+  ("pole number plate"), crops and enlarges it, and Spark reads it (if SAM finds none, Spark looks at the whole photo
+  once). `poles.PoleRegister.lookup` names the pole (exact, or OCR-tolerant when a fold of look-alikes O/0, I/1, S/5,
+  B/8 matches exactly one pole). `Engine._pole_tag` then places the photo's damage at that pole, nearest transformer
+  on its section, with crew-level weight (4.0). Mock mode: the event's `media_pole_tag`; none for other photos. The
+  register is synthetic (tags `P-0001`...); a scenario's `pack.pole_aliases` (`tag`, `street`, `house_no`) maps a real
+  photographed tag to the pole nearest that address. Shown in the console photo popup and the portal `seen` panel.
 - **AI call agent** (chosen and built, see 5.6a), with **realtime mode** over the Voice Transcribe WebSocket
   with diarization (chosen and built 2026-10-30): calls handled turn by turn as they are spoken.
 - **Live call copilot** (chosen and built 2026-10-30, see 5.6a): realtime transcript, live field filling,
   Spark's suggested next line, for a human call-taker on the hard calls the agent hands over.
-- **Drone damage assessment:** SAM 3.1 video tracking of poles and conductors; sag and broken-pole counts.
+- **Drone damage assessment** (finished 2026-11-01): `vision.drone_survey` counts from SAM 3.1's tracks: poles and
+  wires followed (a wire counts if its track spans 40% of the clip; SAM splits wires into pieces), poles lying (box
+  wider than tall), and which wires an obstruction (fallen tree) crosses. Galle's Temple Road clip: 3 poles, 6 wires
+  followed, trunk crosses 4 of 6. The survey is shown in the timeline detail and the map popup; it flags, it does not
+  move the fault. **Masks** (added 2026-11-01, owner approved the dependency): `masks.py` decodes SAM's base85 lossless
+  masks with Meta's `meta-sam-parser` 0.1.0 (read before use: pure Python, no network or process calls; ~4 us per pixel,
+  so decodes are cached in `.cache/masks` and the survey samples 12 frames). From masks: pole lean (long thin masks only:
+  a pole seen from above is a blob and gets none), wire sag as a share of its span, real pixel contact between a fallen
+  tree and the wires (Temple Road: touches 6 of 10 wire tracks), and the outlines drawn over the clip
+  (`media/overlays/temple_road_span_sam.mp4`, built by `scripts/build_overlays.py`) and over photos (built on first
+  analysis). Photos also get the largest pole's lean (rough, street-level). SAM tags a traffic-light post as a pole too.
 - **Realistic paper-to-grid:** hand-drawn pole-numbered sketch + meter-reader ledger → network and
   consumer index the engine runs on, with SAM symbol overlay and a review screen for flagged items.
-- **Glimmer on-premise mode** through a hosted endpoint (no cascade work unless the owner asks).
+- **Glimmer on-premise mode**: dropped 2026-11-01 (see section 2); code and docs removed.
 
 ### 12.3 Built but untested (verify once the API key is in)
 
@@ -598,6 +627,14 @@ Photos and videos (`vision.py`, `models.py`)
 - [ ] Spark watching a clip (`spark_video_json`: `video_url` content part, unverified) and SAM 3.1 tracking
       (`segment_video`: `input_video` part, unverified); request size limits for a 7.6 MB drone clip.
 - [ ] Portal uploads from a phone (MOV from iPhone, large files) and the `seen` panel with real model output.
+      (Offline 2026-11-01: MOV and 50 MB MP4 accepted, >60 MB gives 413; HEIC gives 415.)
+- [ ] Pole-tag reading live: SAM prompt "pole number plate" (does it find a small plate?), Spark reading the crop
+      (`TAG_SCHEMA`), the whole-photo fallback, and the owner's photographed tag via `pack.pole_aliases`. Tests with
+      stand-in models are in `scripts/check_offline.py`.
+- [ ] Voice Transcribe `keywords` on the file endpoint: run `scripts/eval_keywords.py` (GO; cents). Baseline without
+      keywords, from the cache: Houston heard the street right in 1 of 5 clips. If it helps, adopting it in the engine
+      changes every transcript and so every downstream Spark request (re-run Houston ~$1.6): decide after the numbers.
+- [ ] Drone survey on a second clip, and Spark/SAM on the nine photos with the extra "pole number plate" request each.
 
 ### 12.4 Order that saves the most time
 

@@ -11,7 +11,7 @@ const MODEL_CLASS = (m) => {
   if (m.startsWith("mock")) return "mock";
   if (m.includes("SAM")) return "sam";
   if (m.includes("Voice")) return "voice";
-  if (m.includes("Spark") || m.includes("Glimmer")) return "spark";
+  if (m.includes("Spark")) return "spark";
   if (m === "SCADA" || m === "Smart meters") return "scada";
   if (m === "Agent" || m === "Operator") return "agent";
   return "code";
@@ -239,12 +239,6 @@ function renderKpis(s) {
   const found = s.truth.filter((t) => t.found).length;
   $("#k-truth").textContent = `scenario check: ${found}/${s.truth.length} real faults diagnosed`;
   // status chips
-  const net = $("#btn-net");
-  net.textContent = s.offline ? "Network down · Glimmer" : "Network online";
-  net.className = `chip ${s.offline ? "bad" : "ok"}`;
-  net.dataset.offline = s.offline ? "1" : "";
-  $("#offline-banner").hidden = !s.offline;
-  $("#queued").textContent = c.queued || 0;
   const ami = $("#ami-chip");
   ami.hidden = c.ami === null || c.ami === undefined;
   if (!ami.hidden) {
@@ -763,22 +757,43 @@ document.querySelectorAll("#layers input").forEach((cb) => cb.addEventListener("
   for (const l of [layers[cb.dataset.layer], ...extra]) cb.checked ? map.addLayer(l) : map.removeLayer(l);
 }));
 
+// What a patrol clip showed, counted from SAM's tracks (poles and wires followed, what lies across them).
+function surveyHtml(sv) {
+  if (!sv) return "";
+  const lying = sv.poles.lying ? `, ${sv.poles.lying} lying` : "";
+  const m = sv.masks;
+  const sag = m && m.median_sag != null ? `, wire sag ≈ ${(m.median_sag * 100).toFixed(1)}% of span` : "";
+  return `<br><b>Survey</b> · ${sv.poles.followed} poles followed${lying}, ${sv.wires.followed} wires followed${sag}`
+    + sv.flags.map((f) => `<br>⚠ ${esc(f)}`).join("");
+}
+
+// A pole number plate read from a photo, and the pole the register says it is.
+function poleTagHtml(t) {
+  if (!t) return "";
+  const crop = t.crop ? `<img class="tag-crop" src="/${esc(t.crop)}" alt="Pole plate">` : "";
+  if (!t.tag) return `<br>${crop}Pole plate seen, not legible`;
+  const where = t.pole ? `pole ${esc(t.pole.id)} on ${esc(t.pole.street)} (${esc(t.match)})` : `no pole matches (${esc(t.match)})`;
+  return `<br>${crop}<b>Pole tag ${esc(t.tag)}</b> · ${where}`;
+}
+
 // Photos and videos from customers and crews, and drone patrol clips: a marker whose popup shows the media and
 // what the models made of it.
 function addPhoto(ph) {
   if (!ph.lat) return;
   const a = ph.analysis, video = a.kind === "video", drone = a.source === "drone";
+  const shown = a.overlay || ph.path;  // SAM's outlines drawn over the media, when they have been built
   const media = !a.has_image ? "" : video
-    ? `<video src="/${esc(ph.path)}" controls muted playsinline preload="metadata"></video>`
-    : `<img src="/${esc(ph.path)}" alt="Damage photo">`;
+    ? `<video src="/${esc(shown)}" controls muted playsinline preload="metadata"></video>`
+    : `<img src="/${esc(shown)}" alt="Damage photo">`;
   const tracked = Object.entries(a.tracked || {}).map(([p, v]) => `${v.objects} × ${esc(p)}`).join(", ");
   const head = drone ? `Drone patrol ${esc(ph.ref)}` : `${video ? "Video" : "Photo"} from ${esc(ph.ref)}`;
   L.circleMarker([ph.lat, ph.lon], { radius: drone ? 7 : 5, color: drone ? "#4aa3df" : "#3cc2a0", weight: 2, fillOpacity: 0 })
     .bindTooltip(head, { className: "gm" })
     .bindPopup(`<div class="photo-pop">${media}<div class="sub">${head}${ph.caption ? ` · ${esc(ph.caption)}` : ""}</div>
       <b>${esc(a.damage.replaceAll("_", " "))}</b> · ${esc(a.severity)}<br>${esc(a.description)}
-      ${a.clearance_m != null ? `<br>Wire clearance ≈ ${a.clearance_m} m` : ""}${tracked ? `<br>Tracked ${tracked}` : ""}
-      ${a.at_seconds != null && video ? `<br>Clearest at ${a.at_seconds} s` : ""}<br>${a.models.map(badge).join(" ")}</div>`,
+      ${a.clearance_m != null ? `<br>Wire clearance ≈ ${a.clearance_m} m` : ""}${a.pole_lean_deg != null ? `<br>Pole leans ≈ ${Math.round(a.pole_lean_deg)}° (outline, rough)` : ""}${tracked ? `<br>Tracked ${tracked}` : ""}
+      ${a.at_seconds != null && video ? `<br>Clearest at ${a.at_seconds} s` : ""}${surveyHtml(a.survey)}${poleTagHtml(a.pole_tag)}
+      <br>${a.models.map(badge).join(" ")}</div>`,
       { maxWidth: 340 })
     .addTo(layers.messages);
 }
@@ -873,7 +888,6 @@ $("#btn-start").onclick = () => control("start");
 $("#btn-pause").onclick = () => control("pause");
 $("#btn-reset").onclick = () => control("reset");
 $("#speed").onchange = () => control("speed");
-$("#btn-net").onclick = () => control($("#btn-net").dataset.offline ? "online" : "offline");
 $("#scenario").onchange = () => fetch("/api/scenario", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: $("#scenario").value }) });
 
 const dlg = $("#map-dialog");

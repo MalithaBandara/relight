@@ -76,7 +76,7 @@ async def tick(clock: float) -> None:
 
 
 class Control(BaseModel):
-    action: str  # start | pause | reset | speed | offline | online | live_calls | handover
+    action: str  # start | pause | reset | speed | live_calls | handover
     speed: float | None = None
     on: bool | None = None
 
@@ -110,8 +110,6 @@ async def control(c: Control):
         replayer.task = asyncio.create_task(replayer.run(tick, engine.busy))
     elif c.action == "pause":
         replayer.running = False
-    elif c.action in ("offline", "online"):
-        await engine.set_offline(c.action == "offline")
     elif c.action in ("live_calls", "handover"):
         # Live calls play voiced calls in real time (the storm waits while one is on the line).
         setattr(engine, c.action, bool(c.on))

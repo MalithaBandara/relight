@@ -233,7 +233,7 @@
 <script>
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const badgeClass = (m) => m.startsWith("mock") ? "mock" : /Spark|Glimmer/.test(m) ? "spark" : "code";
+const badgeClass = (m) => m.startsWith("mock") ? "mock" : /Spark/.test(m) ? "spark" : "code";
 const human = (s) => String(s || "").replace(/_/g, " ");
 
 const LANGS = {
@@ -458,6 +458,11 @@ $("#q").addEventListener("keydown", (e) => { if (e.key === "Enter") check(); });
 
 // ---- report -----------------------------------------------------------------------------------
 
+function tagLine(t) {
+  if (!t || !t.tag) return "";
+  return `<small>Pole tag ${esc(t.tag)}${t.pole ? ` · found: pole on ${esc(t.pole.street)}` : " · not in our records"}</small>`;
+}
+
 function seen(m) {
   const a = m.media, path = m.video || m.photo;
   if (!a || !path) return "";
@@ -467,7 +472,7 @@ function seen(m) {
   const tracked = Object.entries(a.tracked || {}).map(([p, v]) => `${v.objects} × ${p}`).join(", ");
   const media = m.video ? `<video src="/${esc(path)}" muted playsinline autoplay loop></video>` : `<img src="/${esc(path)}" alt="">`;
   return `<div class="seen">${media}<div><b>${what}${a.public_hazard && !a.mock ? " · danger to the public" : ""}</b>
-    <small>${esc(a.description)}</small>${tracked ? `<small>Followed ${esc(tracked)}</small>` : ""}
+    <small>${esc(a.description)}</small>${tracked ? `<small>Followed ${esc(tracked)}</small>` : ""}${tagLine(a.pole_tag)}
     <small>${a.models.map((x) => `<span class="badge ${badgeClass(x)}">${esc(x)}</span>`).join(" ")}</small></div></div>`;
 }
 

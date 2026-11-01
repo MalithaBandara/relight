@@ -17,7 +17,7 @@ Relight grew out of an idea first explored in
 Gemini at the Jaseci Labs AI Hackathon (17 Oct 2026). Relight is a new project with a new name and a new
 codebase; no code from GridMedic is reused. What is different:
 
-- written from scratch in Python, on Meta's models (Muse Spark, Voice Transcribe, SAM 3.1, Muse Glimmer)
+- written from scratch in Python, on Meta's models (Muse Spark, Voice Transcribe, SAM 3.1)
 - a probabilistic fault tracer that asks customers the question that best separates two explanations
 - feeders generated from real OpenStreetMap roads and buildings, and three scenarios (Galle, Houston with
   smart meters that fail mid-storm, Chennai at ~2,400 messages)
@@ -41,8 +41,6 @@ Meta models read; deterministic code locates and decides.
 | Priority and crew dispatch, vs a first-call-first-served baseline | code: [planner.py](relight/planner.py) |
 | Plain-language reason for each located fault, for the dispatcher | Muse Spark |
 | Restoration-time SMS to every customer who reported, in their language | Muse Spark |
-| Network down: keep triaging text messages on this laptop | Muse Glimmer (open weights, local server) |
-| Network back: review and correct the offline extractions, rebuild the evidence | Muse Spark |
 | Photo of a paper single-line diagram to the grid model, scored against the real feeder | Muse Spark: [diagram.py](relight/diagram.py) |
 | "BD <account>" breakdown SMS, the format customers already use | code only, no model call |
 | Located faults become incidents; crews dispatched by priority, travel and repair on the storm clock | code: [engine.py](relight/engine.py) |
@@ -103,11 +101,13 @@ Headless replay with a summary against ground truth (`galle_storm`, `houston_hur
 Other scripts:
 
 - `scripts/smoke_test.py [call.wav] [photo.jpg]`: one small call to each Meta model to check the key.
-- `scripts/eval_extraction.py [--glimmer]`: complaint-extraction accuracy per language against the
-  scenario labels; writes `eval/extraction-<model>.json`.
-
-Offline mode expects Muse Glimmer behind an OpenAI-compatible server (vLLM, SGLang or llama.cpp) at
-`GLIMMER_BASE`. Without one, the **Online/Offline** toggle still works and labels the offline steps `mock`.
+- `scripts/build_overlays.py`: draw SAM 3.1's outlines over the drone clip and photos from the cached responses
+  (poles blue, wires amber, fallen trees red); `relight/masks.py` also measures pole lean, wire sag and where a
+  fallen tree touches the wires, using Meta's `meta-sam-parser` to decode the masks.
+- `scripts/eval_keywords.py`: Voice Transcribe with and without street-name keywords.
+- `scripts/eval_extraction.py [scenario] [--replay]`: complaint-extraction accuracy per language against the
+  scenario labels; `--replay` scores the engine's own cached readings (no API calls). Writes
+  `eval/extraction-<model>-<scenario>.json`.
 
 ## Data
 
