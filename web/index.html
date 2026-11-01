@@ -39,6 +39,7 @@
       <span id="oncall-chip" class="chip warn" hidden>On a live call</span>
       <span id="ami-chip" class="chip" hidden></span>
       <span id="mode" class="chip">MOCK</span>
+      <button id="btn-models" class="btn ghost" title="What each Meta model has done in this run: requests, tokens, cost">Meta models</button>
       <button id="btn-map" class="btn ghost" title="Build the grid model from a photo of a paper diagram">Paper map</button>
       <a class="btn ghost" href="/customer" target="_blank" title="Customer portal">Customer portal</a>
     </div>
@@ -111,6 +112,22 @@
       <div class="table-wrap tab" data-tab="crews"><table class="grid"><thead><tr><th>Crew</th><th>Skills</th><th>Status</th><th>Event</th><th>Task</th></tr></thead><tbody id="crews"></tbody></table></div>
     </div>
   </section>
+
+  <footer class="fineprint">Demo: all customers, addresses and calls are fictional; caller and crew voices are synthetic (Microsoft
+    edge-tts, not a Meta model). Maps &copy; OpenStreetMap contributors. Damage photos and clips are third-party, credited in the repository.
+    The operator approves every switching plan.</footer>
+
+  <dialog id="models-dialog">
+    <div class="dlg-head"><h2>Meta models at work</h2><button id="models-close" aria-label="Close">✕</button></div>
+    <p class="dlg-sub">Meta models read: calls, messages, photos, clips. Deterministic code locates the fault and decides;
+      nothing a model says moves a fault or approves a switch. Figures are for this run (cached responses count too).</p>
+    <table class="grid models-table"><thead><tr><th>Model</th><th>What it does in Relight</th><th class="num">Requests</th>
+      <th class="num">Tokens in / out</th><th class="num">Cost</th><th class="num">Typical wait</th></tr></thead>
+      <tbody id="models-rows"></tbody></table>
+    <div class="section-t">Who made each decision in this run</div>
+    <div id="models-split" class="split"></div>
+    <p class="dlg-sub" id="models-note"></p>
+  </dialog>
 
   <aside id="copilot" class="copilot" hidden aria-label="Call-taker copilot">
     <div class="cp-head">

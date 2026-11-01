@@ -890,6 +890,39 @@ $("#btn-reset").onclick = () => control("reset");
 $("#speed").onchange = () => control("speed");
 $("#scenario").onchange = () => fetch("/api/scenario", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: $("#scenario").value }) });
 
+// ---- Meta models at work ------------------------------------------------------------------
+
+const SPLIT_LABEL = { spark: "Muse Spark", voice: "Voice Transcribe", sam: "SAM 3.1", code: "Code", agent: "Agent / operator", scada: "SCADA / meters" };
+
+function renderModels() {
+  const c = (state || {}).counts;
+  if (!c) return;
+  $("#models-rows").innerHTML = (c.models || []).map((m) => {
+    const tok = m.tokens_in !== undefined ? `${fmt(m.tokens_in)} / ${fmt(m.tokens_out)}` : m.audio_min !== undefined ? `${m.audio_min} min audio` : "–";
+    const cost = m.cost === null || m.cost === undefined ? "per request" : `$${m.cost.toFixed(2)}`;
+    return `<tr><td>${badge(m.model)}</td><td class="job">${esc(m.job)}</td><td class="num">${fmt(m.calls)}</td>
+      <td class="num">${tok}</td><td class="num">${cost}</td><td class="num">${m.wait_s === null ? "–" : m.wait_s + " s"}</td></tr>`;
+  }).join("");
+  // timeline entries by who produced them (a combined tag such as "Muse Spark + SAM 3.1" counts for each model)
+  const tally = {};
+  for (const b of document.querySelectorAll("#log tr td:nth-child(2) .badge")) {
+    const parts = b.textContent.split(" + ");
+    for (const p of parts) { const k = MODEL_CLASS(p); tally[k] = (tally[k] || 0) + 1; }
+  }
+  delete tally.mock;
+  const total = Object.values(tally).reduce((a, b) => a + b, 0) || 1;
+  $("#models-split").innerHTML = Object.entries(tally).sort((a, b) => b[1] - a[1]).map(([k, n]) =>
+    `<span class="${k}" style="flex:${n}" title="${SPLIT_LABEL[k]}: ${n} log entries">${100 * n / total >= 9 ? `${SPLIT_LABEL[k]} ${Math.round(100 * n / total)}%` : ""}</span>`).join("");
+  $("#models-note").textContent = state.mode === "live"
+    ? "Live mode: responses already in the local cache are replayed for free and still counted here. Wait is the mean for requests made live since timing was recorded. SAM 3.1 is billed per request (see the Meta dashboard). Realtime call lines are not in these counts."
+    : "Mock mode: only responses in the local cache are shown; anything else is labelled mock and not counted.";
+}
+$("#btn-models").onclick = () => { renderModels(); $("#models-dialog").showModal(); };
+$("#models-close").onclick = () => $("#models-dialog").close();
+$("#k-models").parentElement.style.cursor = "pointer";
+$("#k-models").parentElement.title = "Open the Meta models panel";
+$("#k-models").parentElement.onclick = () => $("#btn-models").onclick();
+
 const dlg = $("#map-dialog");
 $("#btn-map").onclick = () => dlg.showModal();
 $("#dlg-close").onclick = () => dlg.close();
@@ -910,3 +943,9 @@ $("#dlg-run").onclick = async () => {
 };
 
 loadGrid().then(connect);
+
+// Recording helper: /?run=20 starts the storm at 20x once the page has connected (the same as pressing Run).
+{
+  const speed = new URLSearchParams(location.search).get("run");
+  if (speed) setTimeout(() => { $("#speed").value = speed; $("#speed").dispatchEvent(new Event("change")); $("#btn-start").click(); }, 2500);
+}

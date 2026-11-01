@@ -1214,6 +1214,7 @@ class Engine:
                 "bd_sms": sum(m["model"] == self.sms_model for m in self.messages),
                 "languages": dict(Counter(m["language"] for m in self.messages)),
                 "model_calls": dict(self.model_calls),
+                "models": self.client.report(),
                 "notified": sum(len(n["to"]) for n in self.notices),
                 "meter_msgs": len(self.ami), "ami": (None if not self.meter_cov else self.ami_ok),
                 "customers_out": sum(self.customers.get(t, 0) for t in dead)

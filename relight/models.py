@@ -26,7 +26,19 @@ from . import config
 TIMEOUT = httpx.Timeout(120, connect=10)
 
 
-KEYWORD_MAX_CHARS = 30  # Voice Transcribe refuses a keyword longer than this (HTTP 400, checked live 2026-11-01)
+# Published prices (Meta Model API): Spark per million tokens (reasoning tokens bill as output), Voice Transcribe per hour
+# of audio. SAM 3.1 has no per-token price to apply here, so its row shows requests only.
+SPARK_PRICE_IN, SPARK_PRICE_OUT, ASR_PRICE_HOUR = 1.25, 4.25, 0.18
+
+# (model, cache kinds counted, what it does here) for the console's "Meta models at work" panel
+MODEL_ROWS = [
+    ("Muse Spark", ("spark", "spark-audio", "spark-video"),
+     "reads complaints and crew reports, words the call agent, looks at photos and clips, listens to Sinhala"),
+    ("Muse Voice Transcribe", ("asr",), "turns phone calls into text (Tamil, Hindi, Spanish, English), street names as keywords"),
+    ("SAM 3.1", ("sam", "sam-video"), "outlines poles, wires and fallen trees in photos and clips; reads pole tags"),
+]
+
+KEYWORD_MAX_CHARS = 30 # Voice Transcribe refuses a keyword longer than this (HTTP 400, checked live 2026-11-01)
 
 
 def fit_keywords(names: list[str], limit: int | None = None) -> list[str]:
@@ -48,6 +60,8 @@ class ModelClient:
         self.base = config.META_API_BASE
         self.headers = {"Authorization": f"Bearer {config.MODEL_API_KEY}"}
         config.CACHE_DIR.mkdir(parents=True, exist_ok=True)
+        self.tally: dict[str, dict] = {}
+        self.audio_s = 0.0  # seconds of audio sent to Voice Transcribe (the price is per hour of audio)
 
     # ---- cache ------------------------------------------------------------
 
@@ -55,10 +69,26 @@ class ModelClient:
         h = hashlib.sha256(json.dumps([kind, payload], sort_keys=True, ensure_ascii=False).encode()).hexdigest()
         return config.CACHE_DIR / f"{kind}-{h[:24]}.json"
 
+    def _tally(self, kind: str, result: Any, seconds: float | None = None) -> None:
+        """Count a response for the console's "Meta models at work" panel. Tokens come from the response's `usage`;
+        `seconds` is the measured wait for a live call (stored in the cache file as `_latency_s`, absent in older files)."""
+        t = self.tally.setdefault(kind, {"calls": 0, "tokens_in": 0, "tokens_out": 0, "wait_s": 0.0, "timed": 0})
+        t["calls"] += 1
+        usage = result.get("usage") if isinstance(result, dict) else None
+        if usage:
+            t["tokens_in"] += usage.get("prompt_tokens", 0)
+            t["tokens_out"] += usage.get("completion_tokens", 0)
+        seconds = seconds if seconds is not None else (result.get("_latency_s") if isinstance(result, dict) else None)
+        if seconds is not None:
+            t["wait_s"] += seconds
+            t["timed"] += 1
+
     def _cached(self, kind: str, payload: Any, call) -> Any | None:
         path = self._key(kind, payload)
         if path.exists():
-            return json.loads(path.read_text(encoding="utf-8"))
+            result = json.loads(path.read_text(encoding="utf-8"))
+            self._tally(kind, result)
+            return result
         if self.mode != "live":
             return None
         if not config.api_allowed():  # see config.api_allowed: the owner has not allowed paid calls right now
@@ -67,9 +97,34 @@ class ModelClient:
                 print("Meta Model API call blocked: the owner has not allowed API use (GO). Using cache/mock.",
                       file=sys.stderr)
             return None
+        t0 = time.time()
         result = call()
+        took = time.time() - t0
+        if isinstance(result, dict):
+            result["_latency_s"] = round(took, 2)
         path.write_text(json.dumps(result, ensure_ascii=False, indent=1), encoding="utf-8")
+        self._tally(kind, result, took)
         return result
+
+    def report(self) -> list[dict]:
+        """One row per Meta model for the console panel: requests, tokens, cost where the price is published, and the
+        mean wait of live requests (only those made since this was added; older cache files carry no timing)."""
+        rows = []
+        for model, kinds, job in MODEL_ROWS:
+            ts = [self.tally[k] for k in kinds if k in self.tally]
+            calls = sum(t["calls"] for t in ts)
+            timed = sum(t["timed"] for t in ts)
+            row = {"model": model, "job": job, "calls": calls, "cost": None,
+                   "wait_s": round(sum(t["wait_s"] for t in ts) / timed, 1) if timed else None}
+            if model == "Muse Spark":
+                row["tokens_in"] = sum(t["tokens_in"] for t in ts)
+                row["tokens_out"] = sum(t["tokens_out"] for t in ts)
+                row["cost"] = round(row["tokens_in"] * SPARK_PRICE_IN / 1e6 + row["tokens_out"] * SPARK_PRICE_OUT / 1e6, 2)
+            elif model == "Muse Voice Transcribe":
+                row["audio_min"] = round(self.audio_s / 60, 1)
+                row["cost"] = round(self.audio_s / 3600 * ASR_PRICE_HOUR, 2)
+            rows.append(row)
+        return rows
 
     # ---- Muse Spark -------------------------------------------------------
 
@@ -150,7 +205,12 @@ class ModelClient:
         if keywords:
             request["keywords"] = fit_keywords(keywords)
         key = {"request": request, "audio_sha": hashlib.sha256(audio).hexdigest()}
+        result = self._transcribe(audio_path, audio, request, key)
+        if result is not None:
+            self.audio_s += max(len(audio) - 44, 0) / (2 * 16000)  # _wav_16k gives mono s16le at 16 kHz
+        return result
 
+    def _transcribe(self, audio_path: Path, audio: bytes, request: dict, key: dict) -> dict | None:
         def call():
             r = httpx.post(
                 f"{self.base}/asr/transcribe",

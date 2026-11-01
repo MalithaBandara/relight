@@ -557,12 +557,12 @@ Can start now
 - [x] Find candidate public photo datasets and drone clips with their licences, for the owner to choose
       (`media/CANDIDATES.md`).
 - [x] Customer portal sample buttons for the Houston and Chennai scenarios (`SAMPLES` in `web/customer.html`).
-- [ ] Polish the console for recording (demo flow, click path, timing).
-- [ ] Shot list, voice-over script and on-screen captions for the video.
-- [ ] README: architecture diagram, "which Meta model does what", screenshots; accuracy table once
-      measured.
-- [ ] Submission description text and the final pre-submission checklist (links, public repo, theme
-      "Push the Frontier").
+- [x] Console polish (2026-11-02): "Meta models" panel (`ModelClient.report`, per-model requests/tokens/cost/wait; header
+      button), fictional/synthetic footer line, `/?run=<speed>` autorun for recording. Wait times only exist for live calls
+      made after 2026-11-02 (`_latency_s` in the cache file).
+- [x] Shot list, voice-over and captions: `docs/DEMO.md`.
+- [x] README rewritten (architecture diagram, model table, accuracy, limits). Still missing: screenshots.
+- [x] Submission text and final checklist: `docs/SUBMISSION.md`.
 
 ### 12.2 Optional features (owner chooses; agent builds)
 
