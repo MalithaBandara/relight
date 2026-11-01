@@ -82,8 +82,13 @@ def crew_summary(f: dict, lang: str) -> str:
 
 def facts_kept(draft: str, said: str, keep: tuple[str, ...] = ()) -> list[str]:
     """Numbers, times and names from the draft that a model's rewording dropped or changed."""
-    needed = set(re.findall(r"\d+(?::\d+)?", draft)) | {k for k in keep if k}
-    return sorted(k for k in needed if k.lower() not in said.lower())
+    numbers = set(re.findall(r"\d+(?::\d+)?", draft))
+    names = {k for k in keep if k}
+    # whole tokens only: "23" must not pass inside "123", "6" inside "16", "I2" inside "I20"; a number may follow a
+    # letter ("I2" in the draft yields "2", which the line may write as "I2")
+    return sorted([n for n in numbers if not re.search(rf"(?<!\d){re.escape(n)}(?!\d)", said)] +
+                  [k for k in names if not re.search(rf"(?<![A-Za-z0-9]){re.escape(k)}(?![A-Za-z0-9])", said,
+                                                     re.IGNORECASE)])
 
 
 class CallAgent:
