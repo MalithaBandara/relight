@@ -1,0 +1,3732 @@
+{
+ "model": "muse-spark-1.3",
+ "scenario": "houston_hurricane",
+ "summary": {
+  "all": {
+   "street": 0.969,
+   "house_no": 0.975,
+   "symptom": 0.994,
+   "hazard": 0.994,
+   "junk": 1.0
+  },
+  "en": {
+   "street": 0.966,
+   "house_no": 0.966,
+   "symptom": 1.0,
+   "hazard": 1.0,
+   "junk": 1.0
+  },
+  "es": {
+   "street": 0.977,
+   "house_no": 1.0,
+   "symptom": 0.977,
+   "hazard": 0.977,
+   "junk": 1.0
+  }
+ },
+ "rows": [
+  {
+   "id": "C21",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": "gust",
+    "hazard": "none",
+    "house_no": 1052,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Huge Oak Street",
+    "summary_en": "Power is out at 1052 Huge Oak Street after a big gust, no hazard visible.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C125",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": "storm",
+    "hazard": "none",
+    "house_no": 1024,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Shady Villa Manner",
+    "summary_en": "No electricity at 1024 Shady Villa Manner since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C136",
+   "language": "es",
+   "checks": {
+    "street": false,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1132,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Morret Street",
+    "summary_en": "No power at 1132 Morret Street since the storm, no hazard seen.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C24",
+   "language": "en",
+   "checks": {
+    "street": false,
+    "house_no": false,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": null,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": null,
+    "summary_en": "Caller reports lights out with whole house dark and no visible hazard.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C175",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1004,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Moritz Green",
+    "summary_en": "Lights went out at house 1004 on Moritz Green.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C169",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1108,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Auline Lane",
+    "summary_en": "Power is out at 1108 Auline Lane.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C178",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1036,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Moritz Green",
+    "summary_en": "Outage reported at 1036 Moritz Green with no visible hazard.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C188",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1044,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Lynnview Drive",
+    "summary_en": "Power out at 1044 Lynnview Drive, no hazard visible.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C224",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1056,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Janak Drive",
+    "summary_en": "Outage reported at 1056 Janak Drive.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C106",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1020,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Moritz Drive",
+    "summary_en": "Outage reported at 1020 Moritz Drive.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C234",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1000,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Auline Lane",
+    "summary_en": "No electricity at 1000 Auline Lane since the storm, with no visible hazard.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C246",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1256,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Glourie Drive",
+    "summary_en": "Power outage reported at 1256 Glourie Drive.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C163",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1376,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Glourie Drive",
+    "summary_en": "Power out at 1376 Glourie Drive, no hazard observed.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C235",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1016,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Auline Lane",
+    "summary_en": "No electricity at 1016 Auline Lane since the storm, no visible hazard.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C202",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1052,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Shadyvilla Lane",
+    "summary_en": "Outage reported at 1052 Shadyvilla Lane, no hazard observed.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C238",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1048,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Auline Lane",
+    "summary_en": "Power outage at 1048 Auline Lane.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C130",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1012,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Barberry Branch Street",
+    "summary_en": "Outage reported at 1012 Barberry Branch Street, no hazard visible.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C103",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1036,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Flowerdale Street",
+    "summary_en": "Power is out at 1036 Flowerdale Street.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C221",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": "storm",
+    "hazard": "none",
+    "house_no": 1108,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Flowerdale Street",
+    "summary_en": "No electricity at 1108 Flowerdale Street since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C35",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1316,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Pech Road",
+    "summary_en": "Power outage at 1316 Pech Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C16",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1036,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Westwood Drive",
+    "summary_en": "Power is out at 1036 Westwood Drive.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C84",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1048,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Monarch Oaks Street",
+    "summary_en": "No power at 1048 Monarch Oaks Street since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C236",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1044,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Auline Lane",
+    "summary_en": "No power at house 1044 on Auline Lane.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C64",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1380,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Wirt Road",
+    "summary_en": "Power is out at 1380 Wirt Road with no visible hazard.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C101",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1020,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Flowerdale Street",
+    "summary_en": "No power at 1020 Flowerdale Street since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C187",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1108,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Johanna Drive",
+    "summary_en": "Power is out at 1108 Johanna Drive.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C159",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1180,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Westwood Drive",
+    "summary_en": "Power outage at 1180 Westwood Drive.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C135",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1124,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Moritz Drive",
+    "summary_en": "Power outage reported at 1124 Moritz Drive, caller reports no visible hazard.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C189",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1372,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Pech Road",
+    "summary_en": "Lights out at house 1372 on Pech Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C142",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1028,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Lynnview Drive",
+    "summary_en": "Lights out at 1028 Lynnview Drive.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C217",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1088,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Flowerdale Street",
+    "summary_en": "Outage reported at 1088 Flowerdale Street.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C212",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1080,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Moritz Drive",
+    "summary_en": "Power is out at 1080 Moritz Drive, caller asks when it will return, no hazards seen.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C182",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1108,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Gingerleaf Lane",
+    "summary_en": "Power outage at 1108 Gingerleaf Lane, help requested.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C111",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1084,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Moritz Drive",
+    "summary_en": "Power is out at 1084 Moritz Drive with no visible hazard.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C40",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": false,
+    "hazard": false,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": "tree",
+    "hazard": "wire_down",
+    "house_no": 1436,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Westview Drive",
+    "summary_en": "A tree knocked down wires on Westview Drive near 1436.",
+    "symptom": "none"
+   }
+  },
+  {
+   "id": "C191",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1384,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Pech Road",
+    "summary_en": "No power at 1384 Pech Road since the storm, no visible hazard.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C57",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1100,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Maravilla Drive",
+    "summary_en": "No electricity at 1100 Maravilla Drive since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C168",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1088,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Auline Lane",
+    "summary_en": "Outage reported at 1088 Auline Lane, no hazard observed.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C41",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1488,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Westview Drive",
+    "summary_en": "No power at 1488 Westview Drive.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C82",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1028,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Monarch Oaks Street",
+    "summary_en": "No power at 1028 Monarch Oaks Street since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C58",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1028,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Baggett Lane",
+    "summary_en": "Power outage at 1028 Baggett Lane.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C70",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1432,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Wirt Road",
+    "summary_en": "No power at 1432 Wirt Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C79",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1164,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Monarch Oaks Street",
+    "summary_en": "No power at 1164 Monarch Oaks Street, no hazard observed.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C3",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1004,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Westwood Drive",
+    "summary_en": "Power went out at 1004 Westwood Drive; caller reports seeing no hazard.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C14",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1064,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Moritz Drive",
+    "summary_en": "No power at 1064 Moritz Drive since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C239",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1052,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Auline Lane",
+    "summary_en": "Lights went out at house 1052 on Auline Lane.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C137",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1144,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Moritz Drive",
+    "summary_en": "Power is out at 1144 Moritz Drive.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C86",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1008,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Wellington Court North",
+    "summary_en": "No power at 1008 Wellington Court North.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C96",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1036,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Jalna Street",
+    "summary_en": "No electricity at 1036 Jalna Street since the storm, no visible hazard.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C91",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1032,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Wellington Court South",
+    "summary_en": "Power's out at 1032 Wellington Court South.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C167",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": "storm",
+    "hazard": "none",
+    "house_no": 1072,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Auline Lane",
+    "summary_en": "No electricity at 1072 Auline Lane since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C154",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1388,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Pech Road",
+    "summary_en": "Lights went out at house 1388 on Pech Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C116",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1132,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Johanna Drive",
+    "summary_en": "Power is out at 1132 Johanna Drive.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C8",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1032,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Moritz Drive",
+    "summary_en": "Power is out at 1032 Moritz Drive, no hazard observed.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C277",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1308,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Winningham Lane",
+    "summary_en": "Power is out at 1308 Winningham Lane.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C193",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1084,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Huge Oaks Street",
+    "summary_en": "Outage reported at 1084 Huge Oaks Street.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C220",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1100,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Flowerdale Street",
+    "summary_en": "Lights went out at house 1100 on Flowerdale Street.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C128",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1028,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Johanna Drive",
+    "summary_en": "No power at 1028 Johanna Drive.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C160",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1324,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Glourie Drive",
+    "summary_en": "No electricity at 1324 Glourie Drive since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C23",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1060,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Huge Oaks Street",
+    "summary_en": "No power at 1060 Huge Oaks Street.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C275",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1104,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Winningham Lane",
+    "summary_en": "Power is out at 1104 Winningham Lane.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C230",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1172,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Janak Drive",
+    "summary_en": "Power outage reported at 1172 Janak Drive with no hazard observed.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C107",
+   "language": "en",
+   "checks": {
+    "street": false,
+    "house_no": false,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1308,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Winningham Lane",
+    "summary_en": "House at 1308 Winningham Lane still without power while rest of street has power back.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C110",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": "storm",
+    "hazard": "none",
+    "house_no": 0,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Pech Road",
+    "summary_en": "No electricity at 0 Pech Road since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C162",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1352,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Glourie Drive",
+    "summary_en": "Power is out at house 1352 on Glourie Drive.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C244",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1016,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Cassia Springs Drive",
+    "summary_en": "Power is out at 1016 Cassia Springs Drive.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C13",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1060,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Moritz Drive",
+    "summary_en": "Power is out at 1060 Moritz Drive, no hazard observed.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C113",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1088,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Moritz Drive",
+    "summary_en": "Outage reported at 1088 Moritz Drive, please help.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C126",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1000,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Johanna Drive",
+    "summary_en": "Power is out at 1000 Johanna Drive.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C258",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1152,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Pech Road",
+    "summary_en": "No power at 1152 Pech Road since the storm, no visible hazard reported.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C225",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1216,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Shadyvilla Lane",
+    "summary_en": "Lights out at house 1216 on Shadyvilla Lane.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C53",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1060,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Maravilla Drive",
+    "summary_en": "Power is out at 1060 Maravilla Drive.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C315",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": null,
+    "is_junk": true,
+    "landmark": null,
+    "language": "en",
+    "street": null,
+    "summary_en": "Caller asks to fix their wifi router.",
+    "symptom": "none"
+   }
+  },
+  {
+   "id": "C33",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1312,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Pech Road",
+    "summary_en": "Power is out at 1312 Pech Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C215",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1008,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Wirt Road",
+    "summary_en": "Power out at 1008 Wirt Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C45",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1076,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Shadyvilla Lane",
+    "summary_en": "Power outage reported at 1076 Shadyvilla Lane.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C77",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1232,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Glourie Drive",
+    "summary_en": "Lights went out at house 1232 on Glourie Drive.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C229",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": "storm",
+    "hazard": "none",
+    "house_no": 1168,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Janak Drive",
+    "summary_en": "No electricity at 1168 Janak Drive since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C272",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1192,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Winningham Lane",
+    "summary_en": "No electricity at 1192 Winningham Lane since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C282",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": "storm",
+    "hazard": "none",
+    "house_no": 1128,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Voss Road",
+    "summary_en": "No power at 1128 Voss Road since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C255",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1084,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Pech Road",
+    "summary_en": "Outage at 1084 Pech Road, please help.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C150",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": "storm",
+    "hazard": "none",
+    "house_no": 1020,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Glenmore Forest Street",
+    "summary_en": "No electricity at 1020 Glenmore Forest Street since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C68",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1424,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Wirt Road",
+    "summary_en": "Outage reported at 1424 Wirt Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C195",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1096,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Huge Oaks Street",
+    "summary_en": "Power is out at 1096 Huge Oaks Street.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C273",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1096,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Winningham Lane",
+    "summary_en": "Power outage at 1096 Winningham Lane.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C259",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1160,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Pech Road",
+    "summary_en": "Lights out at 1160 Pech Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C28",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1184,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Monarch Oaks Street",
+    "summary_en": "No power at house 1184 on Monarch Oaks Street.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C85",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1056,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Monarch Oaks Street",
+    "summary_en": "Lights went out at house 1056 on Monarch Oaks Street.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C87",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1024,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Wellington Court North",
+    "summary_en": "Power out at 1024 Wellington Court North.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C270",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1224,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Winningham Lane",
+    "summary_en": "Lights out at 1224 Winningham Lane.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C262",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1068,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Pech Road",
+    "summary_en": "Lights out at house 1068 on Pech Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C268",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1148,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Winningham Lane",
+    "summary_en": "Power outage at 1148 Winningham Lane.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C118",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1128,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Monarch Oaks Street",
+    "summary_en": "No power at 1128 Monarch Oaks Street.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C22",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1052,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Huge Oaks Street",
+    "summary_en": "Power outage at 1052 Huge Oaks Street.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C55",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1080,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Maravilla Drive",
+    "summary_en": "Lights out at house 1080 on Maravilla Drive.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C109",
+   "language": "en",
+   "checks": {
+    "street": false,
+    "house_no": false,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1332,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Winningham Lane",
+    "summary_en": "House at 1332 Winningham Lane still without power while street power is back.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C161",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1324,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Glourie Drive",
+    "summary_en": "No electricity at 1324 Glourie Drive since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C266",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": "storm",
+    "hazard": "none",
+    "house_no": 1140,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Winningham Lane",
+    "summary_en": "No electricity at 1140 Winningham Lane since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C93",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1160,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Pine Chase Drive",
+    "summary_en": "Power went out at 1160 Pine Chase Drive.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C151",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": "storm",
+    "hazard": "none",
+    "house_no": 1020,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Glenmore Forest Street",
+    "summary_en": "No electricity at 1020 Glenmore Forest Street since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C54",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1060,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Maravilla Drive",
+    "summary_en": "Power is out at 1060 Maravilla Drive.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C149",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": "storm",
+    "hazard": "none",
+    "house_no": 1284,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Glourie Drive",
+    "summary_en": "No electricity at 1284 Glourie Drive since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C253",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1160,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Winningham Lane",
+    "summary_en": "Power outage reported at 1160 Winningham Lane.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C271",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1228,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Winningham Lane",
+    "summary_en": "Power is out at 1228 Winningham Lane.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C281",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1124,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Voss Road",
+    "summary_en": "Power is out at 1124 Voss Road with no visible hazard.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C194",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1084,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Huge Oaks Street",
+    "summary_en": "Outage reported at 1084 Huge Oaks Street.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C254",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": "storm",
+    "hazard": "none",
+    "house_no": 1164,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Winningham Lane",
+    "summary_en": "No electricity at 1164 Winningham Lane since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C283",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": "storm",
+    "hazard": "none",
+    "house_no": 1128,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Voss Road",
+    "summary_en": "No power at 1128 Voss Road since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C88",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1132,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Huge Oaks Street",
+    "summary_en": "Outage at 1132 Huge Oaks Street, please help.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C25",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1068,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Huge Oaks Street",
+    "summary_en": "Lights went out at house 1068 on Huge Oaks Street.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C284",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1132,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Voss Road",
+    "summary_en": "Power is out at 1132 Voss Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C69",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1424,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Wirt Road",
+    "summary_en": "Outage reported at 1424 Wirt Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C314",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": null,
+    "is_junk": true,
+    "landmark": null,
+    "language": "en",
+    "street": null,
+    "summary_en": "Spam message claiming a $500 gift card win with a link.",
+    "symptom": "none"
+   }
+  },
+  {
+   "id": "C287",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1144,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Ronson Road",
+    "summary_en": "Power is very low at 1144 Ronson Road, no hazard seen.",
+    "symptom": "partial_power"
+   }
+  },
+  {
+   "id": "C289",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1160,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Ronson Road",
+    "summary_en": "Power is very low at 1160 Ronson Road, no hazard seen.",
+    "symptom": "partial_power"
+   }
+  },
+  {
+   "id": "C298",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1252,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Ronson Road",
+    "summary_en": "Half the house has power at 1252 Ronson Road.",
+    "symptom": "partial_power"
+   }
+  },
+  {
+   "id": "C294",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1176,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Ronson Road",
+    "summary_en": "Half the house has power at 1176 Ronson Road.",
+    "symptom": "partial_power"
+   }
+  },
+  {
+   "id": "C303",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "live_wire",
+    "house_no": 1132,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Ronson Road",
+    "summary_en": "Power line down and sparking across the sidewalk in front of 1132 Ronson Road.",
+    "symptom": "none"
+   }
+  },
+  {
+   "id": "C295",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1180,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Ronson Road",
+    "summary_en": "Lights are dim and flickering at 1180 Ronson Road.",
+    "symptom": "partial_power"
+   }
+  },
+  {
+   "id": "C251",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": "storm",
+    "hazard": "none",
+    "house_no": 1120,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Huge Oaks Street",
+    "summary_en": "No electricity at 1120 Huge Oaks Street since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C83",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1036,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Monarch Oaks Street",
+    "summary_en": "No power at house 1036 on Monarch Oaks Street.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C213",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1008,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Gingerleaf Lane",
+    "summary_en": "Power outage reported at house 1008 on Gingerleaf Lane.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C256",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1136,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Pech Road",
+    "summary_en": "Outage reported at 1136 Pech Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C17",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1036,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Westwood Drive",
+    "summary_en": "Power is out at 1036 Westwood Drive.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C302",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1000,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Ronson Road",
+    "summary_en": "Half the house has power at 1000 Ronson Road.",
+    "symptom": "partial_power"
+   }
+  },
+  {
+   "id": "C78",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": "storm",
+    "hazard": "none",
+    "house_no": 1412,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Wirt Road",
+    "summary_en": "No power at 1412 Wirt Road since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C264",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1240,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Winningham Lane",
+    "summary_en": "No power at 1240 Winningham Lane.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C299",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1024,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Ronson Road",
+    "summary_en": "Half the house has power at 1024 Ronson Road.",
+    "symptom": "partial_power"
+   }
+  },
+  {
+   "id": "C293",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1168,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Ronson Road",
+    "summary_en": "Only half the house has power at 1168 Ronson Road.",
+    "symptom": "partial_power"
+   }
+  },
+  {
+   "id": "C301",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1044,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Ronson Road",
+    "summary_en": "Lights are dim and flickering at 1044 Ronson Road.",
+    "symptom": "partial_power"
+   }
+  },
+  {
+   "id": "C274",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1096,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Winningham Lane",
+    "summary_en": "Power outage at 1096 Winningham Lane.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C214",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1008,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Gingerleaf Lane",
+    "summary_en": "Power outage reported at house 1008 on Gingerleaf Lane.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C263",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1068,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Pech Road",
+    "summary_en": "Lights out at house 1068 on Pech Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C100",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1220,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Huge Oaks Street",
+    "summary_en": "No power at 1220 Huge Oaks Street since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C276",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1104,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Winningham Lane",
+    "summary_en": "Power is out at 1104 Winningham Lane.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C6",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1012,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Westwood Drive",
+    "summary_en": "Outage reported at 1012 Westwood Drive, help requested.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C288",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1144,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Ronson Road",
+    "summary_en": "Power is very low at 1144 Ronson Road.",
+    "symptom": "partial_power"
+   }
+  },
+  {
+   "id": "C313",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": null,
+    "is_junk": true,
+    "landmark": null,
+    "language": "en",
+    "street": null,
+    "summary_en": "Spam message claiming a $500 gift card win with a link.",
+    "symptom": "none"
+   }
+  },
+  {
+   "id": "C56",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1080,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Maravilla Drive",
+    "summary_en": "Lights out at house 1080 on Maravilla Drive.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C292",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1132,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Ronson Road",
+    "summary_en": "Lights are dim and flickering at 1132 Ronson Road.",
+    "symptom": "partial_power"
+   }
+  },
+  {
+   "id": "C257",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1136,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Pech Road",
+    "summary_en": "Outage reported at 1136 Pech Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C18",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1044,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Westwood Drive",
+    "summary_en": "No power at 1044 Westwood Drive since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C199",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1140,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Westwood Drive",
+    "summary_en": "Power outage at 1140 Westwood Drive.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C306",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1236,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Burkhart Road",
+    "summary_en": "Lights out at house 1236 on Burkhart Road, no hazard observed.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C252",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": "storm",
+    "hazard": "none",
+    "house_no": 1120,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Huge Oaks Street",
+    "summary_en": "No electricity at 1120 Huge Oaks Street since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C260",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1160,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Pech Road",
+    "summary_en": "Lights out at 1160 Pech Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C296",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1180,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Ronson Road",
+    "summary_en": "Lights are dim and flickering at 1180 Ronson Road.",
+    "symptom": "partial_power"
+   }
+  },
+  {
+   "id": "C305",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1228,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Burkhart Road",
+    "summary_en": "Outage reported at 1228 Burkhart Road, help requested.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C19",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1044,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Westwood Drive",
+    "summary_en": "No power at 1044 Westwood Drive since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C291",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1100,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Ronson Road",
+    "summary_en": "Power is very low at 1100 Ronson Road.",
+    "symptom": "partial_power"
+   }
+  },
+  {
+   "id": "C290",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1160,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Ronson Road",
+    "summary_en": "Power is very low at 1160 Ronson Road.",
+    "symptom": "partial_power"
+   }
+  },
+  {
+   "id": "C312",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": null,
+    "is_junk": true,
+    "landmark": null,
+    "language": "en",
+    "street": null,
+    "summary_en": "Caller asks to fix their wifi router.",
+    "symptom": "none"
+   }
+  },
+  {
+   "id": "C300",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1024,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Ronson Road",
+    "summary_en": "Half the house has power at 1024 Ronson Road.",
+    "symptom": "partial_power"
+   }
+  },
+  {
+   "id": "C307",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1176,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Burkhart Road",
+    "summary_en": "Power is out at 1176 Burkhart Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C247",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1272,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Glourie Drive",
+    "summary_en": "No power at 1272 Glourie Drive since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C286",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1136,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Ronson Road",
+    "summary_en": "Lights are dim and flickering at 1136 Ronson Road.",
+    "symptom": "partial_power"
+   }
+  },
+  {
+   "id": "C265",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1240,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Winningham Lane",
+    "summary_en": "No power at 1240 Winningham Lane.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C7",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1012,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Westwood Drive",
+    "summary_en": "Outage reported at 1012 Westwood Drive, help requested.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C200",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1140,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Westwood Drive",
+    "summary_en": "Power outage at 1140 Westwood Drive.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C108",
+   "language": "en",
+   "checks": {
+    "street": false,
+    "house_no": false,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1320,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Winningham Lane",
+    "summary_en": "Street has power but house at 1320 Winningham Lane is still without electricity.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C311",
+   "language": "es",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 1060,
+    "is_junk": false,
+    "landmark": null,
+    "language": "es",
+    "street": "Westview Drive",
+    "summary_en": "No power at 1060 Westview Drive.",
+    "symptom": "no_power"
+   }
+  }
+ ]
+}

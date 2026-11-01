@@ -35,7 +35,7 @@ from pathlib import Path
 from typing import Awaitable, Callable
 
 from . import config
-from .models import wav_pcm
+from .models import fit_keywords, wav_pcm
 
 RATE = 24000
 FRAME_MS = 80
@@ -62,7 +62,7 @@ class Line:
     def __init__(self, client, call_id: str, language: str, keywords: list[str] | None = None,
                  on_event: Callable[[Event], Awaitable[None]] | None = None, diarize: bool = True) -> None:
         self.client, self.id, self.lang = client, call_id, language
-        self.keywords = [k for k in dict.fromkeys(keywords or []) if k][:MAX_KEYWORDS]
+        self.keywords = fit_keywords(keywords or [], MAX_KEYWORDS)
         self.on_event = on_event
         self.mode = "DIARIZATION" if diarize else "ENDPOINTING"
         self.ws = None

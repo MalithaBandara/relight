@@ -1,0 +1,95 @@
+{
+ "scenario": "galle_storm",
+ "score": {
+  "plain": [
+   4,
+   5
+  ],
+  "keywords": [
+   5,
+   5
+  ]
+ },
+ "rows": [
+  {
+   "id": "C31",
+   "language": "en",
+   "street": "Market Street",
+   "keywords": false,
+   "hit": true,
+   "transcript": "Hello? There are sparks and a wire lying lying on the road near the market on Market Street. People are walking past it. Please come quickly."
+  },
+  {
+   "id": "C31",
+   "language": "en",
+   "street": "Market Street",
+   "keywords": true,
+   "hit": true,
+   "transcript": "Hello. There are sparks and a wire lying on the road near the market on Market Street. People are walking past it please come quickly."
+  },
+  {
+   "id": "N1",
+   "language": "en",
+   "street": "Hospital Road",
+   "keywords": false,
+   "hit": true,
+   "transcript": "Patrol one. Hospital road opposite number 52 concrete poles snapped at the base conductors down down across the road no sparking recloser is locked out. Need a bucket bucket truck and a new pole."
+  },
+  {
+   "id": "N1",
+   "language": "en",
+   "street": "Hospital Road",
+   "keywords": true,
+   "hit": true,
+   "transcript": "Patrol one. Hospital Road opposite number 52 concrete pole snapped at the base conductors down across the road no sparking recloser is locked out need a bucket truck and a new pole"
+  },
+  {
+   "id": "N2",
+   "language": "en",
+   "street": "Market Street",
+   "keywords": false,
+   "hit": true,
+   "transcript": "Patrol to add market street by the market. One phase conductor is down on on the road. It is live and arcing on and off. We have cordoned it off. Need a line crew urgently."
+  },
+  {
+   "id": "N2",
+   "language": "en",
+   "street": "Market Street",
+   "keywords": true,
+   "hit": true,
+   "transcript": "What role do at Market Street by the market? One phase conductor is down on the road. It is live and arcing on and off. We have have cordoned it off. Need a line crew urgently."
+  },
+  {
+   "id": "N3",
+   "language": "en",
+   "street": "Temple Road",
+   "keywords": false,
+   "hit": true,
+   "transcript": "Temple Road near the temple, a large jut tree is across the lines two spans down. Need the vegetation crew before any line work. work."
+  },
+  {
+   "id": "N3",
+   "language": "en",
+   "street": "Temple Road",
+   "keywords": true,
+   "hit": true,
+   "transcript": "Temple Road near the temple a large Bo tree is across the lines two spans down. Need the vegetation vegetation crew before any line work."
+  },
+  {
+   "id": "N4",
+   "language": "en",
+   "street": "Cinnamon Gardens Lane",
+   "keywords": false,
+   "hit": false,
+   "transcript": "Cinnamon Garden Lane transformer by number 55 the dropout fuse is blown. Looks like lightning. One person can replace it."
+  },
+  {
+   "id": "N4",
+   "language": "en",
+   "street": "Cinnamon Gardens Lane",
+   "keywords": true,
+   "hit": true,
+   "transcript": "Cinnamon Gardens Lane transformer by number 55 the drop out fuse is blown Looks like lightning. One person can can replace it."
+  }
+ ]
+}

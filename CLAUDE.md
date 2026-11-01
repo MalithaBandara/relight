@@ -401,6 +401,19 @@ All writes to the engine go through one `asyncio.Lock` in `server.py` (replay, o
   (`label`), `audioProgress`, `error`. Pricing **$0.18 per hour** of audio, streaming
   or not, billed per whole second; failed and 429 requests are not billed.
 - **No text-to-speech or speech-to-speech model** exists on the Meta Model API (checked 2026-10-30).
+- **Checked live 2026-11-01:** Voice Transcribe `keywords` work on the file endpoint (in the `request` part) and the
+  realtime handshake, but **each keyword must be 30 characters or fewer** (HTTP 400 "ASR keyword 0 exceeds the maximum
+  length of 30 characters"); `models.fit_keywords` cleans names ("Clinic on Wirt Road" -> "Wirt Road") for both. With the
+  feeder's street and landmark names as keywords the street was heard right in 11 of 13 clips where the caller names it
+  (Galle 4->5 of 5, Houston 1->3 of 3, Chennai 1->3 of 5), against 6 of 13 without (synthetic voices, small sample).
+  Realtime with 100 keywords: handshake 4.7 s, three clips back to back, transcripts exact, no errors.
+  Spark `reasoning_effort` (top-level field: minimal|low|medium|high|xhigh|max; `none` is a 400): `minimal` cut extraction
+  latency 4.4 -> 2.4 s (~74% fewer output tokens) and Sinhala line wording 9.9 -> 2.8 s (~88% fewer), same results on a
+  tiny sample. Off by default (`SPARK_EFFORT` unset) so no cached request key changes; set it to adopt, then re-run
+  Galle/Houston (~$1.1 / ~$1.5) because every request changes. Spark listening to Sinhala needs a domain hint in the
+  prompt (done in `spark_listen`): without it C02 came out as near-nonsense and was filed as junk; with it, at
+  `minimal` effort, it reads "Hospital Road ... a pole has fallen" in 8.5 s (house number still off: 40 for 47; higher
+  efforts were slower and invented place names).
 - **SAM 3.1** (`sam-3.1`): `POST /responses` with `input_text` (short noun phrase) + `input_image`
   (URL or base64 data URL) or `input_video`. Output is special-token text:
   `<|box;x1=..;y1=..;x2=..;y2=..;w=..;h=..;c=..|><|mask;x=0;y=0;data=H,W,<enc>payload|>`, video lines
@@ -519,14 +532,17 @@ Blocked until the owner provides something
       `RELIGHT_ALLOW_API=1`). Keep the regression baseline green.
 - [x] Extraction accuracy measured 2026-11-01 for Galle and Houston with `scripts/eval_extraction.py <scenario>
       --replay` (scores the engine's own cached Spark readings; free). Muse Spark vs scenario labels, fields right:
-      Galle (46 scored) street 89%, house_no 94%, symptom 94%, hazard 96%, junk 98% (en 29, si 11, ta 6; Sinhala is
-      the weakest: street 82%, symptom 82%); Houston (161 scored) street 97%, house_no 98%, symptom 99%, hazard 99%,
+      Galle (46 scored; re-measured after the Sinhala listening fix) street 91%, house_no 94%, symptom 94%, hazard 94%,
+      junk 100% (en 29, si 11, ta 6; Sinhala symptom 82% is the weakest, Tamil hazard 5 of 6); Houston (161 scored) street 97%, house_no 98%, symptom 99%, hazard 99%,
       junk 100% (en 117, es 44). Not scored: SMS codes (no model) and complaints that made no message of their own.
       Misses on calls are mostly facts the caller gave only later or that come from caller ID (labels hold them), and
-      the garbled Sinhala call C02. Put the table in the README. Not run for Chennai or without `--replay`
+      the Sinhala call C02 (now read well enough to be filed as a fallen wire, not junk). Put the table in the README. Not run for Chennai or without `--replay`
       (that mode sends fresh requests: ~$2.6 for Galle+Houston; it refuses to score mock output).
 - Gate gotcha: GO opens the API only for the turn that carries it. A background task's completion notice starts a new
   turn with the gate closed, so a long run must be polled in the foreground until it ends.
+- Gate gotcha 2: while GO is open, **never replay an uncached scenario** (Chennai) with `run_headless.py`: every
+  uncached request goes out live. On 2026-11-01 a Chennai regression run started that way and was stopped within
+  minutes (~60 small calls, under $1). Run Chennai's baseline only on a turn without GO.
 - [ ] *(needs `MODEL_API_KEY`)* Keep a running cost estimate under $150 (Voice Transcribe is $0.18/h).
 - [ ] *(needs `MODEL_API_KEY`)* Run the voiced calls live: Voice Transcribe on en/ta/es/hi, Spark listening
       to the Sinhala call (`spark_listen` request shape), Spark rewording status lines; fix what breaks.
@@ -584,8 +600,9 @@ mock/template fallback, and list it here. Tick items off (or fix them) after liv
 Call agent and crew calls
 - [ ] Spark wording of agent lines (`SPEAK_SYSTEM`): naturalness per language, how often `facts_kept`
       rejects lines (Spark may write digits in local script or transliterate street names), latency per line.
-- [ ] `spark_listen` (Sinhala calls and Sinhala crews): request shape (`input_audio` content part) and
-      transcript quality; the SMS fallback (`not_understood`) and crew text fallback (`crew_by_text`).
+- [x] `spark_listen` request shape works (2026-10-30). Quality checked 2026-11-01 on the one Sinhala call (C02): near
+      nonsense without a domain hint, usable with it (see section 8); crew R4 read "Cinnamon Gardens, Lane 55, T 093".
+      Still open: the SMS fallback (`not_understood`) and crew text fallback (`crew_by_text`) paths with real audio.
 - [ ] Voice Transcribe on the synthetic 8 kHz phone WAVs (en/ta/es/hi): `languageBias` value format,
       `ENDPOINTING` response field `transcript`, accuracy vs the scripted text.
 - [ ] Spark extraction of non-English and code-mixed crew reports (crew schema), and of a caller's
@@ -598,7 +615,7 @@ Call agent and crew calls
 
 Realtime calls and copilot (`realtime.py`, `copilot.py`)
 - [x] Realtime WebSocket against the live API (2026-10-30): handshake with `keywords` (2 names), event shapes and
-      latencies as documented, transcript of C01 exact. Still open: 100 `keywords`, pacing over a long call.
+      latencies as documented, transcript of C01 exact. 100 `keywords` and three clips on one line checked 2026-11-01.
 - [x] Live run 2026-10-30 of C01 (agent), C03 and C31 (hand-overs, copilot driven by its top suggestion): every
       caller and call-taker utterance heard by realtime and attributed by `speechStart` time; Spark read the
       realtime "nine zero zero ..." as account 9000000000; Spark's copilot choices sensible, no fact-check rejects.
@@ -623,18 +640,19 @@ Realtime calls and copilot (`realtime.py`, `copilot.py`)
 - [ ] Call-taker voices (`voices.taker`): en-GB Sonia for Sri Lanka is a stand-in; Sameera / Kumar double as caller voices.
 
 Photos and videos (`vision.py`, `models.py`)
-- [ ] Spark on photos (`analyse_photo`) and SAM 3.1 boxes on the nine Commons photos; wire clearance numbers.
+- [x] Spark and SAM 3.1 on the nine Commons photos, live (2026-11-01): outlines, lean 3-13 degrees on the leaning poles;
+      wire clearance in metres is still unmeasured (needs a pole fully in frame).
 - [ ] Spark watching a clip (`spark_video_json`: `video_url` content part, unverified) and SAM 3.1 tracking
       (`segment_video`: `input_video` part, unverified); request size limits for a 7.6 MB drone clip.
 - [ ] Portal uploads from a phone (MOV from iPhone, large files) and the `seen` panel with real model output.
       (Offline 2026-11-01: MOV and 50 MB MP4 accepted, >60 MB gives 413; HEIC gives 415.)
-- [ ] Pole-tag reading live: SAM prompt "pole number plate" (does it find a small plate?), Spark reading the crop
-      (`TAG_SCHEMA`), the whole-photo fallback, and the owner's photographed tag via `pack.pole_aliases`. Tests with
-      stand-in models are in `scripts/check_offline.py`.
-- [ ] Voice Transcribe `keywords` on the file endpoint: run `scripts/eval_keywords.py` (GO; cents). Baseline without
-      keywords, from the cache: Houston heard the street right in 1 of 5 clips. If it helps, adopting it in the engine
-      changes every transcript and so every downstream Spark request (re-run Houston ~$1.6): decide after the numbers.
-- [ ] Drone survey on a second clip, and Spark/SAM on the nine photos with the extra "pole number plate" request each.
+- [ ] Pole-tag reading live, partly done 2026-11-01: on the nine photos (none has a legible plate) no false tag was
+      reported; on Houston's tree photo SAM found a plate box and Spark said it was too blurred, so no guess. Still open:
+      the owner's photographed tag (needs the photo, `pack.pole_aliases`). Stand-in tests: `scripts/check_offline.py`.
+- [x] Voice Transcribe `keywords` on the file endpoint measured 2026-11-01 (`scripts/eval_keywords.py`, results in
+      section 8): 11 of 13 vs 6 of 13. **Not adopted in the engine yet**: it changes every transcript and so every
+      downstream Spark request (re-run Galle ~$1.1 and Houston ~$1.5). The realtime line already uses them.
+- [ ] Drone survey on a second clip.
 
 ### 12.4 Order that saves the most time
 

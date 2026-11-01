@@ -19,11 +19,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from relight import config, packs  # noqa: E402
 from relight.callagent import TRANSCRIBE_LANGS  # noqa: E402
-from relight.models import ModelClient  # noqa: E402
+from relight.models import ModelClient, fit_keywords  # noqa: E402
 from relight.realtime import BIAS, MAX_KEYWORDS  # noqa: E402
 from relight.scenario import load  # noqa: E402
 
 WORKERS = 6
+SAYS_STREET: set[str] = set()  # clips that name the street in words the script does not spell the same way
 
 
 def norm(s: str) -> str:
@@ -34,7 +35,7 @@ def keywords_for(db) -> list[str]:
     """The same list the realtime line uses: landmarks, then streets with the most customers."""
     rows = db.con.execute("SELECT street, COUNT(*) n FROM customers GROUP BY street ORDER BY n DESC")
     names = [lm["name"] for lm in db.landmarks][:20] + [r[0] for r in rows]
-    return list(dict.fromkeys(names))[:MAX_KEYWORDS]
+    return fit_keywords(names, MAX_KEYWORDS)
 
 
 def main() -> None:
@@ -48,8 +49,10 @@ def main() -> None:
     for name in names:
         sc = load(name)
         kw = keywords_for(packs.network(sc)[1])
+        # Only clips whose scripted words name the street: a caller who withholds the address cannot be heard saying it.
         clips = [e for e in sc["events"] if e.get("audio") and (config.ROOT / e["audio"]).exists()
-                 and e.get("language", "en") in TRANSCRIBE_LANGS and e.get("truth", {}).get("street")]
+                 and e.get("language", "en") in TRANSCRIBE_LANGS and e.get("truth", {}).get("street")
+                 and (norm(e["truth"]["street"]) in norm(e["text"]) or e["id"] in SAYS_STREET)]
         jobs = [(e, with_kw) for e in clips for with_kw in (False, True)]
 
         def run(job):
@@ -76,7 +79,7 @@ def main() -> None:
         for key in score:
             grand[key][0] += score[key][0]
             grand[key][1] += score[key][1]
-        print(f"\n== {name}: {len(clips)} clips with a street")
+        print(f"\n== {name}: {len(clips)} clips where the caller names the street")
         for key, (a, n) in score.items():
             print(f"  {key:<9} street heard right in {a}/{n}")
         by_id: dict[str, dict] = {}

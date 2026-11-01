@@ -22,6 +22,10 @@ META_API_BASE = os.getenv("META_API_BASE", "https://api.meta.ai/v1").rstrip("/")
 SPARK_MODEL = os.getenv("SPARK_MODEL", "muse-spark-1.3")
 TRANSCRIBE_MODEL = os.getenv("TRANSCRIBE_MODEL", "muse-voice-transcribe-1.0")
 SAM_MODEL = os.getenv("SAM_MODEL", "sam-3.1")
+# Optional reasoning effort for Muse Spark text calls (minimal|low|medium|high|xhigh|max). Unset keeps Spark's own choice
+# and every cached request key as it was. Measured 2026-11-01: "minimal" cut extraction latency 4.4 -> 2.4 s and Sinhala
+# line wording 9.9 -> 2.8 s with ~75-88% fewer output tokens, same results on a small sample.
+SPARK_EFFORT = os.getenv("SPARK_EFFORT", "").strip() or None
 
 # "live" calls the Meta Model API; "mock" replays cached responses and falls back to
 # the scenario's labelled ground truth. Defaults to live when a key is present.

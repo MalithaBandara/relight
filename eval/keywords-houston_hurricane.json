@@ -1,0 +1,63 @@
+{
+ "scenario": "houston_hurricane",
+ "score": {
+  "plain": [
+   1,
+   3
+  ],
+  "keywords": [
+   3,
+   3
+  ]
+ },
+ "rows": [
+  {
+   "id": "C21",
+   "language": "en",
+   "street": "Huge Oaks Street",
+   "keywords": false,
+   "hit": false,
+   "transcript": "Hi. Yeah. The power's out at 1052. Huge Oak Street. It went out with that big gust just now."
+  },
+  {
+   "id": "C21",
+   "language": "en",
+   "street": "Huge Oaks Street",
+   "keywords": true,
+   "hit": true,
+   "transcript": "Hi. Yeah. The power's out at 1052 Huge Oaks Street. It went out with that big gust just now."
+  },
+  {
+   "id": "C136",
+   "language": "es",
+   "street": "Moritz Drive",
+   "keywords": false,
+   "hit": false,
+   "transcript": "Hola, buenas buenas noches. Le llamo porque no hay electricidad en el mil ciento treinta y dos de Morret Street desde la la tormenta."
+  },
+  {
+   "id": "C136",
+   "language": "es",
+   "street": "Moritz Drive",
+   "keywords": true,
+   "hit": true,
+   "transcript": "Hola, buenas noches. Le llamo porque no hay electricidad en el mil ciento treinta y dos de Moritz Drive desde la tormenta."
+  },
+  {
+   "id": "C303",
+   "language": "en",
+   "street": "Ronson Road",
+   "keywords": false,
+   "hit": true,
+   "transcript": "there's a power line down and sparking in front of 1132 Ronson Road. It's right across right across the sidewalk."
+  },
+  {
+   "id": "C303",
+   "language": "en",
+   "street": "Ronson Road",
+   "keywords": true,
+   "hit": true,
+   "transcript": "There's a power line down down and sparking in front of 1132 Ronson Road. it's right across the sidewalk."
+  }
+ ]
+}

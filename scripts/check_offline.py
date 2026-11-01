@@ -159,7 +159,7 @@ def drone_survey_check() -> None:
     if not clip.exists():
         print("  skipped: drone clip not on this computer (scripts/fetch_videos.py)")
         return
-    res = vision.analyse_video(ModelClient(), clip.relative_to(ROOT).as_posix(), "tree_on_line", "drone")
+    res = vision.analyse_video(ModelClient(mode="mock"), clip.relative_to(ROOT).as_posix(), "tree_on_line", "drone")
     s = res.get("survey")
     if s is None:
         print("  skipped: no cached SAM tracks (needs a live run once)")
@@ -215,7 +215,7 @@ def mask_checks() -> None:
     if clip.exists() and cached:
         from relight import vision
         from relight.models import ModelClient
-        res = vision.analyse_video(ModelClient(), clip.relative_to(ROOT).as_posix(), "tree_on_line", "drone")
+        res = vision.analyse_video(ModelClient(mode="mock"), clip.relative_to(ROOT).as_posix(), "tree_on_line", "drone")
         m = ((res.get("survey") or {}).get("masks")) or {}
         check("drone clip: trunk touches wires by pixel overlap", any(o["wires_touched"] for o in m.get("obstructions", [])),
               "; ".join((res.get("survey") or {}).get("flags", [])))
@@ -275,17 +275,26 @@ def pole_tags() -> None:
 async def pole_tag_in_engine() -> None:
     print("pole tag moves a customer photo's damage to the exact pole")
     from relight.engine import Engine
+    from relight.models import ModelClient
     from relight.scenario import Replayer, load
 
     sc = load("galle_storm")
     quiet = lambda _m: asyncio.sleep(0)  # noqa: E731
     probe = Engine(sc, quiet)
+    probe.client = ModelClient(mode="mock")
     c18 = next(e for e in sc["events"] if e.get("id") == "C18")
     cust = probe.db.by_address(c18["truth"]["street"], c18["truth"]["house_no"])[0]
     # a pole about 150 m from the caller, so the move is visible
     far = min(probe.poles.poles.values(), key=lambda p: abs(grid_m(p, cust) - 150))
     c18["media_pole_tag"] = far.tag.replace("0", "O")
+    # A plain generated photo: the real photos have live model answers in the cache ("no plate"), which rightly win.
+    from PIL import Image
+    fake = ROOT / "media" / "uploads" / "_tag_engine_test.jpg"
+    fake.parent.mkdir(parents=True, exist_ok=True)
+    Image.new("RGB", (320, 240), (70, 80, 90)).save(fake)
+    c18["photo"] = fake.relative_to(ROOT).as_posix()
     engine = Engine(sc, quiet)
+    engine.client = ModelClient(mode="mock")  # the stand-in tag must not meet a live model
     replayer = Replayer(sc, engine.handle)
     engine.sim = replayer
     while replayer.queue and replayer.queue[0][0] <= 760:
@@ -300,6 +309,7 @@ async def pole_tag_in_engine() -> None:
     check("the timeline names the pole", any("pole tag" in t["title"] and far.id in t["detail"] for t in engine.timeline))
     check("the photo counts as strong damage evidence", any(d.strength >= 4.0 and d.source == "C18/photo"
                                                             for d in engine.field_damage))
+    fake.unlink(missing_ok=True)
 
 
 def grid_m(p, cust) -> float:

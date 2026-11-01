@@ -1,0 +1,1094 @@
+{
+ "model": "muse-spark-1.3",
+ "scenario": "galle_storm",
+ "summary": {
+  "all": {
+   "street": 0.913,
+   "house_no": 0.935,
+   "symptom": 0.935,
+   "hazard": 0.935,
+   "junk": 1.0
+  },
+  "en": {
+   "street": 0.897,
+   "house_no": 0.931,
+   "symptom": 0.966,
+   "hazard": 0.966,
+   "junk": 1.0
+  },
+  "si": {
+   "street": 0.909,
+   "house_no": 0.909,
+   "symptom": 0.818,
+   "hazard": 0.909,
+   "junk": 1.0
+  },
+  "ta": {
+   "street": 1.0,
+   "house_no": 1.0,
+   "symptom": 1.0,
+   "hazard": 0.833,
+   "junk": 1.0
+  }
+ },
+ "rows": [
+  {
+   "id": "C01",
+   "language": "en",
+   "checks": {
+    "street": false,
+    "house_no": false,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": null,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": null,
+    "summary_en": "Caller reports power is out at their house and the whole road is dark, with no visible hazard.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C02",
+   "language": "si",
+   "checks": {
+    "street": true,
+    "house_no": false,
+    "symptom": false,
+    "hazard": false,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": "bang",
+    "hazard": "wire_down",
+    "house_no": null,
+    "is_junk": false,
+    "landmark": null,
+    "language": "si",
+    "street": "Hospital Road",
+    "summary_en": "Caller from Hospital Road turn reports a loud bang and a wire snapped and fell down.",
+    "symptom": "none"
+   }
+  },
+  {
+   "id": "C03",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": "9000000000",
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": null,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Hospital Road",
+    "summary_en": "Galle Teaching Hospital Annex on Hospital Road reports mains power loss, running on generator, requests urgent restoration.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C04",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 20,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Hospital Road",
+    "summary_en": "Still no power at No. 20 Hospital Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C05",
+   "language": "ta",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": false,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 75,
+    "is_junk": false,
+    "landmark": null,
+    "language": "ta",
+    "street": "Hospital Road",
+    "summary_en": "Caller from No. 75, Hospital Road reports no power.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C06",
+   "language": "en",
+   "checks": {
+    "street": false,
+    "house_no": false,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": "4774971915",
+    "cause_hint": "storm",
+    "hazard": "none",
+    "house_no": null,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": null,
+    "summary_en": "Account 4774971915 has had no electricity since the storm.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C07",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 95,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Hospital Road",
+    "summary_en": "Power cut on Hospital Road near the end, number 95.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C19",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": "wind",
+    "hazard": "none",
+    "house_no": 60,
+    "is_junk": false,
+    "landmark": "temple",
+    "language": "en",
+    "street": "Temple Road",
+    "summary_en": "Power outage at No. 60 Temple Road near the temple after wind, no hazard visible.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C08",
+   "language": "si",
+   "checks": {
+    "street": false,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 47,
+    "is_junk": false,
+    "landmark": null,
+    "language": "si",
+    "street": null,
+    "summary_en": "Still no power, number 47.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C39",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": null,
+    "is_junk": true,
+    "landmark": null,
+    "language": "en",
+    "street": null,
+    "summary_en": "Spam message offering Rs 50,000 storm relief prize.",
+    "symptom": "none"
+   }
+  },
+  {
+   "id": "C20",
+   "language": "si",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": "tree",
+    "hazard": "tree_on_line",
+    "house_no": 70,
+    "is_junk": false,
+    "landmark": "temple",
+    "language": "si",
+    "street": "Temple Road",
+    "summary_en": "Large tree fallen onto wires near temple, no power at 70 Temple Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C09",
+   "language": "si",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 30,
+    "is_junk": false,
+    "landmark": null,
+    "language": "si",
+    "street": "Hospital Road",
+    "summary_en": "No power at 30 Hospital Road, asking when power will return.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C10",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 60,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Hospital Road",
+    "summary_en": "No power at 60 Hospital Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C38",
+   "language": "si",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": null,
+    "is_junk": false,
+    "landmark": "temple",
+    "language": "si",
+    "street": null,
+    "summary_en": "No electricity near the temple.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C21",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": null,
+    "is_junk": false,
+    "landmark": "water pumping station",
+    "language": "en",
+    "street": null,
+    "summary_en": "Wakwella water pumping station lost power and pumps are down, town water supply will stop in two hours.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C31",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "live_wire",
+    "house_no": null,
+    "is_junk": false,
+    "landmark": "market",
+    "language": "en",
+    "street": "Market Street",
+    "summary_en": "Sparking wire lying on Market Street near the market with people walking past.",
+    "symptom": "none"
+   }
+  },
+  {
+   "id": "C11",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 88,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Hospital Road",
+    "summary_en": "Power off on whole lane at 88 Hospital Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C32",
+   "language": "si",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": false,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "live_wire",
+    "house_no": 10,
+    "is_junk": false,
+    "landmark": "market",
+    "language": "si",
+    "street": "Market Street",
+    "summary_en": "Wire fallen and sparking near the market at 10 Market Street.",
+    "symptom": "none"
+   }
+  },
+  {
+   "id": "C22",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 140,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Temple Road",
+    "summary_en": "No power at 140 Temple Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C12",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": "9000000000",
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": null,
+    "is_junk": false,
+    "landmark": "hospital annex",
+    "language": "en",
+    "street": null,
+    "summary_en": "Hospital annex on generator for operating theatre requesting update for account 9000000000.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C33",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 30,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Market Street",
+    "summary_en": "Lights very dim and fridge stopped, half power at 30 Market Street.",
+    "symptom": "partial_power"
+   }
+  },
+  {
+   "id": "C13",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 105,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Hospital Road",
+    "summary_en": "No power at 105 Hospital Road since 3pm",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C23",
+   "language": "ta",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 30,
+    "is_junk": false,
+    "landmark": null,
+    "language": "ta",
+    "street": "Pumping Station Road",
+    "summary_en": "No power at house number 30 on Pumping Station Road; no hazard observed.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C37",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 200,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Karapitiya Road",
+    "summary_en": "House at 200 Karapitiya Road has no power while neighbours have lights, no hazard observed.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C14",
+   "language": "ta",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 12,
+    "is_junk": false,
+    "landmark": null,
+    "language": "ta",
+    "street": "Hospital Road",
+    "summary_en": "No electricity at 12 Hospital Road since morning.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C28",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": false,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": "bang from the transformer",
+    "hazard": "transformer_bang",
+    "house_no": 50,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Cinnamon Gardens Lane",
+    "summary_en": "No power on reporter's side of the lane at 50 Cinnamon Gardens Lane, bang heard from transformer.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C24",
+   "language": "si",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 100,
+    "is_junk": false,
+    "landmark": null,
+    "language": "si",
+    "street": "Temple Road",
+    "summary_en": "No power at 100 Temple Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C15",
+   "language": "si",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 30,
+    "is_junk": false,
+    "landmark": null,
+    "language": "si",
+    "street": "Hospital Road",
+    "summary_en": "No power at 30 Hospital Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C34",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 45,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Market Street",
+    "summary_en": "Low voltage with flickering lights at 45 Market Street.",
+    "symptom": "partial_power"
+   }
+  },
+  {
+   "id": "C40",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": null,
+    "is_junk": true,
+    "landmark": null,
+    "language": "en",
+    "street": null,
+    "summary_en": "Caller asks for help with TV remote not working, unrelated to power outage.",
+    "symptom": "none"
+   }
+  },
+  {
+   "id": "C25",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 60,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Temple Road",
+    "summary_en": "House 60 Temple Road still has no power after five minutes.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C50",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": "wind",
+    "hazard": "none",
+    "house_no": 9,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Lake Road",
+    "summary_en": "Power outage at No. 9 Lake Road during wind, neighbours still have power, no hazard seen.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C16",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": false,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "pole_down",
+    "house_no": 52,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Hospital Road",
+    "summary_en": "Pole broken in half in front of 52 Hospital Road with wires on ground but no sparks.",
+    "symptom": "none"
+   }
+  },
+  {
+   "id": "C35",
+   "language": "ta",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 70,
+    "is_junk": false,
+    "landmark": null,
+    "language": "ta",
+    "street": "Market Street",
+    "summary_en": "Light burning dimly at 70 Market Street.",
+    "symptom": "partial_power"
+   }
+  },
+  {
+   "id": "C51",
+   "language": "si",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 12,
+    "is_junk": false,
+    "landmark": null,
+    "language": "si",
+    "street": "Lake Road",
+    "summary_en": "No power at No. 12, Lake Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C36",
+   "language": "en",
+   "checks": {
+    "street": false,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "live_wire",
+    "house_no": null,
+    "is_junk": false,
+    "landmark": "market",
+    "language": "en",
+    "street": null,
+    "summary_en": "Sparking wire near the market nearly touched a dog.",
+    "symptom": "none"
+   }
+  },
+  {
+   "id": "C17",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 95,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Hospital Road",
+    "summary_en": "House 95 on Hospital Road still has no power.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C29",
+   "language": "si",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 60,
+    "is_junk": false,
+    "landmark": null,
+    "language": "si",
+    "street": "Cinnamon Gardens Lane",
+    "summary_en": "No power at No. 60, Cinnamon Gardens Lane.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C42",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 60,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Hospital Road",
+    "summary_en": "Power still off at 60 Hospital Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C18",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "pole_down",
+    "house_no": 70,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Hospital Road",
+    "summary_en": "No power at 70 Hospital Road, broken pole down the road reported with photo.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C53",
+   "language": "ta",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 14,
+    "is_junk": false,
+    "landmark": null,
+    "language": "ta",
+    "street": "Lake Road",
+    "summary_en": "No power at 14 Lake Road, no hazard seen.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C41",
+   "language": "si",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": null,
+    "is_junk": true,
+    "landmark": null,
+    "language": "si",
+    "street": null,
+    "summary_en": "You guys don't do your work properly!!!",
+    "symptom": "none"
+   }
+  },
+  {
+   "id": "C30",
+   "language": "ta",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 64,
+    "is_junk": false,
+    "landmark": null,
+    "language": "ta",
+    "street": "Cinnamon Gardens Lane",
+    "summary_en": "No power at 64 Cinnamon Gardens Lane, only on our side, no hazard seen.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C45",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 140,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Temple Road",
+    "summary_en": "No power at 140 Temple Road.",
+    "symptom": "no_power"
+   }
+  },
+  {
+   "id": "C44",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 30,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Market Street",
+    "summary_en": "House No. 30 on Market Street still has half power.",
+    "symptom": "partial_power"
+   }
+  },
+  {
+   "id": "C46",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": null,
+    "hazard": "none",
+    "house_no": 50,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Cinnamon Gardens Lane",
+    "summary_en": "Still no power at 50 Cinnamon Gardens Lane.",
+    "symptom": "no_power"
+   }
+  }
+ ]
+}

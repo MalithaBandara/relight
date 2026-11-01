@@ -1,0 +1,95 @@
+{
+ "scenario": "chennai_cyclone",
+ "score": {
+  "plain": [
+   1,
+   5
+  ],
+  "keywords": [
+   3,
+   5
+  ]
+ },
+ "rows": [
+  {
+   "id": "C494",
+   "language": "ta",
+   "street": "Vijayanagar 1st Main Road",
+   "keywords": false,
+   "hit": false,
+   "transcript": "வணக்கம், விஜயநகர் 1st main road, கதவு N 19. current இல்லை."
+  },
+  {
+   "id": "C494",
+   "language": "ta",
+   "street": "Vijayanagar 1st Main Road",
+   "keywords": true,
+   "hit": true,
+   "transcript": "வணக்கம். Vijayanagar 1st main Road கதவு N 19. current current இல்லை."
+  },
+  {
+   "id": "C1331",
+   "language": "en",
+   "street": "1st Cross Street Cross Street 1",
+   "keywords": false,
+   "hit": false,
+   "transcript": "Hello, power cut in first cross street cross street one house 190 please send a a lineman."
+  },
+  {
+   "id": "C1331",
+   "language": "en",
+   "street": "1st Cross Street Cross Street 1",
+   "keywords": true,
+   "hit": false,
+   "transcript": "Hello, power cut in first Cross Street, Cross Street 1, house 190. Please send a lineman."
+  },
+  {
+   "id": "C2226",
+   "language": "hi",
+   "street": "1st Cross Street Cross Street 1",
+   "keywords": false,
+   "hit": false,
+   "transcript": "Hello, Namaste. मैं एक Sand Cross street, Cross Street एक से बोल रही हूँ, मकान नंबर दो सौ उनतीस. तूफान के बाद से बिजली नहीं है."
+  },
+  {
+   "id": "C2226",
+   "language": "hi",
+   "street": "1st Cross Street Cross Street 1",
+   "keywords": true,
+   "hit": false,
+   "transcript": "Hello, namaste. मैं एक Saint Cross Street, Cross Street 1 से बोल रही हूँ. मकान नंबर दो सौ उनतीस. तूफान के बाद से बिजली नहीं है."
+  },
+  {
+   "id": "C3429",
+   "language": "ta",
+   "street": "Muthu Krishnan Street",
+   "keywords": false,
+   "hit": true,
+   "transcript": "Muthu Krishnan Street பதின்மூன்று அருகில் மீன் கம்பம் இருந்துவிட்டது. கரண்ட் இல்லை."
+  },
+  {
+   "id": "C3429",
+   "language": "ta",
+   "street": "Muthu Krishnan Street",
+   "keywords": true,
+   "hit": true,
+   "transcript": "Muthu Krishnan Street Padinmoor main Kambar Street Extn current illai."
+  },
+  {
+   "id": "C3648",
+   "language": "en",
+   "street": "A.G.S. Colony 2nd Street Cross Street 1",
+   "keywords": false,
+   "hit": false,
+   "transcript": "wire fallen on the road and sparking near door number 16, AGS Colony Second Second Street, Cross Street One. Very dangerous."
+  },
+  {
+   "id": "C3648",
+   "language": "en",
+   "street": "A.G.S. Colony 2nd Street Cross Street 1",
+   "keywords": true,
+   "hit": true,
+   "transcript": "wire fallen on the road and sparking near door number 16, AGS Colony 2nd Street, Cross Street 1. Very dangerous."
+  }
+ ]
+}

@@ -26,6 +26,20 @@ from . import config
 TIMEOUT = httpx.Timeout(120, connect=10)
 
 
+KEYWORD_MAX_CHARS = 30  # Voice Transcribe refuses a keyword longer than this (HTTP 400, checked live 2026-11-01)
+
+
+def fit_keywords(names: list[str], limit: int | None = None) -> list[str]:
+    """Names Voice Transcribe will accept as keywords: "Clinic on Wirt Road" becomes "Wirt Road", and anything still
+    longer than 30 characters is left out. Order is kept and duplicates dropped."""
+    out: dict[str, None] = {}
+    for name in names:
+        name = (name.split(" on ", 1)[1] if " on " in name else name).strip()
+        if name and len(name) <= KEYWORD_MAX_CHARS:
+            out.setdefault(name)
+    return list(out)[:limit]
+
+
 class ModelClient:
     _blocked_warned = False
 
@@ -60,7 +74,7 @@ class ModelClient:
     # ---- Muse Spark -------------------------------------------------------
 
     def spark_json(self, system: str, user: str | list, schema: dict, name: str,
-                   model: str | None = None, base: str | None = None) -> dict | None:
+                   model: str | None = None, base: str | None = None, effort: str | None = None) -> dict | None:
         """Chat completion constrained to a JSON schema. `user` may be a list of content parts."""
         model = model or config.SPARK_MODEL
         body = {
@@ -68,6 +82,8 @@ class ModelClient:
             "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
             "response_format": {"type": "json_schema", "json_schema": {"name": name, "schema": schema}},
         }
+        if effort := effort or config.SPARK_EFFORT:  # unset by default: request keys (and the cache) stay as they were
+            body["reasoning_effort"] = effort
 
         def call():
             r = httpx.post(f"{base or self.base}/chat/completions", json=body, headers=self.headers, timeout=TIMEOUT)
@@ -80,9 +96,11 @@ class ModelClient:
         content = resp["choices"][0]["message"]["content"]
         return json.loads(_strip_fences(content))
 
-    def spark_text(self, system: str, user: str, model: str | None = None) -> str | None:
+    def spark_text(self, system: str, user: str, model: str | None = None, effort: str | None = None) -> str | None:
         body = {"model": model or config.SPARK_MODEL,
                 "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}]}
+        if effort := effort or config.SPARK_EFFORT:
+            body["reasoning_effort"] = effort
 
         def call():
             r = httpx.post(f"{self.base}/chat/completions", json=body, headers=self.headers, timeout=TIMEOUT)
@@ -99,12 +117,16 @@ class ModelClient:
         not been checked against the live API yet.
         """
         audio = Path(audio_path).read_bytes()
-        system = f"Transcribe this phone call. It is in {language}; write it in {language}'s own script. " \
-                 "Return only the words spoken."
+        # Checked live 2026-11-01: without saying what the call is, Spark's Sinhala came out as near-nonsense; told it is an
+        # outage-line call giving a street, a number and what happened, it reads "Hospital Road ... a pole has fallen"
+        # (house number still off: 40 for 47). Minimal effort gave the best and fastest reading (8.5 s vs 20-70 s).
+        system = (f"This is a short phone call to an electricity utility's outage line (or a field crew's report), spoken in "
+                  f"{language}: it gives a street, a house number and what happened. Transcribe it in {language}'s own "
+                  "script. Return only the words spoken.")
         key = {"model": config.SPARK_MODEL, "system": system, "audio_sha": hashlib.sha256(audio).hexdigest()}
 
         def call():
-            body = {"model": config.SPARK_MODEL, "messages": [
+            body = {"model": config.SPARK_MODEL, "reasoning_effort": "minimal", "messages": [
                 {"role": "system", "content": system},
                 {"role": "user", "content": [{"type": "input_audio", "input_audio": {
                     "data": base64.b64encode(audio).decode(), "format": "wav"}}]}]}
@@ -126,7 +148,7 @@ class ModelClient:
         if language_bias:
             request["languageBias"] = language_bias
         if keywords:
-            request["keywords"] = list(dict.fromkeys(k for k in keywords if k))
+            request["keywords"] = fit_keywords(keywords)
         key = {"request": request, "audio_sha": hashlib.sha256(audio).hexdigest()}
 
         def call():
