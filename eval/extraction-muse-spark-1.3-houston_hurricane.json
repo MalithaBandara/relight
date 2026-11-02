@@ -3,7 +3,7 @@
  "scenario": "houston_hurricane",
  "summary": {
   "all": {
-   "street": 0.969,
+   "street": 0.975,
    "house_no": 0.975,
    "symptom": 0.994,
    "hazard": 0.994,
@@ -17,7 +17,7 @@
    "junk": 1.0
   },
   "es": {
-   "street": 0.977,
+   "street": 1.0,
    "house_no": 1.0,
    "symptom": 0.977,
    "hazard": 0.977,
@@ -37,14 +37,14 @@
    },
    "output": {
     "account_no": null,
-    "cause_hint": "gust",
+    "cause_hint": "wind gust",
     "hazard": "none",
     "house_no": 1052,
     "is_junk": false,
     "landmark": null,
     "language": "en",
-    "street": "Huge Oak Street",
-    "summary_en": "Power is out at 1052 Huge Oak Street after a big gust, no hazard visible.",
+    "street": "Huge Oaks Street",
+    "summary_en": "Power is out at 1052 Huge Oaks Street after a big wind gust, with no visible hazard.",
     "symptom": "no_power"
    }
   },
@@ -75,7 +75,7 @@
    "id": "C136",
    "language": "es",
    "checks": {
-    "street": false,
+    "street": true,
     "house_no": true,
     "symptom": true,
     "hazard": true,
@@ -89,8 +89,8 @@
     "is_junk": false,
     "landmark": null,
     "language": "es",
-    "street": "Morret Street",
-    "summary_en": "No power at 1132 Morret Street since the storm, no hazard seen.",
+    "street": "Moritz Moritz Drive",
+    "summary_en": "No electricity at 1132 Moritz Moritz Drive since the storm, no hazard seen.",
     "symptom": "no_power"
    }
   },
@@ -113,7 +113,7 @@
     "landmark": null,
     "language": "en",
     "street": null,
-    "summary_en": "Caller reports lights out with whole house dark and no visible hazard.",
+    "summary_en": "Caller reports whole house lost power and sees no hazard.",
     "symptom": "no_power"
    }
   },
@@ -136,7 +136,7 @@
     "landmark": null,
     "language": "en",
     "street": "Moritz Green",
-    "summary_en": "Lights went out at house 1004 on Moritz Green.",
+    "summary_en": "Lights out at 1004 Moritz Green.",
     "symptom": "no_power"
    }
   },
@@ -205,7 +205,7 @@
     "landmark": null,
     "language": "en",
     "street": "Lynnview Drive",
-    "summary_en": "Power out at 1044 Lynnview Drive, no hazard visible.",
+    "summary_en": "Power is out at 1044 Lynnview Drive with no visible hazard.",
     "symptom": "no_power"
    }
   },
@@ -274,7 +274,7 @@
     "landmark": null,
     "language": "en",
     "street": "Auline Lane",
-    "summary_en": "No electricity at 1000 Auline Lane since the storm, with no visible hazard.",
+    "summary_en": "No electricity at 1000 Auline Lane since the storm, no visible hazard.",
     "symptom": "no_power"
    }
   },
@@ -297,7 +297,7 @@
     "landmark": null,
     "language": "en",
     "street": "Glourie Drive",
-    "summary_en": "Power outage reported at 1256 Glourie Drive.",
+    "summary_en": "Outage reported at 1256 Glourie Drive.",
     "symptom": "no_power"
    }
   },
@@ -320,7 +320,7 @@
     "landmark": null,
     "language": "en",
     "street": "Glourie Drive",
-    "summary_en": "Power out at 1376 Glourie Drive, no hazard observed.",
+    "summary_en": "Power went out at house 1376 on Glourie Drive, no hazard visible.",
     "symptom": "no_power"
    }
   },
@@ -389,7 +389,7 @@
     "landmark": null,
     "language": "en",
     "street": "Auline Lane",
-    "summary_en": "Power outage at 1048 Auline Lane.",
+    "summary_en": "Power is out at 1048 Auline Lane.",
     "symptom": "no_power"
    }
   },
@@ -412,7 +412,7 @@
     "landmark": null,
     "language": "en",
     "street": "Barberry Branch Street",
-    "summary_en": "Outage reported at 1012 Barberry Branch Street, no hazard visible.",
+    "summary_en": "Outage reported at 1012 Barberry Branch Street.",
     "symptom": "no_power"
    }
   },
@@ -451,14 +451,14 @@
    },
    "output": {
     "account_no": null,
-    "cause_hint": "storm",
+    "cause_hint": null,
     "hazard": "none",
     "house_no": 1108,
     "is_junk": false,
     "landmark": null,
     "language": "en",
     "street": "Flowerdale Street",
-    "summary_en": "No electricity at 1108 Flowerdale Street since the storm.",
+    "summary_en": "No power at 1108 Flowerdale Street since the storm.",
     "symptom": "no_power"
    }
   },
@@ -481,7 +481,7 @@
     "landmark": null,
     "language": "en",
     "street": "Pech Road",
-    "summary_en": "Power outage at 1316 Pech Road.",
+    "summary_en": "Power's out at 1316 Pech Road.",
     "symptom": "no_power"
    }
   },
@@ -520,7 +520,7 @@
    },
    "output": {
     "account_no": null,
-    "cause_hint": null,
+    "cause_hint": "storm",
     "hazard": "none",
     "house_no": 1048,
     "is_junk": false,
@@ -550,7 +550,7 @@
     "landmark": null,
     "language": "es",
     "street": "Auline Lane",
-    "summary_en": "No power at house 1044 on Auline Lane.",
+    "summary_en": "No power at 1044 Auline Lane.",
     "symptom": "no_power"
    }
   },
@@ -589,14 +589,14 @@
    },
    "output": {
     "account_no": null,
-    "cause_hint": null,
+    "cause_hint": "storm",
     "hazard": "none",
     "house_no": 1020,
     "is_junk": false,
     "landmark": null,
     "language": "en",
     "street": "Flowerdale Street",
-    "summary_en": "No power at 1020 Flowerdale Street since the storm.",
+    "summary_en": "No electricity at 1020 Flowerdale Street since the storm.",
     "symptom": "no_power"
    }
   },
@@ -619,7 +619,7 @@
     "landmark": null,
     "language": "es",
     "street": "Johanna Drive",
-    "summary_en": "Power is out at 1108 Johanna Drive.",
+    "summary_en": "Power out at 1108 Johanna Drive.",
     "symptom": "no_power"
    }
   },
@@ -642,7 +642,7 @@
     "landmark": null,
     "language": "en",
     "street": "Westwood Drive",
-    "summary_en": "Power outage at 1180 Westwood Drive.",
+    "summary_en": "Lights went out on Westwood Drive, house 1180.",
     "symptom": "no_power"
    }
   },
@@ -665,7 +665,7 @@
     "landmark": null,
     "language": "en",
     "street": "Moritz Drive",
-    "summary_en": "Power outage reported at 1124 Moritz Drive, caller reports no visible hazard.",
+    "summary_en": "Outage at 1124 Moritz Drive, no hazard observed.",
     "symptom": "no_power"
    }
   },
@@ -688,7 +688,7 @@
     "landmark": null,
     "language": "en",
     "street": "Pech Road",
-    "summary_en": "Lights out at house 1372 on Pech Road.",
+    "summary_en": "Lights went out at house 1372 on Pech Road.",
     "symptom": "no_power"
    }
   },
@@ -711,7 +711,7 @@
     "landmark": null,
     "language": "en",
     "street": "Lynnview Drive",
-    "summary_en": "Lights out at 1028 Lynnview Drive.",
+    "summary_en": "Lights went out at house 1028 on Lynnview Drive.",
     "symptom": "no_power"
    }
   },
@@ -757,7 +757,7 @@
     "landmark": null,
     "language": "es",
     "street": "Moritz Drive",
-    "summary_en": "Power is out at 1080 Moritz Drive, caller asks when it will return, no hazards seen.",
+    "summary_en": "Power is out at home at 1080 Moritz Drive, asking when it will return, no hazards seen.",
     "symptom": "no_power"
    }
   },
@@ -780,7 +780,7 @@
     "landmark": null,
     "language": "en",
     "street": "Gingerleaf Lane",
-    "summary_en": "Power outage at 1108 Gingerleaf Lane, help requested.",
+    "summary_en": "Outage at 1108 Gingerleaf Lane, please help.",
     "symptom": "no_power"
    }
   },
@@ -803,7 +803,7 @@
     "landmark": null,
     "language": "en",
     "street": "Moritz Drive",
-    "summary_en": "Power is out at 1084 Moritz Drive with no visible hazard.",
+    "summary_en": "Power is out at 1084 Moritz Drive, no visible hazard.",
     "symptom": "no_power"
    }
   },
@@ -849,7 +849,7 @@
     "landmark": null,
     "language": "en",
     "street": "Pech Road",
-    "summary_en": "No power at 1384 Pech Road since the storm, no visible hazard.",
+    "summary_en": "No electricity at 1384 Pech Road since the storm, no visible hazard reported.",
     "symptom": "no_power"
    }
   },
@@ -895,7 +895,7 @@
     "landmark": null,
     "language": "en",
     "street": "Auline Lane",
-    "summary_en": "Outage reported at 1088 Auline Lane, no hazard observed.",
+    "summary_en": "Outage reported at 1088 Auline Lane with no visible hazard.",
     "symptom": "no_power"
    }
   },
@@ -934,14 +934,14 @@
    },
    "output": {
     "account_no": null,
-    "cause_hint": null,
+    "cause_hint": "storm",
     "hazard": "none",
     "house_no": 1028,
     "is_junk": false,
     "landmark": null,
     "language": "es",
     "street": "Monarch Oaks Street",
-    "summary_en": "No power at 1028 Monarch Oaks Street since the storm.",
+    "summary_en": "No electricity at 1028 Monarch Oaks Street since the storm.",
     "symptom": "no_power"
    }
   },
@@ -964,7 +964,7 @@
     "landmark": null,
     "language": "en",
     "street": "Baggett Lane",
-    "summary_en": "Power outage at 1028 Baggett Lane.",
+    "summary_en": "Power's out at 1028 Baggett Lane.",
     "symptom": "no_power"
    }
   },
@@ -987,7 +987,7 @@
     "landmark": null,
     "language": "es",
     "street": "Wirt Road",
-    "summary_en": "No power at 1432 Wirt Road.",
+    "summary_en": "No power at house 1432 on Wirt Road.",
     "symptom": "no_power"
    }
   },
@@ -1010,7 +1010,7 @@
     "landmark": null,
     "language": "es",
     "street": "Monarch Oaks Street",
-    "summary_en": "No power at 1164 Monarch Oaks Street, no hazard observed.",
+    "summary_en": "No power at 1164 Monarch Oaks Street, no hazard seen.",
     "symptom": "no_power"
    }
   },
@@ -1033,7 +1033,7 @@
     "landmark": null,
     "language": "es",
     "street": "Westwood Drive",
-    "summary_en": "Power went out at 1004 Westwood Drive; caller reports seeing no hazard.",
+    "summary_en": "Power went out at 1004 Westwood Drive, no hazard observed.",
     "symptom": "no_power"
    }
   },
@@ -1049,7 +1049,7 @@
    },
    "output": {
     "account_no": null,
-    "cause_hint": null,
+    "cause_hint": "storm",
     "hazard": "none",
     "house_no": 1064,
     "is_junk": false,
@@ -1079,7 +1079,7 @@
     "landmark": null,
     "language": "en",
     "street": "Auline Lane",
-    "summary_en": "Lights went out at house 1052 on Auline Lane.",
+    "summary_en": "Power outage reported at house 1052 on Auline Lane.",
     "symptom": "no_power"
    }
   },
@@ -1125,7 +1125,7 @@
     "landmark": null,
     "language": "es",
     "street": "Wellington Court North",
-    "summary_en": "No power at 1008 Wellington Court North.",
+    "summary_en": "No power at house 1008 on Wellington Court North.",
     "symptom": "no_power"
    }
   },
@@ -1171,7 +1171,7 @@
     "landmark": null,
     "language": "en",
     "street": "Wellington Court South",
-    "summary_en": "Power's out at 1032 Wellington Court South.",
+    "summary_en": "Power is out at 1032 Wellington Court South.",
     "symptom": "no_power"
    }
   },
@@ -1217,7 +1217,7 @@
     "landmark": null,
     "language": "en",
     "street": "Pech Road",
-    "summary_en": "Lights went out at house 1388 on Pech Road.",
+    "summary_en": "Lights went out at 1388 Pech Road.",
     "symptom": "no_power"
    }
   },
@@ -1263,7 +1263,7 @@
     "landmark": null,
     "language": "es",
     "street": "Moritz Drive",
-    "summary_en": "Power is out at 1032 Moritz Drive, no hazard observed.",
+    "summary_en": "Power went out at 1032 Moritz Drive, no hazard observed.",
     "symptom": "no_power"
    }
   },
@@ -1332,7 +1332,7 @@
     "landmark": null,
     "language": "en",
     "street": "Flowerdale Street",
-    "summary_en": "Lights went out at house 1100 on Flowerdale Street.",
+    "summary_en": "Power outage reported at house 1100 on Flowerdale Street.",
     "symptom": "no_power"
    }
   },
@@ -1447,7 +1447,7 @@
     "landmark": null,
     "language": "en",
     "street": "Janak Drive",
-    "summary_en": "Power outage reported at 1172 Janak Drive with no hazard observed.",
+    "summary_en": "Power is out at 1172 Janak Drive, no visible hazard.",
     "symptom": "no_power"
    }
   },
@@ -1470,7 +1470,7 @@
     "landmark": null,
     "language": "en",
     "street": "Winningham Lane",
-    "summary_en": "House at 1308 Winningham Lane still without power while rest of street has power back.",
+    "summary_en": "Street has power back but 1308 Winningham Lane is still out.",
     "symptom": "no_power"
    }
   },
@@ -1516,7 +1516,7 @@
     "landmark": null,
     "language": "en",
     "street": "Glourie Drive",
-    "summary_en": "Power is out at house 1352 on Glourie Drive.",
+    "summary_en": "Lights went out at house 1352 on Glourie Drive.",
     "symptom": "no_power"
    }
   },
@@ -1585,7 +1585,7 @@
     "landmark": null,
     "language": "en",
     "street": "Moritz Drive",
-    "summary_en": "Outage reported at 1088 Moritz Drive, please help.",
+    "summary_en": "Outage at 1088 Moritz Drive, please help.",
     "symptom": "no_power"
    }
   },
@@ -1631,7 +1631,7 @@
     "landmark": null,
     "language": "en",
     "street": "Pech Road",
-    "summary_en": "No power at 1152 Pech Road since the storm, no visible hazard reported.",
+    "summary_en": "No electricity at 1152 Pech Road since the storm, no visible hazard.",
     "symptom": "no_power"
    }
   },
@@ -1654,7 +1654,7 @@
     "landmark": null,
     "language": "en",
     "street": "Shadyvilla Lane",
-    "summary_en": "Lights out at house 1216 on Shadyvilla Lane.",
+    "summary_en": "Lights went out at 1216 Shadyvilla Lane.",
     "symptom": "no_power"
    }
   },
@@ -1677,7 +1677,7 @@
     "landmark": null,
     "language": "en",
     "street": "Maravilla Drive",
-    "summary_en": "Power is out at 1060 Maravilla Drive.",
+    "summary_en": "Power's out at 1060 Maravilla Drive.",
     "symptom": "no_power"
    }
   },
@@ -1700,7 +1700,7 @@
     "landmark": null,
     "language": "en",
     "street": null,
-    "summary_en": "Caller asks to fix their wifi router.",
+    "summary_en": "Caller asks to fix wifi router, unrelated to power outage.",
     "symptom": "none"
    }
   },
@@ -1746,7 +1746,7 @@
     "landmark": null,
     "language": "es",
     "street": "Wirt Road",
-    "summary_en": "Power out at 1008 Wirt Road.",
+    "summary_en": "Power outage at 1008 Wirt Road.",
     "symptom": "no_power"
    }
   },
@@ -1769,7 +1769,7 @@
     "landmark": null,
     "language": "en",
     "street": "Shadyvilla Lane",
-    "summary_en": "Power outage reported at 1076 Shadyvilla Lane.",
+    "summary_en": "Outage reported at 1076 Shadyvilla Lane, help requested.",
     "symptom": "no_power"
    }
   },
@@ -1792,7 +1792,7 @@
     "landmark": null,
     "language": "en",
     "street": "Glourie Drive",
-    "summary_en": "Lights went out at house 1232 on Glourie Drive.",
+    "summary_en": "Power out at house 1232 on Glourie Drive.",
     "symptom": "no_power"
    }
   },
@@ -1808,14 +1808,14 @@
    },
    "output": {
     "account_no": null,
-    "cause_hint": "storm",
+    "cause_hint": null,
     "hazard": "none",
     "house_no": 1168,
     "is_junk": false,
     "landmark": null,
     "language": "en",
     "street": "Janak Drive",
-    "summary_en": "No electricity at 1168 Janak Drive since the storm.",
+    "summary_en": "No power at 1168 Janak Drive since the storm.",
     "symptom": "no_power"
    }
   },
@@ -1861,7 +1861,7 @@
     "landmark": null,
     "language": "en",
     "street": "Voss Road",
-    "summary_en": "No power at 1128 Voss Road since the storm.",
+    "summary_en": "No electricity at 1128 Voss Road since the storm.",
     "symptom": "no_power"
    }
   },
@@ -1884,7 +1884,7 @@
     "landmark": null,
     "language": "en",
     "street": "Pech Road",
-    "summary_en": "Outage at 1084 Pech Road, please help.",
+    "summary_en": "Outage reported at 1084 Pech Road.",
     "symptom": "no_power"
    }
   },
@@ -1900,7 +1900,7 @@
    },
    "output": {
     "account_no": null,
-    "cause_hint": "storm",
+    "cause_hint": null,
     "hazard": "none",
     "house_no": 1020,
     "is_junk": false,
@@ -1976,7 +1976,7 @@
     "landmark": null,
     "language": "en",
     "street": "Winningham Lane",
-    "summary_en": "Power outage at 1096 Winningham Lane.",
+    "summary_en": "Lights went out at house 1096 on Winningham Lane.",
     "symptom": "no_power"
    }
   },
@@ -1999,7 +1999,7 @@
     "landmark": null,
     "language": "en",
     "street": "Pech Road",
-    "summary_en": "Lights out at 1160 Pech Road.",
+    "summary_en": "Lights went out at 1160 Pech Road.",
     "symptom": "no_power"
    }
   },
@@ -2045,7 +2045,7 @@
     "landmark": null,
     "language": "en",
     "street": "Monarch Oaks Street",
-    "summary_en": "Lights went out at house 1056 on Monarch Oaks Street.",
+    "summary_en": "Power outage at 1056 Monarch Oaks Street.",
     "symptom": "no_power"
    }
   },
@@ -2091,7 +2091,7 @@
     "landmark": null,
     "language": "en",
     "street": "Winningham Lane",
-    "summary_en": "Lights out at 1224 Winningham Lane.",
+    "summary_en": "Power out at 1224 Winningham Lane.",
     "symptom": "no_power"
    }
   },
@@ -2114,7 +2114,7 @@
     "landmark": null,
     "language": "en",
     "street": "Pech Road",
-    "summary_en": "Lights out at house 1068 on Pech Road.",
+    "summary_en": "Power out at 1068 Pech Road.",
     "symptom": "no_power"
    }
   },
@@ -2137,7 +2137,7 @@
     "landmark": null,
     "language": "en",
     "street": "Winningham Lane",
-    "summary_en": "Power outage at 1148 Winningham Lane.",
+    "summary_en": "Power outage reported at house 1148 on Winningham Lane.",
     "symptom": "no_power"
    }
   },
@@ -2183,7 +2183,7 @@
     "landmark": null,
     "language": "en",
     "street": "Huge Oaks Street",
-    "summary_en": "Power outage at 1052 Huge Oaks Street.",
+    "summary_en": "Power's out at 1052 Huge Oaks Street.",
     "symptom": "no_power"
    }
   },
@@ -2206,7 +2206,7 @@
     "landmark": null,
     "language": "en",
     "street": "Maravilla Drive",
-    "summary_en": "Lights out at house 1080 on Maravilla Drive.",
+    "summary_en": "Power outage at 1080 Maravilla Drive.",
     "symptom": "no_power"
    }
   },
@@ -2229,7 +2229,7 @@
     "landmark": null,
     "language": "en",
     "street": "Winningham Lane",
-    "summary_en": "House at 1332 Winningham Lane still without power while street power is back.",
+    "summary_en": "Street has power back but 1332 Winningham Lane is still out.",
     "symptom": "no_power"
    }
   },
@@ -2314,7 +2314,7 @@
    },
    "output": {
     "account_no": null,
-    "cause_hint": "storm",
+    "cause_hint": null,
     "hazard": "none",
     "house_no": 1020,
     "is_junk": false,
@@ -2344,7 +2344,7 @@
     "landmark": null,
     "language": "en",
     "street": "Maravilla Drive",
-    "summary_en": "Power is out at 1060 Maravilla Drive.",
+    "summary_en": "Power's out at 1060 Maravilla Drive.",
     "symptom": "no_power"
    }
   },
@@ -2436,7 +2436,7 @@
     "landmark": null,
     "language": "en",
     "street": "Voss Road",
-    "summary_en": "Power is out at 1124 Voss Road with no visible hazard.",
+    "summary_en": "Power is out at 1124 Voss Road, no hazard visible.",
     "symptom": "no_power"
    }
   },
@@ -2505,7 +2505,7 @@
     "landmark": null,
     "language": "en",
     "street": "Voss Road",
-    "summary_en": "No power at 1128 Voss Road since the storm.",
+    "summary_en": "No electricity at 1128 Voss Road since the storm.",
     "symptom": "no_power"
    }
   },
@@ -2528,7 +2528,7 @@
     "landmark": null,
     "language": "en",
     "street": "Huge Oaks Street",
-    "summary_en": "Outage at 1132 Huge Oaks Street, please help.",
+    "summary_en": "Outage reported at 1132 Huge Oaks Street.",
     "symptom": "no_power"
    }
   },
@@ -2551,7 +2551,7 @@
     "landmark": null,
     "language": "en",
     "street": "Huge Oaks Street",
-    "summary_en": "Lights went out at house 1068 on Huge Oaks Street.",
+    "summary_en": "Power is out at house 1068 on Huge Oaks Street.",
     "symptom": "no_power"
    }
   },
@@ -2620,7 +2620,7 @@
     "landmark": null,
     "language": "en",
     "street": null,
-    "summary_en": "Spam message claiming a $500 gift card win with a link.",
+    "summary_en": "Spam message about winning a $500 gift card.",
     "symptom": "none"
    }
   },
@@ -2643,7 +2643,7 @@
     "landmark": null,
     "language": "es",
     "street": "Ronson Road",
-    "summary_en": "Power is very low at 1144 Ronson Road, no hazard seen.",
+    "summary_en": "Power is very low/dim at 1144 Ronson Road, no hazard seen.",
     "symptom": "partial_power"
    }
   },
@@ -2666,7 +2666,7 @@
     "landmark": null,
     "language": "es",
     "street": "Ronson Road",
-    "summary_en": "Power is very low at 1160 Ronson Road, no hazard seen.",
+    "summary_en": "Power is very low at 1160 Ronson Road, no hazard observed.",
     "symptom": "partial_power"
    }
   },
@@ -2774,7 +2774,7 @@
    },
    "output": {
     "account_no": null,
-    "cause_hint": "storm",
+    "cause_hint": null,
     "hazard": "none",
     "house_no": 1120,
     "is_junk": false,
@@ -2804,7 +2804,7 @@
     "landmark": null,
     "language": "es",
     "street": "Monarch Oaks Street",
-    "summary_en": "No power at house 1036 on Monarch Oaks Street.",
+    "summary_en": "No power at 1036 Monarch Oaks Street.",
     "symptom": "no_power"
    }
   },
@@ -2827,7 +2827,7 @@
     "landmark": null,
     "language": "en",
     "street": "Gingerleaf Lane",
-    "summary_en": "Power outage reported at house 1008 on Gingerleaf Lane.",
+    "summary_en": "Power out at 1008 Gingerleaf Lane.",
     "symptom": "no_power"
    }
   },
@@ -2850,7 +2850,7 @@
     "landmark": null,
     "language": "en",
     "street": "Pech Road",
-    "summary_en": "Outage reported at 1136 Pech Road.",
+    "summary_en": "Outage at 1136 Pech Road, help requested.",
     "symptom": "no_power"
    }
   },
@@ -2912,7 +2912,7 @@
    },
    "output": {
     "account_no": null,
-    "cause_hint": "storm",
+    "cause_hint": null,
     "hazard": "none",
     "house_no": 1412,
     "is_junk": false,
@@ -2988,7 +2988,7 @@
     "landmark": null,
     "language": "es",
     "street": "Ronson Road",
-    "summary_en": "Only half the house has power at 1168 Ronson Road.",
+    "summary_en": "Half the house has power at 1168 Ronson Road.",
     "symptom": "partial_power"
    }
   },
@@ -3034,7 +3034,7 @@
     "landmark": null,
     "language": "en",
     "street": "Winningham Lane",
-    "summary_en": "Power outage at 1096 Winningham Lane.",
+    "summary_en": "Lights went out at house 1096 on Winningham Lane.",
     "symptom": "no_power"
    }
   },
@@ -3057,7 +3057,7 @@
     "landmark": null,
     "language": "en",
     "street": "Gingerleaf Lane",
-    "summary_en": "Power outage reported at house 1008 on Gingerleaf Lane.",
+    "summary_en": "Power out at 1008 Gingerleaf Lane.",
     "symptom": "no_power"
    }
   },
@@ -3080,7 +3080,7 @@
     "landmark": null,
     "language": "en",
     "street": "Pech Road",
-    "summary_en": "Lights out at house 1068 on Pech Road.",
+    "summary_en": "Power out at 1068 Pech Road.",
     "symptom": "no_power"
    }
   },
@@ -3096,14 +3096,14 @@
    },
    "output": {
     "account_no": null,
-    "cause_hint": null,
+    "cause_hint": "storm",
     "hazard": "none",
     "house_no": 1220,
     "is_junk": false,
     "landmark": null,
     "language": "es",
     "street": "Huge Oaks Street",
-    "summary_en": "No power at 1220 Huge Oaks Street since the storm.",
+    "summary_en": "No electricity at 1220 Huge Oaks Street since the storm.",
     "symptom": "no_power"
    }
   },
@@ -3149,7 +3149,7 @@
     "landmark": null,
     "language": "en",
     "street": "Westwood Drive",
-    "summary_en": "Outage reported at 1012 Westwood Drive, help requested.",
+    "summary_en": "Outage reported at 1012 Westwood Drive.",
     "symptom": "no_power"
    }
   },
@@ -3172,7 +3172,7 @@
     "landmark": null,
     "language": "es",
     "street": "Ronson Road",
-    "summary_en": "Power is very low at 1144 Ronson Road.",
+    "summary_en": "Lights are very dim/low voltage at 1144 Ronson Road.",
     "symptom": "partial_power"
    }
   },
@@ -3195,7 +3195,7 @@
     "landmark": null,
     "language": "en",
     "street": null,
-    "summary_en": "Spam message claiming a $500 gift card win with a link.",
+    "summary_en": "Spam message about winning a $500 gift card.",
     "symptom": "none"
    }
   },
@@ -3218,7 +3218,7 @@
     "landmark": null,
     "language": "en",
     "street": "Maravilla Drive",
-    "summary_en": "Lights out at house 1080 on Maravilla Drive.",
+    "summary_en": "Power outage at 1080 Maravilla Drive.",
     "symptom": "no_power"
    }
   },
@@ -3264,7 +3264,7 @@
     "landmark": null,
     "language": "en",
     "street": "Pech Road",
-    "summary_en": "Outage reported at 1136 Pech Road.",
+    "summary_en": "Outage at 1136 Pech Road, help requested.",
     "symptom": "no_power"
    }
   },
@@ -3280,14 +3280,14 @@
    },
    "output": {
     "account_no": null,
-    "cause_hint": null,
+    "cause_hint": "storm",
     "hazard": "none",
     "house_no": 1044,
     "is_junk": false,
     "landmark": null,
     "language": "es",
     "street": "Westwood Drive",
-    "summary_en": "No power at 1044 Westwood Drive since the storm.",
+    "summary_en": "No electricity at 1044 Westwood Drive since the storm.",
     "symptom": "no_power"
    }
   },
@@ -3310,7 +3310,7 @@
     "landmark": null,
     "language": "en",
     "street": "Westwood Drive",
-    "summary_en": "Power outage at 1140 Westwood Drive.",
+    "summary_en": "Power is out at 1140 Westwood Drive.",
     "symptom": "no_power"
    }
   },
@@ -3333,7 +3333,7 @@
     "landmark": null,
     "language": "en",
     "street": "Burkhart Road",
-    "summary_en": "Lights out at house 1236 on Burkhart Road, no hazard observed.",
+    "summary_en": "Power out at house 1236 on Burkhart Road, no visible hazard.",
     "symptom": "no_power"
    }
   },
@@ -3349,7 +3349,7 @@
    },
    "output": {
     "account_no": null,
-    "cause_hint": "storm",
+    "cause_hint": null,
     "hazard": "none",
     "house_no": 1120,
     "is_junk": false,
@@ -3379,7 +3379,7 @@
     "landmark": null,
     "language": "en",
     "street": "Pech Road",
-    "summary_en": "Lights out at 1160 Pech Road.",
+    "summary_en": "Lights went out at 1160 Pech Road.",
     "symptom": "no_power"
    }
   },
@@ -3425,7 +3425,7 @@
     "landmark": null,
     "language": "en",
     "street": "Burkhart Road",
-    "summary_en": "Outage reported at 1228 Burkhart Road, help requested.",
+    "summary_en": "Outage reported at 1228 Burkhart Road.",
     "symptom": "no_power"
    }
   },
@@ -3441,14 +3441,14 @@
    },
    "output": {
     "account_no": null,
-    "cause_hint": null,
+    "cause_hint": "storm",
     "hazard": "none",
     "house_no": 1044,
     "is_junk": false,
     "landmark": null,
     "language": "es",
     "street": "Westwood Drive",
-    "summary_en": "No power at 1044 Westwood Drive since the storm.",
+    "summary_en": "No electricity at 1044 Westwood Drive since the storm.",
     "symptom": "no_power"
    }
   },
@@ -3471,7 +3471,7 @@
     "landmark": null,
     "language": "es",
     "street": "Ronson Road",
-    "summary_en": "Power is very low at 1100 Ronson Road.",
+    "summary_en": "Power is very low/dim at 1100 Ronson Road.",
     "symptom": "partial_power"
    }
   },
@@ -3494,7 +3494,7 @@
     "landmark": null,
     "language": "es",
     "street": "Ronson Road",
-    "summary_en": "Power is very low at 1160 Ronson Road.",
+    "summary_en": "Power is very low/dim at 1160 Ronson Road.",
     "symptom": "partial_power"
    }
   },
@@ -3517,7 +3517,7 @@
     "landmark": null,
     "language": "en",
     "street": null,
-    "summary_en": "Caller asks to fix their wifi router.",
+    "summary_en": "Caller asks to fix wifi router, unrelated to power outage.",
     "symptom": "none"
    }
   },
@@ -3579,7 +3579,7 @@
    },
    "output": {
     "account_no": null,
-    "cause_hint": null,
+    "cause_hint": "storm",
     "hazard": "none",
     "house_no": 1272,
     "is_junk": false,
@@ -3655,7 +3655,7 @@
     "landmark": null,
     "language": "en",
     "street": "Westwood Drive",
-    "summary_en": "Outage reported at 1012 Westwood Drive, help requested.",
+    "summary_en": "Outage reported at 1012 Westwood Drive.",
     "symptom": "no_power"
    }
   },
@@ -3678,7 +3678,7 @@
     "landmark": null,
     "language": "en",
     "street": "Westwood Drive",
-    "summary_en": "Power outage at 1140 Westwood Drive.",
+    "summary_en": "Power is out at 1140 Westwood Drive.",
     "symptom": "no_power"
    }
   },
@@ -3701,7 +3701,7 @@
     "landmark": null,
     "language": "es",
     "street": "Winningham Lane",
-    "summary_en": "Street has power but house at 1320 Winningham Lane is still without electricity.",
+    "summary_en": "Street has power but my house at 1320 Winningham Lane is still without electricity.",
     "symptom": "no_power"
    }
   },

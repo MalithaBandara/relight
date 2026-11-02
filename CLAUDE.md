@@ -433,8 +433,10 @@ All writes to the engine go through one `asyncio.Lock` in `server.py` (replay, o
   Realtime with 100 keywords: handshake 4.7 s, three clips back to back, transcripts exact, no errors.
   Spark `reasoning_effort` (top-level field: minimal|low|medium|high|xhigh|max; `none` is a 400): `minimal` cut extraction
   latency 4.4 -> 2.4 s (~74% fewer output tokens) and Sinhala line wording 9.9 -> 2.8 s (~88% fewer), same results on a
-  tiny sample. Off by default (`SPARK_EFFORT` unset) so no cached request key changes; set it to adopt, then re-run
-  Galle/Houston (~$1.1 / ~$1.5) because every request changes. Spark listening to Sinhala needs a domain hint in the
+  tiny sample. **Adopted 2026-11-02**: `config.SPARK_EFFORT` defaults to `minimal` (`SPARK_EFFORT=off` restores the old request keys), and the engine's
+  file transcription passes the feeder's names as keywords. Galle and Houston were re-run live (Galle 6/6, Houston 7/7, 0 dark;
+  extraction Galle street 92 / house 94 / symptom 92 / hazard 94, Houston 98 / 98 / 99 / 99). Minimal effort made a crew say
+  "wire down and live" read as `wire_down` + `energised`, so `Extractor.crew_note` maps that to `live_wire` in code. Spark listening to Sinhala needs a domain hint in the
   prompt (done in `spark_listen`): without it C02 came out as near-nonsense and was filed as junk; with it, at
   `minimal` effort, it reads "Hospital Road ... a pole has fallen" in 8.5 s (house number still off: 40 for 47; higher
   efforts were slower and invented place names).
@@ -685,12 +687,15 @@ Portal call (`portalcall.py`, `web/customer.html`)
       browser (`scripts/check_offline.py`).
 - [ ] Microphone in a real browser (Chrome on a phone too): pause detection threshold (`SPEECH_RMS`), echo when the
       agent's line is still playing, `getUserMedia` on a non-localhost host (needs HTTPS).
-- [ ] Voice Transcribe on a real microphone utterance (en/ta/hi/es) and Spark listening to Sinhala: accuracy, wait,
-      cost per call (about 5 Spark requests and 3 short clips).
+- [x] Live 2026-11-02 with synthetic speech standing in for a microphone: English call (Voice Transcribe exact, ~7 s per turn), Tamil (Voice
+      Transcribe returned Latin-letter Tamil; Spark still read it; a very short line came back garbled and was filed as junk), Sinhala (Spark
+      heard the street, lost the house number). Agent lines in ta/si contain an English kind label "(pole down)": native-speaker check.
+- [ ] Voice Transcribe on a human microphone (hi/es not tried).
 - [ ] How long a whole call takes (the agent's lines are spoken in real time, about a minute for a short call).
 
 Crew page (`crewreport.py`, `web/crew.html`)
 - [x] Typed path, correction, confirmation, empty/unknown crew: tested in mock mode and in the browser (`scripts/check_offline.py`).
+- [x] Live 2026-11-02, English voice report from synthetic speech: heard exactly, read back by Spark, correction read back, confirmed, filed to I1.
 - [ ] Voice from a real microphone in a real crew's language (Voice Transcribe en/ta/hi/es, Spark for Sinhala), live read-back wording by
       Spark, photo upload from a phone, and crews in the field with a poor connection.
 - [ ] Keyword reader (`_crew_keyword_fields`) is English only; other languages need the API.

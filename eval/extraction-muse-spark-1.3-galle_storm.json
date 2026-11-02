@@ -3,17 +3,17 @@
  "scenario": "galle_storm",
  "summary": {
   "all": {
-   "street": 0.913,
-   "house_no": 0.935,
-   "symptom": 0.935,
-   "hazard": 0.935,
+   "street": 0.915,
+   "house_no": 0.936,
+   "symptom": 0.915,
+   "hazard": 0.936,
    "junk": 1.0
   },
   "en": {
-   "street": 0.897,
-   "house_no": 0.931,
-   "symptom": 0.966,
-   "hazard": 0.966,
+   "street": 0.9,
+   "house_no": 0.933,
+   "symptom": 0.933,
+   "hazard": 0.967,
    "junk": 1.0
   },
   "si": {
@@ -51,7 +51,7 @@
     "landmark": null,
     "language": "en",
     "street": null,
-    "summary_en": "Caller reports power is out at their house and the whole road is dark, with no visible hazard.",
+    "summary_en": "Caller reports power is gone at their house and the whole road is dark, no visible hazard.",
     "symptom": "no_power"
    }
   },
@@ -67,7 +67,7 @@
    },
    "output": {
     "account_no": null,
-    "cause_hint": "bang",
+    "cause_hint": "loud bang",
     "hazard": "wire_down",
     "house_no": null,
     "is_junk": false,
@@ -94,10 +94,10 @@
     "hazard": "none",
     "house_no": null,
     "is_junk": false,
-    "landmark": null,
+    "landmark": "hospital",
     "language": "en",
     "street": "Hospital Road",
-    "summary_en": "Galle Teaching Hospital Annex on Hospital Road reports mains power loss, running on generator, requests urgent restoration.",
+    "summary_en": "Galle Teaching Hospital annex on Hospital Road has lost mains power and is on generator, requesting urgent restoration.",
     "symptom": "no_power"
    }
   },
@@ -143,7 +143,7 @@
     "landmark": null,
     "language": "ta",
     "street": "Hospital Road",
-    "summary_en": "Caller from No. 75, Hospital Road reports no power.",
+    "summary_en": "Caller from No. 75, Hospital Road reports no current/power.",
     "symptom": "no_power"
    }
   },
@@ -166,7 +166,7 @@
     "landmark": null,
     "language": "en",
     "street": null,
-    "summary_en": "Account 4774971915 has had no electricity since the storm.",
+    "summary_en": "Account 4774971915 has no electricity since the storm.",
     "symptom": "no_power"
    }
   },
@@ -189,7 +189,7 @@
     "landmark": null,
     "language": "en",
     "street": "Hospital Road",
-    "summary_en": "Power cut on Hospital Road near the end, number 95.",
+    "summary_en": "Power cut on Hospital Road, number 95.",
     "symptom": "no_power"
    }
   },
@@ -212,7 +212,7 @@
     "landmark": "temple",
     "language": "en",
     "street": "Temple Road",
-    "summary_en": "Power outage at No. 60 Temple Road near the temple after wind, no hazard visible.",
+    "summary_en": "Power went off after the wind at No. 60 Temple Road near the temple, no hazard seen.",
     "symptom": "no_power"
    }
   },
@@ -235,7 +235,7 @@
     "landmark": null,
     "language": "si",
     "street": null,
-    "summary_en": "Still no power, number 47.",
+    "summary_en": "Still no power. Number 47.",
     "symptom": "no_power"
    }
   },
@@ -274,14 +274,14 @@
    },
    "output": {
     "account_no": null,
-    "cause_hint": "tree",
+    "cause_hint": "tree fell on wire",
     "hazard": "tree_on_line",
     "house_no": 70,
     "is_junk": false,
     "landmark": "temple",
     "language": "si",
     "street": "Temple Road",
-    "summary_en": "Large tree fallen onto wires near temple, no power at 70 Temple Road.",
+    "summary_en": "Large tree near temple fell onto wire, no power at house 70 Temple Road.",
     "symptom": "no_power"
    }
   },
@@ -304,7 +304,7 @@
     "landmark": null,
     "language": "si",
     "street": "Hospital Road",
-    "summary_en": "No power at 30 Hospital Road, asking when power will return.",
+    "summary_en": "No power at 30 Hospital Road, asking when it will come back.",
     "symptom": "no_power"
    }
   },
@@ -327,7 +327,7 @@
     "landmark": null,
     "language": "en",
     "street": "Hospital Road",
-    "summary_en": "No power at 60 Hospital Road.",
+    "summary_en": "Power outage at 60 Hospital Road.",
     "symptom": "no_power"
    }
   },
@@ -350,7 +350,7 @@
     "landmark": "temple",
     "language": "si",
     "street": null,
-    "summary_en": "No electricity near the temple.",
+    "summary_en": "No electricity near the temple",
     "symptom": "no_power"
    }
   },
@@ -370,10 +370,10 @@
     "hazard": "none",
     "house_no": null,
     "is_junk": false,
-    "landmark": "water pumping station",
+    "landmark": "Wakwella pumping station",
     "language": "en",
     "street": null,
-    "summary_en": "Wakwella water pumping station lost power and pumps are down, town water supply will stop in two hours.",
+    "summary_en": "Wakwella water pumping station has lost power and pumps are down, town water supply will stop in about two hours.",
     "symptom": "no_power"
    }
   },
@@ -396,7 +396,7 @@
     "landmark": "market",
     "language": "en",
     "street": "Market Street",
-    "summary_en": "Sparking wire lying on Market Street near the market with people walking past.",
+    "summary_en": "Sparking wire lying on Market Street near the market, people walking past, urgent help requested.",
     "symptom": "none"
    }
   },
@@ -419,7 +419,7 @@
     "landmark": null,
     "language": "en",
     "street": "Hospital Road",
-    "summary_en": "Power off on whole lane at 88 Hospital Road.",
+    "summary_en": "Lights off on whole lane, Hospital Road 88",
     "symptom": "no_power"
    }
   },
@@ -442,7 +442,7 @@
     "landmark": "market",
     "language": "si",
     "street": "Market Street",
-    "summary_en": "Wire fallen and sparking near the market at 10 Market Street.",
+    "summary_en": "A wire has fallen near the pola on Market Street 10 and is sparking.",
     "symptom": "none"
    }
   },
@@ -485,10 +485,10 @@
     "hazard": "none",
     "house_no": null,
     "is_junk": false,
-    "landmark": "hospital annex",
+    "landmark": "hospital",
     "language": "en",
     "street": null,
-    "summary_en": "Hospital annex on generator for operating theatre requesting update for account 9000000000.",
+    "summary_en": "Hospital annex on generator for operating theatre, asking for update on account 9000000000.",
     "symptom": "no_power"
    }
   },
@@ -511,7 +511,7 @@
     "landmark": null,
     "language": "en",
     "street": "Market Street",
-    "summary_en": "Lights very dim and fridge stopped, half power at 30 Market Street.",
+    "summary_en": "Half power with dim lights at 30 Market Street, fridge stopped.",
     "symptom": "partial_power"
    }
   },
@@ -556,8 +556,8 @@
     "is_junk": false,
     "landmark": null,
     "language": "ta",
-    "street": "Pumping Station Road",
-    "summary_en": "No power at house number 30 on Pumping Station Road; no hazard observed.",
+    "street": "Wadakam Pumping Station Road",
+    "summary_en": "House No. 30 on Wadakam Pumping Station Road has no power, no visible cause reported.",
     "symptom": "no_power"
    }
   },
@@ -580,7 +580,7 @@
     "landmark": null,
     "language": "en",
     "street": "Karapitiya Road",
-    "summary_en": "House at 200 Karapitiya Road has no power while neighbours have lights, no hazard observed.",
+    "summary_en": "House at 200 Karapitiya Road has no power while neighbours have lights, no hazard seen.",
     "symptom": "no_power"
    }
   },
@@ -603,7 +603,7 @@
     "landmark": null,
     "language": "ta",
     "street": "Hospital Road",
-    "summary_en": "No electricity at 12 Hospital Road since morning.",
+    "summary_en": "No power at 12 Hospital Road since morning.",
     "symptom": "no_power"
    }
   },
@@ -626,7 +626,7 @@
     "landmark": null,
     "language": "en",
     "street": "Cinnamon Gardens Lane",
-    "summary_en": "No power on reporter's side of the lane at 50 Cinnamon Gardens Lane, bang heard from transformer.",
+    "summary_en": "No power on one side of the lane at 50 Cinnamon Gardens Lane, bang heard from transformer.",
     "symptom": "no_power"
    }
   },
@@ -647,7 +647,7 @@
     "house_no": 100,
     "is_junk": false,
     "landmark": null,
-    "language": "si",
+    "language": "en",
     "street": "Temple Road",
     "summary_en": "No power at 100 Temple Road.",
     "symptom": "no_power"
@@ -672,7 +672,7 @@
     "landmark": null,
     "language": "si",
     "street": "Hospital Road",
-    "summary_en": "No power at 30 Hospital Road.",
+    "summary_en": "No power at No. 30 Hospital Road.",
     "symptom": "no_power"
    }
   },
@@ -682,7 +682,7 @@
    "checks": {
     "street": true,
     "house_no": true,
-    "symptom": true,
+    "symptom": false,
     "hazard": true,
     "junk": true
    },
@@ -695,8 +695,8 @@
     "landmark": null,
     "language": "en",
     "street": "Market Street",
-    "summary_en": "Low voltage with flickering lights at 45 Market Street.",
-    "symptom": "partial_power"
+    "summary_en": "Low voltage and flickering lights at 45 Market Street",
+    "symptom": "flicker"
    }
   },
   {
@@ -718,7 +718,7 @@
     "landmark": null,
     "language": "en",
     "street": null,
-    "summary_en": "Caller asks for help with TV remote not working, unrelated to power outage.",
+    "summary_en": "Caller asks for help with a TV remote, not a power issue.",
     "symptom": "none"
    }
   },
@@ -741,7 +741,7 @@
     "landmark": null,
     "language": "en",
     "street": "Temple Road",
-    "summary_en": "House 60 Temple Road still has no power after five minutes.",
+    "summary_en": "Temple Road 60 still has no power after five minutes.",
     "symptom": "no_power"
    }
   },
@@ -764,7 +764,7 @@
     "landmark": null,
     "language": "en",
     "street": "Lake Road",
-    "summary_en": "Power outage at No. 9 Lake Road during wind, neighbours still have power, no hazard seen.",
+    "summary_en": "House No 9 on Lake Road has no power after wind, while some houses on road still have lights, no hazard seen.",
     "symptom": "no_power"
    }
   },
@@ -787,7 +787,7 @@
     "landmark": null,
     "language": "en",
     "street": "Hospital Road",
-    "summary_en": "Pole broken in half in front of 52 Hospital Road with wires on ground but no sparks.",
+    "summary_en": "Pole broken in half in front of house 52 Hospital Road with wires on ground but no sparks.",
     "symptom": "none"
    }
   },
@@ -810,7 +810,7 @@
     "landmark": null,
     "language": "ta",
     "street": "Market Street",
-    "summary_en": "Light burning dimly at 70 Market Street.",
+    "summary_en": "House 70 Market Street has dim lights.",
     "symptom": "partial_power"
    }
   },
@@ -833,7 +833,7 @@
     "landmark": null,
     "language": "si",
     "street": "Lake Road",
-    "summary_en": "No power at No. 12, Lake Road.",
+    "summary_en": "No power at No. 12 Lake Road.",
     "symptom": "no_power"
    }
   },
@@ -856,7 +856,7 @@
     "landmark": "market",
     "language": "en",
     "street": null,
-    "summary_en": "Sparking wire near the market nearly touched a dog.",
+    "summary_en": "Sparking wire near the market nearly touched by a dog.",
     "symptom": "none"
    }
   },
@@ -879,7 +879,7 @@
     "landmark": null,
     "language": "en",
     "street": "Hospital Road",
-    "summary_en": "House 95 on Hospital Road still has no power.",
+    "summary_en": "No power at 95 Hospital Road.",
     "symptom": "no_power"
    }
   },
@@ -948,7 +948,7 @@
     "landmark": null,
     "language": "en",
     "street": "Hospital Road",
-    "summary_en": "No power at 70 Hospital Road, broken pole down the road reported with photo.",
+    "summary_en": "No power at No. 70 Hospital Road, broken pole down the road (photo sent).",
     "symptom": "no_power"
    }
   },
@@ -971,7 +971,7 @@
     "landmark": null,
     "language": "ta",
     "street": "Lake Road",
-    "summary_en": "No power at 14 Lake Road, no hazard seen.",
+    "summary_en": "No power at 14 Lake Road, no hazard observed.",
     "symptom": "no_power"
    }
   },
@@ -994,8 +994,31 @@
     "landmark": null,
     "language": "si",
     "street": null,
-    "summary_en": "You guys don't do your work properly!!!",
+    "summary_en": "Complaint that you do not work properly, with no outage information.",
     "symptom": "none"
+   }
+  },
+  {
+   "id": "C61",
+   "language": "en",
+   "checks": {
+    "street": true,
+    "house_no": true,
+    "symptom": true,
+    "hazard": true,
+    "junk": true
+   },
+   "output": {
+    "account_no": null,
+    "cause_hint": "storm",
+    "hazard": "pole_down",
+    "house_no": 54,
+    "is_junk": false,
+    "landmark": null,
+    "language": "en",
+    "street": "Hospital Road",
+    "summary_en": "No power at 54 Hospital Road; pole outside number 52 snapped and hanging in wires.",
+    "symptom": "no_power"
    }
   },
   {
@@ -1017,7 +1040,7 @@
     "landmark": null,
     "language": "ta",
     "street": "Cinnamon Gardens Lane",
-    "summary_en": "No power at 64 Cinnamon Gardens Lane, only on our side, no hazard seen.",
+    "summary_en": "No power at 64 Cinnamon Gardens Lane, only on our side, no hazard visible.",
     "symptom": "no_power"
    }
   },
@@ -1063,7 +1086,7 @@
     "landmark": null,
     "language": "en",
     "street": "Market Street",
-    "summary_en": "House No. 30 on Market Street still has half power.",
+    "summary_en": "House No 30 on Market Street still has half power.",
     "symptom": "partial_power"
    }
   },
@@ -1086,7 +1109,7 @@
     "landmark": null,
     "language": "en",
     "street": "Cinnamon Gardens Lane",
-    "summary_en": "Still no power at 50 Cinnamon Gardens Lane.",
+    "summary_en": "No power at 50 Cinnamon Gardens Lane.",
     "symptom": "no_power"
    }
   }

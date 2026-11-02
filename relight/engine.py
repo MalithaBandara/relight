@@ -396,7 +396,8 @@ class Engine:
             bias = {"en": ["English"], "ta": ["Tamil", "English"], "hi": ["Hindi", "English"],
                     "es": ["Spanish", "English"]}.get(lang)
             try:
-                res = await asyncio.to_thread(self.client.transcribe, config.ROOT / audio, bias)
+                res = await asyncio.to_thread(self.client.transcribe, config.ROOT / audio, bias,
+                                             self.agent.keywords())
             except Exception as err:  # noqa: BLE001
                 res = None
                 await self.log("Code", f"{e['id']}: transcription failed, using text", str(err)[:160], e["id"])

@@ -88,8 +88,9 @@ All three scenarios run end to end on the same engine (`scripts/run_headless.py 
 | Houston, USA | OpenStreetMap, Spring Branch, smart meters that fail mid-storm | 3,044 | ~221 | 7 of 7 | 0 |
 | Chennai, India | OpenStreetMap, Velachery | 24,559 | ~2,400 | 9 of 9 | 0 |
 
-Galle and Houston were run against the live Meta Model API (Galle: 195 calls, 24 minutes, $1.13; both are cached, so
-replays are free and identical). Chennai's regression run uses the labelled scenario (marked `mock` in the console)
+Galle and Houston were run against the live Meta Model API (the first Galle run: 195 calls, 24 minutes, $1.13; both were
+re-run on 2026-11-02 with Spark at minimal reasoning effort and Voice Transcribe keywords, and are cached, so replays are
+free and identical). Chennai's regression run uses the labelled scenario (marked `mock` in the console)
 because a live run takes about 2.5 hours.
 
 **Muse Spark extraction accuracy** against the scenario's labels (`scripts/eval_extraction.py <scenario> --replay`,
@@ -97,17 +98,17 @@ scoring the engine's own live readings):
 
 | Scenario | Scored | Street | House no. | Symptom | Hazard | Junk |
 |---|---|---|---|---|---|---|
-| Galle (en 29, si 11, ta 6) | 46 | 91% | 94% | 94% | 94% | 100% |
-| Houston (en 117, es 44) | 161 | 97% | 98% | 99% | 99% | 100% |
+| Galle (en 30, si 11, ta 6) | 47 | 92% | 94% | 92% | 94% | 100% |
+| Houston (en 117, es 44) | 161 | 98% | 98% | 99% | 99% | 100% |
 
-Most misses are facts the caller gave only later, or that come from caller ID; Sinhala symptoms are the weakest (82%).
+Most misses are facts the caller gave only later, or that come from caller ID; Sinhala symptoms are the weakest (82%). These numbers are from the 2026-11-02 re-run (minimal effort, keywords).
 SMS codes need no model and are not scored.
 
 **Voice Transcribe keywords** (`scripts/eval_keywords.py`, only clips where the caller names the street): 11 of 13
 right with the feeder's street and landmark names as keywords, 6 of 13 without (Galle 4 to 5 of 5, Houston 1 to 3 of 3,
 Chennai 1 to 3 of 5). Small sample, synthetic voices. Each keyword must be 30 characters or fewer, which Meta's docs
 do not say and the API answers with HTTP 400; `fit_keywords` handles it. The realtime line uses keywords already;
-the engine's file transcription does not yet (adopting them changes every cached request).
+the engine's file transcription and the portal call use them too (adopted 2026-11-02).
 
 **Sinhala.** Voice Transcribe lists 25 languages and not Sinhala. Spark listens instead. Told only "transcribe this", its
 Sinhala was near-nonsense; told it is an outage-line call giving a street, a number and what happened, it reads
@@ -121,7 +122,7 @@ confirms the address by caller ID.
 - Spark's Sinhala listening still misreads digits and place names.
 - Hindi calls and agent wording are tested only in the Chennai mock; Spanish wording was measured in Houston.
 - Non-English messages and agent lines have been checked by a native speaker only for Sinhala; the sample Tamil, Hindi and Spanish lines were checked, the rest were not.
-- The portal's voice call (browser microphone) has been tested with typed words and recorded clips, not yet with a live microphone and the live Meta models.
+- The portal call and the crew page were tested live (2026-11-02) with synthetic speech sent to the real Voice Transcribe and Spark (English, Tamil, Sinhala), not with a human microphone. Voice Transcribe returned Tamil in Latin letters for synthetic Tamil; Spark still read it.
 - HEIC photos are refused (HTTP 415); SAM refuses clips over a few MB, so clips are trimmed small.
 - The paper-diagram digitiser is scored but not wired into the engine.
 - Priority weights (for example hospital 400, failed backup power 1,500) are our own choices, not a utility's rules.

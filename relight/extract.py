@@ -123,6 +123,8 @@ class Extractor:
     def crew_note(self, text: str, truth: dict) -> Extraction:
         out = self._call(self.crew_system, text, CREW_SCHEMA, "CrewReport")
         if out is not None:
+            if out.get("energised") and out.get("damage") == "wire_down":
+                out["damage"] = "live_wire"  # the crew said the wire is live; code (not the model's label) decides what that means
             return Extraction(out, self.label)
         if not truth:  # a report typed or spoken by a real crew: no labels, so read the words
             return Extraction(_crew_keyword_fields(text), "mock (keywords)", mock=True)
