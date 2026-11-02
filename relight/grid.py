@@ -121,6 +121,7 @@ class Device:
     label: str
     lat: float
     lon: float
+    target_bus: str | None = None
 
 
 def _move(lat: float, lon: float, heading_deg: float, dist_m: float) -> tuple[float, float]:
@@ -205,15 +206,34 @@ class Feeder:
         self.feeder2_label = f2["label"] if f2 else ""
         if f2:
             self.bus_pos[f2["bus"]] = tuple(f2["pos"])
+        self.source_buses: set[str] = set()
+        if self.feeder2_bus:
+            self.source_buses.add(self.feeder2_bus)
+        for ef in spec.get("external_feeders", []):
+            ebus = ef["bus"]
+            self.source_buses.add(ebus)
+            self.bus_pos[ebus] = tuple(ef["pos"])
+
         self.switches: dict[str, Device] = {}
-        for sid, kind, where, normally_open, label in spec["switches"]:
+        for item in spec["switches"]:
+            if len(item) == 6:
+                sid, kind, where, target_bus, normally_open, label = item
+            else:
+                sid, kind, where, normally_open, label = item
+                target_bus = getattr(self, "feeder2_bus", None) if kind == "tie" else None
             if kind == "tie":
-                a, b = self.bus_pos[where], self.bus_pos[self.feeder2_bus]
-                lat, lon = (a[0] + b[0]) / 2, (a[1] + b[1]) / 2
+                target = target_bus or self.feeder2_bus
+                if where in self.bus_pos and target and target in self.bus_pos:
+                    a, b = self.bus_pos[where], self.bus_pos[target]
+                    lat, lon = (a[0] + b[0]) / 2, (a[1] + b[1]) / 2
+                elif where in self.bus_pos:
+                    lat, lon = self.bus_pos[where]
+                else:
+                    lat, lon = (0.0, 0.0)
             else:
                 lat, lon = self.point_on_section(where, 20)
-            self.switches[sid] = Device(sid, kind, where, True, label, lat, lon)
-        self.normally_open = {sid for sid, _, _, no, _ in spec["switches"] if no}
+            self.switches[sid] = Device(sid, kind, where, True, label, lat, lon, target_bus=target_bus)
+        self.normally_open = {item[0] for item in spec["switches"] if (item[4] if len(item) == 6 else item[3])}
         # Every service transformer is protected by its own drop-out fuse.
         for t in self.transformers.values():
             did = f"XF-{t.id[2:]}"
@@ -304,12 +324,14 @@ class Feeder:
                 "properties": {"kind": "transformer", "id": t.id, "section": t.section, "kva": t.kva},
             })
         for tie in (s for s in self.switches.values() if s.kind == "tie"):
-            a, b = self.bus_pos[tie.section], self.bus_pos[self.feeder2_bus]
-            feats.append({
-                "type": "Feature",
-                "geometry": {"type": "LineString", "coordinates": [[a[1], a[0]], [b[1], b[0]]]},
-                "properties": {"kind": "tie_line", "id": f"TIE-{tie.id}", "street": "Feeder 2 tie"},
-            })
+            target = getattr(tie, "target_bus", None) or self.feeder2_bus
+            if target and tie.section in self.bus_pos and target in self.bus_pos:
+                a, b = self.bus_pos[tie.section], self.bus_pos[target]
+                feats.append({
+                    "type": "Feature",
+                    "geometry": {"type": "LineString", "coordinates": [[a[1], a[0]], [b[1], b[0]]]},
+                    "properties": {"kind": "tie_line", "id": f"TIE-{tie.id}", "street": f"Tie {tie.id}"},
+                })
         if self.feeder2_bus:
             b = self.bus_pos[self.feeder2_bus]
             feats.append({

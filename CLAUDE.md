@@ -88,6 +88,8 @@ Environment variables (`.env`, see `.env.example`): `MODEL_API_KEY`, `META_API_B
 ```
 relight/                 Python package (FastAPI backend and all logic)
   config.py              paths and env settings; MODEL_MODE
+  grid_ieee123.py        IEEE 123-node feeder spec from data/IEEE123Master.dss and synthetic customers (Pine Valley)
+  grid_twotie.py         small invented feeder with two ties for the multi-tie switching demo
   grid.py                Feeder: generic radial network built from a spec; IEEE 34-bus spec for Galle;
                          SECTIONS / DEVICES / SWITCHES constants; geometry helpers (haversine, bearing)
   osmnet.py              builds a feeder spec and customer DB from cached OpenStreetMap roads/buildings
@@ -336,6 +338,8 @@ scenario JSON --> Replayer (clock) --> Engine.handle(event)
 | `chennai_cyclone` | OSM, Velachery, Chennai | 24,559 | ~2,400 | 9 | scale; English/Tamil/Hindi; PWR SMS codes; quiet logging; re-trace every 15 s |
 | `house_fuse` | OSM, Spring Branch, Houston (no meters) | 3,044 | ~4 | 1 | one house dark: a lone report, a neighbour asked, a service fault found by elimination (`Engine._isolated`) |
 | `tree_on_line` | same feeder (no meters) | 3,044 | ~58 | 1 | one tree on a lateral: ~160 customers, a tree crew then a line crew |
+| `ieee123_storm` | IEEE 123-node test feeder (EPRI OpenDSS file, BSD 3-clause), synthetic customers, 3 ties | ~1,660 | 13 | 5 | independent benchmark: 4 of 5 found in mock mode, F1 missed, 16 customers dark (a measurement, not a pass mark; `tests/test_regression.py` pins it) |
+| `two_tie_demo` | invented feeder with two ties (`grid_twotie.py`) | ~290 | ~21 | 1 | multi-tie switching: one pole down, three safe plans (east, north, both), the one restoring most is `recommended` |
 | `hospital_generator` | OSM, Velachery, Chennai (no meters) | 24,559 | ~215 | 3 | three trees on lines, one tree crew; at +90 s after the hospital's fault its generator fails and it calls (`backup_failed`): its outage outranks a larger one and is restored 64 min sooner (01:44 vs 02:48) |
 
 **Before every commit that touches `relight/` or `scenarios/`, run all three and check every real fault
@@ -488,7 +492,8 @@ All writes to the engine go through one `asyncio.Lock` in `server.py` (replay, o
 - Branch: `main`, remote `origin` = `MalithaBandara/relight`. Commit only when the owner asks.
 - Commit messages: imperative subject, body explaining what and why. **No co-author trailers or AI
   attribution of any kind** (see the rule at the top).
-- Never commit `.env`, `.cache/`, `data/*.db`, `.venv/`. `data/osm/*.json` is committed on purpose.
+- Never commit `.env`, `.cache/`, `data/*.db`, `.venv/`. `data/osm/*.json` is committed on purpose, and so are `data/IEEE123Master.dss`
+  and its licence `data/IEEE123Master.LICENSE.txt` (EPRI OpenDSS, BSD 3-clause: the licence text must stay beside the file).
 
 ---
 

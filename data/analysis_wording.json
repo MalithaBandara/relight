@@ -1,0 +1,87 @@
+{
+  "runs": [
+    {
+      "scenario": "galle_storm",
+      "title": "Monsoon squall over Wakwella, Galle",
+      "languages": [
+        {
+          "lang": "en",
+          "lines": 40,
+          "kept": 40,
+          "rejected": 0,
+          "reasons": {},
+          "median_wait_s": 2.5
+        },
+        {
+          "lang": "si",
+          "lines": 6,
+          "kept": 6,
+          "rejected": 0,
+          "reasons": {},
+          "median_wait_s": 2.8
+        },
+        {
+          "lang": "ta",
+          "lines": 13,
+          "kept": 13,
+          "rejected": 0,
+          "reasons": {},
+          "median_wait_s": 2.7
+        }
+      ]
+    },
+    {
+      "scenario": "houston_hurricane",
+      "title": "Hurricane landfall over Spring Branch, Houston",
+      "languages": [
+        {
+          "lang": "en",
+          "lines": 101,
+          "kept": 101,
+          "rejected": 0,
+          "reasons": {},
+          "median_wait_s": 2.5
+        },
+        {
+          "lang": "es",
+          "lines": 41,
+          "kept": 41,
+          "rejected": 0,
+          "reasons": {},
+          "median_wait_s": 2.2
+        }
+      ]
+    },
+    {
+      "scenario": "chennai_cyclone",
+      "title": "Cyclone over Velachery, Chennai",
+      "languages": [
+        {
+          "lang": "ta",
+          "lines": 9,
+          "kept": 9,
+          "rejected": 0,
+          "reasons": {},
+          "median_wait_s": 2.9
+        },
+        {
+          "lang": "en",
+          "lines": 7,
+          "kept": 7,
+          "rejected": 0,
+          "reasons": {},
+          "median_wait_s": 2.4
+        },
+        {
+          "lang": "hi",
+          "lines": 9,
+          "kept": 9,
+          "rejected": 0,
+          "reasons": {},
+          "median_wait_s": 2.0
+        }
+      ]
+    }
+  ],
+  "note": "Muse Spark rewordings verified by deterministic fact-check code. Latency median measured per language from cached API responses."
+}

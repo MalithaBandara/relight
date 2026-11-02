@@ -46,6 +46,21 @@ async def handle(e: dict) -> None:
         await engine.handle(e)
 
 
+def _load_saving_range(name: str) -> dict | None:
+    p = config.DATA_DIR / "analysis_sensitivity.json"
+    if not p.exists():
+        return None
+    try:
+        data = json.loads(p.read_text(encoding="utf-8"))
+        for run in data.get("runs", []):
+            if run.get("scenario") == name:
+                s = run.get("saving_pct", {})
+                return {"min_pct": s.get("min", 0), "max_pct": s.get("max", 0), "n": len(run.get("settings", []))}
+    except Exception:
+        pass
+    return None
+
+
 def open_scenario(name: str) -> None:
     """Build the engine and simulated world for one scenario (network and customers are cached)."""
     global scenario, engine, replayer
@@ -53,6 +68,9 @@ def open_scenario(name: str) -> None:
     crew_reports.clear()
     scenario = load(name)
     engine = Engine(scenario, broadcast)
+    engine.saving_range = _load_saving_range(name)
+    if engine.plan and engine.saving_range:
+        engine.plan["saving_range"] = engine.saving_range
     replayer = Replayer(scenario, handle)
     engine.sim = replayer
     engine.lock = lock
@@ -64,7 +82,8 @@ def list_scenarios() -> list[dict]:
         sc = json.loads(p.read_text(encoding="utf-8"))
         pk = packs.pack(sc)
         out.append({"id": p.stem, "title": sc["title"], "country": packs.locale(sc)["country"],
-                    "smart_meters": bool(pk.get("smart_meters")), "network": pk["network"]["type"]})
+                    "smart_meters": bool(pk.get("smart_meters")), "network": pk["network"]["type"],
+                    "external": bool(sc.get("external"))})
     order = {"galle_storm": 0, "houston_hurricane": 1, "chennai_cyclone": 2}
     return sorted(out, key=lambda s: order.get(s["id"], 9))
 
@@ -92,7 +111,38 @@ class ScenarioChoice(BaseModel):
 
 @app.get("/api/scenarios")
 def scenarios():
-    return {"current": scenario["id"], "scenarios": list_scenarios()}
+    offered = []
+    if (config.DATA_DIR / "analysis_ablation.json").exists():
+        offered.append("ablation")
+    if (config.DATA_DIR / "analysis_sensitivity.json").exists():
+        offered.append("sensitivity")
+    if (config.DATA_DIR / "analysis_wording.json").exists():
+        offered.append("wording")
+    return {"current": scenario["id"], "scenarios": list_scenarios(), "analysis": offered}
+
+
+@app.get("/api/analysis/ablation")
+def analysis_ablation():
+    p = config.DATA_DIR / "analysis_ablation.json"
+    if not p.exists():
+        return JSONResponse({"error": "No ablation data"}, status_code=404)
+    return JSONResponse(json.loads(p.read_text(encoding="utf-8")))
+
+
+@app.get("/api/analysis/sensitivity")
+def analysis_sensitivity():
+    p = config.DATA_DIR / "analysis_sensitivity.json"
+    if not p.exists():
+        return JSONResponse({"error": "No sensitivity data"}, status_code=404)
+    return JSONResponse(json.loads(p.read_text(encoding="utf-8")))
+
+
+@app.get("/api/analysis/wording")
+def analysis_wording():
+    p = config.DATA_DIR / "analysis_wording.json"
+    if not p.exists():
+        return JSONResponse({"error": "No wording data"}, status_code=404)
+    return JSONResponse(json.loads(p.read_text(encoding="utf-8")))
 
 
 @app.post("/api/scenario")
@@ -365,6 +415,7 @@ def grid():
         "network": pk["network"]["type"],
         "start_hour": pk["start_hour"],
         "duration": scenario["duration_s"],
+        "external_note": scenario.get("external_note"),
     }
 
 

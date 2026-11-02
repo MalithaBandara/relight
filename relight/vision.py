@@ -47,12 +47,39 @@ crews and drone patrols. Say what is damaged, how severe it is, whether it endan
 the damage is clearest, and which objects should be tracked through the clip (use short concrete noun phrases)."""
 
 
-def _clearance_m(records: dict[str, list[dict]]) -> float | None:
-    poles = [r for r in records.get("utility pole", []) if r.get("box")]
-    wires = [r for r in records.get("power line", []) if r.get("box")]
+def _clearance_m(records: dict[str, list[dict]], damage: str | None = None) -> float | None:
+    if damage in ("pole_down", "wire_down"):
+        return None
+    poles = []
+    for k, recs in records.items():
+        k_low = k.lower()
+        if "pole" in k_low and "plate" not in k_low and "tag" not in k_low:
+            poles.extend(r for r in recs if r.get("box"))
+    wires = []
+    for k, recs in records.items():
+        k_low = k.lower()
+        if any(w in k_low for w in ("line", "wire", "conductor")):
+            wires.extend(r for r in recs if r.get("box"))
     if not poles or not wires:
         return None
-    pole = max(poles, key=lambda r: r["box"][3] - r["box"][1])
+
+    valid_poles = []
+    for p in poles:
+        x1, y1, x2, y2 = p["box"]
+        w_img, h_img = p.get("w", 0), p.get("h", 0)
+        bw = x2 - x1
+        bh = y2 - y1
+        if bh <= bw:  # taller than wide (standing)
+            continue
+        if w_img > 0 and h_img > 0:
+            if x1 <= 2 or y1 <= 2 or x2 >= w_img - 2 or y2 >= h_img - 2:
+                continue
+        valid_poles.append(p)
+
+    if not valid_poles:
+        return None
+
+    pole = max(valid_poles, key=lambda r: r["box"][3] - r["box"][1])
     x1, y1, x2, y2 = pole["box"]
     px_per_m = (y2 - y1) / POLE_HEIGHT_M
     if px_per_m <= 0:
@@ -194,10 +221,9 @@ def analyse_photo(client: ModelClient, rel_path: str, truth_damage: str | None) 
         lean = masks.photo_lean(records)
     except Exception:  # noqa: BLE001
         lean = None
-    clearance = _clearance_m(records)
-    if clearance is not None and clearance < ROAD_CLEARANCE_M:
-        info["public_hazard"] = True
+    clearance = _clearance_m(records, damage=info.get("damage"))
     return {**{k: v for k, v in info.items() if k != "segment_prompts"}, "clearance_m": clearance,
+            "clearance_note": f"from pole {POLE_HEIGHT_M} m reference" if clearance is not None else None,
             "objects": {p: [{"box": r["box"], "conf": r.get("conf")} for r in recs] for p, recs in records.items()},
             "image_size": next(((r["w"], r["h"]) for recs in records.values() for r in recs), None),
             "overlay": overlay, "pole_lean_deg": lean, "models": models, "mock": models[0].startswith("mock"), "has_image": True}

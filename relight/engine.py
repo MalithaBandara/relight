@@ -83,6 +83,8 @@ class Engine:
         self.live_calls = False
         self.handover = True
         self.lock: asyncio.Lock | None = None
+        self.ablate: set[str] = set()
+        self.saving_range: dict | None = None
         self.reset()
 
     def clock(self, t: float) -> str:
@@ -288,6 +290,20 @@ class Engine:
                     self.ev.meters.setdefault(xf, set()).add(acct)
         for h in self.hazards:
             h["safe"] = h["id"] in safe
+        if "calls" in self.ablate:
+            self.ev.reports.clear()
+            self.ev.partial.clear()
+        if "scada" in self.ablate:
+            self.ev.scada_open.clear()
+        if "damage" in self.ablate:
+            self.ev.damage.clear()
+        if "probes" in self.ablate:
+            self.ev.probes.clear()
+        if "meters" in self.ablate:
+            self.ev.meters.clear()
+            self.ev.meter_counts.clear()
+        if "silence" in self.ablate:
+            self.ev.ablate_silence = True
 
     def _apply(self, m: dict) -> None:
         """Turn one message into evidence (dedup, reports, probes, hazards, damage) unless an incident owns it."""
@@ -737,6 +753,8 @@ class Engine:
                     inc["reports"].append(m["id"])
             for d in L.damage:
                 self.damage_owner[id(d)] = inc["id"]
+            if L.why:
+                inc["why"] = L.why
             self._refresh_outages()
             return inc
         return None
@@ -766,6 +784,7 @@ class Engine:
             "mind_changed": False, "after_restore": after_restore, "restored_at": None, "switching": [],
             "plans": [], "explanation": None, "explanation_model": None, "explained_kind": None, "notified": [],
             "first_t": self.elapsed, "priority": 0.0, "breakdown": {}, "eta": None,
+            "why": L.why,
         }
         if self.sim:
             inc["truth"] = self.sim.identify(self._info(inc))  # scoring only; the agent never reads it
@@ -870,6 +889,9 @@ class Engine:
                 plans = restoration_plans(self.feeder, belief, inc["site_section"], device, work, self.customers)
                 mine = set(inc["out"])
                 # Offer what concerns this fault: plans that restore its customers, or shortcuts that would hit it.
+                for p in plans:
+                    if p.safe and p.customers > 0 and len(set(p.restores) & mine) < len(mine):
+                        p.partial = True
                 inc["plans"] = [p.__dict__ for p in plans if (p.safe and mine & set(p.restores)) or (
                     not p.safe and inc["site_section"] in p.reason)]
             else:
@@ -878,6 +900,8 @@ class Engine:
         # What-if from the storm's start: Relight's ranked plan vs first-call-first-served.
         crews = [Crew(c["id"], c["name"], c["skills"], *self.feeder.bus_pos[c["base"]]) for c in self.crews.values()]
         self.plan = schedule(jobs, crews)
+        if self.saving_range:
+            self.plan["saving_range"] = self.saving_range
         self.baseline = schedule(jobs, crews, baseline=True)
 
     def _eta(self, inc: dict) -> float | None:
@@ -1231,6 +1255,7 @@ class Engine:
             "customers_out": 0, "critical": [], "mind_changed": False, "after_restore": False, "restored_at": None,
             "switching": [], "plans": [], "explanation": None, "explanation_model": None, "explained_kind": None,
             "notified": [], "first_t": m["t"], "priority": 0.0, "breakdown": {}, "eta": None,
+            "why": None,
         }
         if self.sim:
             inc["truth"] = self.sim.identify(self._info(inc))  # scoring only; the agent never reads it

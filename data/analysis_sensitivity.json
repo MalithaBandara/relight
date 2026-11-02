@@ -1,0 +1,119 @@
+{
+  "runs": [
+    {
+      "scenario": "galle_storm",
+      "title": "Monsoon squall over Wakwella, Galle",
+      "baseline_label": "first-call-first-served",
+      "saving_pct": {
+        "min": 12,
+        "median": 29,
+        "max": 45
+      },
+      "settings": [
+        {
+          "label": "Base (standard crews, normal calls)",
+          "relight": 68940,
+          "baseline": 98129
+        },
+        {
+          "label": "Fewer crews (-1 line crew CREW-L2)",
+          "relight": 126174,
+          "baseline": 144002
+        },
+        {
+          "label": "Fewer crews (-1 troubleshooter CREW-T1)",
+          "relight": 69001,
+          "baseline": 116204
+        },
+        {
+          "label": "Extra crew (+1 line crew)",
+          "relight": 62974,
+          "baseline": 88678
+        },
+        {
+          "label": "Extra crew (+1 troubleshooter)",
+          "relight": 68746,
+          "baseline": 96090
+        },
+        {
+          "label": "Late line-fault reports (+15 min, all but fuse and service-wire jobs)",
+          "relight": 68940,
+          "baseline": 125187
+        },
+        {
+          "label": "Late branch reports (+15 min fuse, +30 min service wire)",
+          "relight": 68940,
+          "baseline": 97189
+        },
+        {
+          "label": "Fast baseline patrol (30 min)",
+          "relight": 68940,
+          "baseline": 93039
+        },
+        {
+          "label": "Slow baseline patrol (50 min)",
+          "relight": 68940,
+          "baseline": 103219
+        }
+      ]
+    },
+    {
+      "scenario": "houston_hurricane",
+      "title": "Hurricane landfall over Spring Branch, Houston",
+      "baseline_label": "first-call-first-served",
+      "saving_pct": {
+        "min": 18,
+        "median": 22,
+        "max": 38
+      },
+      "settings": [
+        {
+          "label": "Base (standard crews, normal calls)",
+          "relight": 107336,
+          "baseline": 137647
+        },
+        {
+          "label": "Fewer crews (-1 line crew CREW-L1)",
+          "relight": 142050,
+          "baseline": 179498
+        },
+        {
+          "label": "Fewer crews (-1 troubleshooter CREW-T1)",
+          "relight": 107523,
+          "baseline": 148424
+        },
+        {
+          "label": "Extra crew (+1 line crew)",
+          "relight": 96164,
+          "baseline": 131057
+        },
+        {
+          "label": "Extra crew (+1 troubleshooter)",
+          "relight": 107336,
+          "baseline": 137240
+        },
+        {
+          "label": "Late line-fault reports (+15 min, all but fuse and service-wire jobs)",
+          "relight": 107336,
+          "baseline": 172646
+        },
+        {
+          "label": "Late branch reports (+15 min fuse, +30 min service wire)",
+          "relight": 107336,
+          "baseline": 138476
+        },
+        {
+          "label": "Fast baseline patrol (30 min)",
+          "relight": 107336,
+          "baseline": 131707
+        },
+        {
+          "label": "Slow baseline patrol (50 min)",
+          "relight": 107336,
+          "baseline": 143587
+        }
+      ]
+    }
+  ],
+  "note": "Sweep covers crew availability (removing first dispatched line crew/troubleshooter, adding extra crews), reporting order variations, and manual patrol speed (30–50 min). Late-report variations affect the first-call baseline's ordering only, as Relight prioritizes faults by evidence and customer count."
+}

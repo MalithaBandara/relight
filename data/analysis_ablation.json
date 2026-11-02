@@ -1,0 +1,152 @@
+{
+  "runs": [
+    {
+      "scenario": "galle_storm",
+      "title": "Monsoon squall over Wakwella, Galle",
+      "rows": [
+        {
+          "label": "All evidence",
+          "baseline": true,
+          "found": 6,
+          "total": 6,
+          "located_min_median": 8.2,
+          "confidence_mean": 0.95,
+          "dark_at_end": 0
+        },
+        {
+          "label": "Without silence",
+          "baseline": false,
+          "found": 6,
+          "total": 6,
+          "located_min_median": 8.2,
+          "confidence_mean": 0.95,
+          "dark_at_end": 0
+        },
+        {
+          "label": "Without SCADA",
+          "baseline": false,
+          "found": 6,
+          "total": 6,
+          "located_min_median": 8.2,
+          "confidence_mean": 0.95,
+          "dark_at_end": 0
+        },
+        {
+          "label": "Without neighbour probes",
+          "baseline": false,
+          "found": 4,
+          "total": 6,
+          "located_min_median": 4.8,
+          "confidence_mean": 0.94,
+          "dark_at_end": 0
+        },
+        {
+          "label": "Without damage photos",
+          "baseline": false,
+          "found": 6,
+          "total": 6,
+          "located_min_median": 9.2,
+          "confidence_mean": 0.95,
+          "dark_at_end": 0
+        },
+        {
+          "label": "Calls only",
+          "baseline": false,
+          "found": 0,
+          "total": 6,
+          "located_min_median": null,
+          "confidence_mean": 0.0,
+          "dark_at_end": 375
+        },
+        {
+          "label": "SCADA only",
+          "baseline": false,
+          "found": 2,
+          "total": 6,
+          "located_min_median": 2.2,
+          "confidence_mean": 0.97,
+          "dark_at_end": 0
+        }
+      ]
+    },
+    {
+      "scenario": "houston_hurricane",
+      "title": "Hurricane landfall over Spring Branch, Houston",
+      "rows": [
+        {
+          "label": "All evidence",
+          "baseline": true,
+          "found": 7,
+          "total": 7,
+          "located_min_median": 9.0,
+          "confidence_mean": 0.97,
+          "dark_at_end": 0
+        },
+        {
+          "label": "Without silence",
+          "baseline": false,
+          "found": 7,
+          "total": 7,
+          "located_min_median": 8.5,
+          "confidence_mean": 0.97,
+          "dark_at_end": 0
+        },
+        {
+          "label": "Without SCADA",
+          "baseline": false,
+          "found": 7,
+          "total": 7,
+          "located_min_median": 9.0,
+          "confidence_mean": 0.97,
+          "dark_at_end": 0
+        },
+        {
+          "label": "Without neighbour probes",
+          "baseline": false,
+          "found": 6,
+          "total": 7,
+          "located_min_median": 6.5,
+          "confidence_mean": 0.97,
+          "dark_at_end": 0
+        },
+        {
+          "label": "Without damage photos",
+          "baseline": false,
+          "found": 7,
+          "total": 7,
+          "located_min_median": 9.0,
+          "confidence_mean": 0.97,
+          "dark_at_end": 0
+        },
+        {
+          "label": "Without smart meters",
+          "baseline": false,
+          "found": 7,
+          "total": 7,
+          "located_min_median": 9.0,
+          "confidence_mean": 0.97,
+          "dark_at_end": 0
+        },
+        {
+          "label": "Calls only",
+          "baseline": false,
+          "found": 2,
+          "total": 7,
+          "located_min_median": 7.5,
+          "confidence_mean": 0.97,
+          "dark_at_end": 916
+        },
+        {
+          "label": "SCADA only",
+          "baseline": false,
+          "found": 1,
+          "total": 7,
+          "located_min_median": 1.0,
+          "confidence_mean": 0.97,
+          "dark_at_end": 0
+        }
+      ]
+    }
+  ],
+  "note": "Replayed in mock mode with each evidence source removed. Tested on synthetic storm events."
+}

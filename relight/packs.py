@@ -1,8 +1,8 @@
 """Scenario packs: which network, customers, language and message formats a scenario runs on.
 
 A scenario file's "pack" block names its network (the IEEE 34-bus feeder over Galle, or a
-feeder generated from real OpenStreetMap roads) and its locale. Networks and customer
-databases are built once and cached.
+feeder generated from real OpenStreetMap roads, or the IEEE 123-node test feeder) and its
+locale. Networks and customer databases are built once and cached.
 """
 
 from __future__ import annotations
@@ -29,12 +29,23 @@ def network(sc: dict) -> tuple[Feeder, CustomerDB]:
     """The feeder and customer database for a scenario (built on first use)."""
     p = pack(sc)
     net = p["network"]
-    key = net.get("area", "ieee34")
+    key = net.get("area", net.get("type", "ieee34"))
     if key in _cache:
         return _cache[key]
     if net["type"] == "ieee34":
         feeder = get_feeder()
         db = CustomerDB(DATA_DIR / "galle.db")
+    elif net["type"] == "twotie":
+        from .grid_twotie import get_twotie_feeder, twotie_database
+
+        feeder = get_twotie_feeder()
+        db = twotie_database(feeder)
+    elif net["type"] == "ieee123":
+        from .grid_ieee123 import build_ieee123_database, get_ieee123_feeder
+
+        feeder = get_ieee123_feeder()
+        path = DATA_DIR / "ieee123.db"
+        db = CustomerDB(path, build=lambda pth: build_ieee123_database(pth, feeder))
     else:
         from .osmnet import build_customers, build_spec
 

@@ -11,6 +11,9 @@ The same model serves two purposes: the physical truth of the simulated storm, a
 Relight's belief about the network (its located faults plus the device states it
 knows). Restoration plans are checked against the belief: a plan is blocked if any
 step would energise a section believed faulted or a section where a crew is working.
+
+NOTE: There is no load-flow check (voltage, current, thermal capacity), so a plan using
+multiple ties may overload a feeder in reality.
 """
 
 from __future__ import annotations
@@ -63,7 +66,9 @@ def _graph(feeder: Feeder) -> dict[tuple[str, str], list[tuple[tuple[str, str], 
         link(("sec", sid), ("bus", sec.to_bus))
     for s in feeder.switches.values():
         if s.kind == "tie":
-            link(("bus", s.section), ("bus", feeder.feeder2_bus), [s.id])
+            target = getattr(s, "target_bus", None) or feeder.feeder2_bus
+            if target:
+                link(("bus", s.section), ("bus", target), [s.id])
     feeder.__dict__["_graph"] = adj
     return adj
 
@@ -71,9 +76,16 @@ def _graph(feeder: Feeder) -> dict[tuple[str, str], list[tuple[tuple[str, str], 
 def live_sections(feeder: Feeder, st: NetworkState, ignore_faults: bool = False) -> set[str]:
     """Sections whose body is energised. With ignore_faults, faulted bodies conduct (used to ask
     'would this switching energise the fault?')."""
+    # NOTE: There is no load-flow check (voltage, current, thermal capacity), so a plan using
+    # one or more ties may overload a neighbouring feeder in reality.
     adj = _graph(feeder)
     blocked = set() if ignore_faults else st.faulted
-    seen = {("bus", feeder.root)} | ({("bus", feeder.feeder2_bus)} if feeder.feeder2_bus else set())
+    sources = {("bus", feeder.root)}
+    if getattr(feeder, "feeder2_bus", None):
+        sources.add(("bus", feeder.feeder2_bus))
+    for b in getattr(feeder, "source_buses", set()):
+        sources.add(("bus", b))
+    seen = set(sources)
     stack = list(seen)
     while stack:
         node = stack.pop()
@@ -101,6 +113,11 @@ class Plan:
     reason: str = ""
     restores: list[str] = field(default_factory=list)  # transformers that come back on
     customers: int = 0
+    ties: list[str] = field(default_factory=list)
+    recommended: bool = False
+    partial: bool = False
+    blocked_by: str | None = None
+    ops: int = 0
 
 
 def check_plan(feeder: Feeder, belief: NetworkState, plan: Plan, work_zones: dict[str, str],
@@ -110,6 +127,8 @@ def check_plan(feeder: Feeder, belief: NetworkState, plan: Plan, work_zones: dic
     st = belief.copy()
     before = live_transformers(feeder, belief)
     already = live_sections(feeder, belief, ignore_faults=True)  # only what the plan newly energises counts
+    plan.ops = len(plan.steps)
+    plan.ties = [dev for op, dev in plan.steps if dev in feeder.switches and feeder.switches[dev].kind == "tie"]
     for i, (op, dev) in enumerate(plan.steps, 1):
         (st.open.discard if op == "close" else st.open.add)(dev)
         reach = live_sections(feeder, st, ignore_faults=True) - already
@@ -119,18 +138,21 @@ def check_plan(feeder: Feeder, belief: NetworkState, plan: Plan, work_zones: dic
         if hot_zone:
             s = hot_zone[0]
             plan.safe = False
+            plan.blocked_by = f"crew {work_zones[s]} working on {feeder.sections[s].street}"
             plan.reason = (f"Step {i} ({op} {dev}) would energise section {s} on {feeder.sections[s].street} "
                            f"where {work_zones[s]} is working")
             return plan
         if hot_fault:
             s = hot_fault[0]
             plan.safe = False
+            plan.blocked_by = "would re-energise the faulted section"
             plan.reason = (f"Step {i} ({op} {dev}) would re-energise the faulted section {s} on "
                            f"{feeder.sections[s].street}: it would trip again or back-feed the fault")
             return plan
         if hot_suspect:
             s = hot_suspect[0]
             plan.safe = False
+            plan.blocked_by = "unconfirmed fault in zone"
             plan.reason = (f"Step {i} ({op} {dev}) would energise section {s} on {feeder.sections[s].street}, "
                            f"inside a fault zone whose exact location is not confirmed yet")
             return plan
@@ -145,13 +167,18 @@ def check_plan(feeder: Feeder, belief: NetworkState, plan: Plan, work_zones: dic
 def restoration_plans(feeder: Feeder, belief: NetworkState, faulted_section: str, device: str | None,
                       work_zones: dict[str, str], customers: dict[str, int]) -> list[Plan]:
     """Switching options for one located fault: the tempting shortcuts and the isolate-then-restore plan."""
+    # NOTE: There is no load-flow check (voltage, current, thermal capacity), so a plan using
+    # one or more ties may overload a neighbouring feeder in reality.
     switches = {s.section: s.id for s in feeder.switches.values() if s.kind == "switch"}
     ties = [s for s in feeder.switches.values() if s.kind == "tie" and s.id in belief.open]
     plans: list[Plan] = []
     if device and device in belief.open and feeder.devices[device].kind in REMOTE_KINDS:
         plans.append(Plan("reclose", f"Reclose {device}", [("close", device)]))
     for t in ties:
-        plans.append(Plan(f"tie-{t.id}", f"Close tie {t.id} to Feeder 2", [("close", t.id)]))
+        target_name = getattr(t, "target_bus", None) or feeder.feeder2_label or "Feeder 2"
+        plans.append(Plan(f"tie-{t.id}", f"Close tie {t.id} to {target_name}" if len(ties) == 1 else f"Close tie {t.id}", [("close", t.id)]))
+    if len(ties) > 1:
+        plans.append(Plan("tie-all", f"Close all ties ({', '.join(t.id for t in ties)})", [("close", t.id) for t in ties]))
 
     # Isolation: the nearest switch at or above the fault (below the tripped device) and the
     # nearest switch on every branch leaving the faulted section.
@@ -175,10 +202,25 @@ def restoration_plans(feeder: Feeder, belief: NetworkState, faulted_section: str
                 continue
             stack.extend(feeder.children.get(feeder.sections[c].to_bus, []))
     if upstream or downstream:
-        steps = [("open", s) for s in ([upstream] if upstream else []) + downstream]
-        if device and device in belief.open and feeder.devices[device].kind in REMOTE_KINDS:
-            steps.append(("close", device))
-        steps += [("close", t.id) for t in ties]
-        names = " and ".join(s for _, s in steps if _ == "open")
-        plans.append(Plan("isolate", f"Isolate with {names}, then restore around the fault", steps))
-    return [check_plan(feeder, belief, p, work_zones, customers) for p in plans]
+        open_steps = [("open", s) for s in ([upstream] if upstream else []) + downstream]
+        dev_steps = [("close", device)] if (device and device in belief.open and feeder.devices[device].kind in REMOTE_KINDS) else []
+        names = " and ".join(s for _, s in open_steps)
+        if len(ties) <= 1:
+            steps = open_steps + dev_steps + [("close", t.id) for t in ties]
+            plans.append(Plan("isolate", f"Isolate with {names}, then restore around the fault", steps))
+        else:
+            for t in ties:
+                steps_t = open_steps + dev_steps + [("close", t.id)]
+                plans.append(Plan(f"isolate-{t.id}", f"Isolate with {names}, then restore via tie {t.id}", steps_t))
+            steps_all = open_steps + dev_steps + [("close", t.id) for t in ties]
+            plans.append(Plan("isolate-all", f"Isolate with {names}, then restore via all ties ({', '.join(t.id for t in ties)})", steps_all))
+    checked = [check_plan(feeder, belief, p, work_zones, customers) for p in plans]
+    safe_plans = [p for p in checked if p.safe and p.customers > 0]
+    if safe_plans:
+        max_cust = max(p.customers for p in safe_plans)
+        for p in safe_plans:
+            if p.customers < max_cust:
+                p.partial = True
+        best = max(safe_plans, key=lambda p: (p.customers, -p.ops))
+        best.recommended = True
+    return checked

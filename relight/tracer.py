@@ -96,6 +96,7 @@ class Located:
     score_gain: float
     damage: list[Damage]
     reasons: list[str]
+    why: dict | None = None
 
 
 class Tracer:
@@ -155,7 +156,7 @@ class Tracer:
         for t in self.feeder.transformers:
             n = self.n.get(t, 0)
             k = len(ev.reports.get(t, ()))
-            silent = max(n - k, 0) / HOUSEHOLDS_PER_SIGNAL
+            silent = 0.0 if getattr(ev, "ablate_silence", False) else max(n - k, 0) / HOUSEHOLDS_PER_SIGNAL
             g = k * math.log(q / EPS) + silent * (math.log(1 - q) - math.log(1 - EPS))
             if t in ev.probes:
                 g += math.log(0.03 / 0.97) if ev.probes[t] else math.log(0.97 / 0.03)
@@ -241,9 +242,119 @@ class Tracer:
             conf = math.exp(mine - top) / z
             alt_s, alt = max(alts, key=lambda x: x[0])
             dmg = [d for d in ev.damage if d.section in c.zone and c.kind in DAMAGE_COMPAT.get(d.kind, ())]
-            located.append(Located(c, conf, alt, math.exp(alt_s - top) / z, mine - alt_s, dmg,
-                                   self._reasons(c, ev)))
+            alt_conf = math.exp(alt_s - top) / z
+            why = self._why(c, ev, q, mine, alt_s, alt, alt_conf, dmg, rest=rest, gain=gain)
+            located.append(Located(c, conf, alt, alt_conf, mine - alt_s, dmg,
+                                   self._reasons(c, ev), why=why))
         return located
+
+    def _why(self, c: Candidate, ev: Evidence, q: float, mine: float, alt_s: float, alt: Candidate | None,
+             alt_conf: float, dmg: list[Damage], rest: list[Candidate] | None = None,
+             gain: dict[str, float] | None = None) -> dict:
+        rest = rest or []
+        rest_out = frozenset().union(*(h.out for h in rest)) if rest else frozenset()
+        new_out = c.out - rest_out
+        rest_s = self.score(rest, ev, gain if gain is not None else self._per_transformer(ev, q))
+        real_marginal = mine - rest_s
+
+        xf = [t for t in new_out if ev.reports.get(t)]
+        n_rep = sum(len(ev.reports[t]) for t in xf)
+        score_calls = sum(len(ev.reports[t]) * math.log(q / EPS) for t in xf)
+
+        n_silent = sum(max(self.n.get(t, 0) - len(ev.reports.get(t, ())), 0) for t in new_out)
+        score_silent = (0.0 if getattr(ev, "ablate_silence", False)
+                        else sum((max(self.n.get(t, 0) - len(ev.reports.get(t, ())), 0) / HOUSEHOLDS_PER_SIGNAL) *
+                                 (math.log(1 - q) - math.log(1 - EPS)) for t in new_out))
+
+        score_scada = 0.0
+        scada_detail = ""
+        if c.id in ev.scada_open and not any(h.id == c.id for h in rest):
+            score_scada = -math.log(0.005)
+            scada_detail = f"{c.id} locked out"
+        elif c.scada and c.id not in ev.scada_open and not any(h.id == c.id for h in rest):
+            score_scada = math.log(0.02)
+            scada_detail = f"{c.id} no trip signal"
+
+        def _dmg_best(cands: list[Candidate], d: Damage) -> float:
+            b = 0.0
+            for cand in cands:
+                if d.section in cand.zone and cand.kind in DAMAGE_COMPAT.get(d.kind, ()):
+                    if cand.kind == "xfmr_fuse" and d.transformer and d.transformer != "T-" + cand.id[3:]:
+                        continue
+                    w = d.strength * (0.5 if d.kind == "live_wire" and cand.kind != "line" else 1.0)
+                    b = max(b, w)
+            return b
+
+        score_dmg = sum(_dmg_best(rest + [c], d) - _dmg_best(rest, d) for d in ev.damage)
+
+        score_meters = 0.0
+        km_tot = 0
+        if ev.meter_counts:
+            for t in new_out:
+                km = len(ev.meters.get(t, ()))
+                nm = ev.meter_counts.get(t, 0)
+                km_tot += km
+                score_meters += km * math.log(METER_Q / METER_EPS)
+                if ev.ami_ok:
+                    score_meters += max(nm - km, 0) * math.log((1 - METER_Q) / (1 - METER_EPS))
+
+        score_probes = 0.0
+        probed_on = []
+        probed_off = []
+        for t in new_out:
+            if t in ev.probes:
+                if ev.probes[t]:
+                    probed_on.append(t)
+                    score_probes += math.log(0.03 / 0.97)
+                else:
+                    probed_off.append(t)
+                    score_probes += math.log(0.97 / 0.03)
+
+        n_part = sum(len(ev.partial.get(t, ())) for t in c.out)
+        score_part = n_part * (math.log(3.0) if c.kind == "line" else math.log(0.5)) if n_part else 0.0
+
+        p = PRIORS[c.kind]
+        score_prior = math.log(p / (1 - p))
+
+        sources = []
+        if round(score_calls, 1) != 0.0:
+            sources.append({"label": "Calls", "score": round(score_calls, 1),
+                            "detail": f"{n_rep} report{'s' if n_rep != 1 else ''} on {len(xf)} of its {len(c.out)} transformers"})
+        if round(score_silent, 1) != 0.0:
+            sources.append({"label": "Silence from neighbours", "score": round(score_silent, 1),
+                            "detail": f"{round(n_silent)} quiet households"})
+        if round(score_scada, 1) != 0.0:
+            sources.append({"label": "SCADA lockout" if score_scada > 0 else "SCADA normal",
+                            "score": round(score_scada, 1), "detail": scada_detail})
+        if round(score_dmg, 1) != 0.0:
+            matching = [d for d in ev.damage if _dmg_best([c], d) > 0]
+            sources.append({"label": "Located damage", "score": round(score_dmg, 1),
+                            "detail": f"{matching[0].kind.replace('_', ' ')} in zone" if matching else "damage in zone"})
+        if round(score_meters, 1) != 0.0:
+            sources.append({"label": "Smart meters", "score": round(score_meters, 1),
+                            "detail": f"{km_tot} meters sent last-gasp"})
+        if round(score_probes, 1) != 0.0:
+            sources.append({"label": "Probe answers", "score": round(score_probes, 1),
+                            "detail": f"{len(probed_off)} confirmed dark, {len(probed_on)} on"})
+        if round(score_part, 1) != 0.0:
+            sources.append({"label": "Partial power", "score": round(score_part, 1),
+                            "detail": f"{n_part} partial-power report{'s' if n_part != 1 else ''}"})
+        sources.append({"label": "Prior", "score": round(score_prior, 1),
+                        "detail": f"{c.kind.replace('_', ' ')} base rate {p:.1%}"})
+
+        tot = round(real_marginal, 1)
+        s_sum = round(sum(s["score"] for s in sources), 1)
+        if round(s_sum, 1) != tot and sources:
+            delta = round(tot - s_sum, 1)
+            largest = max(sources, key=lambda s: abs(s["score"]))
+            largest["score"] = round(largest["score"] + delta, 1)
+
+        rival_dict = None
+        if alt:
+            rival_score = round(alt_s - rest_s, 1)
+            rival_dict = {"label": alt.label, "score": rival_score, "confidence": round(alt_conf, 2)}
+
+        return {"sources": sources, "total": tot, "rival": rival_dict}
 
     def _reasons(self, c: Candidate, ev: Evidence) -> list[str]:
         r = []
