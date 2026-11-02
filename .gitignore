@@ -47,3 +47,7 @@ agent/
 data/skills/
 .claude/skills/
 skills-lock.json
+
+# demo video build (Remotion project and renders)
+/output/
+/video/
