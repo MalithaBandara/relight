@@ -131,18 +131,20 @@ The agent builds a sentence from these pieces and says it to the crew to confirm
 
 What the fictional Galle customers and crews say or send. Voiced calls are read by the synthetic Sinhala voices.
 
+English meanings below are the developer's own reading, so please correct them too.
+
 | Id | How | Sinhala | English meaning | OK? / correction |
 |---|---|---|---|---|
-| C02 | whatsapp (voiced) | හලෝ, මම කතා කරන්නේ රෝහල පාරේ අංක 47 ඉඳන්. කරන්ට් නැහැ. ලොකු සද්දයක් ආවා, කණුවක් වැටිලා වගේ. |  | |
-| C08 | whatsapp | තවමත් කරන්ට් නැහැ. අංක 47. |  | |
-| C20 | whatsapp | පන්සල ළඟ ලොකු ගහක් වයර් උඩට වැටිලා. අපේ ගෙදර විදුලිය නැහැ, ටෙම්පල් පාර 70. |  | |
-| C09 | sms | Hospital rd 30 current na. kawadda enne? |  | |
-| C38 | whatsapp | පන්සල අසල විදුලිය නැහැ |  | |
-| C32 | whatsapp | පොළ ළඟ පාරේ වයර් එකක් වැටිලා ගිනි පුපුරු එනවා. මාර්කට් වීදිය 10. |  | |
-| C24 | whatsapp | temple road 100 light na |  | |
-| C15 | sms | Hospital rd 30 thama current na |  | |
-| C51 | whatsapp | ලේක් පාර අංක 12 විදුලිය නැහැ |  | |
-| C29 | whatsapp | සිනමන් ගාඩන්ස් පටුමග අංක 60 විදුලිය නැහැ |  | |
-| C41 | whatsapp | ඔයාලා හරියට වැඩ කරන්නේ නැහැ!!! |  | |
+| C02 | whatsapp (voiced) | හලෝ, මම කතා කරන්නේ රෝහල පාරේ අංක 47 ඉඳන්. කරන්ට් නැහැ. ලොකු සද්දයක් ආවා, කණුවක් වැටිලා වගේ. | Hello, I am calling from number 47, Hospital Road. No power. There was a big noise; it seems a pole has fallen. | |
+| C08 | whatsapp | තවමත් කරන්ට් නැහැ. අංක 47. | Still no power. Number 47. | |
+| C20 | whatsapp | පන්සල ළඟ ලොකු ගහක් වයර් උඩට වැටිලා. අපේ ගෙදර විදුලිය නැහැ, ටෙම්පල් පාර 70. | A big tree has fallen onto the wires near the temple. No power at our house, Temple Road 70. | |
+| C09 | sms | Hospital rd 30 current na. kawadda enne? | Hospital Road 30, no power. When will it come? | |
+| C38 | whatsapp | පන්සල අසල විදුලිය නැහැ | No power near the temple. | |
+| C32 | whatsapp | පොළ ළඟ පාරේ වයර් එකක් වැටිලා ගිනි පුපුරු එනවා. මාර්කට් වීදිය 10. | A wire has fallen on the road near the market and is giving off sparks. Market Street 10. | |
+| C24 | whatsapp | temple road 100 light na | Temple Road 100, no power. | |
+| C15 | sms | Hospital rd 30 thama current na | Hospital Road 30, still no power. | |
+| C51 | whatsapp | ලේක් පාර අංක 12 විදුලිය නැහැ | Lake Road number 12, no power. | |
+| C29 | whatsapp | සිනමන් ගාඩන්ස් පටුමග අංක 60 විදුලිය නැහැ | Cinnamon Gardens Lane number 60, no power. | |
+| C41 | whatsapp | ඔයාලා හරියට වැඩ කරන්නේ නැහැ!!! | You people are not working properly!!! (an angry message, not about an outage) | |
 | CREW-V1 | crew language | (their reports use the sentences in section 7) | | |
 | CREW-T1 | crew language | (their reports use the sentences in section 7) | | |
