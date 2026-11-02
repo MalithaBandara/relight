@@ -113,6 +113,28 @@ SCENARIOS = {
     },
 }
 
+# Small events on the same Spring Branch feeder: one fault each, no smart meters (complaints are the only signal).
+SMALL_PACK = {"locale": "us", "languages": ["en", "es"], "language_weights": [0.75, 0.25], "start_hour": 19,
+              "network": {"type": "osm", "area": "houston", "transformer_spacing": 70, "substation_bearing": 270,
+                          "reclosers": 3, "substation_label": "Spring Branch substation",
+                          "feeder2_label": "Feeder 2 (Long Point side)", "unnamed": "Unnamed street"}}
+SMALL_CREWS = [
+    {"id": "CREW-L1", "name": "Line crew 1", "skills": ["line", "bucket_truck"], "base": "SUB"},
+    {"id": "CREW-V1", "name": "Tree crew", "skills": ["vegetation"], "base": "SUB"},
+    {"id": "CREW-T1", "name": "Troubleshooter 1", "skills": ["troubleshooter"], "base": "SUB"},
+    {"id": "CREW-T2", "name": "Troubleshooter 2", "skills": ["troubleshooter"], "base": "SUB"}]
+SCENARIOS["house_fuse"] = {
+    "title": "One house dark: its service fuse blows, Spring Branch, Houston", "pack": SMALL_PACK,
+    "duration_s": 900, "seed": 31, "call_rate": 0.3, "dup_rate": 0.0, "junk": 1, "code_share": 0.2,
+    "crews": SMALL_CREWS,
+    "faults": [{"kind": "service_wire", "where": "transformer", "n": 0, "t": 60, "houses": 1,
+                "title": "Service fuse blown at one house"}]}
+SCENARIOS["tree_on_line"] = {
+    "title": "A tree falls on a power line, Spring Branch, Houston", "pack": SMALL_PACK,
+    "duration_s": 1200, "seed": 37, "call_rate": 0.3, "dup_rate": 0.2, "junk": 1, "code_share": 0.2,
+    "crews": SMALL_CREWS,
+    "faults": [{"kind": "tree_on_line", "where": "fuse", "n": 0, "t": 45}]}
+
 
 def pick_sites(cfg, feeder, db, rng):
     """Resolve each fault's `where` rule to a concrete place on this feeder."""
@@ -316,6 +338,8 @@ def make(name: str) -> None:
 
 
 def _title(f) -> str:
+    if f.get("title"):
+        return f["title"]
     what = {"tree_on_line": "Tree on line", "pole_down": "Pole down", "blown_fuse": "Blown transformer fuse",
             "live_wire": "Live wire on road", "service_wire": "Service wire down (looks like a blown fuse)"}[f["kind"]]
     return f"{what} on {f['street']}" + (" (hidden behind another fault)" if f.get("hidden") else "")

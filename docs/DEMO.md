@@ -12,7 +12,7 @@ the browser zoom to 100%, and play the voiced calls once so edge-tts has cached 
 
 ## Shot list and voice-over
 
-Times are the storm clock on screen (15:00 start) and a running length for the video. The storm replays at 10x, so
+Times are the scenario clock on screen (15:00 start) and a running length for the video. The storm replays at 10x, so
 about 1 s of video is 10 s of storm; pause and speed up around the beats. Cut or time-lapse the quiet stretches
 (the clock box shows "Time-lapse: crews working" by itself while crews repair).
 

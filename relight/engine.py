@@ -37,6 +37,7 @@ from . import voice
 LOCATED_AT = 0.8  # confidence at which a suspected fault becomes an incident
 ASK_BELOW = 0.85  # confidence below which the agent asks a customer to disambiguate
 PROBE_GAP_S = 120
+ISOLATED_AFTER_S = 150  # a lone report that no wider fault explains by now may be one house's own service fault
 SPEED_KMH = 25
 ROAD_FACTOR = 1.3
 SECTION_KINDS = {"pole_down", "tree_on_line", "live_wire", "wire_down"}
@@ -819,6 +820,8 @@ class Engine:
                 opened = True
             else:
                 suspects.append(L)
+        if await self._isolated():
+            opened = True
         if opened:
             self._rebuild()
         self.suspects = [{"id": L.candidate.id, "label": L.candidate.label, "confidence": round(L.confidence, 3),
@@ -964,6 +967,8 @@ class Engine:
             await self._dispatch()
         self._tick_cmi(until)
         self.elapsed = max(self.elapsed, until)
+        if not self._dirty and any(p is None or p.get("answer") == "power ON" for _, _, p in self._isolated_reports()):
+            self._dirty = True  # a lone report has waited long enough: look at it even if no event arrives
         if self._dirty and self.elapsed - self._last_trace >= self.pack.get("retrace_s", 0):
             await self.recompute()
         elif changed:
@@ -1132,6 +1137,81 @@ class Engine:
             await self.broadcast({"type": "probe", "probe": probe})
             if self.sim:
                 self.sim.probe(probe)
+
+    # ---- one house dark and nobody else ----------------------------------------------------
+
+    def _isolated_reports(self) -> list[tuple[dict, dict, dict | None]]:
+        """Located no-power reports that nothing explains: (message, its location, the question asked about it).
+
+        The tracer needs several reports to blame a fault. One house alone could be its transformer's fuse or its own
+        service, and a neighbour's answer tells them apart: with the neighbour's power on, it is the house's service.
+        """
+        claimed = {t for i in self._active() for t in i["out"]}
+        wider = {t for L in getattr(self, "located", []) if len(set(L.candidate.out) & set(self.ev.reports)) > 1
+                 for t in L.candidate.out}
+        out = []
+        for m in self.messages:
+            loc, f = m.get("location") or {}, m["fields"]
+            xf, acct = loc.get("transformer"), loc.get("account")
+            if (m["channel"] == "crew" or m.get("probe_reply") or m.get("incident") or m.get("status") != "new"
+                    or f.get("symptom") != "no_power" or not xf or not acct or self.elapsed - m["t"] < ISOLATED_AFTER_S
+                    or xf in claimed or xf in wider or len(self.ev.reports.get(xf, ())) != 1):
+                continue
+            probe = next((p for p in self.probes if p.get("about") == acct), None)
+            if probe is not None and probe.get("answer") == "power OFF":
+                continue  # the transformer is out too: the tracer's business
+            out.append((m, loc, probe))
+        return out
+
+    async def _isolated(self) -> bool:
+        """Ask a neighbour on the same transformer about a lone report; open a service incident if they have power."""
+        opened = False
+        for m, loc, probe in self._isolated_reports():
+            xf, acct = loc["transformer"], loc["account"]
+            neighbours = [x for x in self.db.customers_on(xf) if not x.critical and x.account_no != acct]
+            if probe is None and neighbours:
+                who = next((x for x in neighbours if x.street == loc.get("street")), neighbours[0])
+                lang = m["language"] if m["language"] in self.loc["question"] else "en"
+                probe = {"id": f"Q{len(self.probes) + 1}", "t": round(self.elapsed), "fault": f"SVC-{xf}",
+                         "rival": f"XF-{xf[2:]}", "about": acct, "transformer": xf, "to": who.phone, "name": who.name,
+                         "street": who.street, "house_no": who.house_no, "language": lang,
+                         "text": self.loc["question"][lang], "answer": None, "lat": who.lat, "lon": who.lon}
+                self.probes.append(probe)
+                await self.log("Agent", f"Asking {who.street} {who.house_no} (transformer {xf})",
+                               f"only one house on {xf} has reported: a neighbour with power means the fault is "
+                               "that house's own service, not the transformer", probe["id"])
+                await self.broadcast({"type": "probe", "probe": probe})
+                if self.sim:
+                    self.sim.probe(probe)
+            elif probe is None or probe.get("answer") == "power ON":
+                await self._open_isolated(m, loc, probe)
+                opened = True
+        return opened
+
+    async def _open_isolated(self, m: dict, loc: dict, probe: dict | None) -> None:
+        xf, acct = loc["transformer"], loc["account"]
+        iid = f"I{len(self.incidents) + 1}"
+        label = f"{loc.get('street', '')} {loc.get('house_no') or ''}".strip()
+        why = ("only this house reported and a neighbour on the same transformer has power" if probe
+               else "only this house reported and nobody else is on its transformer")
+        c = self.feeder.transformers[xf]
+        inc = {
+            "id": iid, "cand": f"SVC-{xf}", "kind": "service_wire", "title": KIND_TITLE["service_wire"], "label": label,
+            "devices": [], "zone": [c.section], "site_section": None, "site_xf": xf, "dead_customers": [acct],
+            "lat": loc.get("lat") or c.lat, "lon": loc.get("lon") or c.lon, "confidence": 0.8, "alternative": None,
+            "reasons": [why, "found by elimination: no wider fault fits one report"], "located_at": self.elapsed,
+            "status": "located", "steps": [], "history": [], "reports": [m["id"]], "damage": [], "out": [],
+            "customers_out": 0, "critical": [], "mind_changed": False, "after_restore": False, "restored_at": None,
+            "switching": [], "plans": [], "explanation": None, "explanation_model": None, "explained_kind": None,
+            "notified": [], "first_t": m["t"], "priority": 0.0, "breakdown": {}, "eta": None,
+        }
+        if self.sim:
+            inc["truth"] = self.sim.identify(self._info(inc))  # scoring only; the agent never reads it
+        self.incidents.append(inc)
+        m["incident"] = iid
+        self._refresh_outages()
+        self._replan_steps(inc)
+        await self.log("Code", f"Located {iid}: {label}", f"80% confident; {why}", iid)
 
     # ---- customer portal -----------------------------------------------------------------
 

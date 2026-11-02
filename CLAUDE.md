@@ -203,6 +203,12 @@ scenario JSON --> Replayer (clock) --> Engine.handle(event)
   (believed dark transformers, recomputed by `_refresh_outages`), `steps` (crew work), `plans`,
   `history` (diagnosis changes), `status` (`located` -> `dispatched` -> `on site` -> `restored`),
   `mind_changed`, `after_restore`, `switching` (operations applied).
+- **One house dark** (`Engine._isolated`, added 2026-11-02): the tracer needs several reports to blame a fault, so a lone
+  no-power report that no incident, wider tracer candidate or other report on its transformer explains, and that is
+  `ISOLATED_AFTER_S` (150 s) old, gets one question to a neighbour on the same transformer (a probe, `about` = the
+  account). Power ON there -> a `service_wire` incident for that house (80%, found by elimination; line crew, 45 min);
+  power OFF -> left to the tracer. A transformer with no other customer opens the incident at once. `advance` wakes the
+  engine when such a report has waited long enough, so no other event is needed.
 - **Diagnosis change:** a crew report with `device_ok` or a different damage type revises the incident
   (`_site_findings`), replans steps (`_replan_steps`) and releases a crew that lacks the skills.
 - **Patrol finds nothing:** if the device is still locked out, the patrol is extended (max 3); if the
@@ -323,6 +329,8 @@ scenario JSON --> Replayer (clock) --> Engine.handle(event)
 | `galle_storm` | IEEE 34-bus over Galle (hand-tuned) | 1,951 | ~69 | 6 | full story: Sinhala/Tamil/English, BD SMS, probe question, Lake Road diagnosis change, Temple Road isolate-and-tie switching, hidden fuse after restoration |
 | `houston_hurricane` | OSM, Spring Branch, Houston | 3,044 | ~221 | 7 | smart meters until the meter network fails at t=600 s; English/Spanish; hidden fault; service-wire twist |
 | `chennai_cyclone` | OSM, Velachery, Chennai | 24,559 | ~2,400 | 9 | scale; English/Tamil/Hindi; PWR SMS codes; quiet logging; re-trace every 15 s |
+| `house_fuse` | OSM, Spring Branch, Houston (no meters) | 3,044 | ~4 | 1 | one house dark: a lone report, a neighbour asked, a service fault found by elimination (`Engine._isolated`) |
+| `tree_on_line` | same feeder (no meters) | 3,044 | ~58 | 1 | one tree on a lateral: ~160 customers, a tree crew then a line crew |
 
 **Before every commit that touches `relight/` or `scenarios/`, run all three and check every real fault
 is found and everyone is restored:**
@@ -338,9 +346,11 @@ Expected: Galle 6/6 `found=True`, Houston 7/7, Chennai 9/9, and the last line
 minutes, something reintroduced per-call graph rebuilding or per-event re-tracing.
 Use `--timeline` to see the full event log; `--no-switching` to skip auto-approval.
 
+The two small scenarios must also end with every fault `found=True` and 0 dark (`house_fuse`, `tree_on_line`).
+
 Regenerating generated scenarios (deterministic seeds):
 ```bash
-.venv/Scripts/python scripts/make_storm.py houston_hurricane chennai_cyclone
+.venv/Scripts/python scripts/make_storm.py houston_hurricane chennai_cyclone house_fuse tree_on_line
 ```
 `make_storm.py` keeps separate faults apart (no overlapping dark areas unless `hidden`), requires
 customers behind each fault, puts the switch-zone tree on the main run between `SW-1` and `SW-2` inside
