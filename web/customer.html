@@ -173,6 +173,12 @@
     /* talk to the outage desk */
     .check-card { grid-column: 1 / -1; }
     #call-start-row { flex-wrap: wrap; }
+    /* the free height beside the report form is split between the gap above the call controls and the gap below */
+    .talk-card .lede { margin-bottom: auto; }
+    .talk-card > .hint { margin-top: auto; }
+    #call-start { flex: 1 1 100%; min-height: 54px; }
+    #call-live:not([hidden]) { display: flex; flex-direction: column; gap: 12px; flex: 1; min-height: 0; }
+    #call-live .convo { flex: 1 1 auto; min-height: 160px; }
     #call-who { min-width: 200px; }
     .convo { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; max-height: 340px; overflow-y: auto; }
     .convo li { max-width: min(560px, 88%); padding: 10px 12px; border-radius: 12px; font-size: 16px; background: #222a33; overflow-wrap: anywhere; }
@@ -258,7 +264,7 @@
       <div id="sent" aria-live="polite"></div>
     </section>
 
-    <section class="card" aria-labelledby="call-h">
+    <section class="card talk-card" aria-labelledby="call-h">
       <h2 id="call-h">Talk to the outage desk</h2>
       <p class="lede">Speak in your own language. An AI agent (Muse Spark and Muse Voice Transcribe) answers by voice, asks where you are and files your report. If a wire is down, stay well away from it.</p>
       <div class="row" id="call-start-row">
