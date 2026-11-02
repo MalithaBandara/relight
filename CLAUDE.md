@@ -629,7 +629,7 @@ Can start now
   analysis). Photos also get the largest pole's lean (rough, street-level). SAM tags a traffic-light post as a pole too.
 - **Paper-to-grid** (dropped 2026-11-02, owner's choice): the simple diagram digitiser (`diagram.py`, `/api/diagram`, the
   console's Paper map button) was removed, and the fuller sketch-and-ledger version is not planned. A utility would
-  bring its own network model (GIS or CIM export); an importer for that is a possible later feature.
+  bring its own network model (GIS or CIM export); no importer is planned.
 - **Glimmer on-premise mode**: dropped 2026-11-01 (see section 2); code and docs removed.
 
 ### 12.3 Built but untested (verify once the API key is in)

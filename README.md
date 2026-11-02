@@ -141,8 +141,7 @@ on a real one, and the plan is to connect it to the channels customers already u
 - **Real conditions.** Test with real callers, phone-line noise and real photos; tune the pause detection and the
   confidence thresholds on real data; measure accuracy per language with native speakers.
 - **Evidence from the models.** Street-name keywords and Spark's faster setting are now in the engine; still to do:
-  run the largest scenario live, and import a utility's own network model (a GIS or CIM export) in place of the
-  generated feeders.
+  run the largest scenario live.
 - **The utility's own rules.** Replace our priority weights and crew rules with the utility's, and add its approval and
   audit steps.
 
