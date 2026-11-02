@@ -528,7 +528,7 @@ Media
       `crew_fuse.jpg` (Galle) is an AI-generated image the owner supplied on 2026-11-02, credited as synthetic.
 - [x] Drone clip and four customer videos (owner's choice, 2026-10-30): third-party clips, git-ignored, credited in
       `media/videos/CREDITS.md`; `scripts/fetch_videos.py` downloads and trims them after a fresh clone.
-- [x] Pole-tag reading (chosen 2026-11-01): the owner supplied an AI-generated photo (`pole_tag_gl0417.jpg`, tag GL-0417) on 2026-11-02; it is Galle message C61, aliased to Hospital Road 52. Not yet read live (needs GO). Original ask: send a photo of a pole with a visible ID tag. The agent adds the tag to
+- [x] Pole-tag reading (chosen 2026-11-01): the owner supplied an AI-generated photo (`pole_tag_gl0417.jpg`, tag GL-0417) on 2026-11-02; it is Galle message C61, aliased to Hospital Road 52. Read live 2026-11-02: SAM 3.1 found the plate, Muse Spark read GL-0417 (high confidence), the register named pole P-0155 on Hospital Road; Spark called the photo a snapped pole (public hazard) and the fuse photo a blown fuse (~$0.03 for both). Original ask: send a photo of a pole with a visible ID tag. The agent adds the tag to
       the scenario's `pack.pole_aliases` (tag + street + house number) so the register finds it.
 - [ ] If realistic paper-to-grid is chosen: draw a pole-numbered feeder sketch and write one meter-reader
       ledger page, then photograph both.
@@ -684,7 +684,7 @@ Photos and videos (`vision.py`, `models.py`)
       (`segment_video`: `input_video` part, unverified); request size limits for a 7.6 MB drone clip.
 - [ ] Portal uploads from a phone (MOV from iPhone, large files) and the `seen` panel with real model output.
       (Offline 2026-11-01: MOV and 50 MB MP4 accepted, >60 MB gives 413; HEIC gives 415.)
-- [ ] Pole-tag reading live, partly done 2026-11-01: on the nine photos (none has a legible plate) no false tag was
+- [x] Pole-tag reading live (done 2026-11-02 on an AI-generated photo with a readable plate, see 12.1; earlier, 2026-11-01): on the nine photos (none has a legible plate) no false tag was
       reported; on Houston's tree photo SAM found a plate box and Spark said it was too blurred, so no guess. Still open:
       the owner's photographed tag (needs the photo, `pack.pole_aliases`). Stand-in tests: `scripts/check_offline.py`.
 - [x] Voice Transcribe `keywords` on the file endpoint measured 2026-11-01 (`scripts/eval_keywords.py`, results in
