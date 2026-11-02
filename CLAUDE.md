@@ -338,8 +338,8 @@ scenario JSON --> Replayer (clock) --> Engine.handle(event)
 | `chennai_cyclone` | OSM, Velachery, Chennai | 24,559 | ~2,400 | 9 | scale; English/Tamil/Hindi; PWR SMS codes; quiet logging; re-trace every 15 s |
 | `house_fuse` | OSM, Spring Branch, Houston (no meters) | 3,044 | ~4 | 1 | one house dark: a lone report, a neighbour asked, a service fault found by elimination (`Engine._isolated`) |
 | `tree_on_line` | same feeder (no meters) | 3,044 | ~58 | 1 | one tree on a lateral: ~160 customers, a tree crew then a line crew |
-| `ieee123_storm` | IEEE 123-node test feeder (EPRI OpenDSS file, BSD 3-clause), synthetic customers, 3 ties | ~1,660 | 13 | 5 | independent benchmark: 4 of 5 found in mock mode, F1 missed, 16 customers dark (a measurement, not a pass mark; `tests/test_regression.py` pins it) |
-| `two_tie_demo` | invented feeder with two ties (`grid_twotie.py`) | ~290 | ~21 | 1 | multi-tie switching: one pole down, three safe plans (east, north, both), the one restoring most is `recommended` |
+| `ieee123_storm` | IEEE 123-node test feeder (EPRI OpenDSS file, BSD 3-clause), synthetic customers, 3 ties | 1,658 | 13 | 5 | independent benchmark: 4 of 5 found in mock mode, F1 missed, 16 customers dark (a measurement, not a pass mark; `tests/test_regression.py` pins it) |
+| `two_tie_demo` | invented feeder with two ties (`grid_twotie.py`) | 229 | ~21 | 1 | multi-tie switching: one pole down, three safe plans (east, north, both), the one restoring most is `recommended` |
 | `hospital_generator` | OSM, Velachery, Chennai (no meters) | 24,559 | ~215 | 3 | three trees on lines, one tree crew; at +90 s after the hospital's fault its generator fails and it calls (`backup_failed`): its outage outranks a larger one and is restored 64 min sooner (01:44 vs 02:48) |
 
 **Before every commit that touches `relight/` or `scenarios/`, run all three and check every real fault

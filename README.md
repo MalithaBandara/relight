@@ -1,30 +1,37 @@
 # Relight
 
-An AI outage agent for electric utilities. When a storm hits, Relight reads what people send (calls, SMS and chat in
+**An AI outage agent for electric utilities.** After a storm, Relight reads what people send (calls, SMS and chat in
 English, Sinhala, Tamil, Hindi and Spanish; crew voice reports; damage photos and drone clips), finds the failed device
 on the grid, plans safe restoration switching, dispatches crews and keeps customers informed. It works with or without
 smart meters: where a utility has none, the customers' own complaints are the sensor.
 
-Entry for the Meta Global AI Developer Hackathon 2026, Indie track, theme **Push the Frontier** (energy: understand and
+Built solo for the **Meta Global AI Developer Hackathon 2026** (Indie track, theme *Push the Frontier*: understand and
 control a physical system).
 
-> **Demo data.** Every customer, address, phone number and account is fictional. Caller and crew voices are synthetic
-> (Microsoft edge-tts; Meta has no text-to-speech model). Maps come from OpenStreetMap; the electrical networks are
-> generated or are the public IEEE 34-bus test feeder. Damage photos and clips are third-party (credits in `media/`).
+<!-- DEMO-VIDEO-LINK: add the video link here at submission -->
 
-**The principle: Meta models read, deterministic code locates and decides.** No model ever guesses where a fault is or
-approves a switching action. The operator approves every switching plan.
+> **Everything shown is synthetic.** Every customer, address, phone number and account is fictional. Caller and crew
+> voices are synthetic (Microsoft edge-tts; Meta has no text-to-speech model). Maps come from OpenStreetMap. Damage
+> photos and clips are third-party and credited in the repository.
 
-![The control-room console on the Galle scenario, mid-storm: work agenda, map, event log and the Meta models counter](docs/img/console.png)
+![The Relight control-room console during the Galle storm: map, work agenda, event log and Meta models counter](docs/img/console.png)
 
-*The control-room console on the Galle scenario at 16:31 of the replay: five open events, the map, the work agenda and the
-event log. Everything shown is synthetic.*
+*The control-room console on the Galle scenario, mid-storm: five open events, the map, the work agenda and the event log.*
+
+## The idea
+
+**Meta models read. Deterministic code locates and decides. The operator approves.**
+
+A model never guesses where a fault is and never approves a switching action. Muse Spark, Muse Voice Transcribe and
+SAM 3.1 turn messy human evidence (speech, text, photos, video) into structured facts. A probabilistic tracer then
+decides which device opened or which line broke, and a safety-checked planner proposes how to restore power. Every
+switching plan waits for the operator.
 
 | Customer portal (`/customer`) | Crew page (`/crew`) |
 |---|---|
 | ![The customer portal: check my supply, report a problem, talk to the outage desk](docs/img/customer.png) | ![The crew page: pick a crew, say or type a report, the agent reads it back](docs/img/crew.png) |
 
-## Architecture
+## How it works
 
 ```mermaid
 flowchart LR
@@ -54,47 +61,67 @@ flowchart LR
   I --> O
 ```
 
-## Which Meta model does what
+### What each Meta model does
 
 | Model | Job in Relight | Measured |
 |---|---|---|
-| **Muse Spark** (`muse-spark-1.3`) | Reads every complaint and crew report into a JSON schema (street, house number, symptom, hazard, junk) in five languages; words the call agent's replies and the dispatcher's explanations; classifies damage photos and watches drone clips; **listens to Sinhala calls itself** (audio in) because Voice Transcribe has no Sinhala; reads pole-number plates | Extraction accuracy below. `reasoning_effort: minimal` cut extraction latency 4.4 to 2.4 s and Sinhala line wording 9.9 to 2.8 s, with 74-88% fewer output tokens |
-| **Muse Voice Transcribe** | Phone calls to text (Tamil, Hindi, Spanish, English), file endpoint and a realtime WebSocket line with speaker diarization; the feeder's street names go in as `keywords` | Street heard right in 11 of 13 clips with keywords vs 6 of 13 without. Realtime handshake about 4.7 s with 100 keywords. $0.18 per hour of audio |
-| **SAM 3.1** | Outlines poles, wires and fallen trees in photos and tracks them through drone clips; finds the pole-number plate to crop for Spark; pixel masks (decoded with Meta's `meta-sam-parser`) give pole lean, wire sag and where a fallen tree actually touches the wires | Temple Road clip: 3 poles, 6 wires followed, the trunk crosses 4 of 6 (touches 6 of 10 wire tracks by mask) |
+| **Muse Spark** (`muse-spark-1.3`) | Reads every complaint and crew report into a JSON schema (street, house number, symptom, hazard, junk) in five languages. Words the call agent's replies and the dispatcher's explanations. Classifies damage photos and watches drone clips. **Listens to Sinhala calls itself**, because Voice Transcribe has no Sinhala. Reads pole-number plates. | Accuracy below. `reasoning_effort: minimal` cut extraction latency from 4.4 to 2.4 s and Sinhala line wording from 9.9 to 2.8 s. |
+| **Muse Voice Transcribe** | Phone calls to text (Tamil, Hindi, Spanish, English), through the file endpoint and a realtime WebSocket line with speaker diarization. The feeder's street names go in as `keywords`. | Street heard right in 11 of 13 clips with keywords against 6 of 13 without. $0.18 per hour of audio. |
+| **SAM 3.1** | Outlines poles, wires and fallen trees in photos and tracks them through drone clips. Finds the pole-number plate for Spark to read. Pixel masks (decoded with Meta's `meta-sam-parser`) give pole lean, wire sag and where a fallen tree actually touches the wires. | Temple Road clip: 3 poles and 6 wires followed; the trunk touches 6 of 10 wire tracks by mask. |
 
-The console has a **Meta models** panel (header button, or click the usage card) with requests, tokens, cost and the
-share of decisions made by each model, by code, and by the agent or operator, for the run on screen.
+The console's **Meta models** panel shows requests, tokens, cost and the share of decisions made by each model, by
+code, and by the agent or operator, for the run on screen.
 
-## What deterministic code does
+### What deterministic code does
 
 | Step | Where |
 |---|---|
-| Place each complaint on its service transformer (account, caller ID, address, landmark) | [customers.py](relight/customers.py) |
-| Which device opened or which line broke: likelihood search over every protective device, transformer fuse and line, with calls, silence, probe answers, meters, SCADA and located damage as evidence | [tracer.py](relight/tracer.py) |
-| Ask a customer the question that best separates two explanations | [engine.py](relight/engine.py) |
-| Incidents, crews dispatched by priority and travel, diagnosis changes from the crew's site report, hidden faults found after a repair | [engine.py](relight/engine.py), [planner.py](relight/planner.py) |
-| Restoration switching (reclose, close the tie, isolate then restore); plans that would energise a fault or a crew's work zone are blocked | [network.py](relight/network.py) |
-| Pole-tag lookup (exact, or OCR-tolerant when O/0, I/1, S/5, B/8 folds match one pole), damage placed at that pole | [poles.py](relight/poles.py) |
-| Fact check of every agent line Spark words: a number, time, street or id that was dropped or changed sends the template instead | [callagent.py](relight/callagent.py) |
-| "BD / OUT / PWR <account>" SMS codes | code only, no model call |
+| Places each complaint on its service transformer (account, caller ID, address, landmark) | [customers.py](relight/customers.py) |
+| Finds which device opened or which line broke: a likelihood search over every protective device, transformer fuse and line, using calls, neighbours' silence, probe answers, meters, SCADA and located damage. Each located device shows the evidence behind it, source by source. | [tracer.py](relight/tracer.py) |
+| Asks a customer the question that best separates two explanations; dispatches crews by priority and travel; revises a diagnosis from a crew's report; finds hidden faults after a repair | [engine.py](relight/engine.py), [planner.py](relight/planner.py) |
+| Proposes restoration switching (reclose, close a tie, isolate then restore, with several ties) and blocks any plan that would energise a fault, an unconfirmed fault zone or a crew's work zone | [network.py](relight/network.py) |
+| Fact-checks every agent line that Spark words: if a number, time, street or id was dropped or changed, the template is spoken instead | [callagent.py](relight/callagent.py) |
+| Looks up a pole from its tag, tolerating look-alike characters (O/0, I/1, S/5, B/8) | [poles.py](relight/poles.py) |
+| Reads `BD`, `OUT` and `PWR <account>` SMS codes | code only, no model call |
 
 ## Results
 
-All three scenarios run end to end on the same engine (`scripts/run_headless.py <scenario>`):
+Eight scenarios run on the same engine. The first three ran against the live Meta Model API and are cached, so replays are
+free and identical.
 
 | Scenario | Network | Customers | Messages | Faults found | Dark at the end |
 |---|---|---|---|---|---|
-| Galle, Sri Lanka | IEEE 34-bus feeder over Galle | 1,951 | ~69 | 6 of 6 | 0 |
-| Houston, USA | OpenStreetMap, Spring Branch, smart meters that fail mid-storm | 3,044 | ~221 | 7 of 7 | 0 |
-| Chennai, India | OpenStreetMap, Velachery | 24,559 | ~2,400 | 9 of 9 | 0 |
+| **Galle**, Sri Lanka | IEEE 34-bus feeder over Galle | 1,951 | ~69 | 6 of 6 | 0 |
+| **Houston**, USA | OpenStreetMap, smart meters that fail mid-storm | 3,044 | ~221 | 7 of 7 | 0 |
+| **Chennai**, India | OpenStreetMap, 2,400 messages in English, Tamil and Hindi | 24,559 | ~2,400 | 9 of 9 | 0 |
+| One house dark | one caller; the agent asks a neighbour | 3,044 | ~4 | 1 of 1 | 0 |
+| Tree on a line | one lateral, about 160 customers | 3,044 | ~58 | 1 of 1 | 0 |
+| Hospital generator | the hospital's backup power fails and it calls | 24,559 | ~215 | 3 of 3 | 0 |
+| **Pine Valley**, independent test | IEEE 123-node test feeder, faults from a separate script | 1,658 | 13 | **4 of 5** | **16** |
+| Two-tie demo | invented feeder with two ties, one pole down | 229 | 21 | 1 of 1 | 0 |
 
-All three were run against the live Meta Model API (the first Galle run: 195 calls, 24 minutes, $1.13). Galle and Houston
-were re-run on 2026-11-02 with Spark at minimal reasoning effort and Voice Transcribe keywords. Chennai was run live the same
-day with the voiced calls on: about 1,400 model requests, roughly $3; before that it had only run on the labelled
-scenario. All three are cached, so replays are free and identical.
+**What the numbers show**
 
-**Muse Spark extraction accuracy** against the scenario's labels (`scripts/eval_extraction.py <scenario> --replay`,
-scoring the engine's own live readings):
+- **Customer minutes.** Against a first-call-first-served schedule, Relight's priority schedule cuts customer-minutes
+  interrupted by 30% in Galle (68,940 against 98,129) and 22% in Houston (107,336 against 137,647). A live wire is made
+  safe after 2 minutes instead of 90 in Galle. Across nine settings (fewer or extra crews, delayed reports, faster or slower baseline patrols) the saving ranges
+  from 12% to 45% in Galle and 18% to 38% in Houston; the report-delay and patrol settings change only the baseline.
+- **A hospital's generator fails.** The call is read in any language by code, the outage jumps the queue, and the
+  hospital is restored 64 minutes sooner (01:44 against 02:48).
+- **Independent test.** On the published IEEE 123-node feeder, with faults and complaints generated by a separate script
+  (fixed seed, no tracer tuning), Relight found 4 of 5 faults and left 16 customers dark; it missed a tree on a lateral
+  that never reached the 80% confidence threshold. We report this as measured, not as a pass mark. The network data is
+  the IEEE PES test feeder, read from the annotated OpenDSS file in EPRI's OpenDSS distribution (BSD 3-clause, licence in
+  [data/IEEE123Master.LICENSE.txt](data/IEEE123Master.LICENSE.txt)).
+- **Switching around a fault.** The IEEE data has no sectionalising switches near its ties, so only one safe plan exists
+  there. On the two-tie demo (an invented feeder), one pole down has three safe plans (east tie, north tie, both) and the
+  planner recommends the one that restores most customers (186 of the 229).
+- **Evidence ablation** (mock mode, each source removed in turn). Removing neighbour-probe questions loses 2 of 6 faults in
+  Galle and 1 of 7 in Houston. With calls only, 0 of 6 and 2 of 7 faults are found; with SCADA only, 2 of 6 and 1 of 7. Removing
+  silence, SCADA, damage photos or smart meters on their own did not change how many faults were found on these storms.
+  Calls alone are not enough, and the neighbour question is the one source whose removal costs faults.
+
+**Muse Spark extraction accuracy**, scored against the scenario's labels on the engine's own live readings:
 
 | Scenario | Scored | Street | House no. | Symptom | Hazard | Junk |
 |---|---|---|---|---|---|---|
@@ -102,137 +129,89 @@ scoring the engine's own live readings):
 | Houston (en 117, es 44) | 161 | 98% | 98% | 99% | 99% | 100% |
 | Chennai (en 821, ta 745, hi 126) | 1,692 | 93% | 98% | 97% | 100% | 100% |
 
-Most misses are facts the caller gave only later, or that come from caller ID; Sinhala symptoms are the weakest (82%). These numbers are from the 2026-11-02 re-run (minimal effort, keywords).
-SMS codes need no model and are not scored.
+Most misses are facts the caller gave only later, or that come from caller ID. Sinhala symptoms are the weakest (82%).
+Spark listening to Sinhala still gets digits and place names wrong, so the agent confirms the address by caller ID.
 
-**Voice Transcribe keywords** (`scripts/eval_keywords.py`, only clips where the caller names the street): 11 of 13
-right with the feeder's street and landmark names as keywords, 6 of 13 without (Galle 4 to 5 of 5, Houston 1 to 3 of 3,
-Chennai 1 to 3 of 5). Small sample, synthetic voices. Each keyword must be 30 characters or fewer, which Meta's docs
-do not say and the API answers with HTTP 400; `fit_keywords` handles it. The realtime line uses keywords already;
-the engine's file transcription and the portal call use them too (adopted 2026-11-02).
+**The fact check.** Of the agent lines Spark worded in the cached runs, none was rejected: Galle 59 lines (English 40,
+Sinhala 6, Tamil 13), Houston 142 (English 101, Spanish 41), Chennai 25 (Tamil 9, English 7, Hindi 9). Median wait per
+line was 2.0 to 2.9 s.
 
-**Sinhala.** Voice Transcribe lists 25 languages and not Sinhala. Spark listens instead. Told only "transcribe this", its
-Sinhala was near-nonsense; told it is an outage-line call giving a street, a number and what happened, it reads
-"Hospital Road ... a pole has fallen". The house number is still sometimes wrong (40 for 47), which is why the agent
-confirms the address by caller ID.
+## Highlights
 
-## Limits, stated plainly
+- **Calls in five languages.** An AI call agent answers every call in the caller's language, warns about hazards,
+  escalates live wires and critical customers, and asks a neighbour when the tracer is torn between two explanations.
+- **Realtime calls with a human in the loop.** Voiced calls play in real time on a Voice Transcribe realtime line; hard
+  calls are handed to a call-taker with a copilot that fills the report live and suggests the next line.
+- **Crews report by voice.** The agent reads each report back and nothing changes until the crew confirms. A crew can say
+  the transformer is fine and the service wire is down, and Relight changes its diagnosis and replans the work.
+- **Photos and drone clips.** SAM 3.1 outlines and tracks poles, wires and fallen trees; Spark reads the damage and the
+  pole-number plate, and the pole is named from a register, not guessed.
+- **Hidden second faults.** After a restoration, callers who are still dark reveal a fault hidden behind the first.
+- **Customers and crews as users.** A customer can check their supply, report a problem or talk to the outage desk by
+  voice; a crew has its own page.
 
-- Lean and wire sag are rough estimates from one camera view. SAM sometimes tags a traffic-light post as a utility pole.
-- Callers are synthetic voices and the customers fictional; real calls are noisier than edge-tts.
-- Spark's Sinhala listening still misreads digits and place names.
-- The Hindi portal call and crew read-back were tested live with synthetic speech. Spanish wording was measured in Houston.
-- Non-English messages and agent lines have been checked by a native speaker only for Sinhala; the sample Tamil, Hindi and Spanish lines were checked, the rest were not.
-- The portal call and the crew page were tested live (2026-11-02) with synthetic speech sent to the real Voice Transcribe and Spark (English, Tamil, Sinhala, Hindi, Spanish), not with a human microphone. Voice Transcribe returned Tamil in Latin letters for synthetic Tamil; Spark still read it. Hindi and Spanish were heard correctly (Voice Transcribe kept the English street name in Latin letters in Hindi) and the crew read-backs were worded by Spark.
-- HEIC photos are refused (HTTP 415); SAM refuses clips over a few MB, so clips are trimmed small.
-- Smart meters are optional and simulated. Only Houston has them (last-gasp messages, then the meter network fails at t=600 s and silent meters stop counting); the other scenarios run on calls, SMS, SCADA and crew reports. The meter messages are generated, not taken from a real meter data system, and there is no integration with one.
+## Limits
+
+- Customers, callers and voices are synthetic; real calls are noisier than synthetic speech. The portal call and the
+  crew page were tested live with synthetic speech in all five languages, not with a human microphone.
+- Only the Sinhala lines were fully checked by a native speaker. For Tamil, Hindi and Spanish only sample lines were.
+- Samples are small. The Voice Transcribe keyword test used 13 clips; the Sinhala and Tamil samples in Galle are a
+  handful of calls each.
+- Lean and wire sag are rough estimates from one camera view, and SAM sometimes tags a traffic-light post as a pole.
+- Smart meters are optional and simulated: only Houston has them, and the meter messages are generated, not read from a
+  meter data system.
+- There is no power-flow model. Relight does not check voltage, current or line capacity, so a plan that uses several
+  ties assumes the neighbouring feeder can carry the load.
 - Priority weights (for example hospital 400, failed backup power 1,500) are our own choices, not a utility's rules.
-- No AC power flow: Relight does not model voltage, current, or thermal capacity limits; switching plans using multiple ties assume adequate feeder capacity.
+- The independent IEEE 123-node test is one synthetic storm run in mock mode, with invented customers and a made-up
+  location. It tests the tracer and switching logic on a network shape we did not design; it is not a validation on a
+  real utility.
 
 ## What's next
 
-Relight today runs on a simulated utility: scripted storms, synthetic customers and voices. The next step is to run it
-on a real one, and the plan is to connect it to the channels customers already use and the systems a control room already has:
-
-- **Customer channels.** Connect to a utility's own SMS gateway, WhatsApp Business messages, web and app portal
-  messages, and its phone lines (calls routed to the agent, with the hand-over to a human call-taker kept). The pipeline
-  that reads, locates and answers each message already exists; what changes is where the messages come from and go.
-- **Utility systems.** Read the utility's real network model, customer database and, where it has them, SCADA and
-  smart-meter events, so the tracer works on the real feeder instead of a generated one. Switching plans stay proposals
-  the operator approves, and the agent never operates equipment.
-- **Real conditions.** Test with real callers, phone-line noise and real photos; tune the pause detection and the
-  confidence thresholds on real data; measure accuracy per language with native speakers.
-- **Evidence from the models.** Street-name keywords and Spark's faster setting are now in the engine; still to do:
-  run the largest scenario live.
-- **The utility's own rules.** Replace our priority weights and crew rules with the utility's, and add its approval and
-  audit steps.
-
-None of this is built yet. It needs a utility partner, their agreement on data and channels, and privacy and security
-review before any real customer data is used.
-
-## Built during the hackathon
-
-All code in this repository was written from Oct 29, 2026 onward, during the event.
-
-Relight grew out of an idea first explored in [GridMedic](https://github.com/MalithaBandara/gridmedic), an earlier team
-project built in Jac with Gemini at the Jaseci Labs AI Hackathon (17 Oct 2026). Relight is a new project with a new
-name and a new codebase; no code from GridMedic is reused. What is different:
-
-- written from scratch in Python, on Meta's models (Muse Spark, Voice Transcribe, SAM 3.1)
-- a probabilistic fault tracer that asks customers the question that best separates two explanations
-- feeders generated from real OpenStreetMap roads and buildings, and three scenarios
-- crew lifecycle with diagnosis changes from site reports, hidden faults found after restoration, and safety-checked
-  restoration switching across a tie to a second feeder
-- an AI call agent in five languages, realtime calls with a call-taker copilot, crew voice reports with read-back
-- damage assessment from photos and drone clips with SAM 3.1 masks, and pole-tag reading
-- an outage-management console modelled on commercial OMS work agendas, and a customer portal
-
-## The scenarios
-
-| Scenario | What it shows |
-|---|---|
-| Galle | The full story: no smart meters; Sinhala, Tamil and English; BD SMS; a probe question; the agent changing its mind (Lake Road); isolate-and-tie switching (Temple Road); a hidden fuse found after restoration |
-| Houston | Smart meters send last-gasp messages until the meter network fails mid-storm; English and Spanish; a hidden fault; a service wire that looks like a blown fuse |
-| Chennai | Scale: ~2,400 messages in 30 minutes in English, Tamil and Hindi; PWR SMS codes; re-traced every 15 s |
-| One house dark | One caller, neighbours have power: the agent asks a neighbour and finds a fault at that house's own service, which a transformer-level tracer would miss |
-| Tree on a line | One tree on a lateral: about 160 customers, a tree crew, then a line crew |
-| Hospital generator | Three trees on lines and one tree crew. A hospital's backup generator fails and the hospital calls: its outage jumps the queue and is restored about an hour sooner (01:44 against 02:48 without the call) |
-| Pine Valley (IEEE 123) | Independent benchmark: official IEEE 123-node test feeder data, synthetic customers and generic street names; faults and complaints generated by standalone script without tracer tuning |
-| Two-tie demo | Synthetic switching demonstration: an invented feeder with two ties and one pole down; three safe switching plans, the one that restores most is recommended |
-
-### Independent test feeder (IEEE 123-node)
-
-To test whether Relight works on networks and fault distributions it was not designed around, we built a benchmark scenario on the official IEEE 123-node distribution test feeder (`ieee123_storm`).
-
-- **Source and attribution:** the network data is the IEEE 123-node test feeder, a published benchmark of the IEEE PES Distribution System Analysis Subcommittee ([test feeder pages](https://cmte.ieee.org/pes-testfeeders/resources)). We read it from `data/IEEE123Master.dss`, the annotated OpenDSS master file from EPRI's OpenDSS distribution, which is published under a BSD 3-clause licence; the licence text is kept beside it in `data/IEEE123Master.LICENSE.txt`. We could not confirm which mirror our copy came from, and it differs slightly from the current [dss-extensions copy](https://github.com/dss-extensions/electricdss-tst) (that one adds `units=kft` and a base frequency line). The IEEE pages state no separate terms for the files; their footer points to the general IEEE terms of use.
-- **Fault placement:** Faults and complaints were generated by an independent standalone script (`scripts/make_ieee123.py`, fixed seed 123) that does not reuse `scripts/make_storm.py` and does not inspect tracer scores. Street names and customers in fictional Pine Valley are synthetic.
-- **Measured result:** In mock mode (`scripts/run_headless.py ieee123_storm`), Relight found 4 of 5 independent faults (80%), left 16 customers dark at the end, and saved 25.9% of customer-minutes interrupted (17,360 vs 23,421 first-call-first-served baseline; live wire made safe in 1 min vs 41 min). Missed fault: F1 (tree on line on Pine Ridge Road, which was tracked as suspect between BRK-1 and FUS-1 but did not reach the 80% confidence threshold before storm end).
-- **Limits:** Relight does not model AC power flow, voltage drop, or thermal line ratings. Switching plans using multiple ties assume adequate feeder capacity.
-- **Why there is one safe switching plan here:** the IEEE data has no sectionalising switches near its ties, so on this feeder only one tie can restore customers after a fault. The multi-tie planner is shown on a separate synthetic scenario, `two_tie_demo` (invented feeder, customers and fault; `scripts/make_two_tie.py`), where one pole down has three safe plans (east tie, north tie, both) and the planner recommends the one that restores most.
-
-For Houston and Chennai the line runs along real streets (a shortest-path tree over the road network from the substation),
-customers sit in real buildings, and landmarks are real facilities shown under generic names ("Hospital on <street>").
-Map data © OpenStreetMap contributors (ODbL), cached in `data/osm/`; refresh with `scripts/fetch_osm.py` and regenerate
-the storms with `scripts/make_storm.py`.
+Relight runs on a simulated utility today. The next step is a real one: connect to the channels customers already use
+(SMS gateway, WhatsApp, web and app messages, phone lines with hand-over to a human), read the utility's own network model
+and customer records, test with real callers and photos, and replace our priority rules with the utility's. The
+operator keeps approving every switching plan, and the agent never operates equipment. None of this is built; it needs a
+utility partner and privacy and security review before any real customer data is used.
 
 ## Run it
 
 ```bash
 python -m venv .venv
-.venv/Scripts/pip install -r requirements.txt   # Windows; use .venv/bin/pip elsewhere
-cp .env.example .env                             # add MODEL_API_KEY for live Meta models
+.venv/Scripts/pip install -r requirements.txt     # Windows; use .venv/bin/pip elsewhere
+cp .env.example .env                               # optional: add MODEL_API_KEY for live Meta models
 .venv/Scripts/python -m uvicorn relight.server:app --port 8000
 ```
 
-Open http://localhost:8000, pick a scenario in the header and press **Run**. The customer portal is at `/customer`: a
-customer can write a report, attach a photo or video, check their supply, or **talk to the outage desk** with the browser
-microphone (the call agent answers by voice; needs a Meta API key, otherwise type what you would say).
-Field crews have their own page at `/crew`: pick a crew, say or type what you see on site (add a photo), and the agent
-reads it back; nothing changes until the crew confirms.
-Voice playback and synthetic callers need `ffmpeg` on the PATH.
+Open http://localhost:8000, pick a scenario in the header and press **Run**. The customer portal is at `/customer` and the
+crew page at `/crew`. Voice playback needs `ffmpeg` on the PATH.
 
-Without an API key the app runs in **mock mode**: cached model responses are replayed, and anything not cached falls
-back to the scenario's labelled ground truth (tagged `mock` in the UI). With a key, every model response is cached in
-`.cache/model/`, so replays are free and repeatable.
+**Without an API key** the app runs in mock mode: cached model responses are replayed, and anything not cached falls back
+to the scenario's labelled ground truth (tagged `mock` in the console). **With a Meta Model API key** (get one at
+https://dev.meta.ai), put `MODEL_API_KEY=...` in `.env`; every response is then cached, so replays are free and
+repeatable. `.env` is git-ignored.
 
-**Using your own Meta Model API key:** put it in `.env` as `MODEL_API_KEY=...` (get one at https://dev.meta.ai) and
-restart the server. `.env` is git-ignored; never commit it. The author's machine has an extra local switch that holds
-back paid calls until the author approves them (`api_allowed` in `relight/config.py`); a fresh clone does not have it
-and calls the API normally.
+To replay a scenario without the browser: `python scripts/run_headless.py galle_storm`.
 
-To fetch the third-party example videos (git-ignored): `pip install yt-dlp`, then `python scripts/fetch_videos.py`.
+## Built during the hackathon
 
-Scripts:
+All code in this repository was written from Oct 29, 2026, during the event. Relight grew out of an idea first explored
+in [GridMedic](https://github.com/MalithaBandara/gridmedic), an earlier team project built in Jac with Gemini at the Jaseci
+Labs AI Hackathon (17 Oct 2026). Relight is a new project with a new name and codebase; no code from GridMedic is
+reused. What is different: it is written from scratch in Python on Meta's models; it has a probabilistic tracer that asks
+customers the question that best separates two explanations; feeders are built from real OpenStreetMap roads; and it adds
+a call agent in five languages, crew voice reports with read-back, damage assessment from photos and drone clips, and a
+console modelled on commercial outage-management work agendas.
 
-- `python -m unittest discover -s tests`: run unit and regression test suite (offline in mock mode, under 2 min).
-- `scripts/run_headless.py <scenario> [--timeline]`: replay to the end and check against the scenario's ground truth.
-- `scripts/check_offline.py`: checks that need no model call (fact check, realtime replay, uploads, masks, pole tags).
-- `scripts/smoke_test.py [call.wav] [photo.jpg]`: one small call to each Meta model to check the key.
-- `scripts/build_overlays.py`: draw SAM 3.1's outlines over the drone clip and photos from the cached responses
-  (poles blue, wires amber, fallen trees red).
-- `scripts/eval_keywords.py`, `scripts/eval_extraction.py [scenario] [--replay]`: the measurements above.
+## Credits and data
 
-## Data
-
-All people, phone numbers and accounts are synthetic. Third-party photos and clips are credited in `media/photos/CREDITS.md`
-and `media/videos/CREDITS.md`. Map data © OpenStreetMap contributors (ODbL).
+- **Maps:** © OpenStreetMap contributors (ODbL). Feeders for Houston and Chennai run along real streets; real facilities
+  appear only under generic names such as "Hospital on <street>".
+- **IEEE 123-node test feeder:** IEEE PES Distribution System Analysis Subcommittee; file from EPRI's OpenDSS
+  distribution, BSD 3-clause ([licence](data/IEEE123Master.LICENSE.txt)). Customers and street names on it are synthetic.
+  The IEEE 34-bus feeder used for Galle is the same family of published test feeders.
+- **Photos and clips:** third-party, credited in [media/photos/CREDITS.md](media/photos/CREDITS.md) and
+  [media/videos/CREDITS.md](media/videos/CREDITS.md). Two images are AI-generated and labelled as such.
+- **Voices:** Microsoft edge-tts, synthetic. **Models:** Muse Spark, Muse Voice Transcribe and SAM 3.1 through the Meta
+  Model API; SAM masks decoded with Meta's `meta-sam-parser`.

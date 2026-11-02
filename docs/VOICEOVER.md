@@ -18,17 +18,17 @@ After a storm, the utility doesn't know where the fault is. It only knows the ph
 
 A caller speaks Sinhala. Voice Transcribe has no Sinhala, so Muse Spark listens to the audio itself. The agent answers in Sinhala; Spark words the reply, but code chooses every fact in it, and a fact check throws a line away if Spark changes a number or a street.
 
-## Shot 3 (0:35-1:00, 25 s, max 62 words, this is 51)
+## Shot 3 (0:35-1:00, 25 s, max 62 words, this is 60)
 
-No model guesses where the fault is. Calls, silence from the neighbours and SCADA go into a probabilistic tracer. It finds a recloser lockout on Hospital Road: 95% confident, crew dispatched. Smart meters help where they exist; when Houston's meter network fails, calls carry on. Models read; code locates and decides.
+No model guesses where the fault is. Calls, silence from the neighbours and SCADA go into a probabilistic tracer. It finds a recloser lockout on Hospital Road: 95% confident, crew dispatched. The evidence behind it is shown, source by source. Smart meters help where they exist; when Houston's meter network fails, calls carry on. Models read; code locates and decides.
 
 ## Shot 4 (1:00-1:20, 20 s, max 50 words, this is 35)
 
 A sparking wire is ranked above every outage and escalated. A photo of a snapped pole goes to SAM 3.1, which finds the number plate, and Spark reads it: the pole is named, not guessed.
 
-## Shot 5 (1:20-1:50, 30 s, max 75 words, this is 40)
+## Shot 5 (1:20-1:50, 30 s, max 75 words, this is 55)
 
-A drone clip: SAM 3.1 tracks the poles, the wires and the fallen trunk. Relight offers switching plans, blocks any that would energise a fault, and waits for the operator. I approve; 115 customers are back before the crews finish.
+A drone clip: SAM 3.1 tracks the poles, the wires and the fallen trunk. Relight offers switching plans, blocks any that would energise a fault, and waits for the operator. I approve; 115 customers are back before the crews finish. On a feeder with two ties, it offers three safe plans and recommends the one that restores most.
 
 ## Shot 6 (1:50-2:10, 20 s, max 50 words, this is 43)
 
@@ -50,4 +50,4 @@ Spark read, Voice Transcribe listened, SAM 3.1 saw the damage. Code made every d
 
 Relight. Meta models read. Code decides. github.com/MalithaBandara/relight.
 
-Total: 354 words.
+Total: 378 words (about 151 s at 2.5 words a second; every shot is inside its slot).
