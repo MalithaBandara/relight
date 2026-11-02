@@ -687,11 +687,13 @@ Portal call (`portalcall.py`, `web/customer.html`)
 - [x] Live 2026-11-02 with synthetic speech standing in for a microphone: English call (Voice Transcribe exact, ~7 s per turn), Tamil (Voice
       Transcribe returned Latin-letter Tamil; Spark still read it; a very short line came back garbled and was filed as junk), Sinhala (Spark
       heard the street, lost the house number). The English kind label "(pole down)" in ta/si lines was replaced on 2026-11-02 by `locales.KIND_NAME` (also es, hi); native-speaker check in `docs/LANGUAGE_CHECK_KINDS.md`.
-- [ ] Voice Transcribe on a human microphone (hi/es not tried).
+- [x] Live 2026-11-02, synthetic speech: Hindi (Chennai) and Spanish (Houston) portal calls heard correctly (Hindi: street name came back in Latin letters), filed with the right account.
+- [ ] Voice Transcribe on a human microphone (all languages).
 - [ ] How long a whole call takes (the agent's lines are spoken in real time, about a minute for a short call).
 
 Crew page (`crewreport.py`, `web/crew.html`)
 - [x] Typed path, correction, confirmation, empty/unknown crew: tested in mock mode and in the browser (`scripts/check_offline.py`).
+- [x] Live 2026-11-02, Hindi and Spanish crew voice reports (synthetic speech): heard, read back by Spark in the crew's language, confirmed; no incident was open, so the acknowledgement said no outage matches.
 - [x] Live 2026-11-02, English voice report from synthetic speech: heard exactly, read back by Spark, correction read back, confirmed, filed to I1.
 - [ ] Voice from a real microphone in a real crew's language (Voice Transcribe en/ta/hi/es, Spark for Sinhala), live read-back wording by
       Spark, photo upload from a phone, and crews in the field with a poor connection.

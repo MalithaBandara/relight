@@ -120,9 +120,9 @@ confirms the address by caller ID.
 - Lean and wire sag are rough estimates from one camera view. SAM sometimes tags a traffic-light post as a utility pole.
 - Callers are synthetic voices and the customers fictional; real calls are noisier than edge-tts.
 - Spark's Sinhala listening still misreads digits and place names.
-- Hindi calls and agent wording are tested only in the Chennai mock; Spanish wording was measured in Houston.
+- Hindi agent wording is checked only in the Chennai mock; the Hindi portal call and crew read-back were tested live with synthetic speech. Spanish wording was measured in Houston.
 - Non-English messages and agent lines have been checked by a native speaker only for Sinhala; the sample Tamil, Hindi and Spanish lines were checked, the rest were not.
-- The portal call and the crew page were tested live (2026-11-02) with synthetic speech sent to the real Voice Transcribe and Spark (English, Tamil, Sinhala), not with a human microphone. Voice Transcribe returned Tamil in Latin letters for synthetic Tamil; Spark still read it.
+- The portal call and the crew page were tested live (2026-11-02) with synthetic speech sent to the real Voice Transcribe and Spark (English, Tamil, Sinhala, Hindi, Spanish), not with a human microphone. Voice Transcribe returned Tamil in Latin letters for synthetic Tamil; Spark still read it. Hindi and Spanish were heard correctly (Voice Transcribe kept the English street name in Latin letters in Hindi) and the crew read-backs were worded by Spark.
 - HEIC photos are refused (HTTP 415); SAM refuses clips over a few MB, so clips are trimmed small.
 - Smart meters are optional and simulated. Only Houston has them (last-gasp messages, then the meter network fails at t=600 s and silent meters stop counting); the other scenarios run on calls, SMS, SCADA and crew reports. The meter messages are generated, not taken from a real meter data system, and there is no integration with one.
 - Priority weights (for example hospital 400, failed backup power 1,500) are our own choices, not a utility's rules.
