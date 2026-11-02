@@ -40,3 +40,10 @@ media/uploads/
 .claude/api_go
 .claude/settings.local.json
 media/overlays/
+
+# agent skill installs (plugin copies, not part of Relight)
+.agents/
+agent/
+data/skills/
+.claude/skills/
+skills-lock.json
