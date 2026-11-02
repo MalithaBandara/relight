@@ -111,9 +111,33 @@ confirms the address by caller ID.
 - Callers are synthetic voices and the customers fictional; real calls are noisier than edge-tts.
 - Spark's Sinhala listening still misreads digits and place names.
 - Hindi calls and agent wording are tested only in the Chennai mock; Spanish wording was measured in Houston.
-- Non-English messages and agent lines have been checked by a native speaker only for Sinhala (in progress).
+- Non-English messages and agent lines have been checked by a native speaker only for Sinhala; the sample Tamil, Hindi and Spanish lines were checked, the rest were not.
+- The portal's voice call (browser microphone) has been tested with typed words and recorded clips, not yet with a live microphone and the live Meta models.
 - HEIC photos are refused (HTTP 415); SAM refuses clips over a few MB, so clips are trimmed small.
 - The paper-diagram digitiser is scored but not wired into the engine.
+- Priority weights (for example hospital 400, failed backup power 1,500) are our own choices, not a utility's rules.
+
+## What's next
+
+Relight today runs on a simulated utility: scripted storms, synthetic customers and voices. The next step is to run it
+on a real one, and the plan is to connect it to the channels customers already use and the systems a control room already has:
+
+- **Customer channels.** Connect to a utility's own SMS gateway, WhatsApp Business messages, web and app portal
+  messages, and its phone lines (calls routed to the agent, with the hand-over to a human call-taker kept). The pipeline
+  that reads, locates and answers each message already exists; what changes is where the messages come from and go.
+- **Utility systems.** Read the utility's real network model, customer database and, where it has them, SCADA and
+  smart-meter events, so the tracer works on the real feeder instead of a generated one. Switching plans stay proposals
+  the operator approves, and the agent never operates equipment.
+- **Real conditions.** Test with real callers, phone-line noise and real photos; tune the pause detection and the
+  confidence thresholds on real data; measure accuracy per language with native speakers.
+- **Evidence from the models.** Use street-name keywords with Voice Transcribe and Spark's faster setting in the engine,
+  run the largest scenario live, and wire the paper-diagram digitiser into the engine for utilities with no digital
+  network model.
+- **The utility's own rules.** Replace our priority weights and crew rules with the utility's, and add its approval and
+  audit steps.
+
+None of this is built yet. It needs a utility partner, their agreement on data and channels, and privacy and security
+review before any real customer data is used.
 
 ## Built during the hackathon
 
