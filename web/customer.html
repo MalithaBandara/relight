@@ -532,7 +532,7 @@ function seen(m) {
   const tracked = Object.entries(a.tracked || {}).map(([p, v]) => `${v.objects} × ${p}`).join(", ");
   const media = m.video ? `<video src="/${esc(path)}" muted playsinline autoplay loop></video>` : `<img src="/${esc(path)}" alt="">`;
   return `<div class="seen">${media}<div><b>${what}${a.public_hazard && !a.mock ? " · danger to the public" : ""}</b>
-    <small>${esc(a.description)}</small>${tracked ? `<small>Followed ${esc(tracked)}</small>` : ""}${tagLine(a.pole_tag)}
+    <small>${esc(a.description)}</small>${a.clearance_m != null ? `<small>Wire clearance about ${esc(a.clearance_m)} m (an estimate)</small>` : ""}${tracked ? `<small>Followed ${esc(tracked)}</small>` : ""}${tagLine(a.pole_tag)}
     <small>${a.models.map((x) => `<span class="badge ${badgeClass(x)}">${esc(x)}</span>`).join(" ")}</small></div></div>`;
 }
 

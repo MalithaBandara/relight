@@ -45,9 +45,9 @@ async function loadGrid() {
   grid = await (await fetch("/api/grid")).json();
   START_MIN = grid.start_hour * 60;
   const served = Object.values(grid.customers).reduce((a, b) => a + b, 0);
-  $("#scenario-sub").textContent = `${grid.country} · ${grid.network === "osm" ? "feeder built on real OpenStreetMap roads" : "IEEE 34-bus test feeder"} · ${fmt(served)} customers · fictional customer data`;
+  $("#scenario-sub").textContent = `${grid.country} · ${grid.network === "osm" ? "feeder built on real OpenStreetMap roads" : "IEEE 34-bus test feeder"} · ${fmt(served)} customers · fictional customer data${grid.external_note ? ` · ${grid.external_note}` : ""}`;
   const list = await (await fetch("/api/scenarios")).json();
-  $("#scenario").innerHTML = list.scenarios.map((s) => `<option value="${s.id}" ${s.id === list.current ? "selected" : ""}>${esc(s.title)}</option>`).join("");
+  $("#scenario").innerHTML = list.scenarios.map((s) => `<option value="${s.id}" ${s.id === list.current ? "selected" : ""}>${esc(s.title)}${s.external ? " (independent test feeder)" : ""}</option>`).join("");
   const bounds = [];
   for (const f of grid.geojson.features) {
     const p = f.properties;
@@ -231,7 +231,7 @@ function renderKpis(s) {
   countTo($("#k-cmi"), c.cmi);
   if (s.plan && s.plan.plan && s.plan.plan.length) {
     const saved = Math.round((s.baseline.customer_minutes - s.plan.customer_minutes) / 60);
-    $("#k-cmi-sub").textContent = `plan saves ${fmt(saved)} customer-h vs first-call`;
+    $("#k-cmi-sub").textContent = `plan saves ${fmt(saved)} customer-h vs first-call${savingRangeText(s.plan)}`;
   }
   $("#k-langs").textContent = Object.keys(c.languages).map((l) => l.toUpperCase()).join(" ") || "–";
   $("#k-msg-sub").textContent = `${fmt(c.messages)} messages · ${c.notified} customers notified`;
@@ -338,9 +338,9 @@ function renderDetails(s) {
     return `<tr><td>${esc(crew)}</td><td>${esc(x.task)}</td><td>${esc(x.status)}</td><td class="mono">${x.depart_t != null ? clockOf(x.depart_t) : "–"}</td>
       <td class="mono">${x.arrive_t != null ? clockOf(x.arrive_t) : "–"}</td><td class="mono">${x.end_t != null ? clockOf(x.end_t) : "–"}</td></tr>`;
   }).join("");
-  const plans = i.status !== "restored" && i.plans.length ? `<div class="section-t">Restoration switching</div>${i.plans.map((p) => p.safe
-    ? `<div class="plan safe"><span class="tag">SAFE</span><span>${esc(p.title)}: ${esc(p.reason)}</span><button data-inc="${i.id}" data-plan="${p.id}">Approve</button></div>`
-    : `<div class="plan blocked"><span class="tag">BLOCKED</span><span>${esc(p.title)}: ${esc(p.reason)}</span><span></span></div>`).join("")}` : "";
+  const offered = plansFor(i);
+  const plans = i.status !== "restored" && offered.length ? `<div class="section-t">Restoration switching${offered.length > 1 ? ` · ${offered.length} options` : ""}${sampleTag()}</div>
+    <div class="plans">${offered.map((p) => planRowHtml(p, i)).join("")}</div>` : "";
   const html = `
     <div class="det-head"><span class="st ${st}">${st}</span><h3>${esc(i.id)} · ${esc(i.title)}</h3>${flags}</div>
     <div class="fields">
@@ -362,6 +362,7 @@ function renderDetails(s) {
     <table class="mini"><tr><th>Crew</th><th>Task</th><th>Status</th><th>Dispatched</th><th>On site</th><th>Done</th></tr>${steps}</table>
     <div class="section-t">Evidence</div>
     <ul class="reasons">${i.reasons.map((r) => `<li>${esc(r)}</li>`).join("")}${i.alternative ? `<li>Rival when located: ${esc(i.alternative.label)} (${Math.round(i.alternative.confidence * 100)}%)</li>` : ""}</ul>
+    ${whyPanelHtml(i)}
     <div class="section-t">Priority</div>
     <div class="sub">${Object.entries(i.breakdown).map(([k, v]) => `${esc(k)} ${v}`).join(" + ")} = <b>${Math.round(i.priority)}</b></div>
     <div class="section-t">Latest callers</div>
@@ -791,7 +792,7 @@ function addPhoto(ph) {
     .bindTooltip(head, { className: "gm" })
     .bindPopup(`<div class="photo-pop">${media}<div class="sub">${head}${ph.caption ? ` · ${esc(ph.caption)}` : ""}</div>
       <b>${esc(a.damage.replaceAll("_", " "))}</b> · ${esc(a.severity)}<br>${esc(a.description)}
-      ${a.clearance_m != null ? `<br>Wire clearance ≈ ${a.clearance_m} m` : ""}${a.pole_lean_deg != null ? `<br>Pole leans ≈ ${Math.round(a.pole_lean_deg)}° (outline, rough)` : ""}${tracked ? `<br>Tracked ${tracked}` : ""}
+      ${a.clearance_m != null ? `<br>${clearanceHtml(a)}` : ""}${a.pole_lean_deg != null ? `<br>Pole leans ≈ ${Math.round(a.pole_lean_deg)}° (outline, rough)` : ""}${tracked ? `<br>Tracked ${tracked}` : ""}
       ${a.at_seconds != null && video ? `<br>Clearest at ${a.at_seconds} s` : ""}${surveyHtml(a.survey)}${poleTagHtml(a.pole_tag)}
       <br>${a.models.map(badge).join(" ")}</div>`,
       { maxWidth: 340 })

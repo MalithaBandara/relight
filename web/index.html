@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body class="console">
+  <div id="preview-banner" class="preview-banner" hidden>UI preview: sample layout with invented numbers, not results. Remove <code>?uipreview=1</code> from the address to hide it.</div>
   <header class="topbar">
     <div class="brand">
       <div class="brand-text"><b>Relight</b></div>
@@ -39,6 +40,7 @@
       <span id="ami-chip" class="chip" hidden></span>
       <span id="mode" class="chip">MOCK</span>
       <button id="btn-models" class="btn ghost" title="What each Meta model has done in this run: requests, tokens, cost">Meta models</button>
+      <button id="btn-analysis" class="btn ghost" hidden title="Evidence tests, the what-if range and the wording report">Analysis</button>
       <a class="btn ghost" href="/customer" target="_blank" title="Customer portal">Customer portal</a>
     </div>
   </header>
@@ -127,6 +129,18 @@
     <p class="dlg-sub" id="models-note"></p>
   </dialog>
 
+  <dialog id="analysis-dialog">
+    <div class="dlg-head"><h2>Analysis</h2><button id="analysis-close" aria-label="Close">✕</button></div>
+    <p class="dlg-sub">How well each part works, measured on this build's scenarios. Synthetic scenarios and voices; see the README for limits.</p>
+    <p id="an-banner" class="preview-note" hidden>Sample layout only: the numbers below are invented.</p>
+    <nav class="tabs an-tabs" id="an-tabs">
+      <button data-an="ablation" class="on">Evidence tests</button>
+      <button data-an="sensitivity">What-if range</button>
+      <button data-an="wording">Agent wording</button>
+    </nav>
+    <div id="an-body" class="an-body"></div>
+  </dialog>
+
   <aside id="copilot" class="copilot" hidden aria-label="Call-taker copilot">
     <div class="cp-head">
       <span class="chip bad">Call-taker</span><b id="cp-id"></b><span id="cp-lang" class="lang"></span>
@@ -158,5 +172,6 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="/static/app.js"></script>
+  <script src="/static/analysis.js"></script>
 </body>
 </html>

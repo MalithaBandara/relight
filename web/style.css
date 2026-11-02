@@ -356,3 +356,42 @@ dialog#models-dialog[open]::backdrop { animation: fade .22s ease-out; }
   .btn:active, .plan button:active { transform: none; }
 }
 .photo-pop img.tag-crop { width: 140px; margin: 4px 0; }
+
+/* ---------- what's-next scaffolding (see whatsnext.md); hidden until the backend supplies data ---------- */
+.preview-banner { background: #3a2f12; color: #f0d58a; border-bottom: 1px solid #6a5420; padding: 4px 12px; font-size: 12px; text-align: center; }
+.preview-banner[hidden], .preview-note[hidden] { display: none; }
+.preview-note { color: #f0d58a; font-size: 12px; margin: 0 0 8px; }
+.sample-tag { font: 600 9px var(--mono); text-transform: uppercase; color: #f0d58a; border: 1px dashed #6a5420; border-radius: 3px; padding: 0 4px; margin-left: 6px; }
+dialog#analysis-dialog { width: min(1000px, 94vw); background: var(--panel); color: var(--text); border: 1px solid var(--line-2); border-radius: 6px; padding: 16px; }
+dialog#analysis-dialog::backdrop { background: rgba(0, 0, 0, .6); }
+.an-tabs { height: 30px; margin-bottom: 8px; }
+.an-tabs button { padding: 0 14px; }
+.an-tabs button[hidden] { display: none; }
+.an-body { max-height: 60vh; overflow: auto; }
+.an-body .empty { color: var(--muted); padding: 20px 0; text-align: center; }
+.an-table td, .an-table th { white-space: nowrap; }
+.an-table .num { text-align: right; }
+.an-table tr.base td { background: var(--panel-2); font-weight: 600; }
+.an-table .warn { color: var(--st-pred); }
+.mbar { display: inline-block; width: 90px; height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; vertical-align: middle; }
+.mbar i { display: block; height: 100%; background: var(--st-rest); }
+.mbar.warn i { background: var(--st-pred); }
+.range-line { margin: 4px 0 6px; font-size: 13px; }
+.range { position: relative; height: 34px; margin: 4px 6px 12px; }
+.range-track { position: absolute; left: 0; right: 0; top: 8px; height: 6px; background: var(--line); border-radius: 3px; }
+.range-span { position: absolute; top: 8px; height: 6px; background: var(--st-rest); border-radius: 3px; }
+.range-mid { position: absolute; top: 4px; width: 2px; height: 14px; background: var(--text); }
+.range-ax { position: absolute; top: 20px; font-size: 10px; color: var(--muted); }
+.plans { max-height: 190px; overflow: auto; }
+.plan-meta { display: block; color: var(--muted); font-size: 11px; margin-top: 1px; }
+.plan-rec { font: 600 9px var(--mono); text-transform: uppercase; color: var(--st-rest); border: 1px solid rgba(63, 180, 124, .5); border-radius: 3px; padding: 0 4px; margin-right: 6px; }
+.plan button:disabled[title="Sample plan"] { cursor: not-allowed; }
+.why { font-size: 12px; }
+.why-row { display: grid; grid-template-columns: 170px 1fr 44px; gap: 8px; align-items: center; margin-bottom: 3px; }
+.why-l { color: #b7c1cc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.why-bar { height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; }
+.why-bar i { display: block; height: 100%; background: var(--st-disp); }
+.why-row.neg .why-bar i { background: var(--st-pred); }
+.why-v { font: 500 12px var(--mono); text-align: right; }
+.why-d { grid-column: 2 / 4; color: var(--muted); font-size: 11px; margin-top: -2px; }
+.why-rival { margin: 6px 0 2px; color: #b7c1cc; }
