@@ -18,7 +18,6 @@ from pydantic import BaseModel
 from . import config
 from . import packs
 from . import voice
-from .diagram import read_diagram, render_diagram, score
 from .crewreport import CrewReport
 from .engine import Engine, clock_str
 from .portalcall import PortalCall
@@ -367,27 +366,6 @@ def grid():
         "start_hour": pk["start_hour"],
         "duration": scenario["duration_s"],
     }
-
-
-DIAGRAM = config.MEDIA_DIR / "diagrams" / "feeder1_sld.png"
-
-
-@app.post("/api/diagram")
-async def diagram(image: UploadFile | None = File(None)):
-    """Digitise a photographed single-line diagram and score it against the known feeder."""
-    path = DIAGRAM
-    if image is not None:
-        path = config.MEDIA_DIR / "diagrams" / f"upload-{Path(image.filename or 'map.jpg').name}"
-        path.write_bytes(await image.read())
-    elif not path.exists():
-        render_diagram(path)
-    topo, model = await asyncio.to_thread(read_diagram, engine.client, path)
-    result = score(topo)
-    await engine.log(model, "Paper map digitised into the grid model",
-                     f"{result['connections_correct']}/{result['connections_total']} connections, "
-                     f"{result['devices_correct']}/{result['devices_total']} protective devices correct")
-    return {"model": model, "image": "/" + path.relative_to(config.ROOT).as_posix(), "score": result,
-            "topology": topo}
 
 
 @app.get("/api/state")

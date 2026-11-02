@@ -58,7 +58,7 @@ flowchart LR
 
 | Model | Job in Relight | Measured |
 |---|---|---|
-| **Muse Spark** (`muse-spark-1.3`) | Reads every complaint and crew report into a JSON schema (street, house number, symptom, hazard, junk) in five languages; words the call agent's replies and the dispatcher's explanations; classifies damage photos and watches drone clips; **listens to Sinhala calls itself** (audio in) because Voice Transcribe has no Sinhala; reads pole-number plates; reads a photographed paper diagram | Extraction accuracy below. `reasoning_effort: minimal` cut extraction latency 4.4 to 2.4 s and Sinhala line wording 9.9 to 2.8 s, with 74-88% fewer output tokens (off by default) |
+| **Muse Spark** (`muse-spark-1.3`) | Reads every complaint and crew report into a JSON schema (street, house number, symptom, hazard, junk) in five languages; words the call agent's replies and the dispatcher's explanations; classifies damage photos and watches drone clips; **listens to Sinhala calls itself** (audio in) because Voice Transcribe has no Sinhala; reads pole-number plates | Extraction accuracy below. `reasoning_effort: minimal` cut extraction latency 4.4 to 2.4 s and Sinhala line wording 9.9 to 2.8 s, with 74-88% fewer output tokens |
 | **Muse Voice Transcribe** | Phone calls to text (Tamil, Hindi, Spanish, English), file endpoint and a realtime WebSocket line with speaker diarization; the feeder's street names go in as `keywords` | Street heard right in 11 of 13 clips with keywords vs 6 of 13 without. Realtime handshake about 4.7 s with 100 keywords. $0.18 per hour of audio |
 | **SAM 3.1** | Outlines poles, wires and fallen trees in photos and tracks them through drone clips; finds the pole-number plate to crop for Spark; pixel masks (decoded with Meta's `meta-sam-parser`) give pole lean, wire sag and where a fallen tree actually touches the wires | Temple Road clip: 3 poles, 6 wires followed, the trunk crosses 4 of 6 (touches 6 of 10 wire tracks by mask) |
 
@@ -124,7 +124,6 @@ confirms the address by caller ID.
 - Non-English messages and agent lines have been checked by a native speaker only for Sinhala; the sample Tamil, Hindi and Spanish lines were checked, the rest were not.
 - The portal call and the crew page were tested live (2026-11-02) with synthetic speech sent to the real Voice Transcribe and Spark (English, Tamil, Sinhala), not with a human microphone. Voice Transcribe returned Tamil in Latin letters for synthetic Tamil; Spark still read it.
 - HEIC photos are refused (HTTP 415); SAM refuses clips over a few MB, so clips are trimmed small.
-- The paper-diagram digitiser is scored but not wired into the engine.
 - Priority weights (for example hospital 400, failed backup power 1,500) are our own choices, not a utility's rules.
 
 ## What's next
@@ -140,9 +139,9 @@ on a real one, and the plan is to connect it to the channels customers already u
   the operator approves, and the agent never operates equipment.
 - **Real conditions.** Test with real callers, phone-line noise and real photos; tune the pause detection and the
   confidence thresholds on real data; measure accuracy per language with native speakers.
-- **Evidence from the models.** Use street-name keywords with Voice Transcribe and Spark's faster setting in the engine,
-  run the largest scenario live, and wire the paper-diagram digitiser into the engine for utilities with no digital
-  network model.
+- **Evidence from the models.** Street-name keywords and Spark's faster setting are now in the engine; still to do:
+  run the largest scenario live, and import a utility's own network model (a GIS or CIM export) in place of the
+  generated feeders.
 - **The utility's own rules.** Replace our priority weights and crew rules with the utility's, and add its approval and
   audit steps.
 

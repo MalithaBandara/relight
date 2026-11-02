@@ -336,7 +336,7 @@ _feeder: Feeder | None = None
 
 
 def get_feeder() -> Feeder:
-    """The Galle IEEE 34-bus feeder (used where only the main scenario makes sense, e.g. the paper map)."""
+    """The Galle IEEE 34-bus feeder."""
     global _feeder
     if _feeder is None:
         _feeder = Feeder()

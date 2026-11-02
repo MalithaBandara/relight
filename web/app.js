@@ -924,25 +924,6 @@ $("#k-models").parentElement.style.cursor = "pointer";
 $("#k-models").parentElement.title = "Open the Meta models panel";
 $("#k-models").parentElement.onclick = () => $("#btn-models").onclick();
 
-const dlg = $("#map-dialog");
-$("#btn-map").onclick = () => dlg.showModal();
-$("#dlg-close").onclick = () => dlg.close();
-$("#dlg-file").onchange = (e) => { const f = e.target.files[0]; if (f) $("#dlg-img").src = URL.createObjectURL(f); };
-$("#dlg-run").onclick = async () => {
-  const out = $("#dlg-result");
-  out.innerHTML = `<span class="k">Reading the diagram…</span>`;
-  const body = new FormData();
-  const file = $("#dlg-file").files[0];
-  if (file) body.append("image", file);
-  const r = await (await fetch("/api/diagram", { method: "POST", body })).json();
-  const s = r.score;
-  out.innerHTML = `${badge(r.model)}
-    <div class="big">${s.connections_correct} / ${s.connections_total}</div><div class="k">connections correct (precision ${Math.round(s.precision * 100)}%)</div>
-    <div class="big">${s.devices_correct} / ${s.devices_total}</div><div class="k">protective devices placed correctly</div>
-    ${s.missing.length ? `<div class="k">Missed: ${s.missing.map(esc).join(", ")}</div>` : ""}
-    ${s.extra.length ? `<div class="k">Not on the feeder: ${s.extra.map(esc).join(", ")}</div>` : ""}`;
-};
-
 loadGrid().then(connect);
 
 // Recording helper: /?run=20 starts the storm at 20x once the page has connected (the same as pressing Run).

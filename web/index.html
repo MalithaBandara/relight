@@ -39,7 +39,6 @@
       <span id="ami-chip" class="chip" hidden></span>
       <span id="mode" class="chip">MOCK</span>
       <button id="btn-models" class="btn ghost" title="What each Meta model has done in this run: requests, tokens, cost">Meta models</button>
-      <button id="btn-map" class="btn ghost" title="Build the grid model from a photo of a paper diagram">Paper map</button>
       <a class="btn ghost" href="/customer" target="_blank" title="Customer portal">Customer portal</a>
     </div>
   </header>
@@ -156,23 +155,6 @@
       </div>
     </div>
   </aside>
-
-  <dialog id="map-dialog">
-    <div class="dlg-head">
-      <h2>Paper map → grid model</h2>
-      <button id="dlg-close" aria-label="Close">✕</button>
-    </div>
-    <p class="dlg-sub">Many utilities without smart meters only have their feeder on paper. Photograph the single-line
-      diagram; Muse Spark reads every bus, line and protective device, and Relight scores it against the known feeder.</p>
-    <div class="dlg-body">
-      <img id="dlg-img" src="/media/diagrams/feeder1_sld.png" alt="Single-line diagram">
-      <div class="dlg-side">
-        <label class="upload">Use your own photo <input type="file" id="dlg-file" accept="image/*"></label>
-        <button id="dlg-run" class="btn primary">Digitise diagram</button>
-        <div id="dlg-result"></div>
-      </div>
-    </div>
-  </dialog>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="/static/app.js"></script>
