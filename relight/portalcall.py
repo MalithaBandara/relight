@@ -44,6 +44,40 @@ def denied(text: str, lang: str) -> bool:
     return any(w in t for w in words)
 
 
+async def listen(engine: Engine, ref: str, lang: str, wav: bytes) -> tuple[str | None, str | None, str]:
+    """Save one spoken utterance, then have Voice Transcribe (or Spark, for Sinhala) hear it: (path, words, who heard).
+
+    Shared by the customer's call and a crew's report. `words` is None when nothing could listen or the audio is
+    not a short mono 16 or 24 kHz WAV.
+    """
+    try:
+        with wave.open(io.BytesIO(wav)) as w:
+            ok = w.getnchannels() == 1 and w.getsampwidth() == 2 and w.getframerate() in (16000, 24000)
+    except wave.Error:
+        ok = False
+    if not ok or len(wav) > MAX_AUDIO:
+        return None, None, ""
+    rel = f"media/uploads/call-{hashlib.sha256(wav).hexdigest()[:16]}.wav"
+    path = config.ROOT / rel
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(wav)
+    agent, client = engine.agent, engine.client
+    try:
+        if lang in TRANSCRIBE_LANGS:
+            res = await asyncio.to_thread(client.transcribe, path, BIAS.get(lang), agent.keywords())
+            text, model = (res or {}).get("transcript", "").strip(), "Voice Transcribe"
+        else:
+            text = await asyncio.to_thread(client.spark_listen, path, agent.lang_name.get(lang, lang))
+            text, model = (text or "").strip(), "Muse Spark"
+    except Exception as err:  # noqa: BLE001 - no network or a refused request: the caller can type instead
+        await engine.log("Code", f"{ref}: could not transcribe the speaker", str(err)[:160], ref)
+        return rel, None, ""
+    if text:
+        engine._count(model)
+        await engine.log(model, f"{ref}: speaker heard", text[:160], ref)
+    return rel, text or None, model
+
+
 class PortalCall:
     def __init__(self, engine: Engine, call_id: str, who: str, language: str, now: float) -> None:
         c = engine.db.by_account(who) or engine.db.by_phone(who)
@@ -106,33 +140,7 @@ class PortalCall:
         return self.result(first)
 
     async def _listen(self, wav: bytes) -> tuple[str | None, str | None, str]:
-        """Save the utterance, then have Voice Transcribe (or Spark, for Sinhala) hear it. (path, words, who heard)."""
-        try:
-            with wave.open(io.BytesIO(wav)) as w:
-                ok = w.getnchannels() == 1 and w.getsampwidth() == 2 and w.getframerate() in (16000, 24000)
-        except wave.Error:
-            ok = False
-        if not ok or len(wav) > MAX_AUDIO:
-            return None, None, ""
-        rel = f"media/uploads/call-{hashlib.sha256(wav).hexdigest()[:16]}.wav"
-        path = config.ROOT / rel
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_bytes(wav)
-        agent, client = self.e.agent, self.e.client
-        try:
-            if self.lang in TRANSCRIBE_LANGS:
-                res = await asyncio.to_thread(client.transcribe, path, BIAS.get(self.lang), agent.keywords())
-                text, model = (res or {}).get("transcript", "").strip(), "Voice Transcribe"
-            else:
-                text = await asyncio.to_thread(client.spark_listen, path, agent.lang_name.get(self.lang, self.lang))
-                text, model = (text or "").strip(), "Muse Spark"
-        except Exception as err:  # noqa: BLE001 - no network or a refused request: the caller can type instead
-            await self.e.log("Code", f"{self.id}: could not transcribe the caller", str(err)[:160], self.id)
-            return rel, None, ""
-        if text:
-            self.e._count(model)
-            await self.e.log(model, f"{self.id}: caller heard", text[:160], self.id)
-        return rel, text or None, model
+        return await listen(self.e, self.id, self.lang, wav)
 
     # ---- what the agent says next -------------------------------------------------------------
 

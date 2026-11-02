@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f1317">
+  <title>Crew Desk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;700&family=Noto+Sans+Sinhala:wght@400;600&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Crew page. Written for a technician on site, often one-handed on a phone, in rain or at night: the console's dark
+       palette, large targets, and one decision at a time (report, then confirm the read-back). */
+    :root {
+      --night: #0f1317; --surface: #151a20; --surface-2: #1b2128; --line: #2a323c; --line-2: #36404c;
+      --text: #d6dde5; --muted: #8592a1; --lamp: #4aa3df; --lamp-ink: #06121b; --lamp-soft: rgba(74, 163, 223, .14);
+      --ok: #3fb47c; --cut: #e5484d; --spark: #5d9cec; --ease-out: cubic-bezier(.23, 1, .32, 1);
+      --font: "Atkinson Hyperlegible Next", "Noto Sans Sinhala", "Noto Sans Tamil", "Noto Sans Devanagari", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--night); color-scheme: dark; }
+    body { margin: 0; min-height: 100vh; background: var(--night); color: var(--text); font: 16px/1.5 var(--font);
+      -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; }
+    ::selection { background: var(--lamp); color: var(--lamp-ink); }
+    * { scrollbar-color: var(--line-2) transparent; }
+    button, input, select, textarea { font: inherit; color: inherit; }
+    :focus-visible { outline: 2px solid var(--lamp); outline-offset: 2px; }
+    [hidden] { display: none !important; }
+
+    .page { max-width: 720px; margin: 0 auto; padding: 28px 16px 48px; display: flex; flex-direction: column; gap: 16px; }
+    h1 { margin: 0; font-size: 24px; line-height: 1.15; letter-spacing: -.01em; }
+    .sub { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+    .card h2 { margin: 0; font-size: 19px; line-height: 1.25; }
+    .lede { margin: -6px 0 2px; color: var(--muted); font-size: 14px; }
+    label.field { display: flex; flex-direction: column; gap: 5px; font-size: 14px; color: var(--muted); }
+    input, textarea, select { background: var(--surface-2); border: 1px solid var(--line-2); border-radius: 10px; padding: 11px 12px; font-size: 16px; caret-color: var(--lamp);
+      transition: border-color .15s ease, background-color .15s ease; }
+    input:hover, textarea:hover, select:hover { border-color: #4a5766; }
+    input:focus, textarea:focus, select:focus { border-color: var(--lamp); outline: none; background: #212932; }
+    textarea { min-height: 110px; resize: vertical; }
+    .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .row > .grow { flex: 1; min-width: 0; }
+
+    .job { display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; border: 1px solid var(--line-2); border-radius: 12px; background: var(--surface-2); }
+    .job b { font-size: 17px; }
+    .job small { color: var(--muted); font-size: 14px; }
+    .badge { display: inline-block; font-size: 12px; font-weight: 700; padding: 1px 7px; border-radius: 6px; color: #10151c; background: var(--spark); }
+    .badge.mock { background: transparent; color: var(--muted); border: 1px dashed var(--line-2); font-weight: 500; }
+    .badge.code { background: #7f8b99; }
+    .state-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--muted); margin-right: 6px; }
+    .state-dot.onsite { background: var(--ok); } .state-dot.enroute { background: var(--lamp); }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .samples > span { font-size: 13px; color: var(--muted); display: block; margin-bottom: 6px; }
+    .chip { background: transparent; border: 1px solid var(--line-2); border-radius: 999px; padding: 6px 12px; font-size: 14px; cursor: pointer;
+      transition: border-color .15s ease, background-color .15s ease, transform .12s var(--ease-out); text-align: left; }
+    .chip:hover { border-color: var(--lamp); background: var(--lamp-soft); }
+    .chip:active { transform: scale(.96); }
+
+    .primary { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 50px; padding: 0 20px;
+      background: var(--lamp); color: var(--lamp-ink); border: 0; border-radius: 10px; font-weight: 700; cursor: pointer;
+      transition: background-color .15s ease, transform .12s var(--ease-out), opacity .15s ease; }
+    .primary:hover { background: #6bb6e8; }
+    .primary:active { transform: scale(.97); }
+    .primary:disabled { opacity: .5; cursor: not-allowed; }
+    .primary.rec { background: var(--cut); color: #fff; }
+    .primary svg { width: 18px; height: 18px; }
+    .ok-btn { background: var(--ok); color: #05150d; }
+    .ok-btn:hover { background: #55c791; }
+    .ghost { background: transparent; border: 1px solid var(--line-2); border-radius: 10px; min-height: 50px; padding: 0 18px; cursor: pointer; font-weight: 700;
+      transition: border-color .15s ease, color .15s ease; }
+    .ghost:hover { border-color: var(--cut); color: var(--cut); }
+    .level { flex: 1; min-width: 90px; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+    .level i { display: block; height: 100%; width: 100%; background: var(--cut); transform-origin: left center; transform: scaleX(0); transition: transform .08s linear; }
+
+    .attach { display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 8px 12px; border: 1px dashed var(--line-2); border-radius: 10px; color: var(--muted); font-size: 15px; cursor: pointer; }
+    .attach:hover { border-color: var(--lamp); background: var(--lamp-soft); color: var(--text); }
+    .attach:focus-within { outline: 2px solid var(--lamp); outline-offset: 2px; }
+    .attach input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+    .attach svg { width: 22px; height: 22px; flex: none; }
+    .attach .name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .attach .thumb { width: 60px; height: 44px; border-radius: 6px; object-fit: cover; background: #000; }
+
+    .convo { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; max-height: 420px; overflow-y: auto; }
+    .convo li { max-width: min(560px, 90%); padding: 10px 12px; border-radius: 12px; font-size: 16px; background: #222a33; overflow-wrap: anywhere; animation: arrive .35s var(--ease-out) both; }
+    .convo li.agent { align-self: flex-start; border-bottom-left-radius: 4px; }
+    .convo li.crew { align-self: flex-end; border-bottom-right-radius: 4px; background: var(--lamp-soft); border: 1px solid rgba(74, 163, 223, .35); }
+    .convo li small { display: block; margin-top: 4px; font-size: 13px; color: var(--muted); }
+    @keyframes arrive { from { opacity: 0; transform: translateY(8px) scale(.98); } }
+    .confirm { display: flex; flex-wrap: wrap; gap: 10px; }
+    .confirm > * { flex: 1 1 200px; }
+    .done { border: 1px solid rgba(63, 180, 124, .7); border-radius: 12px; padding: 14px; background: var(--surface-2); }
+    .done b { color: #7fd6a8; font-size: 18px; display: block; }
+    .done small { color: var(--muted); display: block; margin-top: 2px; }
+    .say { margin: 0; min-height: 1.5em; font-size: 14px; color: var(--muted); }
+    .error { margin: 0; font-size: 14px; color: var(--cut); }
+    .error:empty { display: none; }
+    .note { margin: 0; font-size: 14px; color: var(--muted); max-width: 70ch; }
+    @media (prefers-reduced-motion: reduce) { .convo li { animation: none; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>Crew Desk</h1>
+      <p class="sub">Send what you see on site. The control room's agent reads it back; nothing changes until you confirm.</p>
+    </header>
+
+    <section class="card" aria-labelledby="who-h">
+      <h2 id="who-h">Your crew</h2>
+      <label class="field">Crew
+        <select id="crew"></select>
+      </label>
+      <div class="job" id="job" aria-live="polite"></div>
+    </section>
+
+    <section class="card" aria-labelledby="rep-h" id="compose">
+      <h2 id="rep-h">Report from site</h2>
+      <p class="lede" id="compose-lede">Say it or type it: where you are, what you found, whether the line is live, whether the fuse or transformer is fine, which houses are out and what help you need.</p>
+      <textarea id="text" aria-label="Your report" placeholder="For example: Hospital Road opposite number 52, concrete pole snapped at the base, conductors down, no sparking. Need a bucket truck."></textarea>
+      <label class="attach" id="attach">
+        <input type="file" id="file" accept="image/*,video/*">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+        <span class="name" id="file-name">Add a photo or video of the damage (optional)</span>
+      </label>
+      <div class="samples" id="samples" hidden>
+        <span>Try a sample report</span>
+        <div class="chips"></div>
+      </div>
+      <div class="row">
+        <select id="lang" aria-label="Language"><option value="en">English</option></select>
+        <button id="mic" class="primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span class="label">Tap to speak</span></button>
+        <div class="level" aria-hidden="true"><i id="level"></i></div>
+        <button id="send" class="primary grow"><span class="label">Send report</span></button>
+      </div>
+      <p class="say" id="say" aria-live="polite"></p>
+    </section>
+
+    <section class="card" aria-labelledby="conv-h" id="conv-card" hidden>
+      <h2 id="conv-h">Read-back</h2>
+      <ol class="convo" id="convo" aria-live="polite"></ol>
+      <div class="confirm" id="confirm" hidden>
+        <button id="yes" class="primary ok-btn">Correct, file it</button>
+        <button id="no" class="ghost">Not correct</button>
+      </div>
+      <div id="result"></div>
+    </section>
+
+    <p class="error" id="error" role="alert"></p>
+    <p class="note">Demo: the crews, places and the agent's voice are synthetic. No sign-in here, so anyone with this page can send a report; a real deployment would identify each crew. A voice report is saved on this computer, and goes to Meta's speech models only when the API is switched on.</p>
+  </main>
+
+<script src="/static/recorder.js"></script>
+<script>
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const badgeClass = (m) => (m || "").startsWith("mock") ? "mock" : /Spark/.test(m) ? "spark" : "code";
+const LANG_NAME = { en: "English", si: "සිංහල", ta: "தமிழ்", hi: "हिन्दी", es: "Español" };
+const SAMPLES = {   // Galle's crews and streets
+  galle_storm: [
+    ["Pole snapped", "Hospital Road opposite number 52, concrete pole snapped at the base, conductors down across the road, no sparking. Need a bucket truck and a new pole."],
+    ["Fuse blown", "Cinnamon Gardens Lane, transformer by number 55, the drop-out fuse is blown. One person can replace it."],
+    ["Service wire, fuse fine", "Lake Road number 10. Transformer is fine, fuses intact. Service wire down, houses 6 to 14 without supply."],
+    ["Tree on lines", "Temple Road near number 62, large tree across the lines, two spans down. Need the vegetation crew before any line work."],
+  ],
+};
+
+const st = { crews: [], report: null, phase: "compose", rec: null, busy: false, media: null, playing: null, picked: false, speakId: 0 };
+
+async function getJSON(url, opts) {
+  const r = await fetch(url, opts);
+  const out = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(out.error || `HTTP ${r.status}`);
+  return out;
+}
+
+// ---- crews and their jobs -------------------------------------------------------------------------
+
+function renderJob() {
+  const c = st.crews.find((x) => x.id === $("#crew").value);
+  if (!c) return;
+  const dot = `<span class="state-dot ${c.status.replace(" ", "")}"></span>`;
+  const job = c.incident ? `${esc(c.incident.id)} · ${esc(c.incident.title)} at ${esc(c.incident.label)}` : "No job assigned right now";
+  $("#job").innerHTML = `<b>${esc(c.name)}</b><small>${dot}${esc(c.status)}${c.task ? ` · ${esc(c.task)}` : ""}</small><small>${job}</small>`;
+}
+
+async function loadCrews(first) {
+  const r = await getJSON("/api/crews");
+  st.crews = r.crews;
+  const sel = $("#crew"), keep = sel.value;
+  sel.innerHTML = r.crews.map((c) => `<option value="${esc(c.id)}">${esc(c.name)}</option>`).join("");
+  if (keep && r.crews.some((c) => c.id === keep)) sel.value = keep;
+  if (first) {
+    $("#lang").innerHTML = r.languages.map((l) => `<option value="${l}">${LANG_NAME[l] || l}</option>`).join("");
+    const s = SAMPLES[r.scenario];
+    if (s) {
+      $("#samples .chips").innerHTML = s.map(([l, t]) => `<button class="chip" data-t="${esc(t)}">${esc(l)}</button>`).join("");
+      $("#samples").hidden = false;
+    }
+  }
+  renderJob();
+  const c = st.crews.find((x) => x.id === sel.value);
+  if (c && st.phase === "compose" && !st.picked && [...$("#lang").options].some((o) => o.value === c.language)) $("#lang").value = c.language;
+}
+$("#crew").onchange = () => { st.picked = false; renderJob(); const c = st.crews.find((x) => x.id === $("#crew").value);
+  if (c && [...$("#lang").options].some((o) => o.value === c.language)) $("#lang").value = c.language; };
+$("#lang").onchange = () => { st.picked = true; };
+$("#samples").addEventListener("click", (e) => { const b = e.target.closest("[data-t]"); if (b) $("#text").value = b.dataset.t; });
+loadCrews(true).catch(() => { $("#error").textContent = "Could not reach the control room. Check your connection."; });
+setInterval(() => { if (!document.hidden) loadCrews(false).catch(() => {}); }, 5000);
+
+// ---- photo ------------------------------------------------------------------------------------
+
+$("#file").addEventListener("change", (e) => {
+  const f = e.target.files[0];
+  st.media = f || null;
+  const box = $("#attach"); box.querySelectorAll(".thumb").forEach((x) => x.remove());
+  if (!f) { $("#file-name").textContent = "Add a photo or video of the damage (optional)"; return; }
+  if (!/^(image|video)\//.test(f.type)) { st.media = null; $("#error").textContent = "Attach a photo or a video."; return; }
+  if (f.type.startsWith("image/")) { const t = Object.assign(document.createElement("img"), { src: URL.createObjectURL(f), alt: "", className: "thumb" }); box.insertBefore(t, $("#file-name")); }
+  $("#file-name").textContent = `${f.name} (${(f.size / 1048576).toFixed(1)} MB)`;
+});
+
+async function upload(file) {
+  const body = new FormData(); body.append("file", file);
+  const r = await fetch("/api/customer/upload", { method: "POST", body });
+  const out = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(out.error || "The photo did not go through.");
+  return out.path;
+}
+
+// ---- the read-back conversation ---------------------------------------------------------------------
+
+function addTurns(turns) {
+  const log = $("#convo");
+  for (const t of turns) {
+    const li = document.createElement("li");
+    li.className = t.who === "agent" ? "agent" : "crew";
+    const en = t.en && t.en !== t.text ? `<small>${esc(t.en)}</small>` : "";
+    li.innerHTML = `${esc(t.text)}${en}<small>${t.who === "agent" ? "Control" : "You"} · <span class="badge ${badgeClass(t.model)}">${esc(t.model || "")}</span></small>`;
+    log.append(li);
+  }
+  log.scrollTop = log.scrollHeight;
+}
+
+function playClip(a) {
+  return new Promise((resolve) => {
+    st.playing = a;
+    const done = () => { st.playing = null; resolve(); };
+    a.onended = a.onerror = a.onpause = done;
+    a.play().catch(done);
+    setTimeout(done, 40000);
+  });
+}
+function stopSpeaking() { st.speakId++; if (st.playing) st.playing.pause(); $("#say").textContent = ""; }
+async function speak(rid, turns) {   // every control line of a reply is requested at once, then played in order
+  const id = ++st.speakId;
+  const clips = turns.filter((t) => t.who === "agent").map((t) => { const a = new Audio(`/api/call/${rid}/${t.i}.wav`); a.preload = "auto"; a.load(); return a; });
+  for (const a of clips) {
+    if (id !== st.speakId) return;   // the crew has moved on: stop talking
+    $("#say").textContent = "Control is speaking…"; await playClip(a);
+  }
+  if (id === st.speakId) $("#say").textContent = "";
+}
+
+function setPhase(p) {
+  st.phase = p;
+  $("#compose").hidden = !(p === "compose" || p === "correct");
+  $("#conv-card").hidden = p === "compose";
+  $("#confirm").hidden = p !== "confirm";
+  $("#attach").hidden = p !== "compose"; $("#samples").hidden = p !== "compose" || !$("#samples .chips").innerHTML;
+  $("#rep-h").textContent = p === "correct" ? "Correct the report" : "Report from site";
+  $("#compose-lede").textContent = p === "correct" ? "Say or type the corrected report. Control reads it back again." : "Say it or type it: where you are, what you found, whether the line is live, whether the fuse or transformer is fine, which houses are out and what help you need.";
+  $("#send .label").textContent = p === "correct" ? "Send correction" : "Send report";
+  $("#crew").disabled = p !== "compose";
+}
+
+async function handle(r) {
+  st.report = r.id || st.report;
+  if (r.error) $("#error").textContent = r.error;
+  if (!r.turns || !r.turns.length) return false;
+  addTurns(r.turns);
+  if (r.state === "done") {
+    setPhase("done");
+    const label = r.incident ? `Filed against ${esc(r.incident)}${r.incident_title ? ` · ${esc(r.incident_title)}` : ""}${r.incident_label ? ` at ${esc(r.incident_label)}` : ""}` : "Filed. No open outage matches that place yet.";
+    $("#result").innerHTML = `<div class="done"><b>${label}</b><small>The control room's console shows your report and any change to the diagnosis.</small></div>
+      <div class="row" style="margin-top:12px"><button id="again" class="primary">New report</button></div>`;
+    $("#again").onclick = reset;
+    loadCrews(false).catch(() => {});
+  } else {
+    setPhase("confirm");   // the buttons are there while the read-back is still being spoken
+  }
+  speak(st.report, r.turns);   // not awaited: the crew can answer while control is still talking
+  return true;
+}
+
+function reset() {
+  st.report = null; st.media = null; $("#convo").innerHTML = ""; $("#result").innerHTML = ""; $("#text").value = "";
+  $("#file").value = ""; $("#file").dispatchEvent(new Event("change")); $("#error").textContent = ""; setPhase("compose");
+}
+
+async function submit(blob) {
+  if (st.busy) return;
+  stopSpeaking();
+  const text = $("#text").value.trim();
+  if (!blob && !text) { $("#error").textContent = "Say or type your report first."; return; }
+  st.busy = true; $("#error").textContent = ""; $("#send").disabled = $("#mic").disabled = true; $("#say").textContent = "Control is reading your report…";
+  try {
+    const body = new FormData();
+    if (blob) body.append("audio", blob, "report.wav");
+    if (text) body.append("text", text);
+    let r;
+    if (st.phase === "compose") {
+      body.append("crew_id", $("#crew").value); body.append("language", $("#lang").value);
+      if (st.media) { $("#say").textContent = "Sending your photo…"; body.append("media", await upload(st.media)); }
+      r = await getJSON("/api/crew/report", { method: "POST", body });
+    } else {
+      body.append("ok", "false");
+      r = await getJSON(`/api/crew/report/${st.report}/answer`, { method: "POST", body });
+    }
+    $("#text").value = "";
+    await handle(r);
+  } catch (err) { $("#error").textContent = err.message; $("#say").textContent = ""; }
+  finally { st.busy = false; $("#send").disabled = $("#mic").disabled = false; }
+}
+
+$("#send").onclick = () => submit(null);
+
+$("#yes").onclick = async () => {
+  if (st.busy) return;
+  stopSpeaking();
+  st.busy = true; $("#yes").disabled = $("#no").disabled = true; $("#error").textContent = ""; $("#say").textContent = "Filing…";
+  try {
+    const body = new FormData(); body.append("ok", "true");
+    await handle(await getJSON(`/api/crew/report/${st.report}/answer`, { method: "POST", body }));
+  } catch (err) { $("#error").textContent = err.message; }
+  finally { st.busy = false; $("#yes").disabled = $("#no").disabled = false; }
+};
+$("#no").onclick = () => { stopSpeaking(); $("#error").textContent = ""; setPhase("correct"); $("#text").focus(); };
+
+// ---- microphone: tap to speak, pause (or tap again) to send ----------------------------------------------
+
+$("#mic").onclick = async () => {
+  if (st.rec) { st.rec.stop(); return; }
+  if (st.busy) return;
+  $("#error").textContent = "";
+  try {
+    stopSpeaking();
+    st.rec = await Recorder.start({
+      onLevel: (v) => { $("#level").style.transform = `scaleX(${v})`; },
+      onDone: ({ blob, heard }) => {
+        st.rec = null; $("#mic").classList.remove("rec"); $("#mic .label").textContent = "Tap to speak";
+        if (!heard) { $("#say").textContent = "I did not hear anything. Tap to speak and try again."; return; }
+        submit(blob);
+      },
+    });
+    $("#mic").classList.add("rec"); $("#mic .label").textContent = "Tap to send"; $("#say").textContent = "Listening… speak, then pause.";
+  } catch (err) { $("#error").textContent = err.message; }
+};
+</script>
+</body>
+</html>

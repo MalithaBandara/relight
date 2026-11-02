@@ -198,6 +198,41 @@ def portal_call() -> None:
     server.open_scenario("galle_storm")
 
 
+def crew_page() -> None:
+    print("crew report from the crew page (typed words; the microphone path needs the API)")
+    from fastapi.testclient import TestClient
+
+    from relight import server
+
+    server.open_scenario("galle_storm")
+    c = TestClient(server.app)
+    crews = c.get("/api/crews").json()["crews"]
+    check("the crew list names this scenario's crews", len(crews) == 5 and crews[0]["id"] == "CREW-L1", str(len(crews)))
+    text = ("Hospital Road opposite number 52, concrete pole snapped at the base, conductors down across the road, "
+            "no sparking. Need a bucket truck and a new pole.")
+    r = c.post("/api/crew/report", data={"crew_id": "CREW-L1", "text": text}).json()
+    check("the agent reads the report back and waits", r["state"] == "confirm" and r["turns"][-1]["who"] == "agent"
+          and "pole" in r["turns"][-1]["text"].lower(), r["turns"][-1]["text"][:80])
+    check("nothing is filed before the crew confirms", not any(m["id"] == r["id"] for m in server.engine.messages))
+    r2 = c.post(f"/api/crew/report/{r['id']}/answer", data={"ok": "false", "text": "Negative, the wire is live."}).json()
+    check("'not correct' with a correction is read back again", r2["state"] == "confirm" and r2["readbacks"] == 2,
+          str(r2.get("readbacks")))
+    r3 = c.post(f"/api/crew/report/{r['id']}/answer", data={"ok": "true"}).json()
+    check("confirming files it and the agent acknowledges", r3["state"] == "done" and r3["turns"][-1]["who"] == "agent",
+          str(r3.get("incident")))
+    msg = next((m for m in server.engine.messages if m["id"] == r["id"]), None)
+    check("it is in the console's messages as a crew report", bool(msg and msg["channel"] == "crew"))
+    check("a filed report cannot be answered again",
+          c.post(f"/api/crew/report/{r['id']}/answer", data={"ok": "true"}).status_code == 410)
+    empty = c.post("/api/crew/report", data={"crew_id": "CREW-L1", "text": "  "}).json()
+    check("an empty report is refused with a plain message", not empty.get("id") and empty.get("error"),
+          str(empty.get("error")))
+    check("an unknown crew is refused", c.post("/api/crew/report", data={"crew_id": "X", "text": "hi"}).status_code == 404)
+    check("the crew page is served", c.get("/crew").status_code == 200)
+    c.close()
+    server.open_scenario("galle_storm")
+
+
 def backup_power() -> None:
     print("backup power failed at a critical customer")
     from relight.planner import BACKUP_FAILED, Job, score
@@ -406,6 +441,7 @@ async def main() -> None:
     await cached_replays()
     uploads()
     portal_call()
+    crew_page()
     backup_power()
     drone_survey_check()
     mask_checks()

@@ -113,6 +113,7 @@ relight/                 Python package (FastAPI backend and all logic)
                          per-utterance cache, paced mock)
   copilot.py             call-taker copilot on hard live calls: live fields, Spark's next line, file/end
   portalcall.py          a customer's own call from the portal: browser microphone, turn by turn, answered by the call agent
+  crewreport.py          a field crew's own report from the crew page (voice, text, photo): read back, confirmed by the crew, then filed
   voice.py               text to speech (edge-tts) with a phone-line filter; cached in media/audio/tts/
   scenario.py            scenario loader, simulated physical World, Replayer (clock, time-lapse)
   diagram.py             paper single-line diagram -> topology with Spark; scoring; diagram renderer
@@ -379,6 +380,10 @@ the first recloser's own zone, and guarantees at least two callers for small fau
 | GET | `/api/customer?q=` | portal status by account or phone |
 | POST | `/api/customer/upload` | multipart `file` (photo or video, max 60 MB) -> `{"path"}` under `media/uploads/` |
 | POST | `/api/customer/report` | `{"text", "who", "language", "media"}` live complaint (processed like any other) |
+| GET | `/crew` | crew page (`web/crew.html`; mic recorder in `web/recorder.js`) |
+| GET | `/api/crews` | this scenario's crews with status, current job and language |
+| POST | `/api/crew/report` | multipart `crew_id`, `text` and/or `audio` (16 kHz WAV), `language`, `media`: the agent reads it back (`state: confirm`) |
+| POST | `/api/crew/report/{id}/answer` | multipart `ok` (true files it), or `ok=false` with `text`/`audio` = a correction, read back again (3 read-backs at most) |
 | POST | `/api/customer/call` | `{"who"?, "language"}` a customer rings the desk from the portal: the agent greets (`portalcall.py`) |
 | POST | `/api/customer/call/{id}/say` | multipart `audio` (16 kHz mono WAV, one utterance) or `text`; returns the turns added, `done` when filed |
 | POST | `/api/customer/call/{id}/end` | hang up: what was said so far is filed |
@@ -606,6 +611,13 @@ Can start now
   simulated World answers: the next-door question goes out by SMS. Without the API (mock, or GO closed) the
   microphone path says so and the caller types (keyword reading, `mock (keywords)`). Audio is saved in
   `media/uploads/call-*.wav` (git-ignored). Agent lines are spoken with edge-tts, requested all at once and played in order.
+- **Crew page** (chosen and built 2026-11-02): `/crew` lets a field crew send a report: pick the crew (its job and status
+  come from `/api/crews`), speak, type or add a photo. `CrewReport` has Voice Transcribe hear it (Spark for Sinhala), Spark
+  read it as a crew report (typed reports without the API use `extract._crew_keyword_fields`, English only), and the agent
+  reads it back; the crew taps Correct, or Not correct and says it again. Only a confirmed report changes anything: it goes
+  through `Engine._crew_filed` (the tail of the scripted `_crew_note`), so the diagnosis can change, the photo is analysed and the agent
+  acknowledges. The simulated World still sends its own site reports for the same crew; the two are independent. No sign-in
+  (a real deployment must identify crews).
 - **Drone damage assessment** (finished 2026-11-01): `vision.drone_survey` counts from SAM 3.1's tracks: poles and
   wires followed (a wire counts if its track spans 40% of the clip; SAM splits wires into pieces), poles lying (box
   wider than tall), and which wires an obstruction (fallen tree) crosses. Galle's Temple Road clip: 3 poles, 6 wires
@@ -676,6 +688,12 @@ Portal call (`portalcall.py`, `web/customer.html`)
 - [ ] Voice Transcribe on a real microphone utterance (en/ta/hi/es) and Spark listening to Sinhala: accuracy, wait,
       cost per call (about 5 Spark requests and 3 short clips).
 - [ ] How long a whole call takes (the agent's lines are spoken in real time, about a minute for a short call).
+
+Crew page (`crewreport.py`, `web/crew.html`)
+- [x] Typed path, correction, confirmation, empty/unknown crew: tested in mock mode and in the browser (`scripts/check_offline.py`).
+- [ ] Voice from a real microphone in a real crew's language (Voice Transcribe en/ta/hi/es, Spark for Sinhala), live read-back wording by
+      Spark, photo upload from a phone, and crews in the field with a poor connection.
+- [ ] Keyword reader (`_crew_keyword_fields`) is English only; other languages need the API.
 
 Photos and videos (`vision.py`, `models.py`)
 - [x] Spark and SAM 3.1 on the nine Commons photos, live (2026-11-01): outlines, lean 3-13 degrees on the leaning poles;

@@ -627,6 +627,10 @@ class Engine:
             await self.agent.crew_by_text(call, e)
             text = e["text"]
         ext = await self.agent.readback(call, e, await read(text), read)
+        await self._crew_filed(e, call, ext, text)
+
+    async def _crew_filed(self, e: dict, call: dict, ext: Extraction, text: str) -> None:
+        """The crew confirmed what the agent read back: act on it (diagnosis, damage, acknowledgement, photo)."""
         f = ext.fields
         self.agent.gloss(call, f)
         loc = self._locate(f, None)

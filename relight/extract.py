@@ -124,6 +124,8 @@ class Extractor:
         out = self._call(self.crew_system, text, CREW_SCHEMA, "CrewReport")
         if out is not None:
             return Extraction(out, self.label)
+        if not truth:  # a report typed or spoken by a real crew: no labels, so read the words
+            return Extraction(_crew_keyword_fields(text), "mock (keywords)", mock=True)
         needs = {"pole_down": ["line", "bucket_truck"], "tree_on_line": ["vegetation", "line"],
                  "blown_fuse": ["troubleshooter"], "live_wire": ["line"], "service_wire": ["line"]}.get(truth.get("damage"), [])
         return Extraction({
@@ -132,6 +134,46 @@ class Extractor:
             "device_ok": bool(truth.get("device_ok")), "house_from": truth.get("house_from"),
             "house_to": truth.get("house_to"), "crew_needs": needs, "summary_en": text,
         }, "mock (ground truth)", mock=True)
+
+
+CREW_NEEDS = {"pole_down": ["line", "bucket_truck"], "tree_on_line": ["vegetation", "line"],
+              "blown_fuse": ["troubleshooter"], "live_wire": ["line"], "wire_down": ["line"], "service_wire": ["line"],
+              "transformer_failure": ["line", "bucket_truck"]}
+
+
+def _crew_keyword_fields(text: str) -> dict:
+    """Last-resort reading of an unlabelled crew report in English (mock mode: a crew typing into the crew page)."""
+    t = text.lower()
+    base = _keyword_fields(text, "en")
+    street, house = base.get("street"), base.get("house_no")
+    if not street:  # "Hospital Road opposite number 52", "Cinnamon Gardens Lane, transformer by number 55"
+        m = re.search(r"([a-z]+(?:\s+[a-z]+){0,3}?\s+(?:road|rd|street|st|lane|mawatha|drive|avenue))\b[,\s]+"
+                      r"(?:[a-z-]+\s+){0,4}?(?:number|no\.?|#)\s*(\d{1,4})", text, re.I)
+        if m:
+            street, house = re.sub(r"^(?:at|in|near|on|by)\s+", "", m.group(1), flags=re.I), int(m.group(2))
+    damage = "other"
+    for words, d in ((("service wire", "service line", "service drop"), "service_wire"),
+                     (("fuse",), "blown_fuse"),
+                     (("transformer",), "transformer_failure"),
+                     (("tree", "branch", "limb"), "tree_on_line"),
+                     (("pole",), "pole_down"),
+                     (("wire", "conductor", "line down"), "wire_down")):
+        if any(re.search(rf"\b{w}", t) for w in words):
+            damage = d
+            break
+    energised = bool(re.search(r"\b(live|arcing|sparking|energi[sz]ed)\b", t)) and not re.search(
+        r"\b(no|not)\s+(sparking|arcing|live|energi[sz]ed)", t)
+    if energised and damage in ("wire_down", "other"):
+        damage = "live_wire"
+    houses = re.search(r"houses?\s+(\d{1,4})\s*(?:to|-|through|and)\s*(\d{1,4})", t)
+    ok = bool(re.search(r"(transformer|device|fuses?|recloser)[^.;]{0,40}(is fine|are fine|intact|healthy|\bok\b|okay)", t)
+              or re.search(r"(is fine|intact|healthy)[^.;]{0,20}(transformer|fuses?)", t))
+    if damage in ("blown_fuse", "transformer_failure") and ok:
+        damage = "other"  # the fuse is fine, so the report is about something else on the line
+    return {"street": street, "house_no": house, "landmark": None, "damage": damage,
+            "energised": energised, "device_ok": ok, "house_from": int(houses.group(1)) if houses else None,
+            "house_to": int(houses.group(2)) if houses else None, "crew_needs": CREW_NEEDS.get(damage, []),
+            "summary_en": text}
 
 
 def _keyword_fields(text: str, language: str) -> dict:

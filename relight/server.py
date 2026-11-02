@@ -19,6 +19,7 @@ from . import config
 from . import packs
 from . import voice
 from .diagram import read_diagram, render_diagram, score
+from .crewreport import CrewReport
 from .engine import Engine, clock_str
 from .portalcall import PortalCall
 from .scenario import Replayer, load
@@ -38,6 +39,7 @@ async def broadcast(msg: dict) -> None:
 
 lock = asyncio.Lock()  # one writer at a time: the replay, the operator, the customer portal
 portal_calls: dict[str, PortalCall] = {}  # customers on a call from the portal (cleared with the engine)
+crew_reports: dict[str, CrewReport] = {}  # reports from the crew page, until they are filed
 
 
 async def handle(e: dict) -> None:
@@ -49,6 +51,7 @@ def open_scenario(name: str) -> None:
     """Build the engine and simulated world for one scenario (network and customers are cached)."""
     global scenario, engine, replayer
     portal_calls.clear()
+    crew_reports.clear()
     scenario = load(name)
     engine = Engine(scenario, broadcast)
     replayer = Replayer(scenario, handle)
@@ -221,6 +224,62 @@ async def customer_call_end(call_id: str):
     return await pc.hang_up()
 
 
+@app.get("/api/crews")
+def crews():
+    """The crews of this scenario and what each is doing, for the crew page."""
+    lang = {c["id"]: c.get("language", "en") for c in scenario["crews"]}
+    out = []
+    for c in engine.crews.values():
+        inc = engine._incident(c["incident"])
+        out.append({"id": c["id"], "name": c["name"], "skills": sorted(c["skills"]), "language": lang.get(c["id"], "en"),
+                    "status": c["status"], "task": c.get("step"),
+                    "incident": {"id": inc["id"], "title": inc["title"], "label": inc["label"]} if inc else None})
+    return {"crews": out, "languages": packs.pack(scenario).get("languages") or ["en"],
+            "scenario": scenario["id"], "clock": engine.clock(max(replayer.clock, engine.elapsed))}
+
+
+def _media_path(path: str) -> str | None:
+    media = Path(path)
+    if len(media.parts) == 3 and media.parts[:2] == ("media", "uploads") and (config.ROOT / media).is_file():
+        return media.as_posix()
+    return None
+
+
+@app.post("/api/crew/report")
+async def crew_report(crew_id: str = Form(...), language: str = Form(""), text: str = Form(""), media: str = Form(""),
+                      audio: UploadFile | None = File(None)):
+    """A crew files a report from the crew page: the agent reads back what it understood and waits for the crew."""
+    crew = engine.crews.get(crew_id)
+    if crew is None:
+        return JSONResponse({"error": "That crew is not part of this scenario."}, status_code=404)
+    lang = language or next((c.get("language", "en") for c in scenario["crews"] if c["id"] == crew_id), "en")
+    n = sum(m["id"].startswith("CR") for m in engine.messages) + len(crew_reports) + 1
+    cr = CrewReport(engine, f"CR{n}", crew, lang, max(replayer.clock, engine.elapsed), _media_path(media))
+    wav = await audio.read(7 * 1024 * 1024) if audio is not None else None
+    out = await cr.begin(wav, text)
+    if out.get("id"):
+        crew_reports[cr.id] = cr
+    return out
+
+
+@app.post("/api/crew/report/{rid}/answer")
+async def crew_answer(rid: str, ok: str = Form("true"), text: str = Form(""), audio: UploadFile | None = File(None)):
+    """The crew's reply to the read-back: correct, or a corrected report."""
+    cr = crew_reports.get(rid)
+    if cr is None:
+        return JSONResponse({"error": "That report is already filed or the scenario was changed."}, status_code=410)
+    wav = await audio.read(7 * 1024 * 1024) if audio is not None else None
+    out = await cr.answer(ok.lower() in ("true", "1", "yes"), wav, text)
+    if cr.done:
+        crew_reports.pop(rid, None)
+    return out
+
+
+@app.get("/crew")
+def crew_page():
+    return FileResponse(config.WEB_DIR / "crew.html")
+
+
 class CopilotAction(BaseModel):
     id: str
     action: str  # say | file | end
@@ -268,6 +327,10 @@ async def call_audio(msg_id: str, turn: int):
     """One line of an agent call as audio: the caller's recording, or speech synthesised on first request."""
     m = next((m for m in engine.messages if m["id"] == msg_id and "call" in m), None)
     call = m["call"] if m else engine.agent.live.get(msg_id)  # a live call still on the line
+    if call is None and msg_id in portal_calls:
+        call = portal_calls[msg_id].call
+    if call is None and msg_id in crew_reports:  # a crew's read-back that is waiting for their answer
+        call = crew_reports[msg_id].call
     if call is None or not 0 <= turn < len(call["turns"]):
         return JSONResponse({"error": "no such call line"}, status_code=404)
     line = call["turns"][turn]
