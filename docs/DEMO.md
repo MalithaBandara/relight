@@ -20,7 +20,7 @@ about 1 s of video is 10 s of storm; pause and speed up around the beats. Cut or
 |---|---|---|---|
 | 1 | 0:00-0:12 | Console, empty map of Galle, footer visible. Hit Run. Calls start appearing. | "After a storm, the utility doesn't know where the fault is. It only knows the phones are ringing, in many languages. This is Relight, an outage agent built on Meta's models." |
 | 2 | 0:12-0:35 | Click **Agent calls**. Open call C02 (Sinhala): play the caller's line, the agent's reply, the English gloss. | "A caller speaks Sinhala. Voice Transcribe has no Sinhala, so Muse Spark listens to the audio itself. The agent answers in Sinhala; Spark words the reply, but code chooses every fact in it, and a fact check throws a line away if Spark changes a number or a street." |
-| 3 | 0:35-1:00 | Map: I1 Hospital Road recloser appears with 95%. Click it; details show the reasons. Log shows `Code` locating, `Muse Spark` explaining. | "No model guesses where the fault is. Calls, silence from the neighbours, SCADA, all go into a probabilistic tracer. It finds a recloser lockout on Hospital Road: 95% confident, crew dispatched. Models read; code locates and decides." |
+| 3 | 0:35-1:00 | Map: I1 Hospital Road recloser appears with 95%. Click it; details show the reasons. Log shows `Code` locating, `Muse Spark` explaining. Then a 6 s Houston insert (recorded separately, 40x, captioned "Houston, simulated smart meters"): `Smart meters` last-gasp lines in the log, then the line "Meter network down" and calls carrying on. | "No model guesses where the fault is. Calls, silence from the neighbours and SCADA go into a probabilistic tracer. It finds a recloser lockout on Hospital Road: 95% confident, crew dispatched. Smart meters help where they exist; when Houston's meter network fails, calls carry on. Models read; code locates and decides." |
 | 4 | 1:00-1:20 | The live-wire call C31. Hazard H2 appears; it ranks above every outage. Open the damage photo popup (the tagged pole, C61: SAM finds the plate, Spark reads GL-0417, the register names the pole). | "A sparking wire is ranked above every outage and escalated. A photo of a snapped pole goes to SAM 3.1, which finds the number plate, and Spark reads it: the pole is named, not guessed." |
 | 5 | 1:20-1:50 | Temple Road (I2). Open the drone popup: the SAM overlay video (poles blue, wires amber, the tree red) and the survey text. Then the **switching plan** card: show a blocked plan, press Approve on "isolate then restore". Power restored to 115 customers. | "A drone clip: SAM 3.1 tracks the poles, the wires and the fallen trunk. Relight offers switching plans, blocks any that would energise a fault, and waits for the operator. I approve; 115 customers are back before the crews finish." |
 | 6 | 1:50-2:10 | Lake Road I5: the log line "Mind changed". Then the late hidden-fuse incident (T-059) after the pole repair. | "Crews report by voice and the agent reads it back. A crew says the transformer is fine, the service wire is down: Relight changes its diagnosis. After the last repair, callers who are still dark reveal a second fault hidden behind the first." |
@@ -33,7 +33,7 @@ This cut runs to the 3:00 limit. If the first edit comes out long, cut in this o
 shot 7, then the photo half of shot 4. Each cut still leaves the decision loop and the Meta models on screen.
 
 Words to keep out of the voice-over: anything that claims how a real utility operates, any real utility name, "replaces
-the call centre". Say what was measured and that the sample is small.
+the call centre". Say what was measured and that the sample is small. Say the smart meters are simulated and optional: Galle has none.
 
 ## Motion graphics (Remotion)
 
@@ -45,7 +45,7 @@ animated that implies a capability Relight does not have.
 | Graphic | Where | What it shows | Source of truth |
 |---|---|---|---|
 | Opening title | Shot 1, 0:00-0:04 | "Relight" wipes in over the dark map; one line: "Meta models read. Code locates and decides." | text only |
-| "Read / Decide" flow | Shot 3, 0:40-0:55 | Calls, SMS, SCADA, photos fly into the tracer box and out comes "Hospital Road recloser, 95%"; the Meta models are lit blue, code is grey. | README architecture diagram |
+| "Read / Decide" flow | Shot 3, 0:40-0:55 | Calls, SMS, SCADA, photos and (dashed, "optional") smart meters fly into the tracer box and out comes "Hospital Road recloser, 95%"; the Meta models are lit blue, code is grey. | README architecture diagram |
 | Lower thirds | Shots 2-8 | One-line captions (list below) slide in and out, with the model's name in its colour (Spark purple, Voice Transcribe blue, SAM green, as on the console). | captions list |
 | Callout rings | Shots 3, 4, 5 | A ring pulses on the recloser, the pole-tag plate and the blocked switching plan, with a short label ("95%", "GL-0417", "blocked: would energise a fault"). | console state at that time |
 | Counters | Shots 5, 9 | "115 customers restored" counts up; the Meta models split bar fills to the real request counts from the panel. | Meta models panel |
@@ -75,6 +75,7 @@ positions are known. If time runs short, stop after step 3: the recording alone 
 9. `Meta models panel: requests, tokens, cost`
 10. `Customer and crew pages: the agent reads back, the crew confirms`
 11. `Hospital generator failed: its outage jumps the queue`
+12. `Houston: simulated smart meters, optional; the network fails, calls carry on` (on the Houston insert)
 
 ## Retakes and risks
 
@@ -88,4 +89,5 @@ positions are known. If time runs short, stop after step 3: the recording alone 
 - Shot 8 switches scenario: do it on a cut, and press Reset first. It is cached in mock mode only if the owner has not
   asked for a live run; its call lines are scenario labels (`mock (ground truth)`), so say so if shown.
 - The microphone copilot path needs real speech on camera and has not been tested live: skip it.
+- The Houston insert in shot 3: record it separately (pick **houston_hurricane**, Reset, run at 40x until the log shows "Meter network down", about t=600 s), then switch back to Galle on a cut. Meter messages are simulated; say so in the caption. If the cut is over 3:00, drop the insert and keep only the narration sentence off (edit it out of `docs/VOICEOVER.md`); do not say "smart meters" over Galle footage.
 - Check the footer and header text are legible at 1080p before the final take.

@@ -18,9 +18,9 @@ After a storm, the utility doesn't know where the fault is. It only knows the ph
 
 A caller speaks Sinhala. Voice Transcribe has no Sinhala, so Muse Spark listens to the audio itself. The agent answers in Sinhala; Spark words the reply, but code chooses every fact in it, and a fact check throws a line away if Spark changes a number or a street.
 
-## Shot 3 (0:35-1:00, 25 s, max 62 words, this is 37)
+## Shot 3 (0:35-1:00, 25 s, max 62 words, this is 51)
 
-No model guesses where the fault is. Calls, silence from the neighbours, SCADA, all go into a probabilistic tracer. It finds a recloser lockout on Hospital Road: 95% confident, crew dispatched. Models read; code locates and decides.
+No model guesses where the fault is. Calls, silence from the neighbours and SCADA go into a probabilistic tracer. It finds a recloser lockout on Hospital Road: 95% confident, crew dispatched. Smart meters help where they exist; when Houston's meter network fails, calls carry on. Models read; code locates and decides.
 
 ## Shot 4 (1:00-1:20, 20 s, max 50 words, this is 35)
 
@@ -50,4 +50,4 @@ Spark read, Voice Transcribe listened, SAM 3.1 saw the damage. Code made every d
 
 Relight. Meta models read. Code decides. github.com/MalithaBandara/relight.
 
-Total: 340 words.
+Total: 354 words.
