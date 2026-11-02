@@ -1,6 +1,6 @@
 # Demo video plan (3:00 hard limit)
 
-Record Nov 3. Screen capture of the console on **Galle** at 1920x1080, voice-over by the owner, no music needed.
+Record Nov 3. Motion graphics are added on top afterwards (see "Motion graphics"). Screen capture of the console on **Galle** at 1920x1080, voice-over by the owner, no music needed.
 Start the server, open `http://localhost:8000/?run=10` (it presses Run at 10x after the page connects) or press Run by
 hand. Everything is replayed from the cache, so each take is identical and costs nothing. Check the header shows
 **LIVE** (or says MOCK honestly if recorded without the key) and keep the footer line visible: it says customers are
@@ -34,6 +34,33 @@ shot 7, then the photo half of shot 4. Each cut still leaves the decision loop a
 
 Words to keep out of the voice-over: anything that claims how a real utility operates, any real utility name, "replaces
 the call centre". Say what was measured and that the sample is small.
+
+## Motion graphics (Remotion)
+
+Built as a small Remotion project in `video/` (React compositions, previewed in Remotion Studio; rendered only when the
+owner asks for the MP4). The screen recording is the base layer; graphics are overlays on top of it, so every shot still
+shows the real console. Rule: a graphic only shows a number or a flow that the product really produced, and nothing is
+animated that implies a capability Relight does not have.
+
+| Graphic | Where | What it shows | Source of truth |
+|---|---|---|---|
+| Opening title | Shot 1, 0:00-0:04 | "Relight" wipes in over the dark map; one line: "Meta models read. Code locates and decides." | text only |
+| "Read / Decide" flow | Shot 3, 0:40-0:55 | Calls, SMS, SCADA, photos fly into the tracer box and out comes "Hospital Road recloser, 95%"; the Meta models are lit blue, code is grey. | README architecture diagram |
+| Lower thirds | Shots 2-8 | One-line captions (list below) slide in and out, with the model's name in its colour (Spark purple, Voice Transcribe blue, SAM green, as on the console). | captions list |
+| Callout rings | Shots 3, 4, 5 | A ring pulses on the recloser, the pole-tag plate and the blocked switching plan, with a short label ("95%", "GL-0417", "blocked: would energise a fault"). | console state at that time |
+| Counters | Shots 5, 9 | "115 customers restored" counts up; the Meta models split bar fills to the real request counts from the panel. | Meta models panel |
+| Before/after bar | Shot 8 | Two bars, "without the call 02:48" and "with the call 01:44", the gap labelled "64 minutes". | `hospital_generator` run (`run_headless.py`) |
+| Accuracy bars | Shot 9 | Spark street accuracy: Galle 91%, Houston 97%, with "small sample" under them. | README Results |
+| End card | Shot 10, 2:55-3:00 | Relight, the repo URL, "Customers are fictional; voices are synthetic." | text only |
+
+Timing and style: 30 fps, 1920x1080, each graphic 0.4 s in and 0.4 s out with an ease-out curve, nothing on screen longer
+than the voice-over line it supports, no sound effects. Use the console's own type and colours so the overlays look like
+part of the product, not a template. Keep a 60 px safe margin and never cover the footer line that says the data is
+fictional.
+
+Build order (so the video is never blocked): 1) title and end cards, 2) lower thirds, 3) the numbers (counters, bars)
+with the real values read from the repo, 4) the read/decide flow, 5) callout rings once the screen recording exists and the
+positions are known. If time runs short, stop after step 3: the recording alone is already a complete demo.
 
 ## On-screen captions (burn in, one line each)
 
