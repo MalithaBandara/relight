@@ -29,6 +29,7 @@ STEPS: dict[str, list[tuple[set[str], int, str]]] = {
 SAFETY = {"live_wire": 1000, "wire_down": 200, "pole_down": 150, "tree_on_line": 100}
 AGE_PER_MIN = 2  # older faults climb, so a small one never waits forever
 CRITICAL = {"hospital": 400, "water": 300, "shelter": 150}
+BACKUP_FAILED = 1500  # a critical customer says its own generator has failed: life safety, above any live wire (1000)
 
 
 @dataclass
@@ -52,6 +53,7 @@ class Job:
     critical: list[str]
     first_report_t: float
     hazard_live: bool = False
+    backup_failed: int = 0  # critical customers on this outage whose backup power has failed
     priority: float = 0.0
     breakdown: dict[str, float] = field(default_factory=dict)
 
@@ -63,6 +65,8 @@ def score(job: Job, now_s: float | None = None) -> None:
     for c in job.critical:
         kind = c.rsplit("(", 1)[-1].rstrip(")")
         b[f"critical: {kind}"] = CRITICAL.get(kind, 100)
+    if job.backup_failed:
+        b["backup power failed"] = BACKUP_FAILED * job.backup_failed
     b["customers out"] = round(job.customers_out * job.confidence, 1)
     total_min = sum(m for _, m, _ in STEPS.get(job.kind, STEPS["unknown"]))
     b["quick restore"] = round(job.customers_out * 20 / total_min, 1)

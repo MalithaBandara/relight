@@ -132,13 +132,16 @@ name and a new codebase; no code from GridMedic is reused. What is different:
 - damage assessment from photos and drone clips with SAM 3.1 masks, and pole-tag reading
 - an outage-management console modelled on commercial OMS work agendas, and a customer portal
 
-## The three scenarios
+## The scenarios
 
 | Scenario | What it shows |
 |---|---|
 | Galle | The full story: no smart meters; Sinhala, Tamil and English; BD SMS; a probe question; the agent changing its mind (Lake Road); isolate-and-tie switching (Temple Road); a hidden fuse found after restoration |
 | Houston | Smart meters send last-gasp messages until the meter network fails mid-storm; English and Spanish; a hidden fault; a service wire that looks like a blown fuse |
 | Chennai | Scale: ~2,400 messages in 30 minutes in English, Tamil and Hindi; PWR SMS codes; re-traced every 15 s |
+| One house dark | One caller, neighbours have power: the agent asks a neighbour and finds a fault at that house's own service, which a transformer-level tracer would miss |
+| Tree on a line | One tree on a lateral: about 160 customers, a tree crew, then a line crew |
+| Hospital generator | Three trees on lines and one tree crew. A hospital's backup generator fails and the hospital calls: its outage jumps the queue and is restored about an hour sooner (01:44 against 02:48 without the call) |
 
 For Houston and Chennai the line runs along real streets (a shortest-path tree over the road network from the substation),
 customers sit in real buildings, and landmarks are real facilities shown under generic names ("Hospital on <street>").

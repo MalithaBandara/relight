@@ -209,6 +209,10 @@ scenario JSON --> Replayer (clock) --> Engine.handle(event)
   account). Power ON there -> a `service_wire` incident for that house (80%, found by elimination; line crew, 45 min);
   power OFF -> left to the tracer. A transformer with no other customer opens the incident at once. `advance` wakes the
   engine when such a report has waited long enough, so no other event is needed.
+- **Backup power failed** (`Engine._backup_check`, 2026-11-02): when a call from a critical customer (hospital, water works,
+  shelter) mentions its generator (`BACKUP_WORDS`, read by code in every language, not by a model), the customer is
+  recorded in `backup_failed` and its outage gets `planner.BACKUP_FAILED` (1500) in its priority, above a live wire.
+  `hospital_generator` shows it. The Tamil and Hindi generator call lines in `make_storm.py` need a native-speaker check.
 - **Diagnosis change:** a crew report with `device_ok` or a different damage type revises the incident
   (`_site_findings`), replans steps (`_replan_steps`) and releases a crew that lacks the skills.
 - **Patrol finds nothing:** if the device is still locked out, the patrol is extended (max 3); if the
@@ -331,6 +335,7 @@ scenario JSON --> Replayer (clock) --> Engine.handle(event)
 | `chennai_cyclone` | OSM, Velachery, Chennai | 24,559 | ~2,400 | 9 | scale; English/Tamil/Hindi; PWR SMS codes; quiet logging; re-trace every 15 s |
 | `house_fuse` | OSM, Spring Branch, Houston (no meters) | 3,044 | ~4 | 1 | one house dark: a lone report, a neighbour asked, a service fault found by elimination (`Engine._isolated`) |
 | `tree_on_line` | same feeder (no meters) | 3,044 | ~58 | 1 | one tree on a lateral: ~160 customers, a tree crew then a line crew |
+| `hospital_generator` | OSM, Velachery, Chennai (no meters) | 24,559 | ~215 | 3 | three trees on lines, one tree crew; at +90 s after the hospital's fault its generator fails and it calls (`backup_failed`): its outage outranks a larger one and is restored 64 min sooner (01:44 vs 02:48) |
 
 **Before every commit that touches `relight/` or `scenarios/`, run all three and check every real fault
 is found and everyone is restored:**
@@ -346,11 +351,11 @@ Expected: Galle 6/6 `found=True`, Houston 7/7, Chennai 9/9, and the last line
 minutes, something reintroduced per-call graph rebuilding or per-event re-tracing.
 Use `--timeline` to see the full event log; `--no-switching` to skip auto-approval.
 
-The two small scenarios must also end with every fault `found=True` and 0 dark (`house_fuse`, `tree_on_line`).
+The three small scenarios must also end with every fault `found=True` and 0 dark (`house_fuse`, `tree_on_line`, `hospital_generator`).
 
 Regenerating generated scenarios (deterministic seeds):
 ```bash
-.venv/Scripts/python scripts/make_storm.py houston_hurricane chennai_cyclone house_fuse tree_on_line
+.venv/Scripts/python scripts/make_storm.py houston_hurricane chennai_cyclone house_fuse tree_on_line hospital_generator
 ```
 `make_storm.py` keeps separate faults apart (no overlapping dark areas unless `hidden`), requires
 customers behind each fault, puts the switch-zone tree on the main run between `SW-1` and `SW-2` inside

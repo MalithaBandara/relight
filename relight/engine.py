@@ -37,6 +37,7 @@ from . import voice
 LOCATED_AT = 0.8  # confidence at which a suspected fault becomes an incident
 ASK_BELOW = 0.85  # confidence below which the agent asks a customer to disambiguate
 PROBE_GAP_S = 120
+BACKUP_WORDS = ("generator", "generador", "genset", "ஜெனரேட்டர்", "जनरेटर", "ජෙනරේටර්")  # a critical caller's own backup
 ISOLATED_AFTER_S = 150  # a lone report that no wider fault explains by now may be one house's own service fault
 SPEED_KMH = 25
 ROAD_FACTOR = 1.3
@@ -101,6 +102,7 @@ class Engine:
         self.config_open: set[str] = set(self.feeder.normally_open)  # device states the control room knows
         self.scada_owner: dict[str, str] = {}  # locked-out device -> incident id
         self.probes: list[dict] = []
+        self.backup_failed: dict[str, dict] = {}  # critical customers whose own generator has failed
         self.notices: list[dict] = []
         self.media: list[dict] = []  # analysed photos and videos, replayed to consoles that connect later
         self._poles: PoleRegister | None = None
@@ -525,6 +527,8 @@ class Engine:
                         p["answer"], p["answered_t"] = ("power ON" if on else "power OFF"), e["t"]
                 await self.log("Agent", f"Answer from {xf}: power is {'ON' if on else 'OFF'}",
                                "rules out the wider outage" if on else "the outage extends here", e["id"])
+        if loc.get("account") and not e.get("probe_reply") and msg["status"] != "junk":
+            await self._backup_check(msg, loc)
         if len(self.hazards) > n_hazards:
             h = self.hazards[-1]
             await self.log("Code", f"Hazard {h['id']}: {h['kind'].replace('_', ' ')} reported",
@@ -850,7 +854,9 @@ class Engine:
         for inc in self.incidents:
             job = Job(inc["id"], inc["title"], inc["kind"], inc["lat"], inc["lon"], inc["customers_out"],
                       inc["confidence"], inc["critical"], inc["first_t"],
-                      inc["kind"] == "live_wire" and not live_wire_safe)
+                      inc["kind"] == "live_wire" and not live_wire_safe,
+                      backup_failed=sum(1 for b in self.backup_failed.values()
+                                        if inc["status"] != "restored" and (b["xf"] in inc["out"] or b["account"] in inc["dead_customers"])))
             score(job, None if inc["status"] == "restored" else self.elapsed)
             inc["priority"], inc["breakdown"] = job.priority, job.breakdown
             jobs.append(job)
@@ -1137,6 +1143,22 @@ class Engine:
             await self.broadcast({"type": "probe", "probe": probe})
             if self.sim:
                 self.sim.probe(probe)
+
+    async def _backup_check(self, msg: dict, loc: dict) -> None:
+        """A critical customer (hospital, water works, shelter) says its generator is not carrying the load.
+
+        Code reads the words in the call, whoever heard it: a model never decides this. The grid fault that cuts the
+        customer off is the same one, but with no backup power it now ranks above every other critical load.
+        """
+        cust = self.db.by_account(loc["account"])
+        if (not cust or not cust.critical or cust.account_no in self.backup_failed
+                or not any(w in msg["text"].lower() for w in BACKUP_WORDS)):
+            return
+        self.backup_failed[cust.account_no] = {"account": cust.account_no, "name": cust.name,
+                                               "xf": cust.transformer_id, "t": self.elapsed}
+        await self.log("Agent", f"{msg['id']}: backup power failed at {cust.name}",
+                       f"critical customer ({cust.critical}) says its generator is not carrying the load: "
+                       "its outage now ranks first", msg["id"])
 
     # ---- one house dark and nobody else ----------------------------------------------------
 

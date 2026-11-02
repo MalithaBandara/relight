@@ -52,6 +52,9 @@ TEXT = {
                          "ta": ["{street} {house} அருகில் மரம் மின் கம்பியில் விழுந்துள்ளது."], "hi": ["{street} {house} के पास पेड़ बिजली के तार पर गिरा है।"]},
         "pole_down": {"en": ["EB pole fallen at {street} near door no {house}."],
                       "ta": ["{street} {house} அருகில் மின் கம்பம் விழுந்துவிட்டது."], "hi": ["{street} {house} के पास बिजली का खंभा गिर गया है।"]},
+        "generator": {"en": ["The backup generator at our hospital on {street} has failed. We have no power and patients are on ventilators!"],
+                      "ta": ["{street} மருத்துவமனையின் ஜெனரேட்டர் பழுதாகிவிட்டது. மின்சாரம் இல்லை, நோயாளிகள் வென்டிலேட்டரில் உள்ளனர்!"],
+                      "hi": ["{street} पर अस्पताल का जनरेटर खराब हो गया है। बिजली नहीं है, मरीज़ वेंटिलेटर पर हैं!"]},
         "junk": {"en": ["Recharge offer 299 unlimited calls!!", "When is the next bill date?", "Water not coming in tap please check"]},
         "channels": ["call", "whatsapp", "sms"],
     },
@@ -129,6 +132,28 @@ SCENARIOS["house_fuse"] = {
     "crews": SMALL_CREWS,
     "faults": [{"kind": "service_wire", "where": "transformer", "n": 0, "t": 60, "houses": 1,
                 "title": "Service fuse blown at one house"}]}
+SCENARIOS["hospital_generator"] = {
+    "title": "A hospital's backup generator fails during a cyclone outage, Velachery, Chennai",
+    "pack": {"locale": "india", "languages": ["en", "ta", "hi"], "language_weights": [0.5, 0.42, 0.08],
+             "start_hour": 22,
+             "network": {"type": "osm", "area": "chennai", "transformer_spacing": 150, "substation_bearing": 200,
+                         "reclosers": 4, "multi_unit_share": 0.35, "units_multi": [4, 16],
+                         "substation_label": "Velachery 33/11 kV substation",
+                         "feeder2_label": "Feeder 2 (Taramani side)", "unnamed": "Unnamed street"}},
+    "duration_s": 1500, "seed": 41, "call_rate": 0.04, "dup_rate": 0.25, "junk": 3, "code_share": 0.3,
+    "quiet_critical": True,  # a hospital on its generator does not call about the grid; it calls when the generator fails
+    "crews": [
+        {"id": "CREW-L1", "name": "Line gang 1", "skills": ["line", "bucket_truck"], "base": "SUB"},
+        {"id": "CREW-L2", "name": "Line gang 2", "skills": ["line", "bucket_truck"], "base": "SUB"},
+        {"id": "CREW-V1", "name": "Tree cutting team", "skills": ["vegetation"], "base": "SUB"},
+        {"id": "CREW-T1", "name": "Lineman 1", "skills": ["troubleshooter"], "base": "SUB"},
+        {"id": "CREW-T2", "name": "Lineman 2", "skills": ["troubleshooter"], "base": "SUB"}],
+    "faults": [
+        # One tree crew and three trees on lines: the hospital's and a larger one wait while the crew clears the first.
+        # Without the generator call the larger one gets the crew next; with it the hospital does.
+        {"kind": "tree_on_line", "where": "critical", "t": 200, "generator_after": 90},
+        {"kind": "tree_on_line", "where": "fuse", "n": 0, "t": 60},
+        {"kind": "tree_on_line", "where": "fuse", "pick": "largest", "t": 250}]}
 SCENARIOS["tree_on_line"] = {
     "title": "A tree falls on a power line, Spring Branch, Houston", "pack": SMALL_PACK,
     "duration_s": 1200, "seed": 37, "call_rate": 0.3, "dup_rate": 0.2, "junk": 1, "code_share": 0.2,
@@ -169,8 +194,18 @@ def pick_sites(cfg, feeder, db, rng):
             f["section"] = between[len(between) // 2]
             f["device"] = rec.id
             f["scada"] = rec.id
+        elif f["where"] == "critical":
+            # The smallest fuse zone that cuts off a hospital, on the section that feeds it.
+            hosp = {t for t, names in db.critical_by_transformer().items() if any("(hospital)" in x for x in names)}
+            zone = [x for x in fuses if feeder.downstream[x.id] & hosp and not feeder.downstream[x.id] & covered]
+            d = min(zone, key=lambda x: sum(n.get(t, 0) for t in feeder.downstream[x.id]))
+            fuses.remove(d)
+            f["hospital_xf"] = sorted(feeder.downstream[d.id] & hosp)[0]
+            f["section"] = feeder.transformers[f["hospital_xf"]].section
+            f["device"] = f["open_device"] = d.id
         elif f["where"] == "fuse":
-            d = next(x for x in fuses if not feeder.downstream[x.id] & covered)
+            pool = [x for x in fuses if not feeder.downstream[x.id] & covered]
+            d = max(pool, key=lambda x: sum(n.get(t, 0) for t in feeder.downstream[x.id]))                 if f.get("pick") == "largest" else pool[0]
             fuses.remove(d)
             secs = [s for s in feeder.sections_below(d.section) if feeder.transformers_on(s)]
             f["section"] = secs[min(1, len(secs) - 1)]
@@ -251,7 +286,8 @@ def make(name: str) -> None:
                        {"t": f["t"] + 7, "type": "scada", "device": f["scada"], "event": "lockout"}]
         if f.get("hidden"):
             continue  # its customers are already dark behind the outer fault
-        dark = [c for c in dead_accounts(feeder, db, f) if c.account_no not in seen_callers]
+        dark = [c for c in dead_accounts(feeder, db, f) if c.account_no not in seen_callers
+                and not (cfg.get("quiet_critical") and c.critical)]
         if f["kind"] == "service_wire":
             near = dark[len(dark) // 2] if dark else None
         else:
@@ -302,6 +338,19 @@ def make(name: str) -> None:
                            "text": rng.choice(texts["live_wire"][lang]).format(street=near.street, house=near.house_no),
                            "truth": {"street": near.street, "house_no": near.house_no, "symptom": "none",
                                      "hazard": "live_wire", "passer_by": True}})
+    for f in faults:
+        if "generator_after" not in f:
+            continue
+        # The hospital's generator fails: its own call, the first it makes about this outage.
+        h = next(c for c in db.customers_on(f["hospital_xf"]) if c.critical == "hospital")
+        n_complaint += 1
+        lang = langs[0] if "en" in texts["generator"] else next(iter(texts["generator"]))
+        events.append({"t": f["t"] + f["generator_after"], "type": "complaint", "id": f"C{n_complaint}",
+                       "channel": "call", "language": lang, "from": h.phone,
+                       "text": rng.choice(texts["generator"][lang]).format(street=h.street),
+                       "truth": {"street": h.street, "house_no": h.house_no, "symptom": "no_power", "hazard": "none",
+                                 "account_no": h.account_no, "fault": f["id"], "generator_failed": True}})
+        f["facility"] = h.name
     for i in range(cfg["junk"]):
         n_complaint += 1
         events.append({"t": rng.randint(60, cfg["duration_s"] - 60), "type": "complaint", "id": f"C{n_complaint}",
@@ -340,6 +389,8 @@ def make(name: str) -> None:
 def _title(f) -> str:
     if f.get("title"):
         return f["title"]
+    if f.get("facility"):
+        return f"{f['facility']}: cut off by a tree on the line, then its generator fails"
     what = {"tree_on_line": "Tree on line", "pole_down": "Pole down", "blown_fuse": "Blown transformer fuse",
             "live_wire": "Live wire on road", "service_wire": "Service wire down (looks like a blown fuse)"}[f["kind"]]
     return f"{what} on {f['street']}" + (" (hidden behind another fault)" if f.get("hidden") else "")

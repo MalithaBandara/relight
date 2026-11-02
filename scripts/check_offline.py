@@ -198,6 +198,22 @@ def portal_call() -> None:
     server.open_scenario("galle_storm")
 
 
+def backup_power() -> None:
+    print("backup power failed at a critical customer")
+    from relight.planner import BACKUP_FAILED, Job, score
+
+    def job(**kw):
+        j = Job("I1", "Tree on line", "tree_on_line", 0, 0, 800, 0.9, ["Hospital on A Road (hospital)"], 0, **kw)
+        score(j, 600)
+        return j
+
+    a, b = job(), job(backup_failed=1)
+    check("a failed generator adds its own line to the priority", "backup power failed" in b.breakdown
+          and "backup power failed" not in a.breakdown)
+    check("and lifts the outage above a 2,000-customer fault without it", abs(b.priority - a.priority - BACKUP_FAILED) < 0.01
+          and b.priority > 2000 * 0.9 + 100, f"{a.priority} -> {b.priority}")
+
+
 def drone_survey_check() -> None:
     print("drone survey (counted from the cached SAM 3.1 tracks of the Temple Road clip)")
     from relight import vision
@@ -390,6 +406,7 @@ async def main() -> None:
     await cached_replays()
     uploads()
     portal_call()
+    backup_power()
     drone_survey_check()
     mask_checks()
     pole_tags()
