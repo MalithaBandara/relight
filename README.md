@@ -88,10 +88,10 @@ All three scenarios run end to end on the same engine (`scripts/run_headless.py 
 | Houston, USA | OpenStreetMap, Spring Branch, smart meters that fail mid-storm | 3,044 | ~221 | 7 of 7 | 0 |
 | Chennai, India | OpenStreetMap, Velachery | 24,559 | ~2,400 | 9 of 9 | 0 |
 
-Galle and Houston were run against the live Meta Model API (the first Galle run: 195 calls, 24 minutes, $1.13; both were
-re-run on 2026-11-02 with Spark at minimal reasoning effort and Voice Transcribe keywords, and are cached, so replays are
-free and identical). Chennai's regression run uses the labelled scenario (marked `mock` in the console)
-because a live run takes about 2.5 hours.
+All three were run against the live Meta Model API (the first Galle run: 195 calls, 24 minutes, $1.13). Galle and Houston
+were re-run on 2026-11-02 with Spark at minimal reasoning effort and Voice Transcribe keywords. Chennai was run live the same
+day with the voiced calls on: about 1,400 model requests, roughly $3; before that it had only run on the labelled
+scenario. All three are cached, so replays are free and identical.
 
 **Muse Spark extraction accuracy** against the scenario's labels (`scripts/eval_extraction.py <scenario> --replay`,
 scoring the engine's own live readings):
@@ -100,6 +100,7 @@ scoring the engine's own live readings):
 |---|---|---|---|---|---|---|
 | Galle (en 30, si 11, ta 6) | 47 | 92% | 94% | 92% | 94% | 100% |
 | Houston (en 117, es 44) | 161 | 98% | 98% | 99% | 99% | 100% |
+| Chennai (en 821, ta 745, hi 126) | 1,692 | 93% | 98% | 97% | 100% | 100% |
 
 Most misses are facts the caller gave only later, or that come from caller ID; Sinhala symptoms are the weakest (82%). These numbers are from the 2026-11-02 re-run (minimal effort, keywords).
 SMS codes need no model and are not scored.
@@ -120,7 +121,7 @@ confirms the address by caller ID.
 - Lean and wire sag are rough estimates from one camera view. SAM sometimes tags a traffic-light post as a utility pole.
 - Callers are synthetic voices and the customers fictional; real calls are noisier than edge-tts.
 - Spark's Sinhala listening still misreads digits and place names.
-- Hindi agent wording is checked only in the Chennai mock; the Hindi portal call and crew read-back were tested live with synthetic speech. Spanish wording was measured in Houston.
+- The Hindi portal call and crew read-back were tested live with synthetic speech. Spanish wording was measured in Houston.
 - Non-English messages and agent lines have been checked by a native speaker only for Sinhala; the sample Tamil, Hindi and Spanish lines were checked, the rest were not.
 - The portal call and the crew page were tested live (2026-11-02) with synthetic speech sent to the real Voice Transcribe and Spark (English, Tamil, Sinhala, Hindi, Spanish), not with a human microphone. Voice Transcribe returned Tamil in Latin letters for synthetic Tamil; Spark still read it. Hindi and Spanish were heard correctly (Voice Transcribe kept the English street name in Latin letters in Hindi) and the crew read-backs were worded by Spark.
 - HEIC photos are refused (HTTP 415); SAM refuses clips over a few MB, so clips are trimmed small.

@@ -403,7 +403,7 @@ All writes to the engine go through one `asyncio.Lock` in `server.py` (replay, o
   SAM 3.1 returned **413** for a 7.6 MB video (~10 MB base64): keep clips small (480p, 10 fps, ~3 MB).
   Spark spends ~1,230 reasoning tokens per call (billed as output). Galle live run: 195 calls, 24 min, $1.13; the
   2.9 MB drone clip then passed (Spark + SAM tracking 3 poles, 8 spans, the trunk; $0.12). Galle is cached live.
-  Houston and Chennai not run live yet (owner: skip for now; estimates ~$1.6–2 / 30 min and ~$9–10 / 2.5–3 h).
+  Houston and Chennai were run live later (2026-11-01 and 2026-11-02); Chennai cost ~$3, not the ~$9–10 first estimated, because minimal effort cut the output tokens.
 
 - Base URL `https://api.meta.ai/v1`, header `Authorization: Bearer $MODEL_API_KEY`, OpenAI-compatible.
 - **Muse Spark** (`muse-spark-1.3`): `POST /chat/completions`, `response_format: {"type": "json_schema", ...}`;
@@ -550,10 +550,9 @@ Video
 
 Blocked until the owner provides something
 - [x] Run `scripts/smoke_test.py`; fix request-format mismatches (done 2026-10-30, see section 8 "Checked live").
-- [ ] *(needs GO)* Run all three scenarios live: **Galle done 2026-10-30, Houston done 2026-11-01 (7/7, 0 dark, 184
-      Spark entries, 25 Spark-worded agent lines, 0 fact-check rejects; both cached); Chennai still mock**
-      (66 timeline entries are `mock (ground truth)`; it takes ~2.5-3 h, so run it in the owner's own shell with
-      `RELIGHT_ALLOW_API=1`). Keep the regression baseline green.
+- [x] *(needs GO)* Run all three scenarios live: **Galle done 2026-10-30, Houston done 2026-11-01 (7/7, 0 dark, 184
+      Spark entries, 25 Spark-worded agent lines, 0 fact-check rejects; both cached); Chennai done 2026-11-02 (9/9, 0 dark, ~1,400 requests, ~$3, six 9-minute foreground chunks, cached;
+      replays are free)**. Keep the regression baseline green.
 - [x] Extraction accuracy measured 2026-11-01 for Galle and Houston with `scripts/eval_extraction.py <scenario>
       --replay` (scores the engine's own cached Spark readings; free). Muse Spark vs scenario labels, fields right:
       Galle (46 scored; re-measured after the Sinhala listening fix) street 91%, house_no 94%, symptom 94%, hazard 94%,
