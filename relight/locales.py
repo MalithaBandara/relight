@@ -9,7 +9,7 @@ from __future__ import annotations
 
 # ---- the call agent's lines and the simulated callers' answers -------------------------------------
 # The agent chooses what to say in code (act); these are its fixed words per act. Safety lines are never
-# rewritten by a model. {kind} stays in English inside non-English lines, as in the SMS notices.
+# rewritten by a model. {kind} is filled with KIND_NAME in the caller's language (English text for English).
 
 def _agent_en(desk: str, fire: str) -> dict:
     return {
@@ -133,6 +133,24 @@ READBACK = {
            "houses": "मकान {a} से {b} तक बिजली नहीं है", "needs": "आपको {list} चाहिए", "and": " और ", "sep": "; ",
            "crews": {"line": "लाइन टीम", "bucket_truck": "बकेट ट्रक", "vegetation": "पेड़ काटने वाली टीम",
                      "troubleshooter": "लाइनमैन"}},
+}
+
+# The fault type as a noun phrase inside a status line or notice, in the caller's language. Needs a native-speaker check.
+KIND_NAME = {
+    "si": {"pole_down": "කණුවක් වැටීම", "tree_on_line": "ගසක් වයර් මත වැටීම",
+           "live_wire": "විදුලිය සහිත වයරයක් බිම වැටීම", "wire_down": "වයරයක් බිම වැටීම",
+           "blown_fuse": "ෆියුස් එක පිච්චීම", "service_wire": "සර්විස් වයරය කැඩීම",
+           "unknown": "හේතුව තවමත් පරීක්ෂා කරමින් පවතී"},
+    "ta": {"pole_down": "மின்கம்பம் விழுதல்", "tree_on_line": "மரம் கம்பிகள் மேல் விழுதல்",
+           "live_wire": "மின்சாரம் உள்ள கம்பி அறுந்து விழுதல்", "wire_down": "கம்பி அறுந்து விழுதல்",
+           "blown_fuse": "ஃபியூஸ் போதல்", "service_wire": "சர்வீஸ் கம்பி அறுதல்",
+           "unknown": "காரணம் இன்னும் ஆராயப்படுகிறது"},
+    "es": {"pole_down": "poste caído", "tree_on_line": "árbol sobre la línea",
+           "live_wire": "cable con corriente en el suelo", "wire_down": "cable caído",
+           "blown_fuse": "fusible quemado", "service_wire": "acometida caída", "unknown": "causa en revisión"},
+    "hi": {"pole_down": "खंभा गिरना", "tree_on_line": "लाइन पर पेड़ गिरना",
+           "live_wire": "करंट वाले तार का गिरना", "wire_down": "तार का गिरना",
+           "blown_fuse": "फ़्यूज़ उड़ना", "service_wire": "सर्विस तार टूटना", "unknown": "कारण की जाँच जारी है"},
 }
 
 # What a crew says on arrival (the World picks the template from the real fault), per language.

@@ -1101,7 +1101,7 @@ class Engine:
             except Exception:  # noqa: BLE001
                 text = None
             if not text:
-                text, model = self.loc["notice"][lang].format(kind=kind, eta=eta), "mock (template)"
+                text, model = self.loc["notice"][lang].format(kind=self.agent.local_kind(kind, lang), eta=eta), "mock (template)"
             notice = {"id": f"U{len(self.notices) + 1}", "t": round(self.elapsed), "fault": inc["id"], "language": lang,
                       "text": text.strip(), "to": sorted(set(to)), "model": model, "kind": "eta"}
             self.notices.append(notice)

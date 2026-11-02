@@ -686,7 +686,7 @@ Portal call (`portalcall.py`, `web/customer.html`)
       agent's line is still playing, `getUserMedia` on a non-localhost host (needs HTTPS).
 - [x] Live 2026-11-02 with synthetic speech standing in for a microphone: English call (Voice Transcribe exact, ~7 s per turn), Tamil (Voice
       Transcribe returned Latin-letter Tamil; Spark still read it; a very short line came back garbled and was filed as junk), Sinhala (Spark
-      heard the street, lost the house number). Agent lines in ta/si contain an English kind label "(pole down)": native-speaker check.
+      heard the street, lost the house number). The English kind label "(pole down)" in ta/si lines was replaced on 2026-11-02 by `locales.KIND_NAME` (also es, hi); native-speaker check in `docs/LANGUAGE_CHECK_KINDS.md`.
 - [ ] Voice Transcribe on a human microphone (hi/es not tried).
 - [ ] How long a whole call takes (the agent's lines are spoken in real time, about a minute for a short call).
 

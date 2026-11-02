@@ -31,7 +31,7 @@ from typing import TYPE_CHECKING, Awaitable, Callable
 
 from . import config, voice
 from .grid import haversine_m
-from .locales import HAZARD_NAMES, READBACK
+from .locales import HAZARD_NAMES, KIND_NAME, READBACK
 from .realtime import REALTIME_LANGS, Line
 
 if TYPE_CHECKING:
@@ -202,13 +202,21 @@ class CallAgent:
         call.pop("_hearing", None)
         await self.e.broadcast({"type": "live_turn", "id": call["id"], "i": i, "turn": turn})
 
+    def local_kind(self, kind: str, lang: str) -> str:
+        """The English fault-type text (a `kind_title` in lower case) in the caller's language."""
+        key = next((k for k, v in self.kind_title.items() if v.lower() == kind), "unknown" if "cause" in kind else None)
+        return KIND_NAME.get(lang, {}).get(key, kind)
+
     async def say(self, call: dict, act: str, en_kw: dict | None = None, keep: tuple[str, ...] = (), **kw) -> None:
         """Speak one act: the template, reworded by Spark when allowed and when every fact survives."""
+        en_kw = en_kw or dict(kw)
+        if "kind" in kw:
+            kw = {**kw, "kind": self.local_kind(kw["kind"], call["language"])}
         draft = self.loc["agent"][call["language"]][act].format(**kw)
         text, model, dropped = draft, "Agent", []
         if call.get("spark") and act not in FIXED:
             text, model, dropped = await self._spark(call, act, draft, keep)
-        turn = {"who": "agent", "act": act, "model": model, "en": self.loc["agent"]["en"][act].format(**(en_kw or kw)),
+        turn = {"who": "agent", "act": act, "model": model, "en": self.loc["agent"]["en"][act].format(**en_kw),
                 "text": text}
         if dropped:
             turn["rejected"] = dropped
