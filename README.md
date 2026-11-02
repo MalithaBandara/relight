@@ -15,6 +15,15 @@ control a physical system).
 **The principle: Meta models read, deterministic code locates and decides.** No model ever guesses where a fault is or
 approves a switching action. The operator approves every switching plan.
 
+![The control-room console on the Galle scenario, mid-storm: work agenda, map, event log and the Meta models counter](docs/img/console.png)
+
+*The control-room console on the Galle scenario at 16:31 of the replay: five open events, the map, the work agenda and the
+event log. Everything shown is synthetic.*
+
+| Customer portal (`/customer`) | Crew page (`/crew`) |
+|---|---|
+| ![The customer portal: check my supply, report a problem, talk to the outage desk](docs/img/customer.png) | ![The crew page: pick a crew, say or type a report, the agent reads it back](docs/img/crew.png) |
+
 ## Architecture
 
 ```mermaid
