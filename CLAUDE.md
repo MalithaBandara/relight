@@ -525,10 +525,10 @@ Media
 - [x] ~~Record calls~~: the owner cannot record; calls are synthetic voices (edge-tts), labelled as such.
 - [x] **Listen to the voiced calls** (2026-11-02): the owner listened to the agent voice samples and approved them.
 - [x] Damage photos: nine from Wikimedia Commons, wired into all three scenarios (`media/photos/CREDITS.md`).
-      Still missing: a blown-fuse photo for Galle's `crew_fuse.jpg`.
+      `crew_fuse.jpg` (Galle) is an AI-generated image the owner supplied on 2026-11-02, credited as synthetic.
 - [x] Drone clip and four customer videos (owner's choice, 2026-10-30): third-party clips, git-ignored, credited in
       `media/videos/CREDITS.md`; `scripts/fetch_videos.py` downloads and trims them after a fresh clone.
-- [ ] Pole-tag reading (chosen 2026-11-01): send a photo of a pole with a visible ID tag. The agent adds the tag to
+- [x] Pole-tag reading (chosen 2026-11-01): the owner supplied an AI-generated photo (`pole_tag_gl0417.jpg`, tag GL-0417) on 2026-11-02; it is Galle message C61, aliased to Hospital Road 52. Not yet read live (needs GO). Original ask: send a photo of a pole with a visible ID tag. The agent adds the tag to
       the scenario's `pack.pole_aliases` (tag + street + house number) so the register finds it.
 - [ ] If realistic paper-to-grid is chosen: draw a pole-numbered feeder sketch and write one meter-reader
       ledger page, then photograph both.

@@ -1,6 +1,15 @@
 {
  "id": "galle_storm",
  "title": "Monsoon squall over Wakwella, Galle",
+ "pack": {
+  "pole_aliases": [
+   {
+    "tag": "GL-0417",
+    "street": "Hospital Road",
+    "house_no": 52
+   }
+  ]
+ },
  "duration_s": 1260,
  "notes": "Scripted storm on the IEEE 34-bus feeder laid over Galle. No smart meters. All people, phone numbers and accounts are synthetic. 'truth' blocks are ground-truth labels used only for scoring and for mock mode; the live pipeline never reads them. F5 is the twist: complaints point at a transformer fuse, the crew finds a service wire. F6 is hidden behind F1 and only shows once F1 is repaired.",
  "faults": [
@@ -889,6 +898,23 @@
     "junk": true,
     "symptom": "none",
     "hazard": "none"
+   }
+  },
+  {
+   "t": 720,
+   "type": "complaint",
+   "id": "C61",
+   "channel": "whatsapp",
+   "language": "en",
+   "from": "0713029799",
+   "photo": "media/photos/pole_tag_gl0417.jpg",
+   "media_pole_tag": "GL-0417",
+   "text": "No power at 54 Hospital Road. The pole outside number 52 snapped in the storm and is hanging in the wires. I sent a photo, the plate on it says GL-0417.",
+   "truth": {
+    "street": "Hospital Road",
+    "house_no": 54,
+    "symptom": "no_power",
+    "hazard": "pole_down"
    }
   },
   {
