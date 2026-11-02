@@ -171,7 +171,7 @@
     [hidden] { display: none !important; }
 
     /* talk to the outage desk */
-    .call-card { grid-column: 1 / -1; }
+    .check-card { grid-column: 1 / -1; }
     #call-start-row { flex-wrap: wrap; }
     #call-who { min-width: 200px; }
     .convo { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; max-height: 340px; overflow-y: auto; }
@@ -217,26 +217,19 @@
       <div><h1>Outage Desk</h1><p id="langs">Report a power cut or check your supply · English · සිංහල · தமிழ்</p></div>
     </header>
 
-    <section class="card call-card" aria-labelledby="call-h">
-      <h2 id="call-h">Talk to the outage desk</h2>
-      <p class="lede">Speak in your own language. An AI agent (Muse Spark and Muse Voice Transcribe) answers by voice, asks where you are and files your report. If a wire is down, stay well away from it.</p>
-      <div class="row" id="call-start-row">
-        <input id="call-who" placeholder="Account number or mobile (optional)" aria-label="Account number or mobile (optional)" inputmode="numeric" autocomplete="tel">
-        <select id="call-lang" aria-label="Language"><option value="en">English</option></select>
-        <button id="call-start" class="primary"><span class="spinner" aria-hidden="true"></span><span class="label">Call the desk</span></button>
+    <section class="card check-card" aria-labelledby="check-h">
+      <h2 id="check-h">Check my supply</h2>
+      <p class="lede">See where the repair is and when power should be back.</p>
+      <div class="row">
+        <input id="q" placeholder="Account number or mobile" aria-label="Account number or mobile" inputmode="numeric">
+        <button id="check" class="primary"><span class="spinner" aria-hidden="true"></span><span class="label">Check</span></button>
       </div>
-      <div id="call-live" hidden>
-        <ol class="convo" id="call-log" aria-live="polite"></ol>
-        <p class="call-state" id="call-state" aria-live="polite"></p>
-        <div class="call-controls">
-          <button id="call-mic" class="primary" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span class="label">Tap to talk</span></button>
-          <div class="level" aria-hidden="true"><i id="call-level"></i></div>
-          <button id="call-end" class="ghost">Hang up</button>
-        </div>
-        <form class="call-type" id="call-type"><input id="call-text" placeholder="Or type what you would say" aria-label="Or type what you would say" autocomplete="off"><button class="chip" id="call-send" disabled>Send</button></form>
+      <div class="samples" id="check-samples" hidden>
+        <span>Sample customers</span>
+        <div class="chips"></div>
       </div>
-      <p class="error" id="call-error" role="alert"></p>
-      <p class="hint">Demo: the customers are fictional and the agent's voice is synthetic. Your recording is saved on this computer, and goes to Meta's speech models only when the API is switched on.</p>
+      <p class="error" id="check-error" role="alert"></p>
+      <div id="status" aria-live="polite"></div>
     </section>
 
     <section class="card" aria-labelledby="report-h">
@@ -265,19 +258,26 @@
       <div id="sent" aria-live="polite"></div>
     </section>
 
-    <section class="card" aria-labelledby="check-h">
-      <h2 id="check-h">Check my supply</h2>
-      <p class="lede">See where the repair is and when power should be back.</p>
-      <div class="row">
-        <input id="q" placeholder="Account number or mobile" aria-label="Account number or mobile" inputmode="numeric">
-        <button id="check" class="primary"><span class="spinner" aria-hidden="true"></span><span class="label">Check</span></button>
+    <section class="card" aria-labelledby="call-h">
+      <h2 id="call-h">Talk to the outage desk</h2>
+      <p class="lede">Speak in your own language. An AI agent (Muse Spark and Muse Voice Transcribe) answers by voice, asks where you are and files your report. If a wire is down, stay well away from it.</p>
+      <div class="row" id="call-start-row">
+        <input id="call-who" placeholder="Account number or mobile (optional)" aria-label="Account number or mobile (optional)" inputmode="numeric" autocomplete="tel">
+        <select id="call-lang" aria-label="Language"><option value="en">English</option></select>
+        <button id="call-start" class="primary"><span class="spinner" aria-hidden="true"></span><span class="label">Call the desk</span></button>
       </div>
-      <div class="samples" id="check-samples" hidden>
-        <span>Sample customers</span>
-        <div class="chips"></div>
+      <div id="call-live" hidden>
+        <ol class="convo" id="call-log" aria-live="polite"></ol>
+        <p class="call-state" id="call-state" aria-live="polite"></p>
+        <div class="call-controls">
+          <button id="call-mic" class="primary" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span class="label">Tap to talk</span></button>
+          <div class="level" aria-hidden="true"><i id="call-level"></i></div>
+          <button id="call-end" class="ghost">Hang up</button>
+        </div>
+        <form class="call-type" id="call-type"><input id="call-text" placeholder="Or type what you would say" aria-label="Or type what you would say" autocomplete="off"><button class="chip" id="call-send" disabled>Send</button></form>
       </div>
-      <p class="error" id="check-error" role="alert"></p>
-      <div id="status" aria-live="polite"></div>
+      <p class="error" id="call-error" role="alert"></p>
+      <p class="hint">Demo: the customers are fictional and the agent's voice is synthetic. Your recording is saved on this computer, and goes to Meta's speech models only when the API is switched on.</p>
     </section>
 
     <p class="note">Demo portal on fictional customers. Every report goes through the same pipeline as calls, WhatsApp and SMS in the control room.</p>
