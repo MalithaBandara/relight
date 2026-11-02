@@ -523,7 +523,7 @@ Accounts, keys and forms
 
 Media
 - [x] ~~Record calls~~: the owner cannot record; calls are synthetic voices (edge-tts), labelled as such.
-- [ ] **Listen to the voiced calls** in the console and say which voices or lines sound wrong.
+- [x] **Listen to the voiced calls** (2026-11-02): the owner listened to the agent voice samples and approved them.
 - [x] Damage photos: nine from Wikimedia Commons, wired into all three scenarios (`media/photos/CREDITS.md`).
       Still missing: a blown-fuse photo for Galle's `crew_fuse.jpg`.
 - [x] Drone clip and four customer videos (owner's choice, 2026-10-30): third-party clips, git-ignored, credited in
@@ -534,7 +534,9 @@ Media
       ledger page, then photograph both.
 
 Checks and decisions
-- [ ] **Native-speaker check** of Sinhala, Tamil, Hindi and Spanish messages and templates.
+- [x] **Native-speaker check** (2026-11-02): the owner checked the Sinhala sheet (`docs/LANGUAGE_CHECK_SINHALA.md`: agent,
+      caller, crew and Galle message lines) and the sample Tamil, Hindi and Spanish lines, and approved them. The agent voices
+      were also approved. The other Tamil, Hindi and Spanish lines were not reviewed line by line.
 - [ ] **Decide which optional features to build** (shortlist in 12.2).
 
 Video
