@@ -51,3 +51,18 @@ skills-lock.json
 # demo video build (Remotion project and renders)
 /output/
 /video/
+
+# Session demo animations, scripts, and video outputs
+relight_demo_animation.html
+electricity_airbrush_demo.html
+relight_isometric_demo.html
+generate_mp4.py
+render_launch_ad.py
+render_airbrush_electricity_mp4.py
+render_isometric_video.py
+relight_product_demo.mp4
+relight_airbrush_electricity.mp4
+relight_isometric_motion_graphics.mp4
+*.wav
+
+/whatsnext.md
