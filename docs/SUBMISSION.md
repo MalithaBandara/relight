@@ -29,7 +29,9 @@ differently. Restoration switching is simulated step by step and blocked if it w
 work zone; the operator approves every plan.
 
 Three scenarios run end to end: Galle (6 of 6 faults found), Houston with failing smart meters (7 of 7), and Chennai at
-about 2,400 messages (9 of 9), with nobody left dark. All customers and voices are synthetic; maps are OpenStreetMap.
+about 2,400 messages (9 of 9), with nobody left dark. Smart meters are optional: Houston's simulated meters help until
+the meter network fails mid-storm, and the other scenarios run on calls alone. All customers, voices and meter messages
+are synthetic; maps are OpenStreetMap.
 Limits are stated in the README.
 
 ## Built with

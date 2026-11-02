@@ -124,6 +124,7 @@ confirms the address by caller ID.
 - Non-English messages and agent lines have been checked by a native speaker only for Sinhala; the sample Tamil, Hindi and Spanish lines were checked, the rest were not.
 - The portal call and the crew page were tested live (2026-11-02) with synthetic speech sent to the real Voice Transcribe and Spark (English, Tamil, Sinhala), not with a human microphone. Voice Transcribe returned Tamil in Latin letters for synthetic Tamil; Spark still read it.
 - HEIC photos are refused (HTTP 415); SAM refuses clips over a few MB, so clips are trimmed small.
+- Smart meters are optional and simulated. Only Houston has them (last-gasp messages, then the meter network fails at t=600 s and silent meters stop counting); the other scenarios run on calls, SMS, SCADA and crew reports. The meter messages are generated, not taken from a real meter data system, and there is no integration with one.
 - Priority weights (for example hospital 400, failed backup power 1,500) are our own choices, not a utility's rules.
 
 ## What's next
