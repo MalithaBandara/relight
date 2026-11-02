@@ -168,6 +168,32 @@
     .sms.arrive { animation: arrive .45s var(--ease-out) both; }
     @keyframes arrive { from { opacity: 0; transform: translateY(10px) scale(.98); } }
 
+    [hidden] { display: none !important; }
+
+    /* talk to the outage desk */
+    .call-card { grid-column: 1 / -1; }
+    #call-start-row { flex-wrap: wrap; }
+    #call-who { min-width: 200px; }
+    .convo { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; max-height: 340px; overflow-y: auto; }
+    .convo li { max-width: min(560px, 88%); padding: 10px 12px; border-radius: 12px; font-size: 16px; background: #222a33; overflow-wrap: anywhere; }
+    .convo li.agent { align-self: flex-start; border-bottom-left-radius: 4px; }
+    .convo li.caller { align-self: flex-end; border-bottom-right-radius: 4px; background: var(--lamp-soft); border: 1px solid rgba(74, 163, 223, .35); }
+    .convo li small { display: block; margin-top: 4px; font-size: 13px; color: var(--muted); }
+    .convo li.arrive { animation: arrive .35s var(--ease-out) both; }
+    .call-controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .call-controls .primary svg { width: 18px; height: 18px; }
+    .primary.rec { background: var(--cut); color: #fff; }
+    .primary.rec:hover { background: #ee6b6f; }
+    .primary:disabled { opacity: .5; cursor: not-allowed; }
+    .ghost { background: transparent; border: 1px solid var(--line-2); border-radius: 10px; min-height: 46px; padding: 0 16px; cursor: pointer;
+      transition: border-color .15s ease, color .15s ease; }
+    .ghost:hover { border-color: var(--cut); color: var(--cut); }
+    .level { flex: 1; min-width: 120px; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+    .level i { display: block; height: 100%; width: 100%; background: var(--cut); transform-origin: left center; transform: scaleX(0); transition: transform .08s linear; }
+    .call-state { margin: 0; min-height: 1.5em; font-size: 14px; color: var(--muted); }
+    .call-type { display: flex; gap: 10px; }
+    .call-type input { flex: 1; min-width: 0; }
+
     .note { grid-column: 1 / -1; margin: 4px 0 0; font-size: 14px; color: var(--muted); max-width: 70ch; }
 
     @media (max-width: 760px) {
@@ -190,6 +216,28 @@
     <header class="masthead">
       <div><h1>Outage Desk</h1><p id="langs">Report a power cut or check your supply · English · සිංහල · தமிழ்</p></div>
     </header>
+
+    <section class="card call-card" aria-labelledby="call-h">
+      <h2 id="call-h">Talk to the outage desk</h2>
+      <p class="lede">Speak in your own language. An AI agent (Muse Spark and Muse Voice Transcribe) answers by voice, asks where you are and files your report. If a wire is down, stay well away from it.</p>
+      <div class="row" id="call-start-row">
+        <input id="call-who" placeholder="Account number or mobile (optional)" aria-label="Account number or mobile (optional)" inputmode="numeric" autocomplete="tel">
+        <select id="call-lang" aria-label="Language"><option value="en">English</option></select>
+        <button id="call-start" class="primary"><span class="spinner" aria-hidden="true"></span><span class="label">Call the desk</span></button>
+      </div>
+      <div id="call-live" hidden>
+        <ol class="convo" id="call-log" aria-live="polite"></ol>
+        <p class="call-state" id="call-state" aria-live="polite"></p>
+        <div class="call-controls">
+          <button id="call-mic" class="primary" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span class="label">Tap to talk</span></button>
+          <div class="level" aria-hidden="true"><i id="call-level"></i></div>
+          <button id="call-end" class="ghost">Hang up</button>
+        </div>
+        <form class="call-type" id="call-type"><input id="call-text" placeholder="Or type what you would say" aria-label="Or type what you would say" autocomplete="off"><button class="chip" id="call-send" disabled>Send</button></form>
+      </div>
+      <p class="error" id="call-error" role="alert"></p>
+      <p class="hint">Demo: the customers are fictional and the agent's voice is synthetic. Your recording is saved on this computer, and goes to Meta's speech models only when the API is switched on.</p>
+    </section>
 
     <section class="card" aria-labelledby="report-h">
       <h2 id="report-h">Report a problem</h2>
@@ -301,6 +349,7 @@ fetch("/api/scenarios").then((r) => r.json()).then((list) => {
   const sc = list.scenarios.find((s) => s.id === list.current);
   const langs = LANGS[sc && sc.country] || LANGS["Sri Lanka"];
   $("#lang").innerHTML = langs.map(([v, n]) => `<option value="${v}">${n}</option>`).join("");
+  $("#call-lang").innerHTML = $("#lang").innerHTML;
   $("#langs").textContent = `Report a power cut or check your supply · ${langs.map((l) => l[1]).join(" · ")}`;
   const s = SAMPLES[list.current];
   if (!s) return;
@@ -528,6 +577,185 @@ $("#send").onclick = async () => {
     busy(btn, false);
     btn.querySelector(".label").textContent = "Send report";
   }
+};
+
+// ---- talk to the outage desk ------------------------------------------------------------------
+// Tap to talk: the browser records one utterance, stops when the speaker pauses (or on a second tap), and sends it as a
+// 16 kHz mono WAV. The agent's reply comes back as turns; each agent line is played from /api/call/<id>/<turn>.wav.
+
+const call = { id: null, busy: false, rec: null, playing: null };
+const RATE = 16000, SILENCE_S = 1.4, MAX_S = 25, SPEECH_RMS = 0.015;
+
+function wavBlob(chunks, inRate) {
+  let len = 0; for (const c of chunks) len += c.length;
+  const all = new Float32Array(len); let o = 0;
+  for (const c of chunks) { all.set(c, o); o += c.length; }
+  const ratio = inRate / RATE, n = Math.floor(len / ratio), pcm = new Int16Array(n);
+  for (let i = 0; i < n; i++) {   // average each window of source samples: a plain low-pass before dropping to 16 kHz
+    const a = Math.floor(i * ratio), b = Math.max(a + 1, Math.min(len, Math.floor((i + 1) * ratio)));
+    let s = 0; for (let j = a; j < b; j++) s += all[j];
+    pcm[i] = Math.max(-1, Math.min(1, s / (b - a))) * 32767;
+  }
+  const buf = new ArrayBuffer(44 + n * 2), v = new DataView(buf);
+  const str = (p, t) => { for (let i = 0; i < t.length; i++) v.setUint8(p + i, t.charCodeAt(i)); };
+  str(0, "RIFF"); v.setUint32(4, 36 + n * 2, true); str(8, "WAVEfmt "); v.setUint32(16, 16, true); v.setUint16(20, 1, true);
+  v.setUint16(22, 1, true); v.setUint32(24, RATE, true); v.setUint32(28, RATE * 2, true); v.setUint16(32, 2, true);
+  v.setUint16(34, 16, true); str(36, "data"); v.setUint32(40, n * 2, true);
+  new Int16Array(buf, 44).set(pcm);
+  return new Blob([buf], { type: "audio/wav" });
+}
+
+function callState(text) { $("#call-state").textContent = text || ""; }
+function callReady(on) {
+  $("#call-mic").disabled = !on; $("#call-send").disabled = !on; $("#call-text").disabled = !on;
+}
+
+function addTurns(turns) {
+  const log = $("#call-log");
+  for (const t of turns) {
+    const li = document.createElement("li");
+    li.className = `${t.who} arrive`;
+    li.innerHTML = `${esc(t.text)}<small>${t.who === "agent" ? "Outage desk agent" : "You"} · <span class="badge ${badgeClass(t.model || "")}">${esc(t.model || "")}</span></small>`;
+    log.append(li);
+  }
+  log.scrollTop = log.scrollHeight;
+}
+
+// Every line of a reply is requested at once (the server synthesises each on first request), then played in order.
+function clipFor(i) { const a = new Audio(`/api/call/${call.id}/${i}.wav`); a.preload = "auto"; a.load(); return a; }
+
+function playTurn(a) {   // resolves when the line has been spoken (or at once if there is no audio)
+  return new Promise((resolve) => {
+    call.playing = a;
+    const done = () => { call.playing = null; resolve(); };
+    a.onended = a.onerror = done;
+    a.play().catch(done);
+    setTimeout(done, 40000);
+  });
+}
+
+async function speak(turns) {
+  const clips = turns.filter((t) => t.who === "agent").map((t) => clipFor(t.i));
+  for (const a of clips) { callState("The agent is speaking…"); await playTurn(a); }
+}
+
+async function handleReply(r) {
+  if (r.error) $("#call-error").textContent = r.error;
+  addTurns(r.turns);
+  await speak(r.turns);
+  if (r.done) return finishCall(r);
+  callState("Your turn. Tap to talk, or type.");
+  callReady(true);
+}
+
+async function finishCall(r) {
+  callReady(false); $("#call-end").hidden = true; $("#call-mic").hidden = true; $(".level").hidden = true; $("#call-type").hidden = true;
+  callState(r.incident ? `Call ended. Your report is linked to ${r.incident}.` : "Call ended. Your report is filed.");
+  $("#call-start").querySelector(".label").textContent = "Call again";
+  $("#call-start-row").hidden = false; call.id = null;
+  if (r.account) { $("#q").value = r.account; check(); }   // follow the repair on the status card
+}
+
+async function postSay(body) {
+  const r = await fetch(`/api/customer/call/${call.id}/say`, { method: "POST", body });
+  const out = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(out.error || "The call dropped.");
+  return out;
+}
+
+async function callTurn(body) {
+  if (call.busy) return;
+  call.busy = true; callReady(false); $("#call-error").textContent = "";
+  try { callState("The agent is listening…"); await handleReply(await postSay(body)); }
+  catch (err) { $("#call-error").textContent = err.message; callState(""); callReady(true); }
+  finally { call.busy = false; }
+}
+
+$("#call-start").onclick = async () => {
+  const btn = $("#call-start");
+  $("#call-error").textContent = ""; busy(btn, true);
+  try {
+    const r = await getJSON("/api/customer/call", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ who: $("#call-who").value, language: $("#call-lang").value }) });
+    call.id = r.id;
+    $("#call-log").innerHTML = ""; $("#call-live").hidden = false; $("#call-start-row").hidden = true;
+    $("#call-end").hidden = false; $("#call-mic").hidden = false; $(".level").hidden = false; $("#call-type").hidden = false;
+    callReady(false);
+    call.busy = true;
+    await handleReply(r);
+    call.busy = false;
+  } catch { $("#call-error").textContent = "We could not reach the outage desk. Check your connection and try again."; call.busy = false; }
+  finally { busy(btn, false); }
+};
+
+async function startRecording() {
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) throw new Error("This browser cannot use the microphone here. Type instead.");
+  const stream = await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true } });
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const src = ctx.createMediaStreamSource(stream), proc = ctx.createScriptProcessor(4096, 1, 1);
+  const rec = { stream, ctx, proc, chunks: [], heard: false, quiet: 0, secs: 0 };
+  proc.onaudioprocess = (e) => {
+    const d = new Float32Array(e.inputBuffer.getChannelData(0));
+    rec.chunks.push(d);
+    let s = 0; for (let i = 0; i < d.length; i++) s += d[i] * d[i];
+    const rms = Math.sqrt(s / d.length), dt = d.length / ctx.sampleRate;
+    rec.secs += dt;
+    $("#call-level").style.transform = `scaleX(${Math.min(1, rms * 12)})`;
+    if (rms > SPEECH_RMS) { rec.heard = true; rec.quiet = 0; } else if (rec.heard) rec.quiet += dt;
+    if ((rec.heard && rec.quiet >= SILENCE_S) || rec.secs >= MAX_S) stopRecording();
+  };
+  src.connect(proc); proc.connect(ctx.destination);   // the processor writes no output, so nothing is played back
+  call.rec = rec;
+}
+
+async function stopRecording() {
+  const rec = call.rec; if (!rec) return;
+  call.rec = null;
+  rec.proc.onaudioprocess = null; rec.proc.disconnect();
+  rec.stream.getTracks().forEach((t) => t.stop());
+  const rate = rec.ctx.sampleRate; rec.ctx.close();
+  const mic = $("#call-mic"); mic.classList.remove("rec"); mic.querySelector(".label").textContent = "Tap to talk";
+  $("#call-level").style.transform = "scaleX(0)";
+  if (!rec.heard) { callState("I did not hear anything. Tap to talk and try again."); callReady(true); return; }
+  const body = new FormData();
+  body.append("audio", wavBlob(rec.chunks, rate), "turn.wav");
+  callTurn(body);
+}
+
+$("#call-mic").onclick = async () => {
+  if (call.rec) return stopRecording();
+  if (call.busy) return;
+  $("#call-error").textContent = "";
+  try {
+    if (call.playing) call.playing.pause();
+    await startRecording();
+    const mic = $("#call-mic"); mic.classList.add("rec"); mic.querySelector(".label").textContent = "Tap to send";
+    callState("Listening… speak, then pause.");
+  } catch (err) {
+    $("#call-error").textContent = err.name === "NotAllowedError" ? "The microphone is blocked for this page. Allow it in the browser, or type instead." : err.message;
+  }
+};
+
+$("#call-type").onsubmit = (e) => {
+  e.preventDefault();
+  const text = $("#call-text").value.trim();
+  if (!text || call.busy) return;
+  $("#call-text").value = "";
+  const body = new FormData(); body.append("text", text);
+  callTurn(body);
+};
+
+$("#call-end").onclick = async () => {
+  if (!call.id) return;
+  if (call.rec) { call.rec.proc.onaudioprocess = null; call.rec.stream.getTracks().forEach((t) => t.stop()); call.rec.ctx.close(); call.rec = null; }
+  if (call.playing) call.playing.pause();
+  callReady(false); callState("Ending the call…");
+  try {
+    const r = await getJSON(`/api/customer/call/${call.id}/end`, { method: "POST" });
+    addTurns(r.turns);
+    await speak(r.turns);
+    finishCall(r);
+  } catch { $("#call-error").textContent = "The call had already ended."; finishCall({}); }
 };
 </script>
 </body>

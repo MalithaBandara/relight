@@ -150,6 +150,54 @@ def uploads() -> None:
     c.close()
 
 
+def portal_call() -> None:
+    print("customer call from the portal (typed words; the microphone path needs the API)")
+    import io
+    import wave
+
+    from fastapi.testclient import TestClient
+
+    from relight import server
+
+    server.open_scenario("galle_storm")
+    c = TestClient(server.app)
+    who = "4466799600"  # 20 Hospital Road
+    r = c.post("/api/customer/call", json={"who": who, "language": "en"}).json()
+    cid = r["id"]
+    check("the agent greets first, with the automated-assistant disclosure",
+          r["turns"][0]["who"] == "agent" and "automated" in r["turns"][0]["text"], r["turns"][0]["text"][:60])
+    r = c.post(f"/api/customer/call/{cid}/say", data={"text": "No power since the storm."}).json()
+    check("caller ID places the caller; the agent confirms the address",
+          r["turns"][-1]["who"] == "agent" and "Hospital Road" in r["turns"][-1]["text"] and not r["done"],
+          r["turns"][-1]["text"][:70])
+    r = c.post(f"/api/customer/call/{cid}/say", data={"text": "Yes"}).json()
+    check("then asks about hazards", "fallen" in r["turns"][-1]["text"] or "wires" in r["turns"][-1]["text"],
+          r["turns"][-1]["text"][:70])
+    r = c.post(f"/api/customer/call/{cid}/say", data={"text": "I see nothing"}).json()
+    check("the report is filed and the call ends", r["done"] and r["account"] == who, str({k: r.get(k) for k in
+                                                                                         ("done", "account")}))
+    msg = next((m for m in server.engine.messages if m["id"] == cid), None)
+    check("the call is in the console's messages with its transcript", bool(msg and msg.get("call")), cid)
+    check("a call that has ended is refused", c.post(f"/api/customer/call/{cid}/say",
+                                                    data={"text": "hello"}).status_code in (200, 410))
+    r = c.post("/api/customer/call", json={"who": "", "language": "en"}).json()
+    buf = io.BytesIO()
+    with wave.open(buf, "wb") as w:
+        w.setnchannels(1)
+        w.setsampwidth(2)
+        w.setframerate(16000)
+        w.writeframes(bytes(32000))
+    a = c.post(f"/api/customer/call/{r['id']}/say", files={"audio": ("t.wav", buf.getvalue(), "audio/wav")}).json()
+    check("spoken audio without the API says so and asks the caller to type", a.get("error") and not a["turns"],
+          str(a.get("error"))[:70])
+    hang = c.post(f"/api/customer/call/{r['id']}/end").json()
+    check("hanging up before speaking closes the call without a report", hang["done"] and hang["status"] is None)
+    for p in (ROOT / "media" / "uploads").glob("call-*.wav"):
+        p.unlink(missing_ok=True)
+    c.close()
+    server.open_scenario("galle_storm")
+
+
 def drone_survey_check() -> None:
     print("drone survey (counted from the cached SAM 3.1 tracks of the Temple Road clip)")
     from relight import vision
@@ -341,6 +389,7 @@ async def main() -> None:
     await noise_guard()
     await cached_replays()
     uploads()
+    portal_call()
     drone_survey_check()
     mask_checks()
     pole_tags()

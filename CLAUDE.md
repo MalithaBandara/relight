@@ -112,6 +112,7 @@ relight/                 Python package (FastAPI backend and all logic)
   realtime.py            realtime Voice Transcribe line per live call (WebSocket, diarization, street keywords,
                          per-utterance cache, paced mock)
   copilot.py             call-taker copilot on hard live calls: live fields, Spark's next line, file/end
+  portalcall.py          a customer's own call from the portal: browser microphone, turn by turn, answered by the call agent
   voice.py               text to speech (edge-tts) with a phone-line filter; cached in media/audio/tts/
   scenario.py            scenario loader, simulated physical World, Replayer (clock, time-lapse)
   diagram.py             paper single-line diagram -> topology with Spark; scoring; diagram renderer
@@ -363,6 +364,9 @@ the first recloser's own zone, and guarantees at least two callers for small fau
 | GET | `/api/customer?q=` | portal status by account or phone |
 | POST | `/api/customer/upload` | multipart `file` (photo or video, max 60 MB) -> `{"path"}` under `media/uploads/` |
 | POST | `/api/customer/report` | `{"text", "who", "language", "media"}` live complaint (processed like any other) |
+| POST | `/api/customer/call` | `{"who"?, "language"}` a customer rings the desk from the portal: the agent greets (`portalcall.py`) |
+| POST | `/api/customer/call/{id}/say` | multipart `audio` (16 kHz mono WAV, one utterance) or `text`; returns the turns added, `done` when filed |
+| POST | `/api/customer/call/{id}/end` | hang up: what was said so far is filed |
 | GET | `/api/call/{id}/{turn}.wav` | one line of an agent call: caller recording or synthesised speech |
 | POST | `/api/diagram` | digitise the paper diagram (optional image upload) and score it |
 | WS | `/ws` | snapshot on connect, then `state`, `timeline`, `message`, `probe`, `notice`, `photo`, `drone`, `scada`, `clock`, `reset`, `scenario`, `messages`, `network`, `live`, `live_call`, `live_turn`, `live_partial`, `copilot` |
@@ -577,6 +581,14 @@ Can start now
   with diarization (chosen and built 2026-10-30): calls handled turn by turn as they are spoken.
 - **Live call copilot** (chosen and built 2026-10-30, see 5.6a): realtime transcript, live field filling,
   Spark's suggested next line, for a human call-taker on the hard calls the agent hands over.
+- **Customer call from the portal** (chosen and built 2026-11-02): the portal's "Talk to the outage desk" card. A real
+  person taps to talk; the browser records one utterance (stops on a 1.4 s pause or a second tap) as a 16 kHz mono WAV;
+  `PortalCall` has Voice Transcribe hear it (Spark listens for Sinhala; street and landmark names as `keywords`), Spark
+  read it, and code pick the agent's next act (hazard safety line, confirm the address from caller ID or ask for it, ask
+  about hazards; a "no" to the address discards caller ID), then file it like any call and give the status. No
+  simulated World answers: the next-door question goes out by SMS. Without the API (mock, or GO closed) the
+  microphone path says so and the caller types (keyword reading, `mock (keywords)`). Audio is saved in
+  `media/uploads/call-*.wav` (git-ignored). Agent lines are spoken with edge-tts, requested all at once and played in order.
 - **Drone damage assessment** (finished 2026-11-01): `vision.drone_survey` counts from SAM 3.1's tracks: poles and
   wires followed (a wire counts if its track spans 40% of the clip; SAM splits wires into pieces), poles lying (box
   wider than tall), and which wires an obstruction (fallen tree) crosses. Galle's Temple Road clip: 3 poles, 6 wires
@@ -638,6 +650,15 @@ Realtime calls and copilot (`realtime.py`, `copilot.py`)
       quick read only knows Latin-script street names).
 - [ ] Native-speaker check of the new lines: `transfer`, `ask_medical`, `medical_yes` / `medical_no` (si, ta, es, hi).
 - [ ] Call-taker voices (`voices.taker`): en-GB Sonia for Sri Lanka is a stand-in; Sameera / Kumar double as caller voices.
+
+Portal call (`portalcall.py`, `web/customer.html`)
+- [x] Typed path, hang-up, caller-ID confirmation and denial, hazard safety line: tested in mock mode and in the
+      browser (`scripts/check_offline.py`).
+- [ ] Microphone in a real browser (Chrome on a phone too): pause detection threshold (`SPEECH_RMS`), echo when the
+      agent's line is still playing, `getUserMedia` on a non-localhost host (needs HTTPS).
+- [ ] Voice Transcribe on a real microphone utterance (en/ta/hi/es) and Spark listening to Sinhala: accuracy, wait,
+      cost per call (about 5 Spark requests and 3 short clips).
+- [ ] How long a whole call takes (the agent's lines are spoken in real time, about a minute for a short call).
 
 Photos and videos (`vision.py`, `models.py`)
 - [x] Spark and SAM 3.1 on the nine Commons photos, live (2026-11-01): outlines, lean 3-13 degrees on the leaning poles;

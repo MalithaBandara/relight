@@ -10,7 +10,7 @@ import hashlib
 import json
 from pathlib import Path
 
-from fastapi import FastAPI, File, UploadFile, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, File, Form, UploadFile, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -20,6 +20,7 @@ from . import packs
 from . import voice
 from .diagram import read_diagram, render_diagram, score
 from .engine import Engine, clock_str
+from .portalcall import PortalCall
 from .scenario import Replayer, load
 
 app = FastAPI(title="Relight")
@@ -36,6 +37,7 @@ async def broadcast(msg: dict) -> None:
 
 
 lock = asyncio.Lock()  # one writer at a time: the replay, the operator, the customer portal
+portal_calls: dict[str, PortalCall] = {}  # customers on a call from the portal (cleared with the engine)
 
 
 async def handle(e: dict) -> None:
@@ -46,6 +48,7 @@ async def handle(e: dict) -> None:
 def open_scenario(name: str) -> None:
     """Build the engine and simulated world for one scenario (network and customers are cached)."""
     global scenario, engine, replayer
+    portal_calls.clear()
     scenario = load(name)
     engine = Engine(scenario, broadcast)
     replayer = Replayer(scenario, handle)
@@ -182,6 +185,40 @@ async def customer_report(r: Report):
     msg = next((m for m in reversed(engine.messages) if m["id"] == e["id"]), None)
     return {"message": {k: v for k, v in (msg or {}).items() if k != "event"},
             "status": engine.customer_status(c.account_no) if c else None}
+
+
+class CallStart(BaseModel):
+    who: str = ""  # account number or phone (optional: the agent asks for the address)
+    language: str = "en"
+
+
+@app.post("/api/customer/call")
+async def customer_call(r: CallStart):
+    """A customer rings the outage desk from the portal: the call agent greets them."""
+    for old in [k for k, c in portal_calls.items() if c.done]:
+        portal_calls.pop(old)
+    n = sum(m["id"].startswith("PC") for m in engine.messages) + len(portal_calls) + 1
+    pc = PortalCall(engine, f"PC{n}", r.who, r.language, max(replayer.clock, engine.elapsed))
+    portal_calls[pc.id] = pc
+    return await pc.start()
+
+
+@app.post("/api/customer/call/{call_id}/say")
+async def customer_call_say(call_id: str, audio: UploadFile | None = File(None), text: str = Form("")):
+    """One thing the caller says: a short WAV (16 kHz mono) from the microphone, or typed words."""
+    pc = portal_calls.get(call_id)
+    if pc is None:
+        return JSONResponse({"error": "That call has ended. Start a new one."}, status_code=410)
+    wav = await audio.read(7 * 1024 * 1024) if audio is not None else None
+    return await pc.say(wav, text)
+
+
+@app.post("/api/customer/call/{call_id}/end")
+async def customer_call_end(call_id: str):
+    pc = portal_calls.get(call_id)
+    if pc is None:
+        return JSONResponse({"error": "That call has ended."}, status_code=410)
+    return await pc.hang_up()
 
 
 class CopilotAction(BaseModel):

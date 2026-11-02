@@ -154,7 +154,9 @@ cp .env.example .env                             # add MODEL_API_KEY for live Me
 .venv/Scripts/python -m uvicorn relight.server:app --port 8000
 ```
 
-Open http://localhost:8000, pick a scenario in the header and press **Run**. The customer portal is at `/customer`.
+Open http://localhost:8000, pick a scenario in the header and press **Run**. The customer portal is at `/customer`: a
+customer can write a report, attach a photo or video, check their supply, or **talk to the outage desk** with the browser
+microphone (the call agent answers by voice; needs a Meta API key, otherwise type what you would say).
 Voice playback and synthetic callers need `ffmpeg` on the PATH.
 
 Without an API key the app runs in **mock mode**: cached model responses are replayed, and anything not cached falls
