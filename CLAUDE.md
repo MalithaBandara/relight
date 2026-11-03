@@ -138,7 +138,7 @@ data/*.db                generated customer databases (git-ignored; rebuilt on f
 scenarios/calls/         per-scenario voiced calls (overlay on complaint ids: spoken words, withheld facts, voice)
 media/photos, videos      damage photos and clips (see their CREDITS.md)
 media/audio/calls/       synthetic caller recordings (committed); media/audio/tts/ is a git-ignored cache
-.cache/model/            cached model responses (git-ignored)
+.cache/model/            cached model responses (committed since 2026-11-03: a keyless clone replays the live runs)
 PROJECT_BRIEF.md         original plan, research, judging notes and ideas (historical; keep)
 ```
 
@@ -492,7 +492,8 @@ All writes to the engine go through one `asyncio.Lock` in `server.py` (replay, o
 - Branch: `main`, remote `origin` = `MalithaBandara/relight`. Commit only when the owner asks.
 - Commit messages: imperative subject, body explaining what and why. **No co-author trailers or AI
   attribution of any kind** (see the rule at the top).
-- Never commit `.env`, `.cache/`, `data/*.db`, `.venv/`. `data/osm/*.json` is committed on purpose, and so are `data/IEEE123Master.dss`
+- Never commit `.env`, `data/*.db`, `.venv/`. `.cache/` **is** committed on purpose (2026-11-03; scanned: no keys, tokens or
+  personal paths; re-scan before adding new files). `data/osm/*.json` is committed on purpose, and so are `data/IEEE123Master.dss`
   and its licence `data/IEEE123Master.LICENSE.txt` (EPRI OpenDSS, BSD 3-clause: the licence text must stay beside the file).
 
 ---

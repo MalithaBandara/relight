@@ -86,8 +86,9 @@ code, and by the agent or operator, for the run on screen.
 
 ## Results
 
-Eight scenarios run on the same engine. The first three ran against the live Meta Model API and are cached, so replays are
-free and identical.
+Eight scenarios run on the same engine. Six of them (Galle, Houston, Chennai, `house_fuse`, `tree_on_line` and
+`hospital_generator`) ran against the live Meta Model API, and their responses are committed in `.cache/`, so replays
+are free and identical.
 
 | Scenario | Network | Customers | Messages | Faults found | Dark at the end |
 |---|---|---|---|---|---|
@@ -187,7 +188,8 @@ cp .env.example .env                               # optional: add MODEL_API_KEY
 Open http://localhost:8000, pick a scenario in the header and press **Run**. The customer portal is at `/customer` and the
 crew page at `/crew`. Voice playback needs `ffmpeg` on the PATH.
 
-**Without an API key** the app runs in mock mode: cached model responses are replayed, and anything not cached falls back
+**Without an API key** the app runs in mock mode: the committed model responses in `.cache/` are replayed (a few
+requests differ slightly without a key and are not in the cache), and anything not cached falls back
 to the scenario's labelled ground truth (tagged `mock` in the console). **With a Meta Model API key** (get one at
 https://dev.meta.ai), put `MODEL_API_KEY=...` in `.env`; every response is then cached, so replays are free and
 repeatable. `.env` is git-ignored.
