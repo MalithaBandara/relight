@@ -75,6 +75,7 @@ svg { fill: currentColor; }
 #progress-bar { transition: width .5s linear; }
 .btn.primary { background: #2d6fa3; border-color: #2d6fa3; color: #fff; font-weight: 600; }
 .btn.ghost { background: transparent; }
+#btn-models { line-height: 0.95; text-align: center; justify-content: center; }
 .chip { display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 11px; border: 1px solid var(--line-2); font-size: 11px; color: var(--muted); background: transparent; white-space: nowrap; }
 .chip[hidden] { display: none; }
 .chip.ok { color: var(--st-rest); border-color: rgba(63, 180, 124, .5); cursor: pointer; }
