@@ -185,7 +185,7 @@ class CallAgent:
         line = self.lines.get(call["id"])
         heard, model = (await line.play(path, turn["who"], turn["text"])) if line else (turn["text"], turn["model"])
         if model.startswith("mock") and path is not None and lang not in REALTIME_LANGS:
-            # Voice Transcribe has no Sinhala: Spark listens to the utterance once it has been said.
+            # Sinhala: Spark listens to the utterance once it has been said.
             try:
                 if said := await asyncio.to_thread(self.e.client.spark_listen, path, self.lang_name.get(lang, lang)):
                     heard, model = said, "Muse Spark"

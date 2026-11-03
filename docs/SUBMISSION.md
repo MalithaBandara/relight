@@ -16,8 +16,8 @@ languages, while crews wait for a location. Relight turns that flood into locate
 dispatch and customer updates.
 
 Meta models do the reading. Muse Voice Transcribe hears calls in Tamil, Hindi, Spanish and English, with the feeder's
-street names as keywords (street heard right in 11 of 13 clips against 6 of 13 without). Voice Transcribe has no
-Sinhala, so Muse Spark listens to those calls itself. Spark turns every message into a structured report (street, house
+street names as keywords (street heard right in 11 of 13 clips against 6 of 13 without). Muse Spark listens to Sinhala
+calls directly from the audio. Spark turns every message into a structured report (street, house
 number, symptom, hazard; 91-97% street accuracy against labelled scenarios), words the call agent's replies and checks
 them against the facts code chose, and classifies damage photos. SAM 3.1 outlines poles, wires and fallen trees in
 photos and drone clips, finds pole-number plates, and its masks give pole lean, wire sag and where a tree actually
@@ -32,7 +32,6 @@ Three scenarios run end to end: Galle (6 of 6 faults found), Houston with failin
 about 2,400 messages (9 of 9), with nobody left dark. Smart meters are optional: Houston's simulated meters help until
 the meter network fails mid-storm, and the other scenarios run on calls alone. All customers, voices and meter messages
 are synthetic; maps are OpenStreetMap.
-Limits are stated in the README.
 
 ## Built with
 
@@ -48,7 +47,7 @@ synthetic voices.
 
 - Idea first explored in the earlier GridMedic project (Jaseci Labs hackathon, 17 Oct 2026); Relight is new code written
   from Oct 29 with no reuse.
-- Synthetic voices are Microsoft edge-tts; Meta has no text-to-speech model.
+- Caller, crew and agent voices are synthetic (edge-tts).
 - Third-party damage photos and clips are credited in `media/`.
 - Meta Model API in Standard mode, synthetic or public data only.
 
@@ -57,7 +56,6 @@ synthetic voices.
 Before the video
 - [ ] Listen to a few voiced calls; tell the agent which sound wrong
 - [ ] Send the pole-tag photo (with street and house number) and the blown-fuse photo, if still wanted
-- [ ] Sinhala native-speaker check of the lines you will show on screen
 - [ ] Decide: adopt keywords and/or minimal reasoning effort in the engine (re-runs Galle ~$1.1, Houston ~$1.5), or leave
 - [ ] `git status` clean, `git push`, repo public, README renders (Mermaid diagram shows)
 

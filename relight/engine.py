@@ -421,7 +421,7 @@ class Engine:
                 await self.log("Voice Transcribe", f"{e['id']}: call transcribed", res["transcript"][:160], e["id"])
                 return res["transcript"], "Voice Transcribe"
             return e["text"], "mock (script)"
-        # Voice Transcribe has no Sinhala: Spark listens to the recording itself.
+        # Sinhala: Spark listens to the recording itself.
         text = None
         try:
             text = await asyncio.to_thread(self.client.spark_listen, config.ROOT / audio, LANG_NAME.get(lang, lang))

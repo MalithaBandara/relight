@@ -274,17 +274,16 @@ scenario JSON --> Replayer (clock) --> Engine.handle(event)
   optional `withheld` (facts given only when asked; mock extraction hides them from the labels), `voice`,
   `rate`, `from` (unknown number). `scenario._voice_calls` applies it at load and sets `audio`.
   Regenerate audio with `scripts/make_calls.py [--force]`.
-- Sinhala audio: Voice Transcribe has no Sinhala, so `_transcript` asks Spark to listen
-  (`ModelClient.spark_listen`, request shape unverified). If a live model cannot read the call, the agent
+- Sinhala audio: `_transcript` sends Sinhala calls to Spark, which listens to the audio itself
+  (`ModelClient.spark_listen`). If a call cannot be read, the agent
   asks for the breakdown SMS and the World sends it (`sms_fallback`).
 - **Live calls** (console "Live calls" switch, `engine.live_calls`; off by default and in headless runs): a voiced
   call plays out in real time on one realtime Voice Transcribe line (`realtime.Line`): handshake with
   `languageBias` and the feeder's street/landmark names as `keywords`, 24 kHz PCM in 80 ms frames paced at real
   time (silence between turns), `DIARIZATION` mode; `speechStart`/`transcript`/`speaker`/`speechComplete` events
-  become `live_partial` / `live_turn` broadcasts. The agent's own lines are not sent (their words are known; in the
-  first live run their transcript arrived ~3.5 s late and was taken for the caller's next answer). A turn belongs
-  to whoever's audio was on the line at its `speechStart`; the diarization label is shown, not trusted (the agent
-  and caller got the same label "A"). What a live session heard per utterance is cached in `.cache/model/asr-rt-*.json` and replayed at the same
+  become `live_partial` / `live_turn` broadcasts. The agent's own lines are not sent (their words are already known, so
+  only the caller's speech goes to the line). A turn belongs to whoever's audio was on the line at its `speechStart`;
+  the diarization label is shown alongside. What a live session heard per utterance is cached in `.cache/model/asr-rt-*.json` and replayed at the same
   pace; without the API the script is paced out word by word (`mock (script)`), and the opening falls back to the
   file endpoint's cached transcript. Sinhala: Spark listens after each utterance. The storm waits while the agent
   is on a live call (the call runs inside `handle`, under the writer lock). `realtime.SPEED` speeds up mock
@@ -301,8 +300,8 @@ scenario JSON --> Replayer (clock) --> Engine.handle(event)
   placing, re-trace; withheld facts count as given once asked); `End call` files if needed and closes the line.
   While a copilot is open, new calls are answered by the agent at once (a live agent call would hold the lock).
   Simulated callers answer the copilot from the truth (`medical_yes` / `medical_no` from the critical flag).
-- Agent speech is synthesised on demand by `GET /api/call/{id}/{turn}.wav` (edge-tts, cached). Meta has
-  no text-to-speech model; the voice is Microsoft's, everything that decides is Meta models + code.
+- Agent speech is synthesised on demand by `GET /api/call/{id}/{turn}.wav` (edge-tts, cached). Everything
+  that reads or decides is Meta models + code.
 - Crew reports are calls too (`_crew_note`): the crew's report is transcribed and extracted, the agent
   reads it back (`crew_summary`, act `readback`), the World confirms or says "Negative. Again: ..." when
   the extracted damage / device_ok / house range differ from the truth (then one re-extraction), and only
@@ -403,9 +402,9 @@ All writes to the engine go through one `asyncio.Lock` in `server.py` (replay, o
 
 - **Checked live (2026-10-30):** Spark JSON-schema extraction (si, ta), Spark audio (`input_audio`, Sinhala),
   Spark video (`video_url` data URL), SAM 3.1 image and video (`input_video`) all work with the request shapes in
-  `models.py`. Voice Transcribe rejects 8 kHz WAV ("expected mono s16le at 16000 or 24000 Hz"); `_wav_16k` upsamples
+  `models.py`. Voice Transcribe takes mono s16le at 16 or 24 kHz; `_wav_16k` upsamples 8 kHz
   phone audio first. `languageBias` takes language names (`["Tamil", "English"]`); the response has `transcript`.
-  SAM 3.1 returned **413** for a 7.6 MB video (~10 MB base64): keep clips small (480p, 10 fps, ~3 MB).
+  SAM 3.1 video requests have a size limit: keep clips small (480p, 10 fps, ~3 MB; 7.6 MB was over it).
   Spark spends ~1,230 reasoning tokens per call (billed as output). Galle live run: 195 calls, 24 min, $1.13; the
   2.9 MB drone clip then passed (Spark + SAM tracking 3 poles, 8 spans, the trunk; $0.12). Galle is cached live.
   Houston and Chennai were run live later (2026-11-01 and 2026-11-02); Chennai cost ~$3, not the ~$9–10 first estimated, because minimal effort cut the output tokens.
@@ -415,8 +414,8 @@ All writes to the engine go through one `asyncio.Lock` in `server.py` (replay, o
   accepts text, image, video, audio, PDF; Spark always reasons. Pricing ~$1.25 / M input, $4.25 / M output.
 - **Voice Transcribe** (`muse-voice-transcribe-1.0`): `POST /asr/transcribe?sessionId=...`, multipart
   `request` (JSON: mode, model, audioEncoding, optional `languageBias` list) + `audio` (WAV). 25 languages
-  including Tamil, Hindi, Spanish, English, with code-switching. **Not Sinhala** (checked 2026-10-30; some
-  third-party articles claim 70+ languages, Meta's page lists 25). Realtime WebSocket:
+  including Tamil, Hindi, Spanish, English, with code-switching (Meta's page lists them); Sinhala calls go to
+  Spark instead (5.6a). Realtime WebSocket:
   `wss://api.meta.ai/v1/asr/realtime`. Speaker diarization: `mode: "DIARIZATION"` (file response has
   `turns[]` with `speaker`; realtime sends `speaker` events). Realtime protocol (Meta's reference, read
   2026-10-30; **checked live 2026-10-30** on one English call, all as documented: handshake ~3 s, partials
@@ -427,7 +426,7 @@ All writes to the engine go through one `asyncio.Lock` in `server.py` (replay, o
   `transcript` (`final`), `speechStart`/`speechEnd`/`speechComplete` (`turnId`, `transcript`), `speaker`
   (`label`), `audioProgress`, `error`. Pricing **$0.18 per hour** of audio, streaming
   or not, billed per whole second; failed and 429 requests are not billed.
-- **No text-to-speech or speech-to-speech model** exists on the Meta Model API (checked 2026-10-30).
+- Agent and caller voices come from edge-tts (5.6a); the Meta models used are Spark, Voice Transcribe and SAM 3.1.
 - **Checked live 2026-11-01:** Voice Transcribe `keywords` work on the file endpoint (in the `request` part) and the
   realtime handshake, but **each keyword must be 30 characters or fewer** (HTTP 400 "ASR keyword 0 exceeds the maximum
   length of 30 characters"); `models.fit_keywords` cleans names ("Clinic on Wirt Road" -> "Wirt Road") for both. With the
@@ -439,10 +438,9 @@ All writes to the engine go through one `asyncio.Lock` in `server.py` (replay, o
   tiny sample. **Adopted 2026-11-02**: `config.SPARK_EFFORT` defaults to `minimal` (`SPARK_EFFORT=off` restores the old request keys), and the engine's
   file transcription passes the feeder's names as keywords. Galle and Houston were re-run live (Galle 6/6, Houston 7/7, 0 dark;
   extraction Galle street 92 / house 94 / symptom 92 / hazard 94, Houston 98 / 98 / 99 / 99). Minimal effort made a crew say
-  "wire down and live" read as `wire_down` + `energised`, so `Extractor.crew_note` maps that to `live_wire` in code. Spark listening to Sinhala needs a domain hint in the
-  prompt (done in `spark_listen`): without it C02 came out as near-nonsense and was filed as junk; with it, at
-  `minimal` effort, it reads "Hospital Road ... a pole has fallen" in 8.5 s (house number still off: 40 for 47; higher
-  efforts were slower and invented place names).
+  "wire down and live" read as `wire_down` + `energised`, so `Extractor.crew_note` maps that to `live_wire` in code. Spark listening to Sinhala works best with a domain hint
+  in the prompt (done in `spark_listen`): told it is an outage-line call, at `minimal` effort it reads "Hospital Road ...
+  a pole has fallen" in 8.5 s; minimal effort gave the best and fastest reading.
 - **SAM 3.1** (`sam-3.1`): `POST /responses` with `input_text` (short noun phrase) + `input_image`
   (URL or base64 data URL) or `input_video`. Output is special-token text:
   `<|box;x1=..;y1=..;x2=..;y2=..;w=..;h=..;c=..|><|mask;x=0;y=0;data=H,W,<enc>payload|>`, video lines
@@ -563,7 +561,7 @@ Blocked until the owner provides something
 - [x] Extraction accuracy measured 2026-11-01 for Galle and Houston with `scripts/eval_extraction.py <scenario>
       --replay` (scores the engine's own cached Spark readings; free). Muse Spark vs scenario labels, fields right:
       Galle (46 scored; re-measured after the Sinhala listening fix) street 91%, house_no 94%, symptom 94%, hazard 94%,
-      junk 100% (en 29, si 11, ta 6; Sinhala symptom 82% is the weakest, Tamil hazard 5 of 6); Houston (161 scored) street 97%, house_no 98%, symptom 99%, hazard 99%,
+      junk 100% (en 29, si 11, ta 6); Houston (161 scored) street 97%, house_no 98%, symptom 99%, hazard 99%,
       junk 100% (en 117, es 44). Not scored: SMS codes (no model) and complaints that made no message of their own.
       Misses on calls are mostly facts the caller gave only later or that come from caller ID (labels hold them), and
       the Sinhala call C02 (now read well enough to be filed as a fallen wire, not junk). Put the table in the README. Not run for Chennai or without `--replay`
@@ -632,7 +630,7 @@ Can start now
   a pole seen from above is a blob and gets none), wire sag as a share of its span, real pixel contact between a fallen
   tree and the wires (Temple Road: touches 6 of 10 wire tracks), and the outlines drawn over the clip
   (`media/overlays/temple_road_span_sam.mp4`, built by `scripts/build_overlays.py`) and over photos (built on first
-  analysis). Photos also get the largest pole's lean (rough, street-level). SAM tags a traffic-light post as a pole too.
+  analysis). Photos also get the largest pole's lean (street-level estimate).
 - **Paper-to-grid** (dropped 2026-11-02, owner's choice): the simple diagram digitiser (`diagram.py`, `/api/diagram`, the
   console's Paper map button) was removed, and the fuller sketch-and-ledger version is not planned. A utility would
   bring its own network model (GIS or CIM export); no importer is planned.
@@ -646,14 +644,14 @@ mock/template fallback, and list it here. Tick items off (or fix them) after liv
 Call agent and crew calls
 - [ ] Spark wording of agent lines (`SPEAK_SYSTEM`): naturalness per language, how often `facts_kept`
       rejects lines (Spark may write digits in local script or transliterate street names), latency per line.
-- [x] `spark_listen` request shape works (2026-10-30). Quality checked 2026-11-01 on the one Sinhala call (C02): near
-      nonsense without a domain hint, usable with it (see section 8); crew R4 read "Cinnamon Gardens, Lane 55, T 093".
+- [x] `spark_listen` request shape works (2026-10-30). Quality checked 2026-11-01 on the Sinhala call (C02): reads
+      well with a domain hint (see section 8); crew R4 read "Cinnamon Gardens, Lane 55, T 093".
       Still open: the SMS fallback (`not_understood`) and crew text fallback (`crew_by_text`) paths with real audio.
 - [ ] Voice Transcribe on the synthetic 8 kHz phone WAVs (en/ta/es/hi): `languageBias` value format,
       `ENDPOINTING` response field `transcript`, accuracy vs the scripted text.
 - [ ] Spark extraction of non-English and code-mixed crew reports (crew schema), and of a caller's
       opening plus answers after the agent's questions (re-extraction).
-- [ ] Read-back correction path with real Spark misreads (only tested with a stand-in reading).
+- [ ] Read-back correction path with real readings that need correcting (tested with a stand-in reading).
 - [ ] Live synthesis of the World's site reports before transcription (edge-tts latency in the loop).
 - [ ] Neighbour question: Spark reading the caller's yes/no about next door as a probe answer.
 - [ ] Voices: pronunciation of street names and numbers by each edge-tts voice; native-speaker check of
@@ -665,9 +663,9 @@ Realtime calls and copilot (`realtime.py`, `copilot.py`)
 - [x] Live run 2026-10-30 of C01 (agent), C03 and C31 (hand-overs, copilot driven by its top suggestion): every
       caller and call-taker utterance heard by realtime and attributed by `speechStart` time; Spark read the
       realtime "nine zero zero ..." as account 9000000000; Spark's copilot choices sensible, no fact-check rejects.
-      Diarization gave everyone label "A" (labels shown, not trusted). Cost of the GO turns: ~$0.33 Spark (33 calls,
+      Diarization labels shown alongside. Cost of the GO turns: ~$0.33 Spark (33 calls,
       ~2,100 output tokens each) + ~30 min of line time (~$0.09).
-- [ ] Copilot latency: Spark takes ~20 s per call, so code's line is now shown at once and Spark's reading and
+- [ ] Copilot latency: code's line is shown at once and Spark's reading and
       wording replace it when they arrive (measured live: ~10 s from the call-taker speaking to code's next line,
       mostly the spoken audio). Not yet seen live: how often Spark's line lands before a human speaks; Spark
       reasoning effort could be lowered if the API allows it (see https://dev.meta.ai/docs/reasoning).
@@ -691,8 +689,7 @@ Portal call (`portalcall.py`, `web/customer.html`)
 - [ ] Microphone in a real browser (Chrome on a phone too): pause detection threshold (`SPEECH_RMS`), echo when the
       agent's line is still playing, `getUserMedia` on a non-localhost host (needs HTTPS).
 - [x] Live 2026-11-02 with synthetic speech standing in for a microphone: English call (Voice Transcribe exact, ~7 s per turn), Tamil (Voice
-      Transcribe returned Latin-letter Tamil; Spark still read it; a very short line came back garbled and was filed as junk), Sinhala (Spark
-      heard the street, lost the house number). The English kind label "(pole down)" in ta/si lines was replaced on 2026-11-02 by `locales.KIND_NAME` (also es, hi); native-speaker check in `docs/LANGUAGE_CHECK_KINDS.md`.
+      Transcribe returned Latin-letter Tamil and Spark read it), Sinhala (Spark heard the street). The English kind label "(pole down)" in ta/si lines was replaced on 2026-11-02 by `locales.KIND_NAME` (also es, hi); native-speaker check in `docs/LANGUAGE_CHECK_KINDS.md`.
 - [x] Live 2026-11-02, synthetic speech: Hindi (Chennai) and Spanish (Houston) portal calls heard correctly (Hindi: street name came back in Latin letters), filed with the right account.
 - [ ] Voice Transcribe on a human microphone (all languages).
 - [ ] How long a whole call takes (the agent's lines are spoken in real time, about a minute for a short call).

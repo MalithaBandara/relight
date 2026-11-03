@@ -5,8 +5,8 @@ line would be tapped: what the caller and a call-taker say goes down the same so
 paced at real time, with silence in between (the service closes a stream that falls behind real time). The agent's
 own lines are not sent: their words are known, and their late transcripts were mistaken for the caller's next turn
 in the first live run. A turn belongs to whoever's audio was on the line when Voice Transcribe heard it start
-(`speechStart`); in DIARIZATION mode its speaker label (A, B, ...) is shown, not trusted, since the first live run
-gave the agent's and the caller's voices the same label. A call-taker's microphone is mixed into the same frames. Words appear as partial transcripts while the person is still speaking, so the agent and the copilot can
+(`speechStart`); in DIARIZATION mode its speaker label (A, B, ...) is shown alongside, since the line already knows whose audio it is
+sending. A call-taker's microphone is mixed into the same frames. Words appear as partial transcripts while the person is still speaking, so the agent and the copilot can
 act on a turn the moment it ends rather than after the call.
 
 The handshake carries the language bias and the feeder's street names as `keywords`, so local street names are

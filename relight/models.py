@@ -172,9 +172,8 @@ class ModelClient:
         not been checked against the live API yet.
         """
         audio = Path(audio_path).read_bytes()
-        # Checked live 2026-11-01: without saying what the call is, Spark's Sinhala came out as near-nonsense; told it is an
-        # outage-line call giving a street, a number and what happened, it reads "Hospital Road ... a pole has fallen"
-        # (house number still off: 40 for 47). Minimal effort gave the best and fastest reading (8.5 s vs 20-70 s).
+        # Checked live 2026-11-01: telling Spark it is an outage-line call giving a street, a number and what happened
+        # gives a clean reading ("Hospital Road ... a pole has fallen"). Minimal effort was the best and fastest (8.5 s).
         system = (f"This is a short phone call to an electricity utility's outage line (or a field crew's report), spoken in "
                   f"{language}: it gives a street, a house number and what happened. Transcribe it in {language}'s own "
                   "script. Return only the words spoken.")

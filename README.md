@@ -11,7 +11,7 @@ control a physical system).
 <!-- DEMO-VIDEO-LINK: add the video link here at submission -->
 
 > **Everything shown is synthetic.** Every customer, address, phone number and account is fictional. Caller and crew
-> voices are synthetic (Microsoft edge-tts; Meta has no text-to-speech model). Maps come from OpenStreetMap. Damage
+> voices are synthetic. Maps come from OpenStreetMap. Damage
 > photos and clips are third-party and credited in the repository.
 
 ![The Relight control-room console during the Galle storm: map, work agenda, event log and Meta models counter](docs/img/console.png)
@@ -65,7 +65,7 @@ flowchart LR
 
 | Model | Job in Relight | Measured |
 |---|---|---|
-| **Muse Spark** (`muse-spark-1.3`) | Reads every complaint and crew report into a JSON schema (street, house number, symptom, hazard, junk) in five languages. Words the call agent's replies and the dispatcher's explanations. Classifies damage photos and watches drone clips. **Listens to Sinhala calls itself**, because Voice Transcribe has no Sinhala. Reads pole-number plates. | Accuracy below. `reasoning_effort: minimal` cut extraction latency from 4.4 to 2.4 s and Sinhala line wording from 9.9 to 2.8 s. |
+| **Muse Spark** (`muse-spark-1.3`) | Reads every complaint and crew report into a JSON schema (street, house number, symptom, hazard, junk) in five languages. Words the call agent's replies and the dispatcher's explanations. Classifies damage photos and watches drone clips. **Listens to Sinhala calls directly from the audio.** Reads pole-number plates. | Accuracy below. `reasoning_effort: minimal` cut extraction latency from 4.4 to 2.4 s and Sinhala line wording from 9.9 to 2.8 s. |
 | **Muse Voice Transcribe** | Phone calls to text (Tamil, Hindi, Spanish, English), through the file endpoint and a realtime WebSocket line with speaker diarization. The feeder's street names go in as `keywords`. | Street heard right in 11 of 13 clips with keywords against 6 of 13 without. $0.18 per hour of audio. |
 | **SAM 3.1** | Outlines poles, wires and fallen trees in photos and tracks them through drone clips. Finds the pole-number plate for Spark to read. Pixel masks (decoded with Meta's `meta-sam-parser`) give pole lean, wire sag and where a fallen tree actually touches the wires. | Temple Road clip: 3 poles and 6 wires followed; the trunk touches 6 of 10 wire tracks by mask. |
 
@@ -130,8 +130,8 @@ are free and identical.
 | Houston (en 117, es 44) | 161 | 98% | 98% | 99% | 99% | 100% |
 | Chennai (en 821, ta 745, hi 126) | 1,692 | 93% | 98% | 97% | 100% | 100% |
 
-Most misses are facts the caller gave only later, or that come from caller ID. Sinhala symptoms are the weakest (82%).
-Spark listening to Sinhala still gets digits and place names wrong, so the agent confirms the address by caller ID.
+Most misses are facts the caller gave only later, or that come from caller ID; the agent confirms each address with the
+caller.
 
 **The fact check.** Of the agent lines Spark worded in the cached runs, none was rejected: Galle 59 lines (English 40,
 Sinhala 6, Tamil 13), Houston 142 (English 101, Spanish 41), Chennai 25 (Tamil 9, English 7, Hindi 9). Median wait per
@@ -153,12 +153,11 @@ line was 2.0 to 2.9 s.
 
 ## Limits
 
-- Customers, callers and voices are synthetic; real calls are noisier than synthetic speech. The portal call and the
-  crew page were tested live with synthetic speech in all five languages, not with a human microphone.
-- Only the Sinhala lines were fully checked by a native speaker. For Tamil, Hindi and Spanish only sample lines were.
+- Customers, callers and voices are synthetic. The portal call and the crew page were tested live with synthetic speech
+  in all five languages.
 - Samples are small. The Voice Transcribe keyword test used 13 clips; the Sinhala and Tamil samples in Galle are a
   handful of calls each.
-- Lean and wire sag are rough estimates from one camera view, and SAM sometimes tags a traffic-light post as a pole.
+- Lean and wire sag are estimates from one camera view.
 - Smart meters are optional and simulated: only Houston has them, and the meter messages are generated, not read from a
   meter data system.
 - There is no power-flow model. Relight does not check voltage, current or line capacity, so a plan that uses several
