@@ -62,6 +62,8 @@ render_*.py
 generate_mp4.py
 scripts/make_demo_voiceover.py
 scripts/record_product_shots.py
+scripts/render_cutaways.py
+scripts/assemble_demo.py
 *.mp4
 *.mp3
 *.wav
