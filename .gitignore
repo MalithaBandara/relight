@@ -47,44 +47,23 @@ data/skills/
 .claude/skills/
 skills-lock.json
 
-# demo video build, plans, and renders
+# Demo video documentation, plans, scripts, Remotion project, and animation renders
 docs/DEMO.md
 docs/VOICEOVER.md
-/output/
+video/
 /video/
+output/
+/output/
 
 # Session demo animations, scripts, and video outputs
-relight_demo_animation.html
-electricity_airbrush_demo.html
-relight_isometric_demo.html
-relight_3d_cartoon_demo.html
+*_demo.*
+demo_*.*
+render_*.py
 generate_mp4.py
-render_launch_ad.py
-render_airbrush_electricity_mp4.py
-render_isometric_video.py
-render_cartoon_demo_mp4.py
-relight_product_demo.mp4
-relight_airbrush_electricity.mp4
-relight_isometric_motion_graphics.mp4
-relight_3d_cartoon_demo.mp4
-relight_dot_grid_demo.html
-render_dot_grid_mp4.py
-relight_dot_grid_demo.mp4
-relight_dot_network_demo.html
-render_dot_network_mp4.py
-relight_dot_network_demo.mp4
-relight_vector_motion_demo.html
-render_vector_motion_mp4.py
-relight_vector_motion_demo.mp4
-demo_hook_first_10s.html
-render_hook_first_10s_mp4.py
-relight_hook_first_10s.mp4
-hook_audio.wav
-demo_hand_painted_hook_10s.html
-render_hand_painted_hook_mp4.py
-relight_hand_painted_hook_10s.mp4
-painted_hook_audio.wav
 scripts/make_demo_voiceover.py
+*.mp4
+*.mp3
 *.wav
+!media/audio/calls/**/*.wav
 
 /whatsnext.md
