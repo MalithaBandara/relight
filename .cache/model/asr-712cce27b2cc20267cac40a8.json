@@ -1,0 +1,20 @@
+{
+ "sessionId": "relight-1793617641062",
+ "transcript": "On site at Karapitiya Road 200 no damage found here the line looks healthy",
+ "audioDurationMs": 8160,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 60,
+   "endMs": 3420,
+   "transcript": "On site at Karapitiya Road 200"
+  },
+  {
+   "turnId": 1,
+   "startMs": 3660,
+   "endMs": 6540,
+   "transcript": "no damage found here the line looks healthy"
+  }
+ ],
+ "_latency_s": 3.44
+}

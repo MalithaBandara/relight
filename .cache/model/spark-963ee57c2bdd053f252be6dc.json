@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d03-4fe6-728d-82c3-a7b0e521612b",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 95, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Hospital Road\", \"summary_en\": \"House 95 on Hospital Road still has no power.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367166,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 816,
+  "prompt_tokens": 532,
+  "total_tokens": 1348,
+  "completion_tokens_details": {
+   "reasoning_tokens": 731
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

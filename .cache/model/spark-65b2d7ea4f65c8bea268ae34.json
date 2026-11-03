@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cab-d99f-770d-823f-9a46bcc68cee",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": null, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Muthu Krishnan Street\", \"summary_en\": \"No power on Muthu Krishnan Street / Kambar Street Extn.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629870,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 476,
+  "prompt_tokens": 515,
+  "total_tokens": 991,
+  "completion_tokens_details": {
+   "reasoning_tokens": 383
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.49
+}

@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d0b-c825-7141-b756-5b31ec3b7b5f",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Only T-059 customers are out, so its blown fuse is cutting power. Send a crew to replace the fuse at T-059 and restore 22 customers.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367722,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 971,
+  "prompt_tokens": 131,
+  "total_tokens": 1102,
+  "completion_tokens_details": {
+   "reasoning_tokens": 929
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

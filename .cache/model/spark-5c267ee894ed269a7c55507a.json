@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197ed-557a-72ac-ab63-09ac34277258",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"troubleshooter\"], \"damage\": \"blown_fuse\", \"device_ok\": false, \"energised\": false, \"house_from\": null, \"house_no\": 1136, \"house_to\": null, \"landmark\": null, \"street\": \"Boss Road\", \"summary_en\": \"Transformer T033 on Boss Road near 1136 has a blown dropout fuse, being replaced now.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550275,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 2558,
+  "prompt_tokens": 459,
+  "total_tokens": 3017,
+  "completion_tokens_details": {
+   "reasoning_tokens": 2458
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

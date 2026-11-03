@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a1983d-fcae-772d-9915-351cfcf348cd",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "මා සතුව ඇති ඔබේ ලිපිනය 47, Hospital Road. විදුලිය නැත්තේ එතැනද?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793555561,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1097,
+  "prompt_tokens": 167,
+  "total_tokens": 1264,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1058
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

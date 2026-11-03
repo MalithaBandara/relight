@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cc5-6024-776a-95d8-498699e01d73",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "சரி, I8-இல் பதிவு செய்துவிட்டேன்.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631543,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 444,
+  "prompt_tokens": 156,
+  "total_tokens": 600,
+  "completion_tokens_details": {
+   "reasoning_tokens": 408
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 4.05
+}

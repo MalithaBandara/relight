@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197f4-a67a-70c8-be42-07ee7e5c237e",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Only T-509 customers have no power while the neighbor on T-508 still has power, so the blown fuse at T-509 is the cutoff. Send a crew to replace that fuse and restore the 9 customers.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550755,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1266,
+  "prompt_tokens": 143,
+  "total_tokens": 1409,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1212
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

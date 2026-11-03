@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cc1-bdd9-750a-8c00-410308a6bac5",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "प्रिय ग्राहक, आपके क्षेत्र में उड़े हुए फ्यूज़ की खराबी मिल गई है और मरम्मत के लिए टीम भेज दी गई है। बिजली 18:33 तक बहाल होने की उम्मीद है।\n",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631305,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 276,
+  "prompt_tokens": 89,
+  "total_tokens": 365,
+  "completion_tokens_details": {
+   "reasoning_tokens": 223
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.7
+}

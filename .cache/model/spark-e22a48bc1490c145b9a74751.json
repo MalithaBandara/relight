@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d0a-5035-744e-b813-7e02ecc81f2e",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Control here. Reading back: blown transformer fuse at Cinnamon Garden Lane near number 55, you need a troubleshooter, correct?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367625,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 2326,
+  "prompt_tokens": 168,
+  "total_tokens": 2494,
+  "completion_tokens_details": {
+   "reasoning_tokens": 2289
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

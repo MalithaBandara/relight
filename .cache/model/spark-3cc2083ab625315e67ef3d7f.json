@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bfb-c6a9-7300-9939-e53169ef13e2",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"live_wire\", \"house_no\": 1132, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Ronson Road\", \"summary_en\": \"Power line down and sparking across the sidewalk in front of 1132 Ronson Road.\", \"symptom\": \"none\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618331,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 304,
+  "prompt_tokens": 511,
+  "total_tokens": 815,
+  "completion_tokens_details": {
+   "reasoning_tokens": 209
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.63
+}

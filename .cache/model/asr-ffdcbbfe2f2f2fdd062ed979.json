@@ -1,0 +1,13 @@
+{
+ "sessionId": "relight-1793555058814",
+ "transcript": "Hello, power cut in first Cross Street, Cross Street 1, house 190. Please send a lineman.",
+ "audioDurationMs": 10160,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 220,
+   "endMs": 8780,
+   "transcript": "Hello, power cut in first Cross Street, Cross Street 1, house 190. Please send a lineman."
+  }
+ ]
+}

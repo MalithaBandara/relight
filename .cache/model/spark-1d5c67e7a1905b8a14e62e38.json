@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d03-e2ca-74d7-b796-55080fc19974",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "T-089 has no power while next-door T-090 has power, isolating the fault to the T-089 fuse. Send a crew to replace the fuse and restore 24 customers.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367204,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1532,
+  "prompt_tokens": 143,
+  "total_tokens": 1675,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1484
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

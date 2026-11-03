@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19beb-69ee-73c9-8dad-3f569b36389c",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "This line is for power outages only. For anything else, please call during office hours.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617258,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 157,
+  "prompt_tokens": 155,
+  "total_tokens": 312,
+  "completion_tokens_details": {
+   "reasoning_tokens": 130
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 1.92
+}

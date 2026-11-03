@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19beb-b3f3-7314-bd96-711efccb3f4c",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "We have found a tree on the line causing your outage and a crew has been assigned. Estimated restoration is 18:08. Thank you for your patience.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617277,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 172,
+  "prompt_tokens": 90,
+  "total_tokens": 262,
+  "completion_tokens_details": {
+   "reasoning_tokens": 131
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.24
+}

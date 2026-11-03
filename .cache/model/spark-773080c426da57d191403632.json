@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cac-9766-77ab-a663-0b2b30ae9104",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 6, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Balamurugan Nagar 3rd Street\", \"summary_en\": \"No power at door No. 6, Balamurugan Nagar 3rd Street.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629919,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 262,
+  "prompt_tokens": 524,
+  "total_tokens": 786,
+  "completion_tokens_details": {
+   "reasoning_tokens": 162
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.06
+}

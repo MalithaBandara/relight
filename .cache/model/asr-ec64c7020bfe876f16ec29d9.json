@@ -1,0 +1,14 @@
+{
+ "sessionId": "relight-1793618755317",
+ "transcript": "Vanakkam, Kuyilukku piragu engal veetil minsaram illai. Nangal hospital road en naooril irukkirom.",
+ "audioDurationMs": 8640,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 140,
+   "endMs": 8140,
+   "transcript": "Vanakkam, Kuyilukku piragu engal veetil minsaram illai. Nangal hospital road en naooril irukkirom."
+  }
+ ],
+ "_latency_s": 3.19
+}

@@ -1,0 +1,14 @@
+{
+ "sessionId": "relight-1793626550513",
+ "transcript": "and Wirt Road, frente al número doce, el poste de concreto está quebrado y los cables están en la calle. calle. No hay chispas. Necesitamos un camión canasta.",
+ "audioDurationMs": 12720,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 140,
+   "endMs": 11180,
+   "transcript": "and Wirt Road, frente al número doce, el poste de concreto está quebrado y los cables están en la calle. calle. No hay chispas. Necesitamos un camión canasta."
+  }
+ ],
+ "_latency_s": 4.45
+}

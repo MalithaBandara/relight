@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197e2-1673-747c-bba1-e7292f8cb145",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1012, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Barberry Branch Street\", \"summary_en\": \"Outage reported at 1012 Barberry Branch Street, no hazard visible.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793549538,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 800,
+  "prompt_tokens": 511,
+  "total_tokens": 1311,
+  "completion_tokens_details": {
+   "reasoning_tokens": 707
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

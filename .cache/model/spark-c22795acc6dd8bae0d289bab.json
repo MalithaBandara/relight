@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1ee-c794-7799-81c3-2c19bb10374e",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The outage is at the Burkhart Road fuse because two transformers inside its zone report no power while the neighbor on T-029 still has power. Send a patrol to walk the Burkhart Road fuse zone.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793718142,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 291,
+  "prompt_tokens": 156,
+  "total_tokens": 447,
+  "completion_tokens_details": {
+   "reasoning_tokens": 239
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.73
+}

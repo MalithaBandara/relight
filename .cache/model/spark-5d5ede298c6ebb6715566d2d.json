@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c99-575e-702c-9d0a-aa09262cdde5",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 22, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"4th Cross Street\", \"summary_en\": \"Power cut at house 22, 4th Cross Street, request to send lineman.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793628657,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 160,
+  "prompt_tokens": 513,
+  "total_tokens": 673,
+  "completion_tokens_details": {
+   "reasoning_tokens": 65
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 1.7
+}

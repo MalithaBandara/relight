@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c83-3a48-7015-89e1-4bae4a940ba5",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 190, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"first Cross Street\", \"summary_en\": \"Power cut in first Cross Street, house 190, requesting lineman.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793627208,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 211,
+  "prompt_tokens": 519,
+  "total_tokens": 730,
+  "completion_tokens_details": {
+   "reasoning_tokens": 121
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.74
+}

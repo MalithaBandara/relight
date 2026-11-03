@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bed-11bc-70ff-a5b6-e3cc3e62a0ee",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Our outage desk has found the blown fuse affecting you and a crew is now assigned. Estimated restoration time is 15:45, thank you for your patience.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617367,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 206,
+  "prompt_tokens": 89,
+  "total_tokens": 295,
+  "completion_tokens_details": {
+   "reasoning_tokens": 165
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.14
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c78-bb16-71cc-b429-a991e4547473",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"line\", \"bucket_truck\"], \"damage\": \"pole_down\", \"device_ok\": false, \"energised\": false, \"house_from\": null, \"house_no\": 12, \"house_to\": null, \"landmark\": null, \"street\": \"Velachery main road\", \"summary_en\": \"Concrete pole broken in front of house number 12 on Velachery main road, wires fallen on road with no sparking. Bucket truck required.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793626520,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 585,
+  "prompt_tokens": 488,
+  "total_tokens": 1073,
+  "completion_tokens_details": {
+   "reasoning_tokens": 473
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 4.31
+}

@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197ee-947e-7210-abea-70ef4688639d",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Gracias, su reporte quedó registrado. Estamos ubicando la falla y le enviaremos un mensaje con la hora estimada.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550357,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 603,
+  "prompt_tokens": 155,
+  "total_tokens": 758,
+  "completion_tokens_details": {
+   "reasoning_tokens": 570
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

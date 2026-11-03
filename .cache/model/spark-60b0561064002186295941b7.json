@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cb8-80f0-732c-a3c1-e538f42173bc",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"pole_down\", \"house_no\": 10, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Muthu Krishnan Street\", \"summary_en\": \"Electric pole has fallen near No. 10 Muthu Krishnan Street.\", \"symptom\": \"none\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630699,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 356,
+  "prompt_tokens": 525,
+  "total_tokens": 881,
+  "completion_tokens_details": {
+   "reasoning_tokens": 262
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.79
+}

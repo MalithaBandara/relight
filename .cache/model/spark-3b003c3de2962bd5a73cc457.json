@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bfa-749b-74de-a7a4-518ffdd35f0b",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1148, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Winningham Lane\", \"summary_en\": \"Power outage reported at house 1148 on Winningham Lane.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618244,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 222,
+  "prompt_tokens": 501,
+  "total_tokens": 723,
+  "completion_tokens_details": {
+   "reasoning_tokens": 133
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.03
+}

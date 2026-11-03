@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bfe-caf2-72f9-9b08-f550d89fbe07",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": null, \"is_junk\": false, \"landmark\": null, \"language\": \"es\", \"street\": null, \"summary_en\": \"Yes, there is power here.\", \"symptom\": \"power_on\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618528,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 276,
+  "prompt_tokens": 495,
+  "total_tokens": 771,
+  "completion_tokens_details": {
+   "reasoning_tokens": 198
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.11
+}

@@ -1,0 +1,14 @@
+{
+ "sessionId": "relight-1793618678043",
+ "transcript": "No, I can't see any wires down. Just the whole road is dark.",
+ "audioDurationMs": 6320,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 60,
+   "endMs": 5820,
+   "transcript": "No, I can't see any wires down. Just the whole road is dark."
+  }
+ ],
+ "_latency_s": 2.98
+}

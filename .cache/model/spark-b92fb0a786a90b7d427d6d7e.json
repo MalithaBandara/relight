@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cbf-8768-754f-964d-1940a3c671d1",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"troubleshooter\"], \"damage\": \"blown_fuse\", \"device_ok\": false, \"energised\": false, \"house_from\": null, \"house_no\": 23, \"house_to\": null, \"landmark\": null, \"street\": \"VGP avenue\", \"summary_en\": \"Crew is near No. 23 VGP avenue. The transformer fuse has blown and they are replacing it now.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631160,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 552,
+  "prompt_tokens": 505,
+  "total_tokens": 1057,
+  "completion_tokens_details": {
+   "reasoning_tokens": 449
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 4.27
+}

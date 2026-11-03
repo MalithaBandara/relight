@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197ea-9fd1-7526-bb7e-a11d85777da6",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1192, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Winningham Lane\", \"summary_en\": \"No electricity at 1192 Winningham Lane since the storm.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550098,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1485,
+  "prompt_tokens": 501,
+  "total_tokens": 1986,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1396
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ }
+}

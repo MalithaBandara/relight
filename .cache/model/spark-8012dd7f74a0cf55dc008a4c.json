@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19beb-3f11-746f-a02e-342451ff01e8",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 45, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Market Street\", \"summary_en\": \"Low voltage and flickering lights at 45 Market Street\", \"symptom\": \"flicker\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617248,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 383,
+  "prompt_tokens": 534,
+  "total_tokens": 917,
+  "completion_tokens_details": {
+   "reasoning_tokens": 296
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ },
+ "_latency_s": 2.78
+}

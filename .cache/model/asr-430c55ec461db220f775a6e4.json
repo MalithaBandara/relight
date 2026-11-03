@@ -1,0 +1,14 @@
+{
+ "sessionId": "relight-1793631388554",
+ "transcript": "on site at Transformer T 00 to on Srinivasapuram Road cross street 1 near number 1. The drop out fuse is blown. Replacing it now.",
+ "audioDurationMs": 13440,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 140,
+   "endMs": 12780,
+   "transcript": "on site at Transformer T 00 to on Srinivasapuram Road cross street 1 near number 1. The drop out fuse is blown. Replacing it now."
+  }
+ ],
+ "_latency_s": 4.95
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bea-d000-7478-b807-98a0a5c9e689",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "உங்கள் அருகில் விழுந்த மின்கம்பம், கம்பிகள் அல்லது மரங்கள் ஏதாவது தெரிகிறதா? தயவுசெய்து அவற்றின் அருகில் போகாதீர்கள்.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617219,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 222,
+  "prompt_tokens": 224,
+  "total_tokens": 446,
+  "completion_tokens_details": {
+   "reasoning_tokens": 137
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 1.49
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1d8-901f-72e8-ac94-0d19f70ec633",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Control here, reading back: no damage found at Moritz Drive near number 1280. Correct?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793716686,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 238,
+  "prompt_tokens": 161,
+  "total_tokens": 399,
+  "completion_tokens_details": {
+   "reasoning_tokens": 208
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.72
+}

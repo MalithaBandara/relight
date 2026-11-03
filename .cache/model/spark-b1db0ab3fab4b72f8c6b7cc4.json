@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cb2-d5ee-76c7-b336-f57720f9fe37",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "கட்டுப்பாட்டு அறை. திரும்பச் சொல்கிறேன், N 1st Street 26 எண் அருகில் மின்கம்பம் விழுந்துள்ளது, உங்களுக்கு லைன் குழு மற்றும் பக்கெட் லாரி தேவை, சரியா?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630328,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 622,
+  "prompt_tokens": 236,
+  "total_tokens": 858,
+  "completion_tokens_details": {
+   "reasoning_tokens": 519
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.68
+}

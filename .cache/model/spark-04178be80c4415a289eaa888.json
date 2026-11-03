@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1ee-a3ab-72be-aae2-75a1f80f47ae",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "73 meters went dark together and the house next door still has power, marking a broken conductor on Ronson Road between B262 and B296. Send an overhead line crew to patrol that span and make the repair.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793718133,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 398,
+  "prompt_tokens": 181,
+  "total_tokens": 579,
+  "completion_tokens_details": {
+   "reasoning_tokens": 346
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.59
+}

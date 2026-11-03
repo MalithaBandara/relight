@@ -1,0 +1,20 @@
+{
+ "sessionId": "relight-1793629336584",
+ "transcript": "onOn site at Velachery Bypass Road near number 137. a tree is lying across the conductors. Clearing it before the line work.",
+ "audioDurationMs": 13280,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 60,
+   "endMs": 5740,
+   "transcript": "onOn site at Velachery Bypass Road near number 137."
+  },
+  {
+   "turnId": 1,
+   "startMs": 6540,
+   "endMs": 12460,
+   "transcript": "a tree is lying across the conductors. Clearing it before the line work."
+  }
+ ],
+ "_latency_s": 4.75
+}

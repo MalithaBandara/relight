@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c88-d269-70a4-a405-b39bd3e99354",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "आपका पता हमारे पास 194, 1st Cross Street Cross Street 1 है। क्या वहीं बिजली नहीं है?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793627574,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 247,
+  "prompt_tokens": 158,
+  "total_tokens": 405,
+  "completion_tokens_details": {
+   "reasoning_tokens": 213
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.33
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bb4-25ef-711e-95a6-cec7c51960a7",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Only 200 Karapitiya Road is out and a neighbour on the same transformer has power so the fault is that service wire. Send a service wire repair crew.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793613637,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1224,
+  "prompt_tokens": 143,
+  "total_tokens": 1367,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1182
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 6.72
+}

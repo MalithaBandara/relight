@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19be9-d11e-7379-ad34-02ce9881fd61",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"damage\": \"wire_down\", \"description\": \"Storm-leaning utility pole with power lines sagging low down across the roadway, area cordoned off with police tape and traffic cone\", \"public_hazard\": true, \"segment_prompts\": [\"leaning utility pole\", \"sagging power line\"], \"severity\": \"high\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617154,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 281,
+  "prompt_tokens": 3405,
+  "total_tokens": 3686,
+  "completion_tokens_details": {
+   "reasoning_tokens": 202
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 5.21
+}

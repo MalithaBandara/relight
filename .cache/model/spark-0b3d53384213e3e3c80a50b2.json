@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1e2-a427-759b-afb7-c0fb5625430d",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 209, \"is_junk\": false, \"landmark\": null, \"language\": \"hi\", \"street\": \"Taramani Link Road\", \"summary_en\": \"No electricity at house number 209 on Taramani Link Road.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717347,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 270,
+  "prompt_tokens": 512,
+  "total_tokens": 782,
+  "completion_tokens_details": {
+   "reasoning_tokens": 179
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.68
+}

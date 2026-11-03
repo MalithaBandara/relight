@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bf4-fa0a-77f1-8102-19097e898cb5",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": null, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": null, \"summary_en\": \"Caller reports whole house lost power and sees no hazard.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617885,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 190,
+  "prompt_tokens": 514,
+  "total_tokens": 704,
+  "completion_tokens_details": {
+   "reasoning_tokens": 108
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.32
+}

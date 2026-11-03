@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a19848-6bd0-72da-a25d-848c0e898d3b",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 20, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Temple Road\", \"summary_en\": \"No power at 20 Temple Road.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793556245,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1429,
+  "prompt_tokens": 532,
+  "total_tokens": 1961,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1346
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 241
+  }
+ }
+}

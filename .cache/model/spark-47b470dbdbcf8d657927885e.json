@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bfe-8c21-768d-8042-7ed42baaec50",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"line\"], \"damage\": \"service_wire\", \"device_ok\": true, \"energised\": false, \"house_from\": 1040, \"house_no\": 1052, \"house_to\": 1060, \"landmark\": null, \"street\": \"Westview Drive\", \"summary_en\": \"Transformer T017 on Westview Drive is healthy with fuses intact. Service wire down at 1052 due to a branch, houses 1040 to 1060 without power. Line crew needed for service wire.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618512,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 303,
+  "prompt_tokens": 502,
+  "total_tokens": 805,
+  "completion_tokens_details": {
+   "reasoning_tokens": 179
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.66
+}

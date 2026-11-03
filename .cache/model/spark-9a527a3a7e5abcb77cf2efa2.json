@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1e6-dc67-7178-92ef-ad83f1ccd49b",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The outage is isolated to Transformer T-044 because all no-power reports come from it. Send a crew to replace the fuse and restore 138 customers.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717623,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 193,
+  "prompt_tokens": 131,
+  "total_tokens": 324,
+  "completion_tokens_details": {
+   "reasoning_tokens": 153
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.05
+}

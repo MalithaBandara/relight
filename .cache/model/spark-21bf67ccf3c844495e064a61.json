@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1e9-f766-77c0-ae29-6c9849d4553d",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 16, \"is_junk\": false, \"landmark\": null, \"language\": \"hi\", \"street\": \"Janakpuri 2nd Street\", \"summary_en\": \"Neighbors' power is back but house no 16 on Janakpuri 2nd Street still has no power.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717827,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 352,
+  "prompt_tokens": 529,
+  "total_tokens": 881,
+  "completion_tokens_details": {
+   "reasoning_tokens": 248
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.9
+}

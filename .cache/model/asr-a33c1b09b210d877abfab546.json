@@ -1,0 +1,14 @@
+{
+ "sessionId": "relight-1793716677928",
+ "transcript": "on site of Moritz Drive near number 1280.",
+ "audioDurationMs": 4400,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 60,
+   "endMs": 3500,
+   "transcript": "on site of Moritz Drive near number 1280."
+  }
+ ],
+ "_latency_s": 3.17
+}

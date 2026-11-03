@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18cfd-8a6d-72e5-a183-0fe58eaef0d7",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "இந்த மின் தடை எங்களுக்குத் தெரியும், காரணத்தை இன்னும் சரிபார்த்துக்கொண்டிருக்கிறோம். குழு வந்துகொண்டிருக்கிறது, சுமார் 15:23 மணிக்கு மின்சாரம் வந்துவிடும்.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793366788,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1504,
+  "prompt_tokens": 192,
+  "total_tokens": 1696,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1409
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18cf9-3ed7-76e8-b44b-f43f9e6229b7",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": \"tree\", \"hazard\": \"tree_on_line\", \"house_no\": 70, \"is_junk\": false, \"landmark\": \"temple\", \"language\": \"si\", \"street\": \"Temple Road\", \"summary_en\": \"Large tree fallen onto wires near temple, no power at 70 Temple Road.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793366507,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1360,
+  "prompt_tokens": 573,
+  "total_tokens": 1933,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1264
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

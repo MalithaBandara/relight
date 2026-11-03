@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bed-c172-71d6-8a77-296c23ace97a",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": \"storm\", \"hazard\": \"pole_down\", \"house_no\": 54, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Hospital Road\", \"summary_en\": \"No power at 54 Hospital Road; pole outside number 52 snapped and hanging in wires.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617412,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 367,
+  "prompt_tokens": 565,
+  "total_tokens": 932,
+  "completion_tokens_details": {
+   "reasoning_tokens": 272
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ },
+ "_latency_s": 2.9
+}

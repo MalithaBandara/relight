@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197ef-f286-7723-a75f-eadd6de95c23",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": \"storm\", \"hazard\": \"none\", \"house_no\": 1120, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Huge Oaks Street\", \"summary_en\": \"No electricity at 1120 Huge Oaks Street since the storm.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550447,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1044,
+  "prompt_tokens": 501,
+  "total_tokens": 1545,
+  "completion_tokens_details": {
+   "reasoning_tokens": 953
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ }
+}

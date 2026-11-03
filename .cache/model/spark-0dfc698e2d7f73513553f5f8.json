@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bee-6b78-7200-96fc-42f37da3cefb",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"confidence\": \"high\", \"note\": \"No pole number plate is visible or legible in the image.\", \"readable\": false, \"tag\": null}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617455,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 126,
+  "prompt_tokens": 3658,
+  "total_tokens": 3784,
+  "completion_tokens_details": {
+   "reasoning_tokens": 83
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 113
+  }
+ },
+ "_latency_s": 3.43
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bef-4b4a-7698-b802-cad1f3020ca3",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [], \"damage\": \"none\", \"device_ok\": false, \"energised\": false, \"house_from\": null, \"house_no\": null, \"house_to\": null, \"landmark\": \"Cinnamon Gardens\", \"street\": \"Lane 55\", \"summary_en\": \"Location reported as Cinnamon Gardens, Lane 55, transformer T093 with no damage details provided.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617513,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 454,
+  "prompt_tokens": 490,
+  "total_tokens": 944,
+  "completion_tokens_details": {
+   "reasoning_tokens": 360
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 5.39
+}

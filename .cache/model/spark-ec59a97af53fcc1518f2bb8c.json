@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a19841-c4b6-7754-9759-56e95859a134",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 141, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"1st Cross Street\", \"summary_en\": \"No power at 141, 1st Cross Street, please fix.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793555809,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1544,
+  "prompt_tokens": 535,
+  "total_tokens": 2079,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1453
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ }
+}

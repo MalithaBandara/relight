@@ -1,0 +1,13 @@
+{
+ "sessionId": "relight-1793555051644",
+ "transcript": "Hi. Yeah. The power's out at 1052 Huge Oaks Street. It went out with that big gust just now.",
+ "audioDurationMs": 7040,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 220,
+   "endMs": 6300,
+   "transcript": "Hi. Yeah. The power's out at 1052 Huge Oaks Street. It went out with that big gust just now."
+  }
+ ]
+}

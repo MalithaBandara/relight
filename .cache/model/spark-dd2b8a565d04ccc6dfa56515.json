@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c95-40c5-72fe-b2f8-15349622eacc",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 14, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Mahalakshmi Nagar 3rd Main Road Cross Street 4\", \"summary_en\": \"Power cut at house 14, Mahalakshmi Nagar 3rd Main Road Cross Street 4, request to send lineman.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793628389,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 361,
+  "prompt_tokens": 523,
+  "total_tokens": 884,
+  "completion_tokens_details": {
+   "reasoning_tokens": 247
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.54
+}

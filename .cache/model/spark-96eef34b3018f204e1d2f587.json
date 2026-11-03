@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1ed-fd9a-750a-af42-007837f8e5ee",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The fault is at the Velachery Bypass Road fuse where a tree is down on the line, cutting power to 1245 customers including hospitals and shelters. Send a tree crew with line repair to clear the tree and repair the spans.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793718091,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 276,
+  "prompt_tokens": 271,
+  "total_tokens": 547,
+  "completion_tokens_details": {
+   "reasoning_tokens": 219
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.9
+}

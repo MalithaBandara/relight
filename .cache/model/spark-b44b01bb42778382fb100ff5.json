@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c91-0955-7297-8c2e-08f1b46eb94b",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 136, \"is_junk\": false, \"landmark\": null, \"language\": \"hi\", \"street\": \"1st Cross Street Cross Street 1\", \"summary_en\": \"No power at house number 136 on 1st Cross Street Cross Street 1.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793628113,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 434,
+  "prompt_tokens": 515,
+  "total_tokens": 949,
+  "completion_tokens_details": {
+   "reasoning_tokens": 336
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ },
+ "_latency_s": 3.84
+}

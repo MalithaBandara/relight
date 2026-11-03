@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1989a-1ca0-700e-8ef6-ebb24c7ce70a",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "வணக்கம், உங்களைப் பாதித்த மின்தடைக்குக் காரணமான எரிந்த ஃபியூஸ் கண்டறியப்பட்டு, பழுதுபார்ப்புக் குழு நியமிக்கப்பட்டுள்ளது. மதிப்பிடப்பட்ட மீட்பு நேரம் 15:40, நன்றி.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793561599,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 2013,
+  "prompt_tokens": 89,
+  "total_tokens": 2102,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1899
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 8.58
+}

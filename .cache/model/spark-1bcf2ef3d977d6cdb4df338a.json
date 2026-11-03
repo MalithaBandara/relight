@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bf8-d79b-774c-8eaf-5e0f60779874",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Control here, reading back: tree on the line at Westview Drive near number 1432; you need the vegetation crew and a line crew. Correct?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618138,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 288,
+  "prompt_tokens": 172,
+  "total_tokens": 460,
+  "completion_tokens_details": {
+   "reasoning_tokens": 247
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.13
+}

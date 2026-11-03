@@ -1,0 +1,77 @@
+{
+ "text": "No I can't see anything like that.",
+ "events": [
+  {
+   "kind": "partial",
+   "text": "No",
+   "role": "caller",
+   "ms": 49040,
+   "start": 47980,
+   "speaker": null,
+   "at": 1.75
+  },
+  {
+   "kind": "partial",
+   "text": "No I can't",
+   "role": "caller",
+   "ms": 49680,
+   "start": 47980,
+   "speaker": null,
+   "at": 2.39
+  },
+  {
+   "kind": "partial",
+   "text": "No I can't see",
+   "role": "caller",
+   "ms": 49840,
+   "start": 47980,
+   "speaker": null,
+   "at": 2.55
+  },
+  {
+   "kind": "partial",
+   "text": "No I can't see anything",
+   "role": "caller",
+   "ms": 50560,
+   "start": 47980,
+   "speaker": null,
+   "at": 3.23
+  },
+  {
+   "kind": "partial",
+   "text": "No I can't see anything like",
+   "role": "caller",
+   "ms": 50720,
+   "start": 47980,
+   "speaker": null,
+   "at": 3.42
+  },
+  {
+   "kind": "partial",
+   "text": "No I can't see anything like that.",
+   "role": "caller",
+   "ms": 51040,
+   "start": 47980,
+   "speaker": null,
+   "at": 3.77
+  },
+  {
+   "kind": "partial",
+   "text": "No I can't see anything like that.",
+   "role": "caller",
+   "ms": 52080,
+   "start": 47980,
+   "speaker": null,
+   "at": 4.84
+  },
+  {
+   "kind": "final",
+   "text": "No I can't see anything like that.",
+   "role": "caller",
+   "ms": 51580,
+   "start": 47980,
+   "speaker": "A",
+   "at": 4.84
+  }
+ ]
+}

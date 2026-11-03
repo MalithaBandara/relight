@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1da-0362-77fa-bac1-83545510263e",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1172, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Long Point Road\", \"summary_en\": \"Outage at 1172 Long Point Road.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793716781,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 239,
+  "prompt_tokens": 501,
+  "total_tokens": 740,
+  "completion_tokens_details": {
+   "reasoning_tokens": 153
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 4.96
+}

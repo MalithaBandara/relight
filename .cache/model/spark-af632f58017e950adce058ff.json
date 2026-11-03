@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1dc-1dba-7489-a1c6-4e54f3b547b2",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 13, \"is_junk\": false, \"landmark\": null, \"language\": \"hi\", \"street\": \"Velachery Upper Flyover\", \"summary_en\": \"No power at house number 13, Velachery Upper Flyover.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793716919,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 231,
+  "prompt_tokens": 513,
+  "total_tokens": 744,
+  "completion_tokens_details": {
+   "reasoning_tokens": 138
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.64
+}

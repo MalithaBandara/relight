@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c75-ea77-7625-8684-108d8d0f06bf",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "இந்த மின் தடை எங்களுக்குத் தெரியும், ஃபியூஸ் போதல் காரணமாக குழு வந்துகொண்டிருக்கிறது. மின்சாரம் சுமார் 15:39 மணிக்கு மீண்டும் வரும்.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793626335,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 418,
+  "prompt_tokens": 201,
+  "total_tokens": 619,
+  "completion_tokens_details": {
+   "reasoning_tokens": 330
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.35
+}

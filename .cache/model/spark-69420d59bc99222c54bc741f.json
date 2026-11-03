@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cc4-9717-7159-8ae5-85a69953323d",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 110, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Velachery Bypass Road Cross Street 13\", \"summary_en\": \"No power at 110 Velachery Bypass Road Cross Street 13, fridge stopped.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631491,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 439,
+  "prompt_tokens": 512,
+  "total_tokens": 951,
+  "completion_tokens_details": {
+   "reasoning_tokens": 340
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.47
+}

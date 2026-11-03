@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c84-a6e9-7077-8368-c6edfbd761ab",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 7, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Bhavathi Amman Koil Street Cross Street 2\", \"summary_en\": \"No electricity at house no 7, Bhavathi Amman Koil Street Cross Street 2, please fix.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793627301,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 405,
+  "prompt_tokens": 539,
+  "total_tokens": 944,
+  "completion_tokens_details": {
+   "reasoning_tokens": 297
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.65
+}

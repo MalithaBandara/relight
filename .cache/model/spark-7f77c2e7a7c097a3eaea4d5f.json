@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c91-60d3-712d-8d67-e6e7f7d5fc41",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 86, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"2nd Cross Road Cross Street 1\", \"summary_en\": \"Power cut at house 86, 2nd Cross Road Cross Street 1; request for lineman.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793628135,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 299,
+  "prompt_tokens": 517,
+  "total_tokens": 816,
+  "completion_tokens_details": {
+   "reasoning_tokens": 197
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.46
+}

@@ -1,0 +1,14 @@
+{
+ "sessionId": "relight-1793626537711",
+ "transcript": "No hay luz en mi casa desde la tormenta. Vivo en Wirt Road, número doce.",
+ "audioDurationMs": 6880,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 140,
+   "endMs": 5660,
+   "transcript": "No hay luz en mi casa desde la tormenta. Vivo en Wirt Road, número doce."
+  }
+ ],
+ "_latency_s": 5.45
+}

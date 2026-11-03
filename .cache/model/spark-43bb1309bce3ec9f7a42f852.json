@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d94-64b1-762e-9750-38ead31e9d06",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"en\": \"Please stay at least ten metres away from the wire and keep others away. Treat it as live. We are sending a crew to make it safe.\", \"option\": \"safety_live\", \"say\": \"Please stay at least ten metres away from the wire and keep others away. Treat it as live. We are sending a crew to make it safe.\", \"why_en\": \"live wire reported, safety first\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793376674,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 849,
+  "prompt_tokens": 457,
+  "total_tokens": 1306,
+  "completion_tokens_details": {
+   "reasoning_tokens": 752
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

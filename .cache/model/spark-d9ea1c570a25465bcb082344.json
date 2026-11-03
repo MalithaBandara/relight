@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c9d-4ef0-76d7-a267-07dc58d55813",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 14, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Varatharajapuram\", \"summary_en\": \"No power at door No. 14, Varatharajapuram.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793628917,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 402,
+  "prompt_tokens": 521,
+  "total_tokens": 923,
+  "completion_tokens_details": {
+   "reasoning_tokens": 308
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.5
+}

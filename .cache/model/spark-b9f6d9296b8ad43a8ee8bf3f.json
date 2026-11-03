@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cb0-5bb3-74fb-aa5a-d1a39b9d8a1e",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 18, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"JagannathaPuram 1st Main Road\", \"summary_en\": \"No power at door No 18, JagannathaPuram 1st Main Road.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630165,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 409,
+  "prompt_tokens": 525,
+  "total_tokens": 934,
+  "completion_tokens_details": {
+   "reasoning_tokens": 308
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.87
+}

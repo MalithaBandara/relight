@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197e9-c6bb-7085-a94d-c1d6b8ef9dff",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "REC-1 locked out at Westview Drive with 148 transformers silent and 332 meters reporting out. Send a tree crew to clear the tree and repair spans to restore 916 customers including the Pech Road school shelter.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550042,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1387,
+  "prompt_tokens": 167,
+  "total_tokens": 1554,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1333
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

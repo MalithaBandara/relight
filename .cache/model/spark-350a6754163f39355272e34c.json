@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c01-e51f-7131-ae8b-5fb237e9dd26",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"line\", \"bucket_truck\"], \"damage\": \"pole_down\", \"device_ok\": false, \"energised\": false, \"house_from\": null, \"house_no\": 52, \"house_to\": null, \"landmark\": \"opposite number 52\", \"street\": \"Hospital Road\", \"summary_en\": \"Concrete pole snapped at the base on Hospital Road opposite number 52, conductors down with no sparking. Bucket truck and line crew needed.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618732,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 598,
+  "prompt_tokens": 491,
+  "total_tokens": 1089,
+  "completion_tokens_details": {
+   "reasoning_tokens": 486
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 4.5
+}

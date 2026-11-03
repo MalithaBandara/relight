@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d01-f50e-7433-9675-3f80e4f509a5",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": \"wind\", \"hazard\": \"none\", \"house_no\": 9, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Lake Road\", \"summary_en\": \"Power outage at No. 9 Lake Road during wind, neighbours still have power, no hazard seen.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367078,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1369,
+  "prompt_tokens": 557,
+  "total_tokens": 1926,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1273
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ }
+}

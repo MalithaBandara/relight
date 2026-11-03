@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a19843-040d-73dd-a74f-ce84df513651",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 128, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"6th Main Road Cross Street 1\", \"summary_en\": \"No power at door No. 128 on 6th Main Road Cross Street 1.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793555891,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1420,
+  "prompt_tokens": 523,
+  "total_tokens": 1943,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1321
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ }
+}

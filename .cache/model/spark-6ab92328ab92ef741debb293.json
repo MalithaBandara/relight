@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bb4-6194-75c3-ba82-0aa2c8bac4a0",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Customers on T-093 are out while the neighbor on T-090 has power, isolating the fault to the T-093 fuse. Send a crew to replace the fuse and restore 23 customers.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793613652,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1483,
+  "prompt_tokens": 154,
+  "total_tokens": 1637,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1433
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 7.17
+}

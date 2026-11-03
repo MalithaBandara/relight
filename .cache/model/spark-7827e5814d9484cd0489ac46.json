@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1d8-56af-71ea-850c-cf3aae32e12e",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Only 1280 Moritz Drive is dark while the neighbor on the same transformer still has power, so the fault is that house's service wire. Send a service crew to repair the downed wire.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793716672,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 304,
+  "prompt_tokens": 143,
+  "total_tokens": 447,
+  "completion_tokens_details": {
+   "reasoning_tokens": 254
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.5
+}

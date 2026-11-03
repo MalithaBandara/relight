@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c88-577c-77b2-aaa4-bc97e84b4cff",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 6, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Mohanapuri 4th Street\", \"summary_en\": \"No power since morning at 6 Mohanapuri 4th Street.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793627543,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 283,
+  "prompt_tokens": 511,
+  "total_tokens": 794,
+  "completion_tokens_details": {
+   "reasoning_tokens": 188
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.33
+}

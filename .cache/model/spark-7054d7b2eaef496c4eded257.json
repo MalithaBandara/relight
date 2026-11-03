@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18cfc-4555-73b7-930c-5e81608f0341",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "வணக்கம், உங்கள் மின்தடைக்குக் காரணமான மின்கம்பம் சாய்ந்த பழுது கண்டறியப்பட்டு, சீரமைப்புக் குழு நியமிக்கப்பட்டுள்ளது. மின் விநியோகம் 19:21 மணிக்குள் சீரமைக்கப்படும் என எதிர்பார்க்கப்படுகிறது, சிரமத்திற்கு வருந்துகிறோம்.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793366705,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1435,
+  "prompt_tokens": 89,
+  "total_tokens": 1524,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1296
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

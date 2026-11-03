@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a19844-bc60-723b-8e66-6382c5934d0e",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 170, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"1st Cross Street\", \"summary_en\": \"No power at door No. 170, 1st Cross Street.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793556003,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1175,
+  "prompt_tokens": 523,
+  "total_tokens": 1698,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1084
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

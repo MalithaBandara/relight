@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a19841-0613-70b6-a5bd-5737c77e9b28",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 132, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"1st Cross Street\", \"summary_en\": \"No electricity at 132, 1st Cross Street, please fix it.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793555760,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1975,
+  "prompt_tokens": 535,
+  "total_tokens": 2510,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1883
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 241
+  }
+ }
+}

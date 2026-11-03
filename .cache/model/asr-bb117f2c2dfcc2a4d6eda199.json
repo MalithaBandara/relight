@@ -1,0 +1,26 @@
+{
+ "sessionId": "relight-1793617653497",
+ "transcript": "Hospital Road Noriyan Ariel demands Barber deep Deepochiya ಇದಿರಿಕ್ಕಿದೋಂ Thiravat project ಇರيك್ಕಿನದೆ. ಈ ಪೋದೆ ಮಾತ್ರಿಗಿರೋಂ",
+ "audioDurationMs": 11360,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 140,
+   "endMs": 5740,
+   "transcript": "Hospital Road Noriyan Ariel demands Barber deep Deepochiya ಇದಿರಿಕ್ಕಿದೋಂ"
+  },
+  {
+   "turnId": 1,
+   "startMs": 6300,
+   "endMs": 8460,
+   "transcript": "Thiravat project ಇರيك್ಕಿನದೆ."
+  },
+  {
+   "turnId": 2,
+   "startMs": 9260,
+   "endMs": 10860,
+   "transcript": "ಈ ಪೋದೆ ಮಾತ್ರಿಗಿರೋಂ"
+  }
+ ],
+ "_latency_s": 3.49
+}

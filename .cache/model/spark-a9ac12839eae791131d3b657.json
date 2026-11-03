@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c84-1c2a-770b-9dcd-b778c63ca115",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 136, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"6th Main Road Cross Street 1\", \"summary_en\": \"No power at 136, 6th Main Road Cross Street 1, fridge stopped.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793627266,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 411,
+  "prompt_tokens": 511,
+  "total_tokens": 922,
+  "completion_tokens_details": {
+   "reasoning_tokens": 312
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.89
+}

@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18cfd-c40c-740e-b475-d9776067ccea",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 12, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Hospital Road\", \"summary_en\": \"No electricity at 12 Hospital Road since morning.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793366803,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 676,
+  "prompt_tokens": 559,
+  "total_tokens": 1235,
+  "completion_tokens_details": {
+   "reasoning_tokens": 592
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

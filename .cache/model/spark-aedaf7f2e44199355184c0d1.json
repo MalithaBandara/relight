@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d92-9ddd-747b-8b97-fde88703d7d2",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"en\": \"Is anyone at the address using medical equipment that needs power?\", \"option\": \"ask_medical\", \"say\": \"Is anyone at the address using medical equipment that needs power?\", \"why_en\": \"hospital critical, confirm life-support priority\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793376558,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 3254,
+  "prompt_tokens": 496,
+  "total_tokens": 3750,
+  "completion_tokens_details": {
+   "reasoning_tokens": 3192
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

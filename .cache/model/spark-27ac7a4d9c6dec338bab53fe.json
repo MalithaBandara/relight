@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d99-be65-7206-8db3-fb4c69e9dd22",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 75, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Hospital Road\", \"summary_en\": \"Caller from No. 75 Hospital Road reports no power.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793377025,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 997,
+  "prompt_tokens": 571,
+  "total_tokens": 1568,
+  "completion_tokens_details": {
+   "reasoning_tokens": 911
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

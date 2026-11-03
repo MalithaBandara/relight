@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1de-7744-776a-a1e0-86e6575b40aa",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 30, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"3rd Main Road\", \"summary_en\": \"Power cut in 3rd Main Road, house 30. Please send lineman.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717073,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 216,
+  "prompt_tokens": 513,
+  "total_tokens": 729,
+  "completion_tokens_details": {
+   "reasoning_tokens": 122
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.4
+}

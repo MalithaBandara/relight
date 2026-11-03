@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1e8-b7e2-76cb-a1e7-1d513b00119c",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Dhroupathy Amman Koil Street\", \"summary_en\": \"House at door no 1 on Dhroupathy Amman Koil Street has no power while neighboring houses have power.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717745,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 279,
+  "prompt_tokens": 520,
+  "total_tokens": 799,
+  "completion_tokens_details": {
+   "reasoning_tokens": 175
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ },
+ "_latency_s": 3.29
+}

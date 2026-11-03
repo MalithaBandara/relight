@@ -1,0 +1,14 @@
+{
+ "sessionId": "relight-1793618735657",
+ "transcript": "negative the wire is not live the pole is snapped at number 52 Hospital Road",
+ "audioDurationMs": 7840,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 140,
+   "endMs": 6460,
+   "transcript": "negative the wire is not live the pole is snapped at number 52 Hospital Road"
+  }
+ ],
+ "_latency_s": 2.97
+}

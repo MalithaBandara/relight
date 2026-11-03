@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1e5-dfdb-75b6-9214-e098d5367b9e",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 5, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Lakshmipuram Street\", \"summary_en\": \"No power at door No. 5, Lakshmipuram Street.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717559,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 239,
+  "prompt_tokens": 521,
+  "total_tokens": 760,
+  "completion_tokens_details": {
+   "reasoning_tokens": 146
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.85
+}

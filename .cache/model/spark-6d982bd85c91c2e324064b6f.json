@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cb7-4e64-71e4-8587-d4c838cf48f1",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 9, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Chandru Street\", \"summary_en\": \"No power at 9 Chandru Street, please fix it.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630621,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 295,
+  "prompt_tokens": 531,
+  "total_tokens": 826,
+  "completion_tokens_details": {
+   "reasoning_tokens": 206
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 4.24
+}

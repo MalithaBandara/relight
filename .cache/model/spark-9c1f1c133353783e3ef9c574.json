@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d05-d83c-77ab-b666-01424117ea83",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "வணக்கம், உங்கள் மின்தடைக்கு காரணமான எரிந்த பியூஸ் கண்டறியப்பட்டு, சரிசெய்ய குழு நியமிக்கப்பட்டுள்ளது. மின் விநியோகம் 15:36 க்குள் சீராகும் என எதிர்பார்க்கப்படுகிறது, சிரமத்திற்கு மன்னிக்கவும்.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367332,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1065,
+  "prompt_tokens": 89,
+  "total_tokens": 1154,
+  "completion_tokens_details": {
+   "reasoning_tokens": 939
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

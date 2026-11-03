@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18cfe-88f7-7401-9311-339dfd3e9443",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"at_seconds\": 5.5, \"damage\": \"tree_on_line\", \"description\": \"Tree branch in contact with distribution wires arcing and burning with large flames, heavy black smoke and falling flaming debris\", \"public_hazard\": true, \"segment_prompts\": [\"utility pole\", \"burning tree branch\", \"power line\"], \"severity\": \"high\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793366853,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 560,
+  "prompt_tokens": 2717,
+  "total_tokens": 3277,
+  "completion_tokens_details": {
+   "reasoning_tokens": 474
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

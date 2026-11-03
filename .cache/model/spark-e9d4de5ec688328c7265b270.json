@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197e8-6c2e-7592-b280-dbb64448df19",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1324, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Glourie Drive\", \"summary_en\": \"No electricity at 1324 Glourie Drive since the storm.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793549954,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1369,
+  "prompt_tokens": 502,
+  "total_tokens": 1871,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1278
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

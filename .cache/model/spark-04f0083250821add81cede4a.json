@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bfd-6ece-73bc-8cc9-5f0d17b8be1c",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Entendido, queda registrado en I4.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618439,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 132,
+  "prompt_tokens": 142,
+  "total_tokens": 274,
+  "completion_tokens_details": {
+   "reasoning_tokens": 114
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.14
+}

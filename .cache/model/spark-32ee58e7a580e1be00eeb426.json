@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197df-d61e-70f1-8e54-203f966983ff",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": \"gust\", \"hazard\": \"none\", \"house_no\": 1052, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Huge Oak Street\", \"summary_en\": \"Power is out at 1052 Huge Oak Street after a big gust, no hazard visible.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793549391,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1503,
+  "prompt_tokens": 524,
+  "total_tokens": 2027,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1405
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

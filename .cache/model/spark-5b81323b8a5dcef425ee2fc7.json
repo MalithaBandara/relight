@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19ca2-4b95-74ba-b3ed-1a9882b43936",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 45, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"4th Main Road\", \"summary_en\": \"No power at 45, 4th Main Road, please fix.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629244,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 333,
+  "prompt_tokens": 531,
+  "total_tokens": 864,
+  "completion_tokens_details": {
+   "reasoning_tokens": 242
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.75
+}

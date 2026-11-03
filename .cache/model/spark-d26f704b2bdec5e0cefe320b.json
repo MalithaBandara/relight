@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18cf4-5e2b-7615-b024-8592a352f58f",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 64, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Cinnamon Gardens Lane\", \"summary_en\": \"No power at 64 Cinnamon Gardens Lane, only on our side.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793366187,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 985,
+  "prompt_tokens": 491,
+  "total_tokens": 1476,
+  "completion_tokens_details": {
+   "reasoning_tokens": 894
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

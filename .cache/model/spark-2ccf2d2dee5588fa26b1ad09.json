@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cc4-f264-718e-a7b1-8836cd68d0a1",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [], \"damage\": \"none\", \"device_ok\": false, \"energised\": false, \"house_from\": null, \"house_no\": 8047, \"house_to\": null, \"landmark\": null, \"street\": \"RajaRajaLaxmi Nagar 1st main Road\", \"summary_en\": \"Location reported at house 8047, RajaRajaLaxmi Nagar 1st main Road with no damage details given.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631515,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 250,
+  "prompt_tokens": 458,
+  "total_tokens": 708,
+  "completion_tokens_details": {
+   "reasoning_tokens": 141
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.46
+}

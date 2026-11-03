@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cbd-8351-74f2-975d-6c3f5041a8c9",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "कंट्रोल रूम से दोहरा रहा हूँ: A.G.S. Colony 2nd Street Cross Street 1, मकान नंबर 16 के पास करंट वाला तार नीचे गिरा है, लाइन में करंट है, आपको लाइन टीम चाहिए, सही है?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631028,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 557,
+  "prompt_tokens": 203,
+  "total_tokens": 760,
+  "completion_tokens_details": {
+   "reasoning_tokens": 487
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 4.18
+}

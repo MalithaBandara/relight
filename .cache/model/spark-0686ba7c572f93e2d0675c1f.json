@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cae-4243-768f-9eed-1b83c25c8e94",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 31, \"is_junk\": false, \"landmark\": null, \"language\": \"hi\", \"street\": \"Velachery Main Road Cross Street 10\", \"summary_en\": \"No power at house number 31 on Velachery Main Road Cross Street 10.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630028,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 260,
+  "prompt_tokens": 516,
+  "total_tokens": 776,
+  "completion_tokens_details": {
+   "reasoning_tokens": 161
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.2
+}

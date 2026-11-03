@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bfe-c28e-7629-90da-81d9e35fad56",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1320, \"is_junk\": false, \"landmark\": null, \"language\": \"es\", \"street\": \"Winningham Lane\", \"summary_en\": \"Street has power but my house at 1320 Winningham Lane is still without electricity.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618526,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 166,
+  "prompt_tokens": 507,
+  "total_tokens": 673,
+  "completion_tokens_details": {
+   "reasoning_tokens": 72
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.03
+}

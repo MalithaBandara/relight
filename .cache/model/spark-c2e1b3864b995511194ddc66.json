@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1dc-6373-7356-bfb1-cd2a1708399f",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "हमें इस बिजली कटौती की जानकारी है, कारण की जाँच जारी है और हमारी टीम रास्ते में है। बिजली लगभग 22:20 तक लौटेगी।",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793716937,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 242,
+  "prompt_tokens": 167,
+  "total_tokens": 409,
+  "completion_tokens_details": {
+   "reasoning_tokens": 197
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 14.07
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19ca6-34a9-732e-aef3-589a5d0607ce",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": \"tree\", \"hazard\": \"tree_on_line\", \"house_no\": 138, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Velachery Bypass Road\", \"summary_en\": \"Tree has fallen on power line near 138 Velachery Bypass Road.\", \"symptom\": \"none\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629500,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 361,
+  "prompt_tokens": 528,
+  "total_tokens": 889,
+  "completion_tokens_details": {
+   "reasoning_tokens": 267
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.33
+}

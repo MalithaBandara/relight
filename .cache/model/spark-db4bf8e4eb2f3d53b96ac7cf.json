@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cb9-ce0e-7549-9d1e-926af9cb0b26",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Control here, reading back: tree on the line at Brahmin Street near number 23; you need the vegetation crew and a line crew, correct?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630785,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 349,
+  "prompt_tokens": 171,
+  "total_tokens": 520,
+  "completion_tokens_details": {
+   "reasoning_tokens": 309
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.61
+}

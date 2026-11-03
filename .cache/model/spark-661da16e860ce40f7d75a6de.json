@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19ca4-9a88-73e6-a6b6-4c866ef18025",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 7, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Velachery Upper Flyover\", \"summary_en\": \"No electricity at 7 Velachery Upper Flyover, please fix it.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629395,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 461,
+  "prompt_tokens": 533,
+  "total_tokens": 994,
+  "completion_tokens_details": {
+   "reasoning_tokens": 367
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.8
+}

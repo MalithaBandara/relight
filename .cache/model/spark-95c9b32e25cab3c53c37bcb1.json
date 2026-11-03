@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cbb-80b3-7429-96b7-8c4458082ca5",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 25, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Varatharajapuram\", \"summary_en\": \"No electricity at 25 Varatharajapuram, please fix it.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630896,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 240,
+  "prompt_tokens": 533,
+  "total_tokens": 773,
+  "completion_tokens_details": {
+   "reasoning_tokens": 146
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.36
+}

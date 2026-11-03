@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18cf5-7dba-7426-9b7b-b820933ab0eb",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "හලෝ මම කතාකරන්නේ රෝහලේ පරාක්‍රම හත්ලිස් හීතයෙන්. තුරුන්තුනේ. ලොකේ සිද්ධයක් ආවකුනුව කුඅට්ලෝවගී",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793366261,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 2323,
+  "prompt_tokens": 148,
+  "total_tokens": 2471,
+  "completion_tokens_details": {
+   "reasoning_tokens": 2258
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

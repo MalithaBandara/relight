@@ -1,0 +1,13 @@
+{
+ "sessionId": "relight-1793549409654",
+ "transcript": "Hola, buenas buenas noches. Le llamo porque no hay electricidad en el mil ciento treinta y dos de Morret Street desde la la tormenta.",
+ "audioDurationMs": 9120,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 220,
+   "endMs": 8460,
+   "transcript": "Hola, buenas buenas noches. Le llamo porque no hay electricidad en el mil ciento treinta y dos de Morret Street desde la la tormenta."
+  }
+ ]
+}

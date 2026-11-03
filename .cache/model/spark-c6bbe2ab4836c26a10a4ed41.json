@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1ea-dae0-70a3-96c5-b1eacde8f5ab",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 40, \"is_junk\": false, \"landmark\": null, \"language\": \"hi\", \"street\": \"JagannathaPuram 2nd Street\", \"summary_en\": \"Power has returned to other houses but house no. 40 on JagannathaPuram 2nd Street still has no power.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717885,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 410,
+  "prompt_tokens": 530,
+  "total_tokens": 940,
+  "completion_tokens_details": {
+   "reasoning_tokens": 302
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.37
+}

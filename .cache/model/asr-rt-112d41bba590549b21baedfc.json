@@ -1,0 +1,149 @@
+{
+ "text": "I have your address as zero Hospital Road, is that where the power is out?",
+ "events": [
+  {
+   "kind": "partial",
+   "text": "I have",
+   "role": "taker",
+   "ms": 53280,
+   "start": 52300,
+   "speaker": null,
+   "at": 1.38
+  },
+  {
+   "kind": "partial",
+   "text": "I have your",
+   "role": "taker",
+   "ms": 53440,
+   "start": 52300,
+   "speaker": null,
+   "at": 1.48
+  },
+  {
+   "kind": "partial",
+   "text": "I have your address",
+   "role": "taker",
+   "ms": 53920,
+   "start": 52300,
+   "speaker": null,
+   "at": 1.97
+  },
+  {
+   "kind": "partial",
+   "text": "I have your address as",
+   "role": "taker",
+   "ms": 54560,
+   "start": 52300,
+   "speaker": null,
+   "at": 2.62
+  },
+  {
+   "kind": "partial",
+   "text": "I have your address as zero",
+   "role": "taker",
+   "ms": 54960,
+   "start": 52300,
+   "speaker": null,
+   "at": 3.0
+  },
+  {
+   "kind": "partial",
+   "text": "I have your address as zero Hospital",
+   "role": "taker",
+   "ms": 55680,
+   "start": 52300,
+   "speaker": null,
+   "at": 3.77
+  },
+  {
+   "kind": "partial",
+   "text": "I have your address as zero Hospital Road,",
+   "role": "taker",
+   "ms": 55920,
+   "start": 52300,
+   "speaker": null,
+   "at": 4.02
+  },
+  {
+   "kind": "partial",
+   "text": "I have your address as zero Hospital Road, is",
+   "role": "taker",
+   "ms": 56400,
+   "start": 52300,
+   "speaker": null,
+   "at": 4.45
+  },
+  {
+   "kind": "partial",
+   "text": "I have your address as zero Hospital Road, is that",
+   "role": "taker",
+   "ms": 56880,
+   "start": 52300,
+   "speaker": null,
+   "at": 4.94
+  },
+  {
+   "kind": "partial",
+   "text": "I have your address as zero Hospital Road, is that where",
+   "role": "taker",
+   "ms": 57040,
+   "start": 52300,
+   "speaker": null,
+   "at": 5.11
+  },
+  {
+   "kind": "partial",
+   "text": "I have your address as zero Hospital Road, is that where the",
+   "role": "taker",
+   "ms": 57200,
+   "start": 52300,
+   "speaker": null,
+   "at": 5.28
+  },
+  {
+   "kind": "partial",
+   "text": "I have your address as zero Hospital Road, is that where the power",
+   "role": "taker",
+   "ms": 57600,
+   "start": 52300,
+   "speaker": null,
+   "at": 5.66
+  },
+  {
+   "kind": "partial",
+   "text": "I have your address as zero Hospital Road, is that where the power is",
+   "role": "taker",
+   "ms": 57760,
+   "start": 52300,
+   "speaker": null,
+   "at": 5.83
+  },
+  {
+   "kind": "partial",
+   "text": "I have your address as zero Hospital Road, is that where the power is out?",
+   "role": "taker",
+   "ms": 58160,
+   "start": 52300,
+   "speaker": null,
+   "at": 6.25
+  },
+  {
+   "kind": "partial",
+   "text": "I have your address as zero Hospital Road, is that where the power is out?",
+   "role": "taker",
+   "ms": 58400,
+   "start": 52300,
+   "speaker": null,
+   "at": 6.55
+  },
+  {
+   "kind": "final",
+   "text": "I have your address as zero Hospital Road, is that where the power is out?",
+   "role": "taker",
+   "ms": 57900,
+   "start": 52300,
+   "speaker": "A",
+   "at": 6.55
+  }
+ ]
+}

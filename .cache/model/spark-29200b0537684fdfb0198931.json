@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d0b-8d4c-76a5-916f-f073e5c1093e",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 90, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Hospital Road\", \"summary_en\": \"House at 90 Hospital Road still without power while neighbours have power.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367706,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 617,
+  "prompt_tokens": 542,
+  "total_tokens": 1159,
+  "completion_tokens_details": {
+   "reasoning_tokens": 529
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

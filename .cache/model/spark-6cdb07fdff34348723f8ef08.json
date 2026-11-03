@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18cfc-c557-7186-845b-d335a1d93d3c",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "We have found the live wire on the road affecting your supply and a crew has been assigned, with estimated restoration at 17:06. Please stay clear of the area and thank you for your patience.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793366738,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1265,
+  "prompt_tokens": 91,
+  "total_tokens": 1356,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1215
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

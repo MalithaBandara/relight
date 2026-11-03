@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cc0-3acb-76cf-862e-53b0f0e56199",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "உங்களைப் பாதித்த மின் கோளாறு (எரிந்த உருகி) கண்டறியப்பட்டு, சரிசெய்ய குழு நியமிக்கப்பட்டுள்ளது. மின்சாரம் 18:48-க்குள் மீட்டெடுக்கப்படும் என எதிர்பார்க்கப்படுகிறது.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631206,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 411,
+  "prompt_tokens": 89,
+  "total_tokens": 500,
+  "completion_tokens_details": {
+   "reasoning_tokens": 299
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.52
+}

@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197ec-f2a5-761d-93f9-fe07ba898a53",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1080, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Maravilla Drive\", \"summary_en\": \"Lights out at house 1080 on Maravilla Drive.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550250,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 801,
+  "prompt_tokens": 501,
+  "total_tokens": 1302,
+  "completion_tokens_details": {
+   "reasoning_tokens": 713
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ }
+}

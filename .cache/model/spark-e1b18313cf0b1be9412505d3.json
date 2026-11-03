@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19ca5-b538-7773-bdcc-6a3e661c60f5",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 39, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"2nd Main Road\", \"summary_en\": \"No power at 39, 2nd Main Road, fridge stopped.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629467,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 200,
+  "prompt_tokens": 507,
+  "total_tokens": 707,
+  "completion_tokens_details": {
+   "reasoning_tokens": 109
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.9
+}

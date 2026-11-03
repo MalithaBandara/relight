@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197e9-d886-7082-9148-b6304b0c4411",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "We have found the fault affecting your supply, caused by a tree on the line, and a crew has been assigned. Estimated restoration time is 00:03.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550047,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1095,
+  "prompt_tokens": 90,
+  "total_tokens": 1185,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1053
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

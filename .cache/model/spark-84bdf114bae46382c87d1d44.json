@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bed-090d-77c9-b50c-cf47dc79aad5",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The outage is isolated to Transformer T-093 because its customers are out while the next door neighbor on T-090 has power. Send a crew to replace the fuse at T-093 to restore power to 23 customers.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617365,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 242,
+  "prompt_tokens": 154,
+  "total_tokens": 396,
+  "completion_tokens_details": {
+   "reasoning_tokens": 188
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.44
+}

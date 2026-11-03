@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bff-670d-7309-8749-26de4cd7a8ba",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The outage is at the Burkhart Road fuse because homes on two of its transformers lost power while the house next door stayed on. Send a crew to replace the pole and restring the line to get 26 customers back on.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618568,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 226,
+  "prompt_tokens": 154,
+  "total_tokens": 380,
+  "completion_tokens_details": {
+   "reasoning_tokens": 171
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.37
+}

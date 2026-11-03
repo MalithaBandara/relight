@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bf8-f95a-724a-a717-da1592bfb5ec",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Estimado cliente: hemos localizado la avería que le afecta, provocada por un árbol sobre la línea, y ya hemos asignado un equipo para resolverla. La hora estimada de restablecimiento es 00:03.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618147,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 266,
+  "prompt_tokens": 90,
+  "total_tokens": 356,
+  "completion_tokens_details": {
+   "reasoning_tokens": 211
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.62
+}

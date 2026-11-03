@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1ea-8207-71b8-b34f-d844ac9918e2",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Control here, reading back: no damage found at Transformer T058; the device we sent you to is healthy. Is that correct?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717862,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 305,
+  "prompt_tokens": 165,
+  "total_tokens": 470,
+  "completion_tokens_details": {
+   "reasoning_tokens": 269
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.16
+}

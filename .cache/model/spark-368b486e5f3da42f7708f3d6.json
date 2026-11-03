@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a1983f-c9c9-7086-8e73-1e6a8b6b73ac",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Both outages are on the only transformer fed by Wirt Road 1040-1060, so that service wire is down. Send a crew to repair the service wire.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793555679,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1585,
+  "prompt_tokens": 149,
+  "total_tokens": 1734,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1541
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

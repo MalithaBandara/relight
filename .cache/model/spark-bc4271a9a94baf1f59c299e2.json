@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c92-0ea1-7328-95bb-1d3e587703e8",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": null, \"is_junk\": true, \"landmark\": null, \"language\": \"en\", \"street\": null, \"summary_en\": \"Complainant reports no water coming in tap.\", \"symptom\": \"none\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793628180,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 256,
+  "prompt_tokens": 502,
+  "total_tokens": 758,
+  "completion_tokens_details": {
+   "reasoning_tokens": 176
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.28
+}

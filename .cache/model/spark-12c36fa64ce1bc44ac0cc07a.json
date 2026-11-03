@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197e9-0419-733d-9999-7454c16ca1c7",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1088, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Moritz Drive\", \"summary_en\": \"Outage reported at 1088 Moritz Drive, please help.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793549992,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1001,
+  "prompt_tokens": 501,
+  "total_tokens": 1502,
+  "completion_tokens_details": {
+   "reasoning_tokens": 911
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ }
+}

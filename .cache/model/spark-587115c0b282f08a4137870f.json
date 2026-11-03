@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bfa-d148-77fd-b1ac-80ce32a0badd",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"troubleshooter\"], \"damage\": \"blown_fuse\", \"device_ok\": false, \"energised\": false, \"house_from\": null, \"house_no\": 1136, \"house_to\": null, \"landmark\": null, \"street\": \"Voss Road\", \"summary_en\": \"On site at transformer T033 on Voss Road near number 1136, dropout fuse blown and being replaced.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618268,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 498,
+  "prompt_tokens": 456,
+  "total_tokens": 954,
+  "completion_tokens_details": {
+   "reasoning_tokens": 394
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.75
+}

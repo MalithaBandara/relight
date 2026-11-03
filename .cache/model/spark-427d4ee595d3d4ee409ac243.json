@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19be9-bcb0-76e5-bf87-9422f6e6a6cd",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"live_wire\", \"house_no\": 10, \"is_junk\": false, \"landmark\": \"market\", \"language\": \"si\", \"street\": \"Market Street\", \"summary_en\": \"A wire has fallen near the pola on Market Street 10 and is sparking.\", \"symptom\": \"none\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617149,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 461,
+  "prompt_tokens": 565,
+  "total_tokens": 1026,
+  "completion_tokens_details": {
+   "reasoning_tokens": 369
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.96
+}

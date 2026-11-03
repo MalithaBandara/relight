@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d04-3e15-74b4-83d6-e599d75697cd",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 14, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Lake Road\", \"summary_en\": \"No power at 14 Lake Road, no hazard seen.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367227,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 945,
+  "prompt_tokens": 570,
+  "total_tokens": 1515,
+  "completion_tokens_details": {
+   "reasoning_tokens": 859
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

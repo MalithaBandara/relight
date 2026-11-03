@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cb1-cfbe-7130-96af-4db0d8854723",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 12, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Chandru Street\", \"summary_en\": \"No current at door number 12, Chandru Street.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630261,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 179,
+  "prompt_tokens": 519,
+  "total_tokens": 698,
+  "completion_tokens_details": {
+   "reasoning_tokens": 91
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.06
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19beb-1525-76c1-8275-d96202bc77d7",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "இந்த மின் தடை (pole down) எங்களுக்குத் தெரியும், குழு இப்போது அங்கே வேலை செய்கிறது. மின்சாரம் சுமார் 19:18 மணிக்கு மீண்டும் வரும்.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617237,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 397,
+  "prompt_tokens": 198,
+  "total_tokens": 595,
+  "completion_tokens_details": {
+   "reasoning_tokens": 314
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.29
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1df-ce3e-7601-9800-38c92ae2ddcd",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": \"tree\", \"hazard\": \"tree_on_line\", \"house_no\": null, \"is_junk\": false, \"landmark\": \"Velachery Upper Flyover 23\", \"language\": \"ta\", \"street\": null, \"summary_en\": \"Tree has fallen on power line near Velachery Upper Flyover 23.\", \"symptom\": \"none\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717161,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 421,
+  "prompt_tokens": 529,
+  "total_tokens": 950,
+  "completion_tokens_details": {
+   "reasoning_tokens": 324
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ },
+ "_latency_s": 4.27
+}

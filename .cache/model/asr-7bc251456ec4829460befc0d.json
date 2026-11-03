@@ -1,0 +1,14 @@
+{
+ "sessionId": "relight-1793618198700",
+ "transcript": "En sitio en Winningham Lane, cerca del número mil doscientos ochenta y ocho. El poste de concreto está quebrado y los conductores cruzan la calle. Empezamos a cambiar el poste.",
+ "audioDurationMs": 12960,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 140,
+   "endMs": 12140,
+   "transcript": "En sitio en Winningham Lane, cerca del número mil doscientos ochenta y ocho. El poste de concreto está quebrado y los conductores cruzan la calle. Empezamos a cambiar el poste."
+  }
+ ],
+ "_latency_s": 4.58
+}

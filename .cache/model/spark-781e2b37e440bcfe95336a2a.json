@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cb4-a1e4-7255-9e98-c7875cc5efc4",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 40, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"1st Main Road Cross Street 1\", \"summary_en\": \"No power at house no 40 on 1st Main Road Cross Street 1, fridge stopped.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630446,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 415,
+  "prompt_tokens": 511,
+  "total_tokens": 926,
+  "completion_tokens_details": {
+   "reasoning_tokens": 314
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.97
+}

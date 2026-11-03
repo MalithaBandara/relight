@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bf1-624b-75c8-a4ea-66d6aa2f63fb",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Control here, reading back: no damage found at Karapitiya Road near number 200; the device we sent you to is healthy. Correct?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617650,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 307,
+  "prompt_tokens": 170,
+  "total_tokens": 477,
+  "completion_tokens_details": {
+   "reasoning_tokens": 268
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.54
+}

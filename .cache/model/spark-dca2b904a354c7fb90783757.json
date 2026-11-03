@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197f4-4e5f-7101-979a-d16da1d4ec82",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1308, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Winningham Lane\", \"summary_en\": \"House at 1308 Winningham Lane still without power while rest of street has power back.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550732,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 944,
+  "prompt_tokens": 507,
+  "total_tokens": 1451,
+  "completion_tokens_details": {
+   "reasoning_tokens": 849
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ }
+}

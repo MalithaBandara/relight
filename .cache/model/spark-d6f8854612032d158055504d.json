@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cba-31a0-7778-8507-de393b6390db",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 15, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"AGS Colony 4th Main Road Cross Street 3\", \"summary_en\": \"No current at house 15, AGS Colony 4th Main Road Cross Street 3, fridge stopped.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630810,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 227,
+  "prompt_tokens": 514,
+  "total_tokens": 741,
+  "completion_tokens_details": {
+   "reasoning_tokens": 121
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.73
+}

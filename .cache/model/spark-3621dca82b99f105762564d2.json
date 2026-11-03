@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d05-0778-71de-8e35-ee1f3e4b9648",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Copy, logged against I1.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367279,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 642,
+  "prompt_tokens": 141,
+  "total_tokens": 783,
+  "completion_tokens_details": {
+   "reasoning_tokens": 626
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

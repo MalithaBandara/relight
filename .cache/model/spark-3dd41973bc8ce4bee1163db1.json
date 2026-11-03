@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bb5-04b3-76f0-afd9-4cddcea416c2",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Control here, reading back: no damage found at Karpetia Road near number 200, the device we sent you to is healthy. Correct?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793613694,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1318,
+  "prompt_tokens": 170,
+  "total_tokens": 1488,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1279
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 6.7
+}

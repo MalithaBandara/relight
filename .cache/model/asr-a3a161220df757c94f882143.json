@@ -1,0 +1,20 @@
+{
+ "sessionId": "relight-1793717476790",
+ "transcript": "on site at broken conductor on Velachery Bypass Road B 129 B 130 130 no damage found here the line looks healthy",
+ "audioDurationMs": 12160,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 140,
+   "endMs": 7420,
+   "transcript": "on site at broken conductor on Velachery Bypass Road B 129 B 130 130"
+  },
+  {
+   "turnId": 1,
+   "startMs": 7900,
+   "endMs": 11500,
+   "transcript": "no damage found here the line looks healthy"
+  }
+ ],
+ "_latency_s": 3.95
+}

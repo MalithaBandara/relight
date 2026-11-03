@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c98-7eae-7438-bc1f-3899139a7028",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 27, \"is_junk\": false, \"landmark\": null, \"language\": \"hi\", \"street\": \"Murugan Nagar Extension 1st Street\", \"summary_en\": \"No power at house number 27, Murugan Nagar Extension 1st Street.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793628602,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 267,
+  "prompt_tokens": 515,
+  "total_tokens": 782,
+  "completion_tokens_details": {
+   "reasoning_tokens": 170
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.44
+}

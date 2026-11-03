@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197f2-162d-7048-b46e-3d4f3bd2403a",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Estimado cliente, hemos localizado la avería que le afecta, un cable con tensión en la vía, y ya hay un equipo asignado. La hora estimada de restablecimiento es 22:58.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550587,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1021,
+  "prompt_tokens": 91,
+  "total_tokens": 1112,
+  "completion_tokens_details": {
+   "reasoning_tokens": 970
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

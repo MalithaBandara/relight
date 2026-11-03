@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bec-0b6f-7030-afea-30e69d699f82",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": \"wind\", \"hazard\": \"none\", \"house_no\": 9, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Lake Road\", \"summary_en\": \"House No 9 on Lake Road has no power after wind, while some houses on road still have lights, no hazard seen.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617300,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 339,
+  "prompt_tokens": 557,
+  "total_tokens": 896,
+  "completion_tokens_details": {
+   "reasoning_tokens": 238
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.99
+}

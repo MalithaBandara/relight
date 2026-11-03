@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cc4-19f3-7150-8669-dae5fd039d8f",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 30, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"AGS Colony 4th Main Road Cross Street 3\", \"summary_en\": \"Power cut at house 30, AGS Colony 4th Main Road Cross Street 3, requesting lineman.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631459,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 252,
+  "prompt_tokens": 520,
+  "total_tokens": 772,
+  "completion_tokens_details": {
+   "reasoning_tokens": 145
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.33
+}

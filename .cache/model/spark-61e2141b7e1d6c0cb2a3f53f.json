@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19ca1-ada9-7680-8747-11c1f17969df",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 6, \"is_junk\": false, \"landmark\": null, \"language\": \"hi\", \"street\": \"Velachery Bypass Road Cross Street 13\", \"summary_en\": \"No power at house number 6.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629203,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 228,
+  "prompt_tokens": 516,
+  "total_tokens": 744,
+  "completion_tokens_details": {
+   "reasoning_tokens": 139
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.16
+}

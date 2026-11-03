@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197e7-076c-75ff-932b-aedb2435cfb2",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1164, \"is_junk\": false, \"landmark\": null, \"language\": \"es\", \"street\": \"Monarch Oaks Street\", \"summary_en\": \"No power at 1164 Monarch Oaks Street, no hazard observed.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793549862,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 805,
+  "prompt_tokens": 509,
+  "total_tokens": 1314,
+  "completion_tokens_details": {
+   "reasoning_tokens": 714
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

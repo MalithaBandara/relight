@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cb2-2bd8-7568-baea-41d038db0f3a",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 39, \"is_junk\": false, \"landmark\": \"Velachery Upper Flyover\", \"language\": \"hi\", \"street\": null, \"summary_en\": \"No power at house number 39 near Velachery Upper Flyover.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630284,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 448,
+  "prompt_tokens": 513,
+  "total_tokens": 961,
+  "completion_tokens_details": {
+   "reasoning_tokens": 355
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 5.01
+}

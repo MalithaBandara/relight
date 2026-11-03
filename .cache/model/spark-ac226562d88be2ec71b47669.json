@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a19837-23ce-7400-9e92-15f8b5cf9c63",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"confidence\": \"high\", \"note\": \"Center leaning pole has small tags/markers near base but too distant and small to decipher; no plate characters are legible in this photo.\", \"readable\": false, \"tag\": null}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793555112,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 575,
+  "prompt_tokens": 3658,
+  "total_tokens": 4233,
+  "completion_tokens_details": {
+   "reasoning_tokens": 517
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

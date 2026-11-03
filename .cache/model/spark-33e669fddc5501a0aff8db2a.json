@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1ee-b8a2-75e5-aa71-e5872870ddef",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The break is on Ronson Road between poles B262 and B296 because meters show 75 homes out on that stretch while the house next door on T-029 still has power. Send a crew to make the live wire safe and cordon the road then repair the conductor.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793718138,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 346,
+  "prompt_tokens": 186,
+  "total_tokens": 532,
+  "completion_tokens_details": {
+   "reasoning_tokens": 281
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.82
+}

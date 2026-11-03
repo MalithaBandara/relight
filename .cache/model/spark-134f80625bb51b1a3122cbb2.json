@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19be8-f5eb-764b-b6b0-3bf22e04ee76",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": null, \"is_junk\": true, \"landmark\": null, \"language\": \"en\", \"street\": null, \"summary_en\": \"Spam message offering Rs 50,000 storm relief prize.\", \"symptom\": \"none\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617098,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 247,
+  "prompt_tokens": 542,
+  "total_tokens": 789,
+  "completion_tokens_details": {
+   "reasoning_tokens": 165
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 1.65
+}

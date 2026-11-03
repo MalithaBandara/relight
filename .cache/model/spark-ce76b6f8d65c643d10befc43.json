@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bee-ed11-75f5-8b2e-088873a43e07",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"line\"], \"damage\": \"wire_down\", \"device_ok\": false, \"energised\": true, \"house_from\": null, \"house_no\": null, \"house_to\": null, \"landmark\": \"market\", \"street\": \"Market Street\", \"summary_en\": \"Patrol two at Market Street by the market: one phase conductor down on the road, live and arcing on and off, area cordoned off, line crew needed urgently.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617489,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 518,
+  "prompt_tokens": 560,
+  "total_tokens": 1078,
+  "completion_tokens_details": {
+   "reasoning_tokens": 407
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 4.27
+}

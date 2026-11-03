@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bb4-344a-71de-9231-1af39eb0d16b",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "We have found the service wire down affecting you and assigned a crew. Estimated restoration time is 16:10 – thank you for your patience.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793613640,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 723,
+  "prompt_tokens": 90,
+  "total_tokens": 813,
+  "completion_tokens_details": {
+   "reasoning_tokens": 685
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.68
+}

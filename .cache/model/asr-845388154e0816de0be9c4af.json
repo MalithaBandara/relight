@@ -1,0 +1,14 @@
+{
+ "sessionId": "relight-1793618426991",
+ "transcript": "En sitio en Ronson Road, cerca del número mil ciento treinta y dos. el conductor en el suelo está energizado. Acordonamos el área y lo estamos asegurando.",
+ "audioDurationMs": 12320,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 140,
+   "endMs": 11100,
+   "transcript": "En sitio en Ronson Road, cerca del número mil ciento treinta y dos. el conductor en el suelo está energizado. Acordonamos el área y lo estamos asegurando."
+  }
+ ],
+ "_latency_s": 4.01
+}

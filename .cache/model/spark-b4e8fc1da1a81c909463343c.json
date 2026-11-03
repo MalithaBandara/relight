@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c89-e221-771d-847f-814ef2556a8c",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 13, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Mohanapuri 4th Street\", \"summary_en\": \"No power at door No. 13, Mohanapuri 4th Street.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793627644,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 279,
+  "prompt_tokens": 523,
+  "total_tokens": 802,
+  "completion_tokens_details": {
+   "reasoning_tokens": 182
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.11
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cbe-daca-75d1-a179-59f19b584290",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "வணக்கம், மின் கம்பியில் மரம் விழுந்ததால் ஏற்பட்ட கோளாறு கண்டறியப்பட்டு, சீரமைப்புக் குழு நியமிக்கப்பட்டுள்ளது; மதிப்பிடப்பட்ட மீட்பு நேரம் 21:12. ஏற்பட்ட சிரமத்திற்கு வருந்துகிறோம்.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631115,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 508,
+  "prompt_tokens": 90,
+  "total_tokens": 598,
+  "completion_tokens_details": {
+   "reasoning_tokens": 388
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.27
+}

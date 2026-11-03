@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197e8-0b35-7532-80d2-f9769a4bef00",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1132, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Johanna Drive\", \"summary_en\": \"Power is out at 1132 Johanna Drive.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793549929,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 931,
+  "prompt_tokens": 498,
+  "total_tokens": 1429,
+  "completion_tokens_details": {
+   "reasoning_tokens": 845
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ }
+}

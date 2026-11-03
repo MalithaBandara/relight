@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cad-a2e8-73f8-a4c8-565b757d83d3",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 6, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"VGP Selva Nagar 2nd Main Road Cross Street 1\", \"summary_en\": \"No power since morning at VGP Selva Nagar 2nd Main Road Cross Street 1, house 6.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629987,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 437,
+  "prompt_tokens": 518,
+  "total_tokens": 955,
+  "completion_tokens_details": {
+   "reasoning_tokens": 327
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.12
+}

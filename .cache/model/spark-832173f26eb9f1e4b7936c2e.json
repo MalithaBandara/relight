@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1989b-d82b-7391-8012-164ef6fae4ab",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "கட்டுப்பாட்டு அறை. திரும்பச் சொல்கிறேன் Gardens Lane 57 எண் அருகில் டிரான்ஸ்ஃபார்மர் ஃபியூஸ் போயிருக்கிறது, சரியா?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793561712,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 2108,
+  "prompt_tokens": 214,
+  "total_tokens": 2322,
+  "completion_tokens_details": {
+   "reasoning_tokens": 2028
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 7.36
+}

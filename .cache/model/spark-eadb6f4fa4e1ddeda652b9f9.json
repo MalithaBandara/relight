@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c9e-c8cb-7112-b7ed-1da7b137f4e6",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 52, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Vijayanagar 1st Main Road Cross Street 5\", \"summary_en\": \"No power at 52 Vijayanagar 1st Main Road Cross Street 5, please fix.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629014,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 375,
+  "prompt_tokens": 541,
+  "total_tokens": 916,
+  "completion_tokens_details": {
+   "reasoning_tokens": 268
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.2
+}

@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a19844-f4d4-75e7-9281-f3eaaf3fce69",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 54, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Mohanapuri 2nd Street\", \"summary_en\": \"Power cut at house 54, Mohanapuri 2nd Street, request to send lineman.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793556018,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 969,
+  "prompt_tokens": 515,
+  "total_tokens": 1484,
+  "completion_tokens_details": {
+   "reasoning_tokens": 868
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

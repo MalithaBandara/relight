@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197f0-240d-773b-83f0-c211add00ba7",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1008, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Gingerleaf Lane\", \"summary_en\": \"Power outage reported at house 1008 on Gingerleaf Lane.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550459,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 798,
+  "prompt_tokens": 501,
+  "total_tokens": 1299,
+  "completion_tokens_details": {
+   "reasoning_tokens": 708
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ }
+}

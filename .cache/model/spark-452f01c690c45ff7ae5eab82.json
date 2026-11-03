@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197f1-f0de-7750-8e75-6a8656067b68",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "73 meters died at once and partial power nearby pins the break to Ronson Road B262-B296. Send a crew fast to cordon the live wire and repair the conductor.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550577,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1720,
+  "prompt_tokens": 174,
+  "total_tokens": 1894,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1675
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

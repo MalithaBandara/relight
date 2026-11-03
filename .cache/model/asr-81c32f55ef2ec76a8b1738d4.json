@@ -1,0 +1,14 @@
+{
+ "sessionId": "relight-1793618538961",
+ "transcript": "on site a transformer T 509 on Winningham Lane near number the dropout fuse is blown replacing it now",
+ "audioDurationMs": 10080,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 140,
+   "endMs": 8460,
+   "transcript": "on site a transformer T 509 on Winningham Lane near number the dropout fuse is blown replacing it now"
+  }
+ ],
+ "_latency_s": 3.35
+}

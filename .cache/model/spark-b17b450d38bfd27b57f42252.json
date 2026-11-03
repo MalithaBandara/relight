@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bec-fee5-7143-a59b-25e7e8b71cce",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": null, \"is_junk\": false, \"landmark\": null, \"language\": \"si\", \"street\": null, \"summary_en\": \"Yes, our house has electricity.\", \"symptom\": \"power_on\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617362,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 191,
+  "prompt_tokens": 544,
+  "total_tokens": 735,
+  "completion_tokens_details": {
+   "reasoning_tokens": 113
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ },
+ "_latency_s": 2.17
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19caf-e054-71e2-bffc-f727b1ed883a",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 35, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Velachery Bypass Road Cross Street 13\", \"summary_en\": \"Power cut at house 35, Velachery Bypass Road Cross Street 13, request to send lineman.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630134,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 279,
+  "prompt_tokens": 517,
+  "total_tokens": 796,
+  "completion_tokens_details": {
+   "reasoning_tokens": 175
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ },
+ "_latency_s": 2.72
+}

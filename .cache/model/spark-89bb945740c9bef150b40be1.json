@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bed-274d-77da-b64a-c50b8faa286f",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The outage is isolated to T-089 because its customers are out while T-090 next door still has power. Send a crew to replace the fuse and restore 24 customers.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617372,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 297,
+  "prompt_tokens": 143,
+  "total_tokens": 440,
+  "completion_tokens_details": {
+   "reasoning_tokens": 252
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.37
+}

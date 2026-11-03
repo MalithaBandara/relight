@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18cfa-9898-75a4-bbc6-60ba4d89edf8",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 88, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Hospital Road\", \"summary_en\": \"Power off on whole lane at 88 Hospital Road.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793366595,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 862,
+  "prompt_tokens": 533,
+  "total_tokens": 1395,
+  "completion_tokens_details": {
+   "reasoning_tokens": 777
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ }
+}

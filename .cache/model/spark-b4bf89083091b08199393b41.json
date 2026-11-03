@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c91-1f4b-70d9-a83d-f37291913375",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 20, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Lakshmi Hayagriva 1st Main Road\", \"summary_en\": \"Power cut at house 20, Lakshmi Hayagriva 1st Main Road, lineman requested.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793628118,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 257,
+  "prompt_tokens": 519,
+  "total_tokens": 776,
+  "completion_tokens_details": {
+   "reasoning_tokens": 150
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.47
+}

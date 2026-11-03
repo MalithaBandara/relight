@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197ec-9187-7573-b9cb-13a0dc25e577",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1224, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Winningham Lane\", \"summary_en\": \"Lights out at 1224 Winningham Lane.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550225,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 692,
+  "prompt_tokens": 501,
+  "total_tokens": 1193,
+  "completion_tokens_details": {
+   "reasoning_tokens": 606
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ }
+}

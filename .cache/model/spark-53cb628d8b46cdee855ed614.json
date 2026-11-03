@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bf4-b4bb-730b-ac0e-a0e36cef7ef4",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1132, \"is_junk\": false, \"landmark\": null, \"language\": \"es\", \"street\": \"Moritz Drive\", \"summary_en\": \"No power at 1132 Moritz Drive since the storm.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617867,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 393,
+  "prompt_tokens": 519,
+  "total_tokens": 912,
+  "completion_tokens_details": {
+   "reasoning_tokens": 304
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.4
+}

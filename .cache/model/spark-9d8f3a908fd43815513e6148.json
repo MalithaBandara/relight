@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a19840-3a8e-76a5-989e-11cbbd19b1d3",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"13th Main Road Cross Street 2\", \"summary_en\": \"No power at 1, 13th Main Road Cross Street 2, fridge stopped.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793555708,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 2321,
+  "prompt_tokens": 511,
+  "total_tokens": 2832,
+  "completion_tokens_details": {
+   "reasoning_tokens": 2222
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

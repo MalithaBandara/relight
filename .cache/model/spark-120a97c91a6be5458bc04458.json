@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bef-1678-7234-8cbd-7016db8f2fd0",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"damage\": \"pole_down\", \"description\": \"A wooden distribution pole is leaning severely and an adjacent pole is collapsed into flooded water beside the road, with power lines downed low over the guardrail and into the water.\", \"public_hazard\": true, \"segment_prompts\": [\"leaning utility pole\", \"downed power line\", \"collapsed utility pole\"], \"severity\": \"high\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617499,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 250,
+  "prompt_tokens": 3176,
+  "total_tokens": 3426,
+  "completion_tokens_details": {
+   "reasoning_tokens": 160
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 113
+  }
+ },
+ "_latency_s": 4.94
+}

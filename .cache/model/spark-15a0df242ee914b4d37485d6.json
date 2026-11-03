@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c85-14ba-726a-87fa-1af31d6db00c",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 229, \"is_junk\": false, \"landmark\": null, \"language\": \"hi\", \"street\": \"Saint Cross Street, Cross Street 1\", \"summary_en\": \"Caller from house 229, Saint Cross Street, Cross Street 1 reports no power since the storm.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793627329,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 372,
+  "prompt_tokens": 537,
+  "total_tokens": 909,
+  "completion_tokens_details": {
+   "reasoning_tokens": 271
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.3
+}

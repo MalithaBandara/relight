@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bf8-eafa-7086-b54f-bb3010f114a0",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "We have found the fault affecting you, a tree on the line, and a crew has been assigned. Estimated restoration time is 00:03.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618143,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 190,
+  "prompt_tokens": 90,
+  "total_tokens": 280,
+  "completion_tokens_details": {
+   "reasoning_tokens": 151
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 1.79
+}

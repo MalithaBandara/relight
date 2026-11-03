@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a19841-f0da-743b-8029-0eaadd305561",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 240, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Velachery Bypass Road Cross Street 13\", \"summary_en\": \"No power at 240, Velachery Bypass Road Cross Street 13, please fix it.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793555820,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 2674,
+  "prompt_tokens": 536,
+  "total_tokens": 3210,
+  "completion_tokens_details": {
+   "reasoning_tokens": 2573
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

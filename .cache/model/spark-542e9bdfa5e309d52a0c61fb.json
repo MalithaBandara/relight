@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bf9-812f-752d-a1ee-0d2d3b09acff",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The outage is isolated behind Transformer T-033, with all 11 customers out and 4 meters confirming loss of power. Send a crew to replace the blown fuse at T-033.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618182,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 176,
+  "prompt_tokens": 141,
+  "total_tokens": 317,
+  "completion_tokens_details": {
+   "reasoning_tokens": 129
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.58
+}

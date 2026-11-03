@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cb6-de84-73c2-b552-7c3eef6a4695",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 7, \"is_junk\": false, \"landmark\": null, \"language\": \"hi\", \"street\": \"VPG Selva Nagar Extension 1st Street\", \"summary_en\": \"No electricity at house no 7, VPG Selva Nagar Extension 1st Street.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630592,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 188,
+  "prompt_tokens": 517,
+  "total_tokens": 705,
+  "completion_tokens_details": {
+   "reasoning_tokens": 87
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.72
+}

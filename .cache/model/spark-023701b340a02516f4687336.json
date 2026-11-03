@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a19846-e322-770b-a234-98a179887b80",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Power is out only below the T-017 fuse while the house next door on T-030 stays on. Send a crew to replace the T-017 fuse and restore the 7 customers out.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793556144,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1391,
+  "prompt_tokens": 143,
+  "total_tokens": 1534,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1342
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

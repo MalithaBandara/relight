@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c9a-4764-71aa-b03f-f51da19990de",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The fault is at the Taramani Link Road fuse because trouble is reported across half its transformers while the rest of its zone has gone silent. Send a patrol crew to that fuse zone now to restore 1186 customers including critical shelters and medical sites.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793628718,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 299,
+  "prompt_tokens": 248,
+  "total_tokens": 547,
+  "completion_tokens_details": {
+   "reasoning_tokens": 239
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.99
+}

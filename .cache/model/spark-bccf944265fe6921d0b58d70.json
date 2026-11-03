@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1e4-0c59-71c7-b924-78a54750ca56",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [], \"damage\": \"none\", \"device_ok\": true, \"energised\": false, \"house_from\": 81, \"house_no\": null, \"house_to\": 88, \"landmark\": null, \"street\": \"Velachery main road\", \"summary_en\": \"Crew on site for reported broken conductor on Velachery main road houses 81 to 88, found no damage, line looks healthy.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717439,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 486,
+  "prompt_tokens": 469,
+  "total_tokens": 955,
+  "completion_tokens_details": {
+   "reasoning_tokens": 383
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 4.5
+}

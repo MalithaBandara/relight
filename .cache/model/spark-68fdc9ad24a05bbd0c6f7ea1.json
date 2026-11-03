@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197f2-d88d-75f2-8213-eeef8ce34749",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Sabemos de este apagón, live wire on road, una cuadrilla está trabajando ahí ahora. Restablecimiento estimado: 22:58.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550637,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 2181,
+  "prompt_tokens": 161,
+  "total_tokens": 2342,
+  "completion_tokens_details": {
+   "reasoning_tokens": 2142
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

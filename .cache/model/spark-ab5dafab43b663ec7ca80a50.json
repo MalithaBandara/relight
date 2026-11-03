@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1ed-3cdd-754a-9a65-bd323bef554f",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "உங்கள் பகுதியில் மின் தடைக்குக் காரணமான பழுதடைந்த உருகி (blown fuse) கண்டறியப்பட்டு, சரிசெய்ய குழு நியமிக்கப்பட்டுள்ளது. மின்சாரம் 00:02-க்குள் மீட்கப்படும் என எதிர்பார்க்கப்படுகிறது, ஏற்பட்ட சிரமத்திற்கு வருந்துகிறோம்.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793718041,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 364,
+  "prompt_tokens": 89,
+  "total_tokens": 453,
+  "completion_tokens_details": {
+   "reasoning_tokens": 227
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 4.26
+}

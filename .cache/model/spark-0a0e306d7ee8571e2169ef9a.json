@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bff-724a-7402-a900-a63c99e2c2f5",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The outage is isolated to Westview Drive 1040-1060 because the transformer next door still has power. Send a service crew to repair the downed service wire.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618571,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 248,
+  "prompt_tokens": 172,
+  "total_tokens": 420,
+  "completion_tokens_details": {
+   "reasoning_tokens": 204
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.42
+}

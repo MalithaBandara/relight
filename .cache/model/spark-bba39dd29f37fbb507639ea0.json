@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18cf7-722b-7439-bef4-737480d55658",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "මෙම ඇමතුම් අංකය විදුලි බිඳවැටීම් සඳහා පමණයි. වෙනත් කරුණු සඳහා කාර්යාල වේලාවේ අමතන්න.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793366389,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 895,
+  "prompt_tokens": 183,
+  "total_tokens": 1078,
+  "completion_tokens_details": {
+   "reasoning_tokens": 840
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1dd-a55e-7101-b243-f6069de3a5dd",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 36, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"JagannathaPuram 2nd Street\", \"summary_en\": \"Power cut at house 36, JagannathaPuram 2nd Street, requesting lineman.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717019,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 167,
+  "prompt_tokens": 517,
+  "total_tokens": 684,
+  "completion_tokens_details": {
+   "reasoning_tokens": 65
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.32
+}

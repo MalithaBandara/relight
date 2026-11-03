@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cc3-4fa1-77c7-aa6f-7c8cf6237401",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 7, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Brahmin Street\", \"summary_en\": \"Power cut at house 7, Brahmin Street, requesting lineman.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631408,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 150,
+  "prompt_tokens": 511,
+  "total_tokens": 661,
+  "completion_tokens_details": {
+   "reasoning_tokens": 59
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.14
+}

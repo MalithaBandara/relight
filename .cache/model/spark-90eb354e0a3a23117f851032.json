@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c9b-748b-73fb-a1d0-8fa694e93f7f",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 47, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"EB Colony 1st Street\", \"summary_en\": \"Power cut in EB Colony 1st Street, house 47. Please send lineman.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793628796,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 154,
+  "prompt_tokens": 514,
+  "total_tokens": 668,
+  "completion_tokens_details": {
+   "reasoning_tokens": 57
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.12
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1989c-d4c2-76c7-a0dc-afbbdd1ba126",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The fault is at the Burkhart Road fuse because two of its transformers are out while the house next door on T-036 still has power. Send a crew to replace the downed pole and restring to restore 26 customers.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793561777,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1758,
+  "prompt_tokens": 154,
+  "total_tokens": 1912,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1702
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 7.25
+}

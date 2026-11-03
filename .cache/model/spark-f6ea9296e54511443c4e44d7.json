@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bdb-ecdc-75a3-a016-a57de0716245",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "I have your address as 20, Hospital Road. Is that where the power is out?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793616243,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 199,
+  "prompt_tokens": 153,
+  "total_tokens": 352,
+  "completion_tokens_details": {
+   "reasoning_tokens": 171
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.48
+}

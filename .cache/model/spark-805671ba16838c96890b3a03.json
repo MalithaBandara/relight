@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a19842-d51a-7177-b8d6-47b482e8a91c",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Gangai Nagar 2nd Cross Street\", \"summary_en\": \"Power cut reported at house 1, Gangai Nagar 2nd Cross Street, lineman requested.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793555879,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1082,
+  "prompt_tokens": 516,
+  "total_tokens": 1598,
+  "completion_tokens_details": {
+   "reasoning_tokens": 981
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

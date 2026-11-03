@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1e8-64c4-77ac-a88f-f7d30d0ff6f1",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "पेड़ गिरने के कारण लाइन में आई खराबी का पता लगा लिया गया है और मरम्मत दल नियुक्त कर दिया गया है। अनुमानित बहाली का समय 01:26 है, असुविधा के लिए खेद है।",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717724,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 287,
+  "prompt_tokens": 90,
+  "total_tokens": 377,
+  "completion_tokens_details": {
+   "reasoning_tokens": 225
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.54
+}

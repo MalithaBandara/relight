@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197eb-fc9b-7107-b871-a84b11280ea4",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Le informamos que hemos localizado la falla que le afecta por poste caído y ya hay un equipo asignado. La hora estimada de restablecimiento es 01:20.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550187,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1030,
+  "prompt_tokens": 89,
+  "total_tokens": 1119,
+  "completion_tokens_details": {
+   "reasoning_tokens": 985
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

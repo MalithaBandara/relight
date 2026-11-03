@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cb7-764d-73a2-b23b-99c9b3fe63f5",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 29, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Anna Nagar 4th Main Road\", \"summary_en\": \"No power at door no. 29, Anna Nagar 4th Main Road.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630631,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 209,
+  "prompt_tokens": 522,
+  "total_tokens": 731,
+  "completion_tokens_details": {
+   "reasoning_tokens": 113
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.58
+}

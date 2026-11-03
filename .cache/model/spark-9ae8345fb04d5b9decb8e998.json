@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1da-bc68-73d4-8db1-340d31b71afc",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Control here, reading back: tree on the line at Long Point Road near number 1008, you need a line crew and the vegetation crew. Correct?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793716829,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 284,
+  "prompt_tokens": 172,
+  "total_tokens": 456,
+  "completion_tokens_details": {
+   "reasoning_tokens": 243
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 4.72
+}

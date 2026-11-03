@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197eb-a4c9-738e-a83a-73cf27a723bc",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\":[\"line\",\"bucket_truck\"],\"damage\":\"pole_down\",\"device_ok\":false,\"energised\":false,\"house_from\":null,\"house_no\":1288,\"house_to\":null,\"landmark\":null,\"street\":\"Winningham Lane\",\"summary_en\":\"On site on Winningham Lane near number 1288. Concrete pole is broken with conductors crossing the street. Crew has started replacing the pole.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550165,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1354,
+  "prompt_tokens": 477,
+  "total_tokens": 1831,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1259
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

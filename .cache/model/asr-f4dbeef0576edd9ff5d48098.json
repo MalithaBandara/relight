@@ -1,0 +1,13 @@
+{
+ "sessionId": "relight-1793550262684",
+ "transcript": "On site a transformer T033 on Boss Road near number 1136. The dropout fuse is blown. Replacing it now.",
+ "audioDurationMs": 11440,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 60,
+   "endMs": 10940,
+   "transcript": "On site a transformer T033 on Boss Road near number 1136. The dropout fuse is blown. Replacing it now."
+  }
+ ]
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bfb-96a9-7211-962c-ed09d9a831a2",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "75 customers lost power around Ronson Road B262-B296 because 73 meters went dark together and partial power shows a broken wire. Send an overhead line crew to patrol that span and repair it.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618319,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 242,
+  "prompt_tokens": 169,
+  "total_tokens": 411,
+  "completion_tokens_details": {
+   "reasoning_tokens": 193
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.8
+}

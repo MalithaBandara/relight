@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18cf9-60a0-751a-80f8-bd844fe26866",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"damage\": \"pole_down\", \"description\": \"A wooden utility pole with street light is leaning severely almost to the ground beside the road, with power lines pulled down low and entangled in a large snapped fallen tree.\", \"public_hazard\": true, \"segment_prompts\": [\"utility pole\", \"fallen tree\", \"downed power lines\"], \"severity\": \"high\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793366515,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 849,
+  "prompt_tokens": 3176,
+  "total_tokens": 4025,
+  "completion_tokens_details": {
+   "reasoning_tokens": 764
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

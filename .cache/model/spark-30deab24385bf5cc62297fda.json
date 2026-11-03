@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cb0-1e5c-7044-abef-9ebf5f395d0b",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 218, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Velachery Bypass Road Cross Street 13\", \"summary_en\": \"No power at door no. 218, Velachery Bypass Road Cross Street 13.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630150,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 351,
+  "prompt_tokens": 524,
+  "total_tokens": 875,
+  "completion_tokens_details": {
+   "reasoning_tokens": 251
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.76
+}

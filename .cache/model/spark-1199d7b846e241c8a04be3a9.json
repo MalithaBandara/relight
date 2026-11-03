@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197ee-a657-776e-a3b2-dbb645458e56",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1160, \"is_junk\": false, \"landmark\": null, \"language\": \"es\", \"street\": \"Ronson Road\", \"summary_en\": \"Power is very low at 1160 Ronson Road.\", \"symptom\": \"partial_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550362,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1196,
+  "prompt_tokens": 501,
+  "total_tokens": 1697,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1108
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ }
+}

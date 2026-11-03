@@ -1,0 +1,176 @@
+{
+ "text": "There's a power line down and sparking in front of 1132, Ronson Road. It's right across the sidewalk.",
+ "events": [
+  {
+   "kind": "partial",
+   "text": "There's",
+   "role": "caller",
+   "ms": 19520,
+   "start": 18700,
+   "speaker": null,
+   "at": 1.33
+  },
+  {
+   "kind": "partial",
+   "text": "There's a",
+   "role": "caller",
+   "ms": 19680,
+   "start": 18700,
+   "speaker": null,
+   "at": 1.44
+  },
+  {
+   "kind": "partial",
+   "text": "There's a power",
+   "role": "caller",
+   "ms": 20160,
+   "start": 18700,
+   "speaker": null,
+   "at": 2.44
+  },
+  {
+   "kind": "partial",
+   "text": "There's a power line",
+   "role": "caller",
+   "ms": 20400,
+   "start": 18700,
+   "speaker": null,
+   "at": 2.44
+  },
+  {
+   "kind": "partial",
+   "text": "There's a power line down",
+   "role": "caller",
+   "ms": 20640,
+   "start": 18700,
+   "speaker": null,
+   "at": 2.44
+  },
+  {
+   "kind": "partial",
+   "text": "There's a power line down and",
+   "role": "caller",
+   "ms": 20800,
+   "start": 18700,
+   "speaker": null,
+   "at": 2.53
+  },
+  {
+   "kind": "partial",
+   "text": "There's a power line down and sparking",
+   "role": "caller",
+   "ms": 20960,
+   "start": 18700,
+   "speaker": null,
+   "at": 2.72
+  },
+  {
+   "kind": "partial",
+   "text": "There's a power line down and sparking in",
+   "role": "caller",
+   "ms": 21040,
+   "start": 18700,
+   "speaker": null,
+   "at": 2.77
+  },
+  {
+   "kind": "partial",
+   "text": "There's a power line down and sparking in front",
+   "role": "caller",
+   "ms": 21200,
+   "start": 18700,
+   "speaker": null,
+   "at": 2.95
+  },
+  {
+   "kind": "partial",
+   "text": "There's a power line down and sparking in front of",
+   "role": "caller",
+   "ms": 21280,
+   "start": 18700,
+   "speaker": null,
+   "at": 3.05
+  },
+  {
+   "kind": "partial",
+   "text": "There's a power line down and sparking in front of 1132,",
+   "role": "caller",
+   "ms": 22480,
+   "start": 18700,
+   "speaker": null,
+   "at": 4.28
+  },
+  {
+   "kind": "partial",
+   "text": "There's a power line down and sparking in front of 1132, Ronson",
+   "role": "caller",
+   "ms": 23200,
+   "start": 18700,
+   "speaker": null,
+   "at": 4.94
+  },
+  {
+   "kind": "partial",
+   "text": "There's a power line down and sparking in front of 1132, Ronson Road.",
+   "role": "caller",
+   "ms": 23600,
+   "start": 18700,
+   "speaker": null,
+   "at": 5.36
+  },
+  {
+   "kind": "partial",
+   "text": "There's a power line down and sparking in front of 1132, Ronson Road. It's",
+   "role": "caller",
+   "ms": 23840,
+   "start": 18700,
+   "speaker": null,
+   "at": 5.8
+  },
+  {
+   "kind": "partial",
+   "text": "There's a power line down and sparking in front of 1132, Ronson Road. It's right",
+   "role": "caller",
+   "ms": 23920,
+   "start": 18700,
+   "speaker": null,
+   "at": 5.8
+  },
+  {
+   "kind": "partial",
+   "text": "There's a power line down and sparking in front of 1132, Ronson Road. It's right across the",
+   "role": "caller",
+   "ms": 24480,
+   "start": 18700,
+   "speaker": null,
+   "at": 6.27
+  },
+  {
+   "kind": "partial",
+   "text": "There's a power line down and sparking in front of 1132, Ronson Road. It's right across the sidewalk.",
+   "role": "caller",
+   "ms": 25200,
+   "start": 18700,
+   "speaker": null,
+   "at": 6.94
+  },
+  {
+   "kind": "partial",
+   "text": "There's a power line down and sparking in front of 1132, Ronson Road. It's right across the sidewalk.",
+   "role": "caller",
+   "ms": 25760,
+   "start": 18700,
+   "speaker": null,
+   "at": 7.56
+  },
+  {
+   "kind": "final",
+   "text": "There's a power line down and sparking in front of 1132, Ronson Road. It's right across the sidewalk.",
+   "role": "caller",
+   "ms": 25260,
+   "start": 18700,
+   "speaker": "C",
+   "at": 7.56
+  }
+ ]
+}

@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197f2-49e9-7393-8c2c-ca6c5d4077a1",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1236, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Burkhart Road\", \"summary_en\": \"Power outage at 1236 Burkhart Road.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550600,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1028,
+  "prompt_tokens": 502,
+  "total_tokens": 1530,
+  "completion_tokens_details": {
+   "reasoning_tokens": 940
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ }
+}

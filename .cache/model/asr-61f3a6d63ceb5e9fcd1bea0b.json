@@ -1,0 +1,14 @@
+{
+ "sessionId": "relight-1793617963602",
+ "transcript": "Hola, se fue la luz en mi casa. ¿Saben cuándo va a volver?",
+ "audioDurationMs": 5600,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 220,
+   "endMs": 4300,
+   "transcript": "Hola, se fue la luz en mi casa. ¿Saben cuándo va a volver?"
+  }
+ ],
+ "_latency_s": 2.7
+}

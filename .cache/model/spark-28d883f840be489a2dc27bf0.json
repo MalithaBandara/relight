@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bfd-f724-705a-885f-38f8191a05aa",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1176, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Burkhart Road\", \"summary_en\": \"Power is out at 1176 Burkhart Road.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618474,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 272,
+  "prompt_tokens": 500,
+  "total_tokens": 772,
+  "completion_tokens_details": {
+   "reasoning_tokens": 183
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.39
+}

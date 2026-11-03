@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1db-c73b-7597-bffd-f81a4259d298",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The outage sits at the Taramani Link Road fuse because outage calls came from three of its transformers. Send a patrol crew to that zone now to restore 1186 customers including hospitals and shelters.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793716897,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 408,
+  "prompt_tokens": 248,
+  "total_tokens": 656,
+  "completion_tokens_details": {
+   "reasoning_tokens": 359
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 4.47
+}

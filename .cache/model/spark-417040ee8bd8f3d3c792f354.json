@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cc1-029c-713e-855d-c10e89e518b4",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 57, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Brahmin Street\", \"summary_en\": \"No power since morning at 57 Brahmin Street.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631257,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 295,
+  "prompt_tokens": 507,
+  "total_tokens": 802,
+  "completion_tokens_details": {
+   "reasoning_tokens": 208
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.23
+}

@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d02-f7b9-723e-949c-2cb431260bf3",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 12, \"is_junk\": false, \"landmark\": null, \"language\": \"si\", \"street\": \"Lake Road\", \"summary_en\": \"No power at No. 12, Lake Road.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367144,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 843,
+  "prompt_tokens": 542,
+  "total_tokens": 1385,
+  "completion_tokens_details": {
+   "reasoning_tokens": 758
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

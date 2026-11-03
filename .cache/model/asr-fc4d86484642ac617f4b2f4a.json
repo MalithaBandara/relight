@@ -1,0 +1,25 @@
+{
+ "sessionId": "relight-1793367636182",
+ "transcript": "Lake Road il Grand Farmer depo சேமிக்கப்பது சரியாக உள்ளது, fuseகள் நன்றாக உள்ளன. பத்து N அருகில் அருகில் கிளையில் விழுந்து service கம்பி அறுந்துள்ளது. அதனால் ஆறு முதல் பதினாறு வரையிலான வீடுகளுக்கு மட்டும் மின்சாரம் இல்லை. Service கம்பிக்கு line குழு வேண்டும்.",
+ "audioDurationMs": 19760,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 60,
+   "endMs": 6300,
+   "transcript": "Lake Road il Grand Farmer depo சேமிக்கப்பது சரியாக உள்ளது, fuseகள் நன்றாக உள்ளன."
+  },
+  {
+   "turnId": 1,
+   "startMs": 7020,
+   "endMs": 15900,
+   "transcript": "பத்து N அருகில் அருகில் கிளையில் விழுந்து service கம்பி அறுந்துள்ளது. அதனால் ஆறு முதல் பதினாறு வரையிலான வீடுகளுக்கு மட்டும் மின்சாரம் இல்லை."
+  },
+  {
+   "turnId": 2,
+   "startMs": 16780,
+   "endMs": 19100,
+   "transcript": "Service கம்பிக்கு line குழு வேண்டும்."
+  }
+ ]
+}

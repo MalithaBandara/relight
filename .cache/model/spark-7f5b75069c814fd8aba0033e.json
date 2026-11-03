@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bea-1f31-72ef-a569-30323a0510ea",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [], \"damage\": \"none\", \"device_ok\": false, \"energised\": false, \"house_from\": null, \"house_no\": 52, \"house_to\": null, \"landmark\": null, \"street\": \"Hospital Road\", \"summary_en\": \"Report mentions 52 Hospital Road with no damage details provided.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617174,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 410,
+  "prompt_tokens": 486,
+  "total_tokens": 896,
+  "completion_tokens_details": {
+   "reasoning_tokens": 327
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.67
+}

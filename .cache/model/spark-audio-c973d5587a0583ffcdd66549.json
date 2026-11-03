@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a1983d-c6fd-7684-adac-157729049a03",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "හෙලෝ මම කතාකරන්නේ රෝහල පාර ටර්න් එක නේ ලොකු සද්දයක් ඇහුණා වයර් එක කැඩිලා වැටිලා ගියා",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793555547,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 977,
+  "prompt_tokens": 175,
+  "total_tokens": 1152,
+  "completion_tokens_details": {
+   "reasoning_tokens": 920
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

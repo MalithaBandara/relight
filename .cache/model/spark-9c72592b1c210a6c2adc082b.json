@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1db-5c3a-7214-b478-2761b69b0fbb",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Usted ya lo reportó a las 19:07, gracias.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793716870,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 305,
+  "prompt_tokens": 149,
+  "total_tokens": 454,
+  "completion_tokens_details": {
+   "reasoning_tokens": 281
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.33
+}

@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197ef-e1b2-7259-ad46-d1fd37508a0e",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1180, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Ronson Road\", \"summary_en\": \"Lights are dim and flickering at 1180 Ronson Road.\", \"symptom\": \"partial_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550442,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 2840,
+  "prompt_tokens": 502,
+  "total_tokens": 3342,
+  "completion_tokens_details": {
+   "reasoning_tokens": 2750
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ }
+}

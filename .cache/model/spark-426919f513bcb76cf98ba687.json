@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d04-99a2-70f2-a18a-6c9a59870dd9",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": null, \"is_junk\": true, \"landmark\": null, \"language\": \"si\", \"street\": null, \"summary_en\": \"You guys don't do your work properly!!!\", \"symptom\": \"none\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367251,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 835,
+  "prompt_tokens": 541,
+  "total_tokens": 1376,
+  "completion_tokens_details": {
+   "reasoning_tokens": 756
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ }
+}

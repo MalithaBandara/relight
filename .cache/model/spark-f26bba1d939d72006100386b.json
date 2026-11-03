@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c79-519d-7474-9ce6-6c55c6a50e93",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"bucket_truck\"], \"damage\": \"pole_down\", \"device_ok\": false, \"energised\": false, \"house_from\": null, \"house_no\": 12, \"house_to\": null, \"landmark\": null, \"street\": \"Wirt Road\", \"summary_en\": \"Concrete pole broken in front of number 12 on Wirt Road with wires down in the street, no sparking. Needs bucket truck.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793626558,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 685,
+  "prompt_tokens": 474,
+  "total_tokens": 1159,
+  "completion_tokens_details": {
+   "reasoning_tokens": 580
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 4.07
+}

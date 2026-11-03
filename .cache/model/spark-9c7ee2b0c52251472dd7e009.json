@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197f4-7218-72cb-90ff-6650d0ea6205",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Our records show power was restored in your area at 01:08. I have recorded that your house is still without power and we are checking for a second fault.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550742,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 2406,
+  "prompt_tokens": 166,
+  "total_tokens": 2572,
+  "completion_tokens_details": {
+   "reasoning_tokens": 2363
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

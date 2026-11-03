@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1da-702d-75e9-a595-04c3053e4931",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1028, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Norcrest Drive\", \"summary_en\": \"Power is out at 1028 Norcrest Drive.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793716809,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 143,
+  "prompt_tokens": 499,
+  "total_tokens": 642,
+  "completion_tokens_details": {
+   "reasoning_tokens": 56
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.2
+}

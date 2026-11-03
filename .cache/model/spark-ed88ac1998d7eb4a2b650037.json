@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c89-459b-7425-9f2e-c1ca921142b3",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 115, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"3rd Street Cross Street 2\", \"summary_en\": \"No power at door no 115, 3rd Street Cross Street 2.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793627604,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 303,
+  "prompt_tokens": 512,
+  "total_tokens": 815,
+  "completion_tokens_details": {
+   "reasoning_tokens": 207
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.12
+}

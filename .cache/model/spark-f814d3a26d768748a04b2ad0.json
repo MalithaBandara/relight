@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cb2-c7f4-736f-a600-b2d14ef5e262",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"line\", \"bucket_truck\"], \"damage\": \"pole_down\", \"device_ok\": false, \"energised\": false, \"house_from\": null, \"house_no\": 26, \"house_to\": null, \"landmark\": \"Velachery Upper Flyover\", \"street\": \"N 1st Street\", \"summary_en\": \"Concrete pole broken near 26 N 1st Street by Velachery Upper Flyover with wires fallen across the road. Crew has started pole replacement.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630324,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 849,
+  "prompt_tokens": 540,
+  "total_tokens": 1389,
+  "completion_tokens_details": {
+   "reasoning_tokens": 730
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 7.66
+}

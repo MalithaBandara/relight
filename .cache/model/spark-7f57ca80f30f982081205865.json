@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1d9-78c1-72a9-aeff-6b4d64044f61",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The Bingle Road fuse is out across 11 transformers with T-344 confirmed dead and 163 customers dark. Send a patrol crew to the Bingle Road zone now to get the Pech Road police station back on.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793716746,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 392,
+  "prompt_tokens": 172,
+  "total_tokens": 564,
+  "completion_tokens_details": {
+   "reasoning_tokens": 338
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 4.31
+}

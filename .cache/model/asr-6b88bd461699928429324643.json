@@ -1,0 +1,26 @@
+{
+ "sessionId": "relight-1793630310940",
+ "transcript": "Velachery Upper Flyover இருபத்தாறு இருபத்தாறு N 1st Street அருகில் இருக்கிறோம் Concrete Kambam உடைந்து கம்பிகள் சாலையின் குறுக்கே விழுந்துள்ளன. கம்பத்தை மாற்ற மாற்றத் தொடங்கியிருக்கிறோம்.",
+ "audioDurationMs": 13360,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 140,
+   "endMs": 4300,
+   "transcript": "Velachery Upper Flyover இருபத்தாறு இருபத்தாறு N 1st Street அருகில் இருக்கிறோம்"
+  },
+  {
+   "turnId": 1,
+   "startMs": 5180,
+   "endMs": 9820,
+   "transcript": "Concrete Kambam உடைந்து கம்பிகள் சாலையின் குறுக்கே விழுந்துள்ளன."
+  },
+  {
+   "turnId": 2,
+   "startMs": 10300,
+   "endMs": 12700,
+   "transcript": "கம்பத்தை மாற்ற மாற்றத் தொடங்கியிருக்கிறோம்."
+  }
+ ],
+ "_latency_s": 6.25
+}

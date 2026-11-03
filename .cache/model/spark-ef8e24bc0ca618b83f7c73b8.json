@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cac-37b1-72ae-9438-43bcd528d085",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 24, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"VGP Selva Nagar Extn 1st Main Road Cross Street 1\", \"summary_en\": \"No power at 24 VGP Selva Nagar Extn 1st Main Road Cross Street 1, fridge stopped.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629894,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 314,
+  "prompt_tokens": 519,
+  "total_tokens": 833,
+  "completion_tokens_details": {
+   "reasoning_tokens": 201
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.78
+}

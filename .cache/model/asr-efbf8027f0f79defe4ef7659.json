@@ -1,0 +1,19 @@
+{
+ "sessionId": "relight-1793554989669",
+ "transcript": "Cinnamon Gardens Lane transformer by number 55 the drop out fuse is blown Looks like lightning. One person can can replace it.",
+ "audioDurationMs": 12480,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 140,
+   "endMs": 6300,
+   "transcript": "Cinnamon Gardens Lane transformer by number 55 the drop out fuse is blown"
+  },
+  {
+   "turnId": 1,
+   "startMs": 6860,
+   "endMs": 11820,
+   "transcript": "Looks like lightning. One person can can replace it."
+  }
+ ]
+}

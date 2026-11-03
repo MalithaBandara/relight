@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197e6-cf0e-70e3-8d68-70aacd9e957e",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1432, \"is_junk\": false, \"landmark\": null, \"language\": \"es\", \"street\": \"Wirt Road\", \"summary_en\": \"No power at 1432 Wirt Road.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793549848,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1029,
+  "prompt_tokens": 501,
+  "total_tokens": 1530,
+  "completion_tokens_details": {
+   "reasoning_tokens": 943
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ }
+}

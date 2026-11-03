@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c9f-8779-7405-bbeb-f59229142624",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 59, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Film Street\", \"summary_en\": \"No current at 59 Film Street, fridge stopped.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629063,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 155,
+  "prompt_tokens": 505,
+  "total_tokens": 660,
+  "completion_tokens_details": {
+   "reasoning_tokens": 70
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 1.53
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1e8-06f8-72fa-a387-821bb46e9b0a",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Copy. I have changed the diagnosis to tree on line and replanned the work.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717700,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 244,
+  "prompt_tokens": 151,
+  "total_tokens": 395,
+  "completion_tokens_details": {
+   "reasoning_tokens": 218
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 113
+  }
+ },
+ "_latency_s": 2.96
+}

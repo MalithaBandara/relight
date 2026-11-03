@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cc4-6ff5-70bc-b454-e1bb60466514",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 2, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Taramani Link Road Cross Street 3\", \"summary_en\": \"No power at door no 2, Taramani Link Road Cross Street 3.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631481,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 295,
+  "prompt_tokens": 513,
+  "total_tokens": 808,
+  "completion_tokens_details": {
+   "reasoning_tokens": 196
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ },
+ "_latency_s": 1.88
+}

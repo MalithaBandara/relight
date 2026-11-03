@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19ca2-9536-755a-a69b-4417210cc74e",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 54, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"2nd Cross Road Cross Street 1\", \"summary_en\": \"No power at door no. 54, 2nd Cross Road Cross Street 1.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629263,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 208,
+  "prompt_tokens": 523,
+  "total_tokens": 731,
+  "completion_tokens_details": {
+   "reasoning_tokens": 109
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.05
+}

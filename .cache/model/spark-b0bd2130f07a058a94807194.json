@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d07-e731-75d1-b95b-7b36a8e280fa",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "පාලන මැදිරියෙන් නැවත කියවන්නම්. Cinnamon Gardens Lane අංක 55 අසල ට්‍රාන්ස්ෆෝමර් ෆියුස් එක පිච්චිලා, හරිද?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367467,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1866,
+  "prompt_tokens": 203,
+  "total_tokens": 2069,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1798
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

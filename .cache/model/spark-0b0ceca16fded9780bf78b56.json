@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bf5-8f80-77b4-b989-1f3d4e545aca",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1048, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Auline Lane\", \"summary_en\": \"Power is out at 1048 Auline Lane.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617923,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 229,
+  "prompt_tokens": 499,
+  "total_tokens": 728,
+  "completion_tokens_details": {
+   "reasoning_tokens": 142
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 1.95
+}

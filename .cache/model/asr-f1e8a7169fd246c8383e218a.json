@@ -1,0 +1,14 @@
+{
+ "sessionId": "relight-1793631508471",
+ "transcript": "RajaRajaLaxmi Nagar 1st main Road, 8047.",
+ "audioDurationMs": 6000,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 140,
+   "endMs": 5500,
+   "transcript": "RajaRajaLaxmi Nagar 1st main Road, 8047."
+  }
+ ],
+ "_latency_s": 3.49
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19caa-6e44-7595-853c-fc47c7054dee",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 5, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"VGP Selva Nagar Extension 5th Street\", \"summary_en\": \"No power at 5, VGP Selva Nagar Extension 5th Street, please fix.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629777,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 373,
+  "prompt_tokens": 537,
+  "total_tokens": 910,
+  "completion_tokens_details": {
+   "reasoning_tokens": 271
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.2
+}

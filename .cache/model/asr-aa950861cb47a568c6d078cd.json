@@ -1,0 +1,20 @@
+{
+ "sessionId": "relight-1793716815575",
+ "transcript": "on site at Long Point Road near number 1008 A tree is lying across the conductors. Clearing it before the line work.",
+ "audioDurationMs": 10400,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 60,
+   "endMs": 3820,
+   "transcript": "on site at Long Point Road near number 1008"
+  },
+  {
+   "turnId": 1,
+   "startMs": 4140,
+   "endMs": 9820,
+   "transcript": "A tree is lying across the conductors. Clearing it before the line work."
+  }
+ ],
+ "_latency_s": 4.2
+}

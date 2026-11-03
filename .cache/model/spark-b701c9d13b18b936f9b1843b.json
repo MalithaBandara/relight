@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197ea-b384-74f3-a64b-d8044048c9ee",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": \"storm\", \"hazard\": \"none\", \"house_no\": 1128, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Voss Road\", \"summary_en\": \"No power at 1128 Voss Road since the storm.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550103,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1156,
+  "prompt_tokens": 501,
+  "total_tokens": 1657,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1066
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ }
+}

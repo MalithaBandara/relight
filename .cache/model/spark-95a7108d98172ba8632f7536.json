@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cbf-d632-7332-a47c-7a8654f8feb3",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 51, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Anna Nagar 4th Main Road\", \"summary_en\": \"Power cut at house 51, Anna Nagar 4th Main Road, requesting lineman.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631180,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 161,
+  "prompt_tokens": 515,
+  "total_tokens": 676,
+  "completion_tokens_details": {
+   "reasoning_tokens": 63
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.19
+}

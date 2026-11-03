@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bfd-8813-75b0-88bb-373cef97a13d",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Estimado cliente: hemos localizado la falla que le afecta, un cable energizado sobre la vía, y ya hay una cuadrilla asignada. La hora estimada de restablecimiento es 22:58.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618446,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 173,
+  "prompt_tokens": 91,
+  "total_tokens": 264,
+  "completion_tokens_details": {
+   "reasoning_tokens": 122
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.25
+}

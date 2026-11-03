@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1ec-a0b8-73f0-9427-e216a21600e0",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": null, \"is_junk\": false, \"landmark\": null, \"language\": \"hi\", \"street\": null, \"summary_en\": \"No, there is no power here either.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793718001,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 312,
+  "prompt_tokens": 504,
+  "total_tokens": 816,
+  "completion_tokens_details": {
+   "reasoning_tokens": 232
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 4.14
+}

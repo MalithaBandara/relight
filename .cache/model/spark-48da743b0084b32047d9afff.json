@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bfa-191e-72d5-ba19-c1f179df3b42",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1096, \"is_junk\": false, \"landmark\": null, \"language\": \"es\", \"street\": \"Huge Oaks Street\", \"summary_en\": \"Power is out at 1096 Huge Oaks Street.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618221,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 229,
+  "prompt_tokens": 502,
+  "total_tokens": 731,
+  "completion_tokens_details": {
+   "reasoning_tokens": 141
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.42
+}

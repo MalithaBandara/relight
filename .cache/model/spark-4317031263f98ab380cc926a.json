@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1ea-1cf8-7032-a234-7a9b0e70cdc0",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "प्रिय ग्राहक, आपके क्षेत्र में फ्यूज उड़ने का फॉल्ट मिल गया है और हमारी टीम नियुक्त कर दी गई है। बिजली 23:05 तक बहाल होने का अनुमान है।",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717836,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 258,
+  "prompt_tokens": 89,
+  "total_tokens": 347,
+  "completion_tokens_details": {
+   "reasoning_tokens": 205
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.03
+}

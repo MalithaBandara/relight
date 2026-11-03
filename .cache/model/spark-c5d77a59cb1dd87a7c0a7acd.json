@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bf6-46aa-773d-a0e8-52408053b498",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "No encontré su dirección. ¿Me indica el número de casa y la calle, o su número de cuenta, por favor?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617970,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 277,
+  "prompt_tokens": 157,
+  "total_tokens": 434,
+  "completion_tokens_details": {
+   "reasoning_tokens": 242
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.16
+}

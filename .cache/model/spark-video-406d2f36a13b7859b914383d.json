@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19ca6-75a7-7026-99f4-01632cb643bf",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"at_seconds\": 1.0, \"damage\": \"live_wire\", \"description\": \"Overhead distribution wires beside a wet road arc and burn where they pass through a tall tree, producing orange flames followed by an intense blue-white flash during rain.\", \"public_hazard\": true, \"segment_prompts\": [\"utility pole\", \"overhead power line\", \"tall tree\", \"electrical arc\"], \"severity\": \"high\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629517,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1613,
+  "prompt_tokens": 3525,
+  "total_tokens": 5138,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1514
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 16.52
+}

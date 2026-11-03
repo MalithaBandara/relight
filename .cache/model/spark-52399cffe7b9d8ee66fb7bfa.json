@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197e3-ae0e-73e9-8e10-b5c418bd9456",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"damage\": \"tree_on_line\", \"description\": \"Multiple large trees fallen across roadside and roadway next to distribution poles, with guy wires and overhead conductors displaced and entangled in fallen trunks. Roadway partially blocked with vehicles stopped nearby.\", \"public_hazard\": true, \"segment_prompts\": [\"fallen tree trunk\", \"utility pole\", \"overhead power line\"], \"severity\": \"high\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793549643,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 980,
+  "prompt_tokens": 3383,
+  "total_tokens": 4363,
+  "completion_tokens_details": {
+   "reasoning_tokens": 889
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

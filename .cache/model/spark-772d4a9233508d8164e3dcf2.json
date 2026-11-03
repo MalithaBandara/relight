@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1e7-72e8-73ab-88bf-a8190a36486d",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "வணக்கம், உங்கள் பகுதியில் மின்தடைக்கு காரணமான மின்கம்பியில் விழுந்த மரத்தால் ஏற்பட்ட பழுது கண்டறியப்பட்டு, பழுதுநீக்கும் குழு நியமிக்கப்பட்டுள்ளது. மின்சாரம் 01:18 அளவில் மீட்கப்படும் என எதிர்பார்க்கப்படுகிறது, அசௌகரியத்திற்கு மன்னிக்கவும்.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717662,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 402,
+  "prompt_tokens": 90,
+  "total_tokens": 492,
+  "completion_tokens_details": {
+   "reasoning_tokens": 253
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 5.12
+}

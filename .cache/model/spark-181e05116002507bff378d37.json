@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cbd-742f-740f-9baa-99f67f42a4cb",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"line\"], \"damage\": \"live_wire\", \"device_ok\": false, \"energised\": true, \"house_from\": null, \"house_no\": 16, \"house_to\": null, \"landmark\": null, \"street\": \"A.G.S. Colony 2nd Street Cross Street 1\", \"summary_en\": \"Crew reached near house no 16. Wire lying on the road is live. Area has been barricaded and is being made safe.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631024,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 491,
+  "prompt_tokens": 512,
+  "total_tokens": 1003,
+  "completion_tokens_details": {
+   "reasoning_tokens": 378
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 4.0
+}

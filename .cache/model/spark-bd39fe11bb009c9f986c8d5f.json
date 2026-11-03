@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bea-1411-737e-8d9e-1b9815b4d8f9",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "You already reported this at 15:01, thank you.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617171,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 302,
+  "prompt_tokens": 147,
+  "total_tokens": 449,
+  "completion_tokens_details": {
+   "reasoning_tokens": 280
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.86
+}

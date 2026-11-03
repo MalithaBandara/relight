@@ -1,0 +1,20 @@
+{
+ "sessionId": "relight-1793618129228",
+ "transcript": "on side of Westview Drive near number 1432 a tree is lying across the conductors. clearing it before the line work.",
+ "audioDurationMs": 10320,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 380,
+   "endMs": 3740,
+   "transcript": "on side of Westview Drive near number 1432"
+  },
+  {
+   "turnId": 1,
+   "startMs": 4380,
+   "endMs": 9580,
+   "transcript": "a tree is lying across the conductors. clearing it before the line work."
+  }
+ ],
+ "_latency_s": 4.9
+}

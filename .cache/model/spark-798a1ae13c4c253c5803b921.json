@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19caf-8eef-7560-a9fe-6719015e105f",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 27, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"mahalakshmi nagar 3rd main road Cross Street 4\", \"summary_en\": \"No power at 27, mahalakshmi nagar 3rd main road Cross Street 4, please fix.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630113,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 613,
+  "prompt_tokens": 543,
+  "total_tokens": 1156,
+  "completion_tokens_details": {
+   "reasoning_tokens": 500
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.82
+}

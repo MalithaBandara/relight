@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19beb-c4b5-77a7-b89e-7dbffc3e0cb5",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "ගෞරවනීය පාරිභෝගිකයාණනි, ඔබ ප්‍රදේශයේ විදුලි බිඳවැටීමට හේතුව රැහැන මත වැටී ඇති ගසක් බව සොයාගෙන ඇති අතර අලුත්වැඩියා කණ්ඩායමක් පත් කර ඇත. ඇස්තමේන්තුගත විදුලිය යථා තත්ත්වයට පත්වීමේ වේලාව 18:08 වන අතර සිදුවූ අපහසුතාවට අප සමාව අයදිමු.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617282,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 699,
+  "prompt_tokens": 91,
+  "total_tokens": 790,
+  "completion_tokens_details": {
+   "reasoning_tokens": 562
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 4.3
+}

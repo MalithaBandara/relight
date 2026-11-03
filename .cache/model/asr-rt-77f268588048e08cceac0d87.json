@@ -1,0 +1,221 @@
+{
+ "text": "Please stay at least 10 meters away from the wire and keep others away. Treat it as live. We are sending a crew to make it safe.",
+ "events": [
+  {
+   "kind": "partial",
+   "text": "Please",
+   "role": "taker",
+   "ms": 42320,
+   "start": 41500,
+   "speaker": null,
+   "at": 1.72
+  },
+  {
+   "kind": "partial",
+   "text": "Please stay at",
+   "role": "taker",
+   "ms": 42560,
+   "start": 41500,
+   "speaker": null,
+   "at": 1.98
+  },
+  {
+   "kind": "partial",
+   "text": "Please stay at least",
+   "role": "taker",
+   "ms": 42960,
+   "start": 41500,
+   "speaker": null,
+   "at": 2.36
+  },
+  {
+   "kind": "partial",
+   "text": "Please stay at least 10",
+   "role": "taker",
+   "ms": 43280,
+   "start": 41500,
+   "speaker": null,
+   "at": 2.7
+  },
+  {
+   "kind": "partial",
+   "text": "Please stay at least 10 meters",
+   "role": "taker",
+   "ms": 43440,
+   "start": 41500,
+   "speaker": null,
+   "at": 2.84
+  },
+  {
+   "kind": "partial",
+   "text": "Please stay at least 10 meters away",
+   "role": "taker",
+   "ms": 43600,
+   "start": 41500,
+   "speaker": null,
+   "at": 3.02
+  },
+  {
+   "kind": "partial",
+   "text": "Please stay at least 10 meters away from",
+   "role": "taker",
+   "ms": 43920,
+   "start": 41500,
+   "speaker": null,
+   "at": 3.33
+  },
+  {
+   "kind": "partial",
+   "text": "Please stay at least 10 meters away from the",
+   "role": "taker",
+   "ms": 44080,
+   "start": 41500,
+   "speaker": null,
+   "at": 3.47
+  },
+  {
+   "kind": "partial",
+   "text": "Please stay at least 10 meters away from the wire",
+   "role": "taker",
+   "ms": 44480,
+   "start": 41500,
+   "speaker": null,
+   "at": 3.89
+  },
+  {
+   "kind": "partial",
+   "text": "Please stay at least 10 meters away from the wire and",
+   "role": "taker",
+   "ms": 45040,
+   "start": 41500,
+   "speaker": null,
+   "at": 4.45
+  },
+  {
+   "kind": "partial",
+   "text": "Please stay at least 10 meters away from the wire and keep",
+   "role": "taker",
+   "ms": 45280,
+   "start": 41500,
+   "speaker": null,
+   "at": 4.69
+  },
+  {
+   "kind": "partial",
+   "text": "Please stay at least 10 meters away from the wire and keep others",
+   "role": "taker",
+   "ms": 45440,
+   "start": 41500,
+   "speaker": null,
+   "at": 4.84
+  },
+  {
+   "kind": "partial",
+   "text": "Please stay at least 10 meters away from the wire and keep others away.",
+   "role": "taker",
+   "ms": 45600,
+   "start": 41500,
+   "speaker": null,
+   "at": 5.06
+  },
+  {
+   "kind": "partial",
+   "text": "Please stay at least 10 meters away from the wire and keep others away. Treat",
+   "role": "taker",
+   "ms": 46320,
+   "start": 41500,
+   "speaker": null,
+   "at": 5.72
+  },
+  {
+   "kind": "partial",
+   "text": "Please stay at least 10 meters away from the wire and keep others away. Treat it as",
+   "role": "taker",
+   "ms": 46640,
+   "start": 41500,
+   "speaker": null,
+   "at": 6.08
+  },
+  {
+   "kind": "partial",
+   "text": "Please stay at least 10 meters away from the wire and keep others away. Treat it as live.",
+   "role": "taker",
+   "ms": 47360,
+   "start": 41500,
+   "speaker": null,
+   "at": 6.78
+  },
+  {
+   "kind": "partial",
+   "text": "Please stay at least 10 meters away from the wire and keep others away. Treat it as live. We",
+   "role": "taker",
+   "ms": 47760,
+   "start": 41500,
+   "speaker": null,
+   "at": 7.17
+  },
+  {
+   "kind": "partial",
+   "text": "Please stay at least 10 meters away from the wire and keep others away. Treat it as live. We are",
+   "role": "taker",
+   "ms": 47920,
+   "start": 41500,
+   "speaker": null,
+   "at": 7.31
+  },
+  {
+   "kind": "partial",
+   "text": "Please stay at least 10 meters away from the wire and keep others away. Treat it as live. We are sending a",
+   "role": "taker",
+   "ms": 48640,
+   "start": 41500,
+   "speaker": null,
+   "at": 8.06
+  },
+  {
+   "kind": "partial",
+   "text": "Please stay at least 10 meters away from the wire and keep others away. Treat it as live. We are sending a crew",
+   "role": "taker",
+   "ms": 48960,
+   "start": 41500,
+   "speaker": null,
+   "at": 8.36
+  },
+  {
+   "kind": "partial",
+   "text": "Please stay at least 10 meters away from the wire and keep others away. Treat it as live. We are sending a crew to make it",
+   "role": "taker",
+   "ms": 49360,
+   "start": 41500,
+   "speaker": null,
+   "at": 8.78
+  },
+  {
+   "kind": "partial",
+   "text": "Please stay at least 10 meters away from the wire and keep others away. Treat it as live. We are sending a crew to make it safe.",
+   "role": "taker",
+   "ms": 50000,
+   "start": 41500,
+   "speaker": null,
+   "at": 9.45
+  },
+  {
+   "kind": "partial",
+   "text": "Please stay at least 10 meters away from the wire and keep others away. Treat it as live. We are sending a crew to make it safe.",
+   "role": "taker",
+   "ms": 50240,
+   "start": 41500,
+   "speaker": null,
+   "at": 9.7
+  },
+  {
+   "kind": "final",
+   "text": "Please stay at least 10 meters away from the wire and keep others away. Treat it as live. We are sending a crew to make it safe.",
+   "role": "taker",
+   "ms": 49740,
+   "start": 41500,
+   "speaker": "B",
+   "at": 9.7
+  }
+ ]
+}

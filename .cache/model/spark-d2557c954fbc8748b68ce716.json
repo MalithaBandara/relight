@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c97-b11d-7768-a2b1-ae1a269195cb",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 88, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"6th Main Road\", \"summary_en\": \"No power at 88 6th Main Road, please fix it.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793628549,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 255,
+  "prompt_tokens": 531,
+  "total_tokens": 786,
+  "completion_tokens_details": {
+   "reasoning_tokens": 164
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 23.35
+}

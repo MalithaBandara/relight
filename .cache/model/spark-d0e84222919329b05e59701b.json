@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cb9-8a2e-761a-86b8-20acdc21edc8",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 18, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"VGP avenue\", \"summary_en\": \"No power at door number 18, VGP avenue.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630767,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 197,
+  "prompt_tokens": 518,
+  "total_tokens": 715,
+  "completion_tokens_details": {
+   "reasoning_tokens": 110
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.5
+}

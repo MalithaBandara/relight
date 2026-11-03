@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1df-08a0-7258-b5b4-1b49272fb2c0",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "All 4 no-power reports trace to Transformer T-059 so its blown fuse is cutting power to 287 customers. Send a fuse replacement crew there now to restore the police station on JagannathaPuram 2nd Street.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717110,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 298,
+  "prompt_tokens": 145,
+  "total_tokens": 443,
+  "completion_tokens_details": {
+   "reasoning_tokens": 242
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.62
+}

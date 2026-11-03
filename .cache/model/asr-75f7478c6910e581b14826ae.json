@@ -1,0 +1,26 @@
+{
+ "sessionId": "relight-1793630743969",
+ "transcript": "Muthu Krishnan Street 11th என் அருகில் இருக்கிறோம். Concrete Kambam ഉடைந்து, கம்பிகள் சாலையின் குறுக்கே விழுந்துள்ளன. கம்பத்தை மாற்றத் தொடங்குகிறோம்.",
+ "audioDurationMs": 12800,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 140,
+   "endMs": 3740,
+   "transcript": "Muthu Krishnan Street 11th என் அருகில் இருக்கிறோம்."
+  },
+  {
+   "turnId": 1,
+   "startMs": 4540,
+   "endMs": 9100,
+   "transcript": "Concrete Kambam ഉடைந்து, கம்பிகள் சாலையின் குறுக்கே விழுந்துள்ளன."
+  },
+  {
+   "turnId": 2,
+   "startMs": 10060,
+   "endMs": 11980,
+   "transcript": "கம்பத்தை மாற்றத் தொடங்குகிறோம்."
+  }
+ ],
+ "_latency_s": 5.66
+}

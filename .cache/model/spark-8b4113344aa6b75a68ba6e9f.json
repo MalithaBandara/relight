@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c8a-2a12-7762-ae56-35d395e5fd3d",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 203, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"6th Main Road Cross Street 1\", \"summary_en\": \"No power since morning at 203, 6th Main Road Cross Street 1.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793627662,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 408,
+  "prompt_tokens": 513,
+  "total_tokens": 921,
+  "completion_tokens_details": {
+   "reasoning_tokens": 310
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 4.48
+}

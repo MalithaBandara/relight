@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19be9-f3b1-7302-b645-a53c84b855f1",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"confidence\": \"high\", \"note\": \"Power pole visible but no identification plate is legible due to distance, rain and blur\", \"readable\": false, \"tag\": null}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617163,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 148,
+  "prompt_tokens": 3386,
+  "total_tokens": 3534,
+  "completion_tokens_details": {
+   "reasoning_tokens": 100
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.65
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cb2-7c0e-74da-9fc5-93073de5332b",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 66, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Film Street\", \"summary_en\": \"No power at door no 66, Film Street.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630305,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 152,
+  "prompt_tokens": 506,
+  "total_tokens": 658,
+  "completion_tokens_details": {
+   "reasoning_tokens": 67
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.16
+}

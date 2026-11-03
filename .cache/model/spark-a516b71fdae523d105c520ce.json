@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bf9-22b3-7514-aad7-fc128e266765",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": null, \"is_junk\": true, \"landmark\": null, \"language\": \"en\", \"street\": null, \"summary_en\": \"Caller asks to fix wifi router, unrelated to power outage.\", \"symptom\": \"none\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618158,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 292,
+  "prompt_tokens": 495,
+  "total_tokens": 787,
+  "completion_tokens_details": {
+   "reasoning_tokens": 210
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.08
+}

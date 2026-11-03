@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1ec-618f-7608-88bf-d817a31fb36e",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 63, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Velachery Bypass Road\", \"summary_en\": \"House at door no 63 Velachery Bypass Road has no power while neighboring houses have power.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717985,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 300,
+  "prompt_tokens": 517,
+  "total_tokens": 817,
+  "completion_tokens_details": {
+   "reasoning_tokens": 203
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ },
+ "_latency_s": 3.15
+}

@@ -1,0 +1,176 @@
+{
+ "text": "We know about this outage, cause still being checked and a crew is on the way. estimated restoration around 1520",
+ "events": [
+  {
+   "kind": "partial",
+   "text": "We",
+   "role": "taker",
+   "ms": 202880,
+   "start": 202380,
+   "speaker": null,
+   "at": 1.14
+  },
+  {
+   "kind": "partial",
+   "text": "We know",
+   "role": "taker",
+   "ms": 203200,
+   "start": 202380,
+   "speaker": null,
+   "at": 1.44
+  },
+  {
+   "kind": "partial",
+   "text": "We know about",
+   "role": "taker",
+   "ms": 203440,
+   "start": 202380,
+   "speaker": null,
+   "at": 1.67
+  },
+  {
+   "kind": "partial",
+   "text": "We know about this",
+   "role": "taker",
+   "ms": 203600,
+   "start": 202380,
+   "speaker": null,
+   "at": 1.84
+  },
+  {
+   "kind": "partial",
+   "text": "We know about this outage,",
+   "role": "taker",
+   "ms": 204400,
+   "start": 202380,
+   "speaker": null,
+   "at": 2.64
+  },
+  {
+   "kind": "partial",
+   "text": "We know about this outage, cause still",
+   "role": "taker",
+   "ms": 205200,
+   "start": 202380,
+   "speaker": null,
+   "at": 3.47
+  },
+  {
+   "kind": "partial",
+   "text": "We know about this outage, cause still being",
+   "role": "taker",
+   "ms": 205440,
+   "start": 202380,
+   "speaker": null,
+   "at": 3.67
+  },
+  {
+   "kind": "partial",
+   "text": "We know about this outage, cause still being checked",
+   "role": "taker",
+   "ms": 205680,
+   "start": 202380,
+   "speaker": null,
+   "at": 3.91
+  },
+  {
+   "kind": "partial",
+   "text": "We know about this outage, cause still being checked and",
+   "role": "taker",
+   "ms": 206160,
+   "start": 202380,
+   "speaker": null,
+   "at": 4.39
+  },
+  {
+   "kind": "partial",
+   "text": "We know about this outage, cause still being checked and a",
+   "role": "taker",
+   "ms": 206480,
+   "start": 202380,
+   "speaker": null,
+   "at": 4.73
+  },
+  {
+   "kind": "partial",
+   "text": "We know about this outage, cause still being checked and a crew",
+   "role": "taker",
+   "ms": 206560,
+   "start": 202380,
+   "speaker": null,
+   "at": 4.83
+  },
+  {
+   "kind": "partial",
+   "text": "We know about this outage, cause still being checked and a crew is on the",
+   "role": "taker",
+   "ms": 206960,
+   "start": 202380,
+   "speaker": null,
+   "at": 5.27
+  },
+  {
+   "kind": "partial",
+   "text": "We know about this outage, cause still being checked and a crew is on the way.",
+   "role": "taker",
+   "ms": 207360,
+   "start": 202380,
+   "speaker": null,
+   "at": 5.61
+  },
+  {
+   "kind": "partial",
+   "text": "We know about this outage, cause still being checked and a crew is on the way. estimated",
+   "role": "taker",
+   "ms": 208800,
+   "start": 202380,
+   "speaker": null,
+   "at": 7.06
+  },
+  {
+   "kind": "partial",
+   "text": "We know about this outage, cause still being checked and a crew is on the way. estimated restoration",
+   "role": "taker",
+   "ms": 209440,
+   "start": 202380,
+   "speaker": null,
+   "at": 7.72
+  },
+  {
+   "kind": "partial",
+   "text": "We know about this outage, cause still being checked and a crew is on the way. estimated restoration around",
+   "role": "taker",
+   "ms": 209600,
+   "start": 202380,
+   "speaker": null,
+   "at": 7.86
+  },
+  {
+   "kind": "partial",
+   "text": "We know about this outage, cause still being checked and a crew is on the way. estimated restoration around 1520",
+   "role": "taker",
+   "ms": 210800,
+   "start": 202380,
+   "speaker": null,
+   "at": 9.06
+  },
+  {
+   "kind": "partial",
+   "text": "We know about this outage, cause still being checked and a crew is on the way. estimated restoration around 1520",
+   "role": "taker",
+   "ms": 211280,
+   "start": 202380,
+   "speaker": null,
+   "at": 9.56
+  },
+  {
+   "kind": "final",
+   "text": "We know about this outage, cause still being checked and a crew is on the way. estimated restoration around 1520",
+   "role": "taker",
+   "ms": 210780,
+   "start": 202380,
+   "speaker": "B",
+   "at": 9.56
+  }
+ ]
+}

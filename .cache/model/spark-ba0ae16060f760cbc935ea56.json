@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bf0-8247-7089-ab7e-522ab63f2f5b",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "சரி. கோளாறை service wire down என்று மாற்றி, வேலையை மீண்டும் திட்டமிட்டுள்ளேன்.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617592,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 264,
+  "prompt_tokens": 179,
+  "total_tokens": 443,
+  "completion_tokens_details": {
+   "reasoning_tokens": 211
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.59
+}

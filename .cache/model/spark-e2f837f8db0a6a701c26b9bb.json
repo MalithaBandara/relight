@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bf8-afdf-71dc-a718-a25105551fa5",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1216, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Shadyvilla Lane\", \"summary_en\": \"Lights went out at 1216 Shadyvilla Lane.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618128,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 143,
+  "prompt_tokens": 503,
+  "total_tokens": 646,
+  "completion_tokens_details": {
+   "reasoning_tokens": 52
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 1.92
+}

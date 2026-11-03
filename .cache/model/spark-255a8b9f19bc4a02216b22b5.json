@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bfc-3d35-74b6-b07a-65e9d6348290",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Lamentamos el inconveniente, sabemos de este apagón por tree on line. Una cuadrilla está trabajando ahí ahora y el restablecimiento estimado es 23:53.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618361,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 288,
+  "prompt_tokens": 160,
+  "total_tokens": 448,
+  "completion_tokens_details": {
+   "reasoning_tokens": 243
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.67
+}

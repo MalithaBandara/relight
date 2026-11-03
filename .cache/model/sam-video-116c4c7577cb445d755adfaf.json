@@ -1,0 +1,52 @@
+{
+ "metadata": {
+  "include_confidence": "true"
+ },
+ "top_logprobs": 0,
+ "temperature": 1.0,
+ "top_p": 1.0,
+ "service_tier": "auto",
+ "model": "sam-3.1",
+ "background": false,
+ "tools": [],
+ "tool_choice": "auto",
+ "truncation": "disabled",
+ "id": "resp_6ae766083710a5a33b934680",
+ "object": "response",
+ "status": "completed",
+ "created_at": 1793549820.0,
+ "completed_at": 1793549832.0,
+ "error": null,
+ "incomplete_details": null,
+ "output": [
+  {
+   "type": "message",
+   "id": "msg_805c9a3c-a01f-4119-a355-cfc97de3d8b9",
+   "role": "assistant",
+   "content": [
+    {
+     "type": "output_text",
+     "text": "",
+     "annotations": [],
+     "logprobs": []
+    }
+   ],
+   "status": "completed"
+  }
+ ],
+ "instructions": null,
+ "usage": {
+  "input_tokens": 0,
+  "input_tokens_details": {
+   "cached_tokens": 0
+  },
+  "output_tokens": 0,
+  "output_tokens_details": {
+   "reasoning_tokens": 0
+  },
+  "total_tokens": 0,
+  "video_frames_processed": 429
+ },
+ "parallel_tool_calls": true,
+ "store": true
+}

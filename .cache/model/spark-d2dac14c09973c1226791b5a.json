@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bf1-b77e-77d3-b4c2-f8f8b2f585b1",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "சரி, I7 இல் பதிவு செய்தேன்.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617672,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 214,
+  "prompt_tokens": 156,
+  "total_tokens": 370,
+  "completion_tokens_details": {
+   "reasoning_tokens": 184
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.7
+}

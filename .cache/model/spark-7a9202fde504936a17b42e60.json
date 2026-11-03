@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cac-034d-7063-bd89-c67fab4fa1ad",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "We have located the downed pole affecting your power and assigned a crew, with estimated restoration at 22:09. Thank you for your patience.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629881,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 221,
+  "prompt_tokens": 89,
+  "total_tokens": 310,
+  "completion_tokens_details": {
+   "reasoning_tokens": 182
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 1.87
+}

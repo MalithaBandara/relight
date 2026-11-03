@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c01-9e62-73b2-98ed-02d9fef0048b",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "අපේ ගෙදර විදුලිය නැහැ හොස්පිටල් පාරේ හේත දැකේ",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618714,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 550,
+  "prompt_tokens": 118,
+  "total_tokens": 668,
+  "completion_tokens_details": {
+   "reasoning_tokens": 510
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 7.2
+}

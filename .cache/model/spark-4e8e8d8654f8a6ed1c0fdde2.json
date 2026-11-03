@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a1983f-f886-7353-91ee-e5d179366511",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 19, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Vijayanagar 1st Main Road\", \"summary_en\": \"No power at door No. 19, Vijayanagar 1st Main Road; no visible cause or hazard.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793555691,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1043,
+  "prompt_tokens": 551,
+  "total_tokens": 1594,
+  "completion_tokens_details": {
+   "reasoning_tokens": 937
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bef-e746-7752-9a37-7d534190b476",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"troubleshooter\"], \"damage\": \"blown_fuse\", \"device_ok\": false, \"energised\": false, \"house_from\": null, \"house_no\": 55, \"house_to\": null, \"landmark\": null, \"street\": \"Cinnamon Gardens Lane\", \"summary_en\": \"Drop-out fuse blown at transformer by No 55 Cinnamon Gardens Lane, suspected lightning. Single technician can replace fuse.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617553,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 295,
+  "prompt_tokens": 496,
+  "total_tokens": 791,
+  "completion_tokens_details": {
+   "reasoning_tokens": 190
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.05
+}

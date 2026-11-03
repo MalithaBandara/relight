@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197e4-0110-70fa-b4a7-66bd05bb83ce",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"confidence\": \"high\", \"note\": \"Plate is severely blurred/out of focus; no characters can be reliably distinguished, so no guess is made.\", \"readable\": false, \"tag\": null}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793549664,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1019,
+  "prompt_tokens": 416,
+  "total_tokens": 1435,
+  "completion_tokens_details": {
+   "reasoning_tokens": 968
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

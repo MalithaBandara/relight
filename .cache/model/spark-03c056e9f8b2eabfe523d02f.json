@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18cfa-b938-73f7-aeb1-9173ab1ba39e",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"live_wire\", \"house_no\": 10, \"is_junk\": false, \"landmark\": \"market\", \"language\": \"si\", \"street\": \"Market Street\", \"summary_en\": \"Wire fallen and sparking near the market at 10 Market Street.\", \"symptom\": \"none\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793366604,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1731,
+  "prompt_tokens": 565,
+  "total_tokens": 2296,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1642
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ }
+}

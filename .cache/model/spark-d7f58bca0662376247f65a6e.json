@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a1983e-6074-7278-a9e5-041705ae5c14",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\":[\"line\",\"bucket_truck\"],\"damage\":\"pole_down\",\"device_ok\":false,\"energised\":false,\"house_from\":null,\"house_no\":52,\"house_to\":null,\"landmark\":null,\"street\":\"Hospital Road\",\"summary_en\":\"Near No. 52 Hospital Road, a concrete pole is broken with wire fallen across the road. Crew is starting pole replacement.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793555587,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1768,
+  "prompt_tokens": 555,
+  "total_tokens": 2323,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1678
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

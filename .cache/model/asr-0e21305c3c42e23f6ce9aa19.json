@@ -1,0 +1,14 @@
+{
+ "sessionId": "relight-1793631010472",
+ "transcript": "A GS Colony 2nd Street Cross Street 1 16.",
+ "audioDurationMs": 5680,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 60,
+   "endMs": 5180,
+   "transcript": "A GS Colony 2nd Street Cross Street 1 16."
+  }
+ ],
+ "_latency_s": 3.73
+}

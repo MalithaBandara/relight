@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cbd-5af8-742b-ad95-eaaa728f5cd9",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [], \"damage\": \"none\", \"device_ok\": false, \"energised\": false, \"house_from\": null, \"house_no\": 16, \"house_to\": null, \"landmark\": null, \"street\": \"GS Colony 2nd Street Cross Street\", \"summary_en\": \"No damage reported at 16 GS Colony 2nd Street Cross Street.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631017,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 383,
+  "prompt_tokens": 454,
+  "total_tokens": 837,
+  "completion_tokens_details": {
+   "reasoning_tokens": 291
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.79
+}

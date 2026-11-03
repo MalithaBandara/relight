@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cbb-6e3a-769f-a48d-124d3fd1dd78",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "प्रिय ग्राहक, आपके क्षेत्र की बिजली बाधा का कारण मिल गया है - लाइन पर पेड़ गिरा है। हमारी टीम नियुक्त कर दी गई है और बिजली 21:10 तक बहाल होने का अनुमान है।\n",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630891,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 258,
+  "prompt_tokens": 90,
+  "total_tokens": 348,
+  "completion_tokens_details": {
+   "reasoning_tokens": 200
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.77
+}

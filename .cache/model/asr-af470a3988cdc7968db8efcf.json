@@ -1,0 +1,19 @@
+{
+ "sessionId": "relight-1793366389558",
+ "transcript": "Hello, this is the Gali Teaching Hospital Annexon Hospital Road, account 9000000000 we have have lost mains power. The generator is running. But we need the power back urgently.",
+ "audioDurationMs": 17120,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 60,
+   "endMs": 8300,
+   "transcript": "Hello, this is the Gali Teaching Hospital Annexon Hospital Road, account"
+  },
+  {
+   "turnId": 1,
+   "startMs": 9100,
+   "endMs": 16620,
+   "transcript": "9000000000 we have have lost mains power. The generator is running. But we need the power back urgently."
+  }
+ ]
+}

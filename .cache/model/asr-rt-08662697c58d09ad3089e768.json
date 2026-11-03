@@ -1,0 +1,122 @@
+{
+ "text": "Is anyone at the address using medical equipment that needs power?",
+ "events": [
+  {
+   "kind": "partial",
+   "text": "Is",
+   "role": "taker",
+   "ms": 146320,
+   "start": 145660,
+   "speaker": null,
+   "at": 1.34
+  },
+  {
+   "kind": "partial",
+   "text": "Is anyone",
+   "role": "taker",
+   "ms": 146720,
+   "start": 145660,
+   "speaker": null,
+   "at": 1.75
+  },
+  {
+   "kind": "partial",
+   "text": "Is anyone at",
+   "role": "taker",
+   "ms": 147360,
+   "start": 145660,
+   "speaker": null,
+   "at": 2.39
+  },
+  {
+   "kind": "partial",
+   "text": "Is anyone at the",
+   "role": "taker",
+   "ms": 147520,
+   "start": 145660,
+   "speaker": null,
+   "at": 2.53
+  },
+  {
+   "kind": "partial",
+   "text": "Is anyone at the address",
+   "role": "taker",
+   "ms": 147600,
+   "start": 145660,
+   "speaker": null,
+   "at": 2.62
+  },
+  {
+   "kind": "partial",
+   "text": "Is anyone at the address using",
+   "role": "taker",
+   "ms": 148080,
+   "start": 145660,
+   "speaker": null,
+   "at": 3.11
+  },
+  {
+   "kind": "partial",
+   "text": "Is anyone at the address using medical",
+   "role": "taker",
+   "ms": 148320,
+   "start": 145660,
+   "speaker": null,
+   "at": 3.34
+  },
+  {
+   "kind": "partial",
+   "text": "Is anyone at the address using medical equipment",
+   "role": "taker",
+   "ms": 148880,
+   "start": 145660,
+   "speaker": null,
+   "at": 3.91
+  },
+  {
+   "kind": "partial",
+   "text": "Is anyone at the address using medical equipment that",
+   "role": "taker",
+   "ms": 149200,
+   "start": 145660,
+   "speaker": null,
+   "at": 4.25
+  },
+  {
+   "kind": "partial",
+   "text": "Is anyone at the address using medical equipment that needs",
+   "role": "taker",
+   "ms": 149600,
+   "start": 145660,
+   "speaker": null,
+   "at": 4.62
+  },
+  {
+   "kind": "partial",
+   "text": "Is anyone at the address using medical equipment that needs power?",
+   "role": "taker",
+   "ms": 149760,
+   "start": 145660,
+   "speaker": null,
+   "at": 4.83
+  },
+  {
+   "kind": "partial",
+   "text": "Is anyone at the address using medical equipment that needs power?",
+   "role": "taker",
+   "ms": 152400,
+   "start": 145660,
+   "speaker": null,
+   "at": 7.5
+  },
+  {
+   "kind": "final",
+   "text": "Is anyone at the address using medical equipment that needs power?",
+   "role": "taker",
+   "ms": 151900,
+   "start": 145660,
+   "speaker": "B",
+   "at": 7.5
+  }
+ ]
+}

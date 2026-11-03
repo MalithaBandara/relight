@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a19847-efb5-730f-8109-35e7726eaa71",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "ඔබට බලපෑ දෝෂය අප සොයාගෙන ඇත, මාර්ගයේ ඇති සජීවී විදුලි රැහැන සඳහා අලුත්වැඩියා කණ්ඩායමක් යොදවා ඇත. විදුලිය 17:05 වන විට යථා තත්ත්වයට පත් කිරීමට අපේක්ෂා කරමු.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793556213,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1273,
+  "prompt_tokens": 92,
+  "total_tokens": 1365,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1180
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

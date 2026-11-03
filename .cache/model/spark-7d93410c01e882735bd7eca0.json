@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bee-88c4-744d-b14b-1ac0aaf8ae3e",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "வணக்கம், உங்கள் மின்தடைக்குக் காரணமான எரிந்த உருகி கண்டறியப்பட்டு, அதனைச் சரிசெய்ய குழு நியமிக்கப்பட்டுள்ளது. மின்சாரம் 15:36 மணிக்குள் மீண்டும் வழங்கப்படும் என எதிர்பார்க்கப்படுகிறது, சிரமத்திற்கு மன்னிக்கவும்.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617463,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 398,
+  "prompt_tokens": 89,
+  "total_tokens": 487,
+  "completion_tokens_details": {
+   "reasoning_tokens": 263
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.85
+}

@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18cf7-9f41-72cf-bb42-4ca8cae7eaee",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": \"9000000000\", \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": null, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Hospital Road\", \"summary_en\": \"Galle Teaching Hospital Annex on Hospital Road reports mains power loss, running on generator, requests urgent restoration.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793366400,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1030,
+  "prompt_tokens": 566,
+  "total_tokens": 1596,
+  "completion_tokens_details": {
+   "reasoning_tokens": 932
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

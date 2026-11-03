@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19ca1-66d7-7032-a037-8fc621b19d79",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 11, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Sri Devi Karumari Amman Nagar 1st Street\", \"summary_en\": \"No power at door no 11, Sri Devi Karumari Amman Nagar 1st Street.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629185,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 237,
+  "prompt_tokens": 516,
+  "total_tokens": 753,
+  "completion_tokens_details": {
+   "reasoning_tokens": 132
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.98
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19ca2-bf67-716e-b017-581b5ce3c177",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 59, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"6th Main Road\", \"summary_en\": \"Power cut at house 59, 6th Main Road; lineman requested.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629273,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 256,
+  "prompt_tokens": 513,
+  "total_tokens": 769,
+  "completion_tokens_details": {
+   "reasoning_tokens": 163
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.05
+}

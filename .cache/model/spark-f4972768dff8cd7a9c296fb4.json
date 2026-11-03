@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c95-a604-73cf-8b07-6769cfdd588c",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 12, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Velachery Bypass Road\", \"summary_en\": \"No power at 12 Velachery Bypass Road, please fix.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793628415,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 388,
+  "prompt_tokens": 532,
+  "total_tokens": 920,
+  "completion_tokens_details": {
+   "reasoning_tokens": 297
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.35
+}

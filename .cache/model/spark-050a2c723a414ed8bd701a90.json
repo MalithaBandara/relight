@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bf7-1fa1-71ca-baa6-621b8760ff88",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The fault is at the Winningham Lane fuse because 19 meters there sent last-gasp alerts and its 12 transformers went silent. Send a patrol crew to walk that zone to restore 90 customers.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618026,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 203,
+  "prompt_tokens": 138,
+  "total_tokens": 341,
+  "completion_tokens_details": {
+   "reasoning_tokens": 153
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.96
+}

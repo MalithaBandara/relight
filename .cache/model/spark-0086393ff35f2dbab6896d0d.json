@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19ca1-5ca7-710c-9f84-a3081d7ebcb6",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 196, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Taramani Link Road\", \"summary_en\": \"No power since morning at 196, Taramani Link Road.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629183,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 300,
+  "prompt_tokens": 509,
+  "total_tokens": 809,
+  "completion_tokens_details": {
+   "reasoning_tokens": 209
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.51
+}

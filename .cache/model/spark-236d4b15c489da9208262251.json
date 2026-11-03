@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a19843-89ca-77e1-abf4-7b8ea804dc51",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 113, \"is_junk\": false, \"landmark\": null, \"language\": \"hi\", \"street\": \"6th Main Road Cross Street 1\", \"summary_en\": \"No power at house number 113 on 6th Main Road Cross Street 1.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793555925,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1039,
+  "prompt_tokens": 515,
+  "total_tokens": 1554,
+  "completion_tokens_details": {
+   "reasoning_tokens": 941
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

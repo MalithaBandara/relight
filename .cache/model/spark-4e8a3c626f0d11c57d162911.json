@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d00-251e-7759-b2ca-9c815fa879fd",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 30, \"is_junk\": false, \"landmark\": null, \"language\": \"si\", \"street\": \"Hospital Road\", \"summary_en\": \"No power at 30 Hospital Road.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793366959,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1429,
+  "prompt_tokens": 533,
+  "total_tokens": 1962,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1347
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

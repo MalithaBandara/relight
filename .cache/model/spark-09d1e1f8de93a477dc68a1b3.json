@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c85-3eea-73c1-bd81-498b6fb1a2d0",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 24, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Nathan Subramaniam Colony\", \"summary_en\": \"No power at door no 24, Nathan Subramaniam Colony.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793627340,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 247,
+  "prompt_tokens": 510,
+  "total_tokens": 757,
+  "completion_tokens_details": {
+   "reasoning_tokens": 154
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 1.91
+}

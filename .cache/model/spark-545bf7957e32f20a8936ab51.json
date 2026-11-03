@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bfa-da42-71f2-8a2e-8d17c64888ba",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Control here, reading back: blown transformer fuse at Voss Road near number 1136; you need a troubleshooter. Correct?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618270,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 247,
+  "prompt_tokens": 168,
+  "total_tokens": 415,
+  "completion_tokens_details": {
+   "reasoning_tokens": 210
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.26
+}

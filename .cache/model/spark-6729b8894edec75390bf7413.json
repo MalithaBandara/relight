@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bec-6bc6-7489-8cbf-3e6038d9f992",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"line\", \"bucket_truck\"], \"damage\": \"wire_down\", \"device_ok\": false, \"energised\": true, \"house_from\": null, \"house_no\": 8, \"house_to\": null, \"landmark\": null, \"street\": \"Market Street\", \"summary_en\": \"Wire down and live on the road at No. 8 Market Street, area cordoned off and made safe.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617324,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 492,
+  "prompt_tokens": 561,
+  "total_tokens": 1053,
+  "completion_tokens_details": {
+   "reasoning_tokens": 390
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 4.12
+}

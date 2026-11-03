@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d04-0408-723b-a023-bb96f00e553f",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 60, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Hospital Road\", \"summary_en\": \"Power still off at 60 Hospital Road.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367213,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 687,
+  "prompt_tokens": 530,
+  "total_tokens": 1217,
+  "completion_tokens_details": {
+   "reasoning_tokens": 604
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bfe-4dc4-7742-bba0-9694f2bf24d3",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"line\", \"bucket_truck\"], \"damage\": \"pole_down\", \"device_ok\": false, \"energised\": false, \"house_from\": null, \"house_no\": 1212, \"house_to\": null, \"landmark\": null, \"street\": \"Burkhart Road\", \"summary_en\": \"Concrete pole snapped at 1212 Burkhart Road with conductors down across the road, pole replacement starting.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618496,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 294,
+  "prompt_tokens": 458,
+  "total_tokens": 752,
+  "completion_tokens_details": {
+   "reasoning_tokens": 190
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.45
+}

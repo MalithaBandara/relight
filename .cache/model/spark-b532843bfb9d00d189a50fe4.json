@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c85-5a30-7612-a3f4-b87cabe90e3e",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The REC-1 recloser at Velachery MRTS locked out and cut power to 13,302 customers across its zone. Send a patrol crew to that zone now to restore the hospital and shelter on 6th Main Road Cross Street 1.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793627347,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 304,
+  "prompt_tokens": 239,
+  "total_tokens": 543,
+  "completion_tokens_details": {
+   "reasoning_tokens": 242
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.83
+}

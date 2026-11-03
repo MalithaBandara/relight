@@ -1,0 +1,13 @@
+{
+ "sessionId": "relight-1793555058859",
+ "transcript": "Hello, namaste. मैं एक Saint Cross Street, Cross Street 1 से बोल रही हूँ. मकान नंबर दो सौ उनतीस. तूफान के बाद से बिजली नहीं है.",
+ "audioDurationMs": 13520,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 60,
+   "endMs": 13020,
+   "transcript": "Hello, namaste. मैं एक Saint Cross Street, Cross Street 1 से बोल रही हूँ. मकान नंबर दो सौ उनतीस. तूफान के बाद से बिजली नहीं है."
+  }
+ ]
+}

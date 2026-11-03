@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1ea-050d-72e8-9381-beed136f2986",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 119, \"is_junk\": false, \"landmark\": null, \"language\": \"hi\", \"street\": \"Velachery Bypass Road\", \"summary_en\": \"Power restored to neighboring houses but house no. 119 on Velachery Bypass Road still has no power.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717830,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 249,
+  "prompt_tokens": 526,
+  "total_tokens": 775,
+  "completion_tokens_details": {
+   "reasoning_tokens": 150
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.47
+}

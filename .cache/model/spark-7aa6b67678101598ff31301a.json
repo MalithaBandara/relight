@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c89-f4c4-71e0-b3a0-1c80f01bee53",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 8, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Vijayanagar 1st Main Road\", \"summary_en\": \"No power at 8, Vijayanagar 1st Main Road, please fix.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793627649,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 285,
+  "prompt_tokens": 537,
+  "total_tokens": 822,
+  "completion_tokens_details": {
+   "reasoning_tokens": 185
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 5.57
+}

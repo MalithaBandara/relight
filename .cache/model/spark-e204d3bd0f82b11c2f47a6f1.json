@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1e7-5352-76fa-81f5-6356194df6d7",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "We know about this outage, a tree on the line, and a crew will be assigned shortly. Estimated restoration is around 01:17.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717654,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 204,
+  "prompt_tokens": 156,
+  "total_tokens": 360,
+  "completion_tokens_details": {
+   "reasoning_tokens": 166
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.1
+}

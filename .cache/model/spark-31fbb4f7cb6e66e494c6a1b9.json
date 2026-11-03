@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bec-5b9f-72e5-ae9d-9ad7717d8072",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Control here, reading back: wire down at Market Street near number 8, the line is live, you need a line crew. Correct?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617320,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 255,
+  "prompt_tokens": 169,
+  "total_tokens": 424,
+  "completion_tokens_details": {
+   "reasoning_tokens": 217
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.07
+}

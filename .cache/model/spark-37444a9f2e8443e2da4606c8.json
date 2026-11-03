@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bf6-21fd-740b-bd58-2b6bbde37131",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1028, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Lynnview Drive\", \"summary_en\": \"Lights went out at house 1028 on Lynnview Drive.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617961,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 226,
+  "prompt_tokens": 501,
+  "total_tokens": 727,
+  "completion_tokens_details": {
+   "reasoning_tokens": 136
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 1.99
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cb3-244f-701f-8d2a-6210c7e7dcac",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 101, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Velachery Upper Flyover\", \"summary_en\": \"No power at 101 Velachery Upper Flyover, fridge stopped.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630348,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 254,
+  "prompt_tokens": 509,
+  "total_tokens": 763,
+  "completion_tokens_details": {
+   "reasoning_tokens": 161
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.16
+}

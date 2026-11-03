@@ -1,0 +1,14 @@
+{
+ "sessionId": "relight-1793618670659",
+ "transcript": "there is no power at my house on Lake Road, number nine, since the storm.",
+ "audioDurationMs": 5680,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 60,
+   "endMs": 5180,
+   "transcript": "there is no power at my house on Lake Road, number nine, since the storm."
+  }
+ ],
+ "_latency_s": 2.94
+}

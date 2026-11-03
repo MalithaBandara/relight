@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1db-3b6d-73c7-91cb-53b76ee88877",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Sabemos de este apagón, árbol sobre la línea, y una cuadrilla está trabajando ahí ahora. Restablecimiento estimado: 21:54.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793716861,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 202,
+  "prompt_tokens": 162,
+  "total_tokens": 364,
+  "completion_tokens_details": {
+   "reasoning_tokens": 162
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.57
+}

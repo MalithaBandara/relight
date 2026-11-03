@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197ef-4b0d-721b-92f0-0f5cd1b49f0e",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"damage\": \"wire_down\", \"description\": \"A wooden distribution pole with two transformers is leaning heavily, causing a power wire to sag down across the roadway and lie on the pavement. The road is cordoned off with caution tape.\", \"public_hazard\": true, \"segment_prompts\": [\"leaning utility pole\", \"downed power wire\", \"transformer\"], \"severity\": \"high\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550404,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1823,
+  "prompt_tokens": 3383,
+  "total_tokens": 5206,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1732
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

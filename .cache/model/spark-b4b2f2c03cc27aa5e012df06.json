@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d09-7a2b-76d1-b2db-82a3976ddf3b",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"vegetation\", \"line\"], \"damage\": \"tree_on_line\", \"device_ok\": false, \"energised\": false, \"house_from\": null, \"house_no\": null, \"house_to\": null, \"landmark\": \"temple\", \"street\": \"Temple Road\", \"summary_en\": \"Large jut tree across the lines two spans down on Temple Road near the temple, vegetation crew needed before line work.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367570,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1102,
+  "prompt_tokens": 500,
+  "total_tokens": 1602,
+  "completion_tokens_details": {
+   "reasoning_tokens": 998
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

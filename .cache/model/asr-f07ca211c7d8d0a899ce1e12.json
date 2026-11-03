@@ -1,0 +1,14 @@
+{
+ "sessionId": "relight-1793617060683",
+ "transcript": "Hello. This is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero zero zero zero zero zero zero zero we have lost mains power. The generator is running. But we need the power back urgently.",
+ "audioDurationMs": 17120,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 220,
+   "endMs": 16460,
+   "transcript": "Hello. This is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero zero zero zero zero zero zero zero we have lost mains power. The generator is running. But we need the power back urgently."
+  }
+ ],
+ "_latency_s": 4.41
+}

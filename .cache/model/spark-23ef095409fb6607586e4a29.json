@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c98-a2f6-7531-a404-9bc519acd378",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 44, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Mahalakshmi Nagar 3rd Main Road Cross Street 4\", \"summary_en\": \"No power at house 44, fridge stopped.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793628611,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 333,
+  "prompt_tokens": 519,
+  "total_tokens": 852,
+  "completion_tokens_details": {
+   "reasoning_tokens": 237
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.95
+}

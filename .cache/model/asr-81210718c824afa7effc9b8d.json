@@ -1,0 +1,20 @@
+{
+ "sessionId": "relight-1793630773297",
+ "transcript": "On site at Brahmin Street near near number 23. a tree is lying across the conductors. Clearing it before the line work.",
+ "audioDurationMs": 11440,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 60,
+   "endMs": 3740,
+   "transcript": "On site at Brahmin Street near near number 23."
+  },
+  {
+   "turnId": 1,
+   "startMs": 4380,
+   "endMs": 10220,
+   "transcript": "a tree is lying across the conductors. Clearing it before the line work."
+  }
+ ],
+ "_latency_s": 5.15
+}

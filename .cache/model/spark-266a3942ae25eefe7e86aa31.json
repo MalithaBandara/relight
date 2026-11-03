@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18cf8-8026-706a-a1af-7491532164ea",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 95, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Hospital Road\", \"summary_en\": \"Power cut on Hospital Road near the end, number 95.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793366458,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1203,
+  "prompt_tokens": 538,
+  "total_tokens": 1741,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1116
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

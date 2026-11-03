@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cc3-018a-745e-8033-6d2ca5d04839",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": null, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Kannadasan street 6\", \"summary_en\": \"No power on Kannadasan street 6, please fix it.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631387,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 354,
+  "prompt_tokens": 531,
+  "total_tokens": 885,
+  "completion_tokens_details": {
+   "reasoning_tokens": 263
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.52
+}

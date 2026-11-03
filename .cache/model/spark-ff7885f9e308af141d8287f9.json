@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a19837-6f04-7002-949f-3232c7ee98db",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"confidence\": \"high\", \"note\": \"Utility pole is visible in foreground but no identification plate characters are legible; only indistinct bands and paint marks that cannot be read.\", \"readable\": false, \"tag\": null}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793555132,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 596,
+  "prompt_tokens": 3658,
+  "total_tokens": 4254,
+  "completion_tokens_details": {
+   "reasoning_tokens": 539
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

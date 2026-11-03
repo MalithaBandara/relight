@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cab-5a03-752a-b0da-443e39809841",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 3, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"VGP Selva Nagar Extension 2nd Street\", \"summary_en\": \"Power cut in house 3, VGP Selva Nagar Extension 2nd Street, requesting lineman.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629837,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 289,
+  "prompt_tokens": 518,
+  "total_tokens": 807,
+  "completion_tokens_details": {
+   "reasoning_tokens": 185
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ },
+ "_latency_s": 3.82
+}

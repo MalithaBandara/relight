@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c85-4592-7619-9c10-6721c235971e",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 97, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Lake View Road\", \"summary_en\": \"No power at door no. 97, Lake View Road.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793627342,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 256,
+  "prompt_tokens": 518,
+  "total_tokens": 774,
+  "completion_tokens_details": {
+   "reasoning_tokens": 168
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 1.67
+}

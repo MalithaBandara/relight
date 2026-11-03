@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19ca3-d2ad-728f-81d9-a3ba1291384e",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"line\", \"vegetation\"], \"damage\": \"tree_on_line\", \"device_ok\": false, \"energised\": false, \"house_from\": null, \"house_no\": 137, \"house_to\": null, \"landmark\": null, \"street\": \"Velachery Bypass Road\", \"summary_en\": \"On site at Velachery Bypass Road near number 137. A tree is lying across the conductors. Vegetation clearing needed before line work.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629344,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 327,
+  "prompt_tokens": 469,
+  "total_tokens": 796,
+  "completion_tokens_details": {
+   "reasoning_tokens": 216
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.25
+}

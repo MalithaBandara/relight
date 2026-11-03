@@ -1,0 +1,176 @@
+{
+ "text": "Hi. Yeah. The power's out at 1052. Huge Oaks Street. It went out with that big gust just now.",
+ "events": [
+  {
+   "kind": "partial",
+   "text": "Hi.",
+   "role": "caller",
+   "ms": 1120,
+   "start": 380,
+   "speaker": null,
+   "at": 1.78
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. Yeah.",
+   "role": "caller",
+   "ms": 1520,
+   "start": 380,
+   "speaker": null,
+   "at": 1.86
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. Yeah. The",
+   "role": "caller",
+   "ms": 2000,
+   "start": 380,
+   "speaker": null,
+   "at": 2.3
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. Yeah. The power's",
+   "role": "caller",
+   "ms": 2400,
+   "start": 380,
+   "speaker": null,
+   "at": 2.7
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. Yeah. The power's out at",
+   "role": "caller",
+   "ms": 2560,
+   "start": 380,
+   "speaker": null,
+   "at": 2.88
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. Yeah. The power's out at 1052.",
+   "role": "caller",
+   "ms": 3680,
+   "start": 380,
+   "speaker": null,
+   "at": 4.02
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. Yeah. The power's out at 1052. Huge",
+   "role": "caller",
+   "ms": 4160,
+   "start": 380,
+   "speaker": null,
+   "at": 4.44
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. Yeah. The power's out at 1052. Huge Oaks",
+   "role": "caller",
+   "ms": 4320,
+   "start": 380,
+   "speaker": null,
+   "at": 4.72
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. Yeah. The power's out at 1052. Huge Oaks Street.",
+   "role": "caller",
+   "ms": 4400,
+   "start": 380,
+   "speaker": null,
+   "at": 4.72
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. Yeah. The power's out at 1052. Huge Oaks Street. It",
+   "role": "caller",
+   "ms": 4880,
+   "start": 380,
+   "speaker": null,
+   "at": 5.16
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. Yeah. The power's out at 1052. Huge Oaks Street. It went",
+   "role": "caller",
+   "ms": 5120,
+   "start": 380,
+   "speaker": null,
+   "at": 5.38
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. Yeah. The power's out at 1052. Huge Oaks Street. It went out",
+   "role": "caller",
+   "ms": 5360,
+   "start": 380,
+   "speaker": null,
+   "at": 5.64
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. Yeah. The power's out at 1052. Huge Oaks Street. It went out with",
+   "role": "caller",
+   "ms": 5760,
+   "start": 380,
+   "speaker": null,
+   "at": 6.03
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. Yeah. The power's out at 1052. Huge Oaks Street. It went out with that",
+   "role": "caller",
+   "ms": 5920,
+   "start": 380,
+   "speaker": null,
+   "at": 6.19
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. Yeah. The power's out at 1052. Huge Oaks Street. It went out with that big",
+   "role": "caller",
+   "ms": 6080,
+   "start": 380,
+   "speaker": null,
+   "at": 6.36
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. Yeah. The power's out at 1052. Huge Oaks Street. It went out with that big gust just",
+   "role": "caller",
+   "ms": 6480,
+   "start": 380,
+   "speaker": null,
+   "at": 6.77
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. Yeah. The power's out at 1052. Huge Oaks Street. It went out with that big gust just now.",
+   "role": "caller",
+   "ms": 6640,
+   "start": 380,
+   "speaker": null,
+   "at": 6.94
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. Yeah. The power's out at 1052. Huge Oaks Street. It went out with that big gust just now.",
+   "role": "caller",
+   "ms": 7040,
+   "start": 380,
+   "speaker": null,
+   "at": 7.36
+  },
+  {
+   "kind": "final",
+   "text": "Hi. Yeah. The power's out at 1052. Huge Oaks Street. It went out with that big gust just now.",
+   "role": "caller",
+   "ms": 6540,
+   "start": 380,
+   "speaker": "A",
+   "at": 7.36
+  }
+ ]
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bfb-a07b-7395-9149-16c6ccfde836",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Sabemos de este apagón, la causa aún se está verificando. Una cuadrilla va en camino, con restablecimiento estimado a las 21:39.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618321,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 255,
+  "prompt_tokens": 161,
+  "total_tokens": 416,
+  "completion_tokens_details": {
+   "reasoning_tokens": 212
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.96
+}

@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d08-5019-745b-919d-a8b721dff189",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"at_seconds\": 9.5, \"damage\": \"tree_on_line\", \"description\": \"A large snapped tree trunk is draped across multiple overhead distribution conductors in the wooded corridor beside the road. Poles remain standing and wires appear still suspended but loaded by the weight of the wood.\", \"public_hazard\": false, \"segment_prompts\": [\"snapped tree trunk\", \"overhead power lines\", \"utility pole\"], \"severity\": \"medium\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367494,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1782,
+  "prompt_tokens": 8574,
+  "total_tokens": 10356,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1678
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

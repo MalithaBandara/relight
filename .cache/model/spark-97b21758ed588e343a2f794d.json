@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bf9-f45b-73f5-8e0b-aac551ca8e5a",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Entendido, registrado en I2.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618211,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 212,
+  "prompt_tokens": 142,
+  "total_tokens": 354,
+  "completion_tokens_details": {
+   "reasoning_tokens": 195
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.26
+}

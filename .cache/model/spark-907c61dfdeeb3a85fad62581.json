@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a19847-b0ce-749c-a1a6-59fd7e9520d0",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "හිතවත් පාරිභෝගිකයිනි, ඔබේ ප්‍රදේශයේ විදුලි බිඳවැටීමට හේතුව (කණුවක් කඩා වැටීම) සොයාගෙන ඇති අතර අපගේ කණ්ඩායමක් යොදවා ඇත. 19:20 වන විට විදුලිය යථා තත්ත්වයට පත් කිරීමට අපේක්ෂා කෙරේ, සිදුවූ අපහසුතාවයට කණගාටුයි.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793556197,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1532,
+  "prompt_tokens": 90,
+  "total_tokens": 1622,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1410
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a19843-5606-7588-a728-3131977431de",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 17, \"is_junk\": false, \"landmark\": null, \"language\": \"hi\", \"street\": \"AGS Colony 4th Main Road Cross Street 3\", \"summary_en\": \"No power at house No 17, AGS Colony 4th Main Road Cross Street 3.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793555912,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1316,
+  "prompt_tokens": 518,
+  "total_tokens": 1834,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1212
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bec-8619-7739-ab16-7752a2bf0d80",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 70, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Market Street\", \"summary_en\": \"House 70 Market Street has dim lights.\", \"symptom\": \"partial_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617331,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 249,
+  "prompt_tokens": 559,
+  "total_tokens": 808,
+  "completion_tokens_details": {
+   "reasoning_tokens": 166
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.58
+}

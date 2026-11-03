@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19ca1-f0ca-765d-a137-6f0c2888e2d4",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 105, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Main Road\", \"summary_en\": \"No current at 105 Main Road, fridge stopped.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629221,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 157,
+  "prompt_tokens": 505,
+  "total_tokens": 662,
+  "completion_tokens_details": {
+   "reasoning_tokens": 72
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.19
+}

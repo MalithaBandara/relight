@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d05-5c25-7798-b7d9-6f8f9f49b930",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"damage\": \"pole_down\", \"description\": \"Multiple utility poles snapped, leaning and collapsed across a residential street, with power lines down on the wet roadway next to parked cars. A large fallen tree trunk blocks the road and is entangled with the downed poles and wires, with broken crossarms and hardware scattered on the pavement.\", \"public_hazard\": true, \"segment_prompts\": [\"fallen utility pole\", \"leaning utility pole\", \"downed power line\", \"fallen tree trunk\"], \"severity\": \"high\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367301,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 798,
+  "prompt_tokens": 3677,
+  "total_tokens": 4475,
+  "completion_tokens_details": {
+   "reasoning_tokens": 682
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

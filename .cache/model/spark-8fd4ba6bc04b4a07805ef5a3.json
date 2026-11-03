@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c85-2df2-749f-ab62-e6dadcebcbdb",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "धन्यवाद, आपकी शिकायत दर्ज हो गई है। हम खराबी ढूंढ रहे हैं और बिजली लौटने का समय SMS से भेजेंगे।",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793627336,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 186,
+  "prompt_tokens": 162,
+  "total_tokens": 348,
+  "completion_tokens_details": {
+   "reasoning_tokens": 146
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.05
+}

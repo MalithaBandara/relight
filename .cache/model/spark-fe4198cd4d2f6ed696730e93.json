@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c02-5562-74ad-ae39-0845f86be296",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": null, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Hospital Road\", \"summary_en\": \"No power at home on Hospital Road after thunder.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618761,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 265,
+  "prompt_tokens": 560,
+  "total_tokens": 825,
+  "completion_tokens_details": {
+   "reasoning_tokens": 182
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.7
+}

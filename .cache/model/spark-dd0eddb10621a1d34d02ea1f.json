@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c83-7717-76eb-9409-5a5a2442d5ab",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 37, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Vijayanagar 1st Main Road Cross Street 5\", \"summary_en\": \"No power at house 37, Vijayanagar 1st Main Road Cross Street 5, fridge stopped.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793627223,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 325,
+  "prompt_tokens": 517,
+  "total_tokens": 842,
+  "completion_tokens_details": {
+   "reasoning_tokens": 216
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.42
+}

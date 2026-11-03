@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18cfc-aaf4-7285-b35a-f95c14ee8f5c",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Partial power and an outage isolate the break to Market Street 844-846 affecting 82 customers. Send a crew to cordon off the live wire and repair the conductor.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793366731,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1744,
+  "prompt_tokens": 162,
+  "total_tokens": 1906,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1700
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

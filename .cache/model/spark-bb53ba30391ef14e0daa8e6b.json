@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19ca1-a552-77b9-bf8b-b8f6373d83fd",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 79, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Main Road\", \"summary_en\": \"No power at door no 79, Main Road.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629201,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 203,
+  "prompt_tokens": 506,
+  "total_tokens": 709,
+  "completion_tokens_details": {
+   "reasoning_tokens": 118
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 1.97
+}

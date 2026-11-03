@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d8c-6bc4-7685-a13f-e735bf8b2f3a",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"live_wire\", \"house_no\": null, \"is_junk\": false, \"landmark\": \"market\", \"language\": \"en\", \"street\": \"Market Street\", \"summary_en\": \"Sparking wire lying on Market Street near the market with people walking past, urgent help requested.\", \"symptom\": \"none\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793376152,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1137,
+  "prompt_tokens": 557,
+  "total_tokens": 1694,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1044
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ }
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1dd-3dc1-7003-8eda-28b9a9536cce",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 55, \"is_junk\": false, \"landmark\": null, \"language\": \"hi\", \"street\": \"Brahmin Street\", \"summary_en\": \"No power at house number 55 on Brahmin Street, no hazard visible.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793716993,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 216,
+  "prompt_tokens": 519,
+  "total_tokens": 735,
+  "completion_tokens_details": {
+   "reasoning_tokens": 124
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.02
+}

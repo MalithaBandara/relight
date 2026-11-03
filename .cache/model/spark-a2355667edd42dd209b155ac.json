@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bfd-c5bc-70e8-b620-2b10e04d9e6a",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Thanks for your patience — we're aware of this outage with a live wire on road, and a crew is working on it now. Estimated restoration is around 22:58.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618462,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 328,
+  "prompt_tokens": 158,
+  "total_tokens": 486,
+  "completion_tokens_details": {
+   "reasoning_tokens": 284
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.62
+}

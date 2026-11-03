@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19ca4-f5df-7691-b64e-03148454ebd8",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 188, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Taramani Link Road\", \"summary_en\": \"No power at door no 188, Taramani Link Road.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629418,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 197,
+  "prompt_tokens": 520,
+  "total_tokens": 717,
+  "completion_tokens_details": {
+   "reasoning_tokens": 106
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.16
+}

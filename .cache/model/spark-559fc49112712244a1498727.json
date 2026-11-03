@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d0c-10dc-7273-9971-f9a76bc2e3e0",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 104, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Hospital Road\", \"summary_en\": \"Neighboring houses have power back but 104 Hospital Road still has no power.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367740,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 888,
+  "prompt_tokens": 569,
+  "total_tokens": 1457,
+  "completion_tokens_details": {
+   "reasoning_tokens": 798
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

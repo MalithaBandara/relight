@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c8f-85e7-741d-be84-b2c3ff17f30c",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 100, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"1st Cross Street\", \"summary_en\": \"No current at 100, 1st Cross Street, fridge stopped.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793628014,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 305,
+  "prompt_tokens": 511,
+  "total_tokens": 816,
+  "completion_tokens_details": {
+   "reasoning_tokens": 214
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 12.01
+}

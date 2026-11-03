@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19ca3-e6d3-70ca-97f2-1aa654f0b1fc",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The fault is at the Velachery MRTS recloser because REC-1 is locked out with 43 transformers and 83 customers reporting no power in its zone.\n\nSend a tree-clearing and line-repair crew now for 13,302 customers out including shelters, schools and hospitals.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629349,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 251,
+  "prompt_tokens": 239,
+  "total_tokens": 490,
+  "completion_tokens_details": {
+   "reasoning_tokens": 182
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.35
+}

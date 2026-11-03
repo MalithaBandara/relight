@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bee-18a3-7214-8b5c-4d845f070655",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"confidence\": \"high\", \"note\": \"Yellow plate clearly legible in close-up\", \"readable\": true, \"tag\": \"GL-0417\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617434,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 105,
+  "prompt_tokens": 383,
+  "total_tokens": 488,
+  "completion_tokens_details": {
+   "reasoning_tokens": 62
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.52
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cb6-b432-7143-8bde-92a8a2a96166",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 4, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Velachery Main Road Cross Street 10\", \"summary_en\": \"No power since morning at house 4, Velachery Main Road Cross Street 10.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630581,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 366,
+  "prompt_tokens": 513,
+  "total_tokens": 879,
+  "completion_tokens_details": {
+   "reasoning_tokens": 266
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ },
+ "_latency_s": 3.35
+}

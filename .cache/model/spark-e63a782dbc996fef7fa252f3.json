@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1e5-ad0e-77e6-a738-87aff46b01da",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 21, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Dhroupathy Amman Koil Street\", \"summary_en\": \"No power at 21 Dhroupathy Amman Koil Street, please fix; no hazard observed.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717546,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 374,
+  "prompt_tokens": 558,
+  "total_tokens": 932,
+  "completion_tokens_details": {
+   "reasoning_tokens": 273
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.67
+}

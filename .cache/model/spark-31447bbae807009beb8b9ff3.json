@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bec-7bfc-753c-a1f3-843755c2e3dc",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The fault is on Market Street at 844-846 where partial power reports show an open conductor and one transformer is confirmed out. Send a line crew to repair the downed conductor and restore 82 customers.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617329,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 246,
+  "prompt_tokens": 166,
+  "total_tokens": 412,
+  "completion_tokens_details": {
+   "reasoning_tokens": 195
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.33
+}

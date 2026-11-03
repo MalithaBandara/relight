@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19beb-da1b-7104-a22e-de5e89c088fd",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 60, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Temple Road\", \"summary_en\": \"Temple Road 60 still has no power after five minutes.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617287,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 189,
+  "prompt_tokens": 542,
+  "total_tokens": 731,
+  "completion_tokens_details": {
+   "reasoning_tokens": 101
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ },
+ "_latency_s": 2.03
+}

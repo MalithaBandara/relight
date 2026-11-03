@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1989b-ee80-73e6-8d10-36d15dcd4dfb",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "சரிங்க, I5 இல் பதிவு செய்துவிட்டேன்.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793561718,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1316,
+  "prompt_tokens": 156,
+  "total_tokens": 1472,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1280
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 5.7
+}

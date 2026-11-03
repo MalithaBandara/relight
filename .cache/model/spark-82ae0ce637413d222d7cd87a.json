@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19ca2-a492-7223-ae29-5bcb4cdf23a3",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 36, \"is_junk\": false, \"landmark\": null, \"language\": \"hi\", \"street\": \"Gangai Nagar 2nd Cross Street\", \"summary_en\": \"No power at house no. 36 on Gangai Nagar 2nd Cross Street.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629267,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 192,
+  "prompt_tokens": 515,
+  "total_tokens": 707,
+  "completion_tokens_details": {
+   "reasoning_tokens": 94
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 1.43
+}

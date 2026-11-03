@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cae-26d1-7470-a3d3-1603dfbcfb51",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The fault is at the Velachery Main Road fuse because five of its six transformers report no power. Send a patrol crew to that fuse to restore power for 852 customers including the hospital.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630021,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 409,
+  "prompt_tokens": 178,
+  "total_tokens": 587,
+  "completion_tokens_details": {
+   "reasoning_tokens": 361
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 4.15
+}

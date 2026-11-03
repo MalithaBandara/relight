@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197e4-d6a7-7378-9744-ef91d94f2481",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"at_seconds\": 5.0, \"damage\": \"tree_on_line\", \"description\": \"Night view of a wood distribution pole with transformer and street light with a large broken tree top impaled on the pole top. Branches are draped and tangled through multiple overhead conductors around the transformer. Pole remains standing and wires appear still suspended but strained. Consistent with tornado wind damage and likely outage.\", \"public_hazard\": true, \"segment_prompts\": [\"utility pole\", \"fallen tree top\", \"pole transformer\", \"overhead power lines\"], \"severity\": \"high\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793549719,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1817,
+  "prompt_tokens": 4899,
+  "total_tokens": 6716,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1689
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

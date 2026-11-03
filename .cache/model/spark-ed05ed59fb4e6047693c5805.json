@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d02-9403-7145-b7a7-3c7bbb75e900",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Control here, Reading back: live conductor down at Market Street near number 8; the line is live. Correct?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367118,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 2011,
+  "prompt_tokens": 164,
+  "total_tokens": 2175,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1978
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

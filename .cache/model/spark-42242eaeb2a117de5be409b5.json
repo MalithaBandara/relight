@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197f1-c94a-7532-9215-721df7e9aaa7",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Aquí control. Repito: conductor energizado en el suelo en Ranson Road, cerca del número 1132; la línea está energizada; necesita una cuadrilla de línea, ¿correcto?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550567,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1966,
+  "prompt_tokens": 181,
+  "total_tokens": 2147,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1916
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

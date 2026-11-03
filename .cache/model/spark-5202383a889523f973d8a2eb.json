@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c8b-87d9-75af-b522-e0aa065a7431",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 40, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Murugan Nagar Extension 1st Street\", \"summary_en\": \"No power since morning at 40, Murugan Nagar Extension 1st Street.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793627752,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 342,
+  "prompt_tokens": 512,
+  "total_tokens": 854,
+  "completion_tokens_details": {
+   "reasoning_tokens": 245
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ },
+ "_latency_s": 2.31
+}

@@ -1,0 +1,20 @@
+{
+ "sessionId": "relight-1793617306962",
+ "transcript": "On site at Market Street near number eight. The conductor on the road is Liv. Area cordoned off, making it safe now.",
+ "audioDurationMs": 11200,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 140,
+   "endMs": 3420,
+   "transcript": "On site at Market Street near number eight."
+  },
+  {
+   "turnId": 1,
+   "startMs": 4060,
+   "endMs": 10540,
+   "transcript": "The conductor on the road is Liv. Area cordoned off, making it safe now."
+  }
+ ],
+ "_latency_s": 3.45
+}

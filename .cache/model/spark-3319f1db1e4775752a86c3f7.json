@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c9b-0430-71f9-9878-2cd1ccf21ba7",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 80, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"2nd Main Road Cross Street 1\", \"summary_en\": \"Power cut at house 80, 2nd Main Road Cross Street 1, requesting lineman.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793628767,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 220,
+  "prompt_tokens": 517,
+  "total_tokens": 737,
+  "completion_tokens_details": {
+   "reasoning_tokens": 119
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.34
+}

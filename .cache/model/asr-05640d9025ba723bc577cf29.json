@@ -1,0 +1,14 @@
+{
+ "sessionId": "relight-1793617876045",
+ "transcript": "Hey, the lights just went out at my place. The whole house is dark.",
+ "audioDurationMs": 4800,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 60,
+   "endMs": 4060,
+   "transcript": "Hey, the lights just went out at my place. The whole house is dark."
+  }
+ ],
+ "_latency_s": 3.1
+}

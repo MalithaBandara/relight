@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cc2-7278-7604-878c-7cd54c37ca90",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "We've found the fault affecting you — a pole is down — and a crew is assigned. Estimated restoration: 22:31.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631351,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 156,
+  "prompt_tokens": 89,
+  "total_tokens": 245,
+  "completion_tokens_details": {
+   "reasoning_tokens": 121
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 1.81
+}

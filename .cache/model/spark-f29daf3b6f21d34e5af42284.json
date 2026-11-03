@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19beb-ab37-729b-b6bc-40cbef75e7be",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "REC-2 at Temple Road locked out after a tree hit the line, cutting 263 customers. Send a tree and line-repair crew to clear it and restore Wakwella water pumping.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617275,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 319,
+  "prompt_tokens": 160,
+  "total_tokens": 479,
+  "completion_tokens_details": {
+   "reasoning_tokens": 271
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.59
+}

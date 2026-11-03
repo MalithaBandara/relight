@@ -1,0 +1,329 @@
+{
+ "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero zero zero zero zero zero zero we have lost mains power. The generator is running. But we need the power back urgently.",
+ "events": [
+  {
+   "kind": "partial",
+   "text": "Hello,",
+   "role": "caller",
+   "ms": 12240,
+   "start": 11180,
+   "speaker": null,
+   "at": 1.41
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is",
+   "role": "caller",
+   "ms": 12880,
+   "start": 11180,
+   "speaker": null,
+   "at": 2.08
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the",
+   "role": "caller",
+   "ms": 12960,
+   "start": 11180,
+   "speaker": null,
+   "at": 2.14
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle",
+   "role": "caller",
+   "ms": 13360,
+   "start": 11180,
+   "speaker": null,
+   "at": 2.52
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching",
+   "role": "caller",
+   "ms": 14080,
+   "start": 11180,
+   "speaker": null,
+   "at": 3.24
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital",
+   "role": "caller",
+   "ms": 14400,
+   "start": 11180,
+   "speaker": null,
+   "at": 3.56
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex",
+   "role": "caller",
+   "ms": 14640,
+   "start": 11180,
+   "speaker": null,
+   "at": 3.8
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on",
+   "role": "caller",
+   "ms": 15040,
+   "start": 11180,
+   "speaker": null,
+   "at": 4.19
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital",
+   "role": "caller",
+   "ms": 15360,
+   "start": 11180,
+   "speaker": null,
+   "at": 4.53
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road,",
+   "role": "caller",
+   "ms": 15760,
+   "start": 11180,
+   "speaker": null,
+   "at": 4.94
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account",
+   "role": "caller",
+   "ms": 16720,
+   "start": 11180,
+   "speaker": null,
+   "at": 5.86
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine",
+   "role": "caller",
+   "ms": 17280,
+   "start": 11180,
+   "speaker": null,
+   "at": 6.45
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine zero",
+   "role": "caller",
+   "ms": 17600,
+   "start": 11180,
+   "speaker": null,
+   "at": 6.78
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero",
+   "role": "caller",
+   "ms": 17920,
+   "start": 11180,
+   "speaker": null,
+   "at": 7.06
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero zero",
+   "role": "caller",
+   "ms": 18000,
+   "start": 11180,
+   "speaker": null,
+   "at": 7.17
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero zero zero",
+   "role": "caller",
+   "ms": 18160,
+   "start": 11180,
+   "speaker": null,
+   "at": 7.34
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero zero zero zero",
+   "role": "caller",
+   "ms": 18960,
+   "start": 11180,
+   "speaker": null,
+   "at": 8.12
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero zero zero zero zero",
+   "role": "caller",
+   "ms": 19440,
+   "start": 11180,
+   "speaker": null,
+   "at": 8.59
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero zero zero zero zero zero",
+   "role": "caller",
+   "ms": 19920,
+   "start": 11180,
+   "speaker": null,
+   "at": 9.08
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero zero zero zero zero zero zero",
+   "role": "caller",
+   "ms": 20480,
+   "start": 11180,
+   "speaker": null,
+   "at": 9.66
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero zero zero zero zero zero zero we",
+   "role": "caller",
+   "ms": 21600,
+   "start": 11180,
+   "speaker": null,
+   "at": 10.75
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero zero zero zero zero zero zero we have",
+   "role": "caller",
+   "ms": 21680,
+   "start": 11180,
+   "speaker": null,
+   "at": 10.84
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero zero zero zero zero zero zero we have lost",
+   "role": "caller",
+   "ms": 22080,
+   "start": 11180,
+   "speaker": null,
+   "at": 11.25
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero zero zero zero zero zero zero we have lost mains power.",
+   "role": "caller",
+   "ms": 22720,
+   "start": 11180,
+   "speaker": null,
+   "at": 11.88
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero zero zero zero zero zero zero we have lost mains power. The",
+   "role": "caller",
+   "ms": 24160,
+   "start": 11180,
+   "speaker": null,
+   "at": 13.34
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero zero zero zero zero zero zero we have lost mains power. The generator",
+   "role": "caller",
+   "ms": 24400,
+   "start": 11180,
+   "speaker": null,
+   "at": 13.56
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero zero zero zero zero zero zero we have lost mains power. The generator is",
+   "role": "caller",
+   "ms": 24560,
+   "start": 11180,
+   "speaker": null,
+   "at": 13.72
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero zero zero zero zero zero zero we have lost mains power. The generator is running.",
+   "role": "caller",
+   "ms": 24880,
+   "start": 11180,
+   "speaker": null,
+   "at": 14.05
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero zero zero zero zero zero zero we have lost mains power. The generator is running. But we",
+   "role": "caller",
+   "ms": 25760,
+   "start": 11180,
+   "speaker": null,
+   "at": 14.94
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero zero zero zero zero zero zero we have lost mains power. The generator is running. But we need",
+   "role": "caller",
+   "ms": 25920,
+   "start": 11180,
+   "speaker": null,
+   "at": 15.09
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero zero zero zero zero zero zero we have lost mains power. The generator is running. But we need the",
+   "role": "caller",
+   "ms": 26240,
+   "start": 11180,
+   "speaker": null,
+   "at": 15.41
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero zero zero zero zero zero zero we have lost mains power. The generator is running. But we need the power",
+   "role": "caller",
+   "ms": 26320,
+   "start": 11180,
+   "speaker": null,
+   "at": 15.49
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero zero zero zero zero zero zero we have lost mains power. The generator is running. But we need the power back",
+   "role": "caller",
+   "ms": 26880,
+   "start": 11180,
+   "speaker": null,
+   "at": 16.05
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero zero zero zero zero zero zero we have lost mains power. The generator is running. But we need the power back urgently.",
+   "role": "caller",
+   "ms": 27520,
+   "start": 11180,
+   "speaker": null,
+   "at": 16.7
+  },
+  {
+   "kind": "partial",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero zero zero zero zero zero zero we have lost mains power. The generator is running. But we need the power back urgently.",
+   "role": "caller",
+   "ms": 27600,
+   "start": 11180,
+   "speaker": null,
+   "at": 16.83
+  },
+  {
+   "kind": "final",
+   "text": "Hello, this is the Galle Teaching Hospital annex on Hospital Road, account nine zero zero zero zero zero zero zero zero we have lost mains power. The generator is running. But we need the power back urgently.",
+   "role": "caller",
+   "ms": 27100,
+   "start": 11180,
+   "speaker": "A",
+   "at": 16.83
+  }
+ ]
+}

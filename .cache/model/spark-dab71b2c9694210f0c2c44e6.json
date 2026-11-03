@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1989a-42c8-718e-9fdf-39039d806f30",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "இந்த மின் தடை எங்களுக்குத் தெரியும், blown fuse காரணமாக குழு வந்துகொண்டிருக்கிறது. மின்சாரம் சுமார் 15:40 மணிக்கு மீண்டும் வரும்.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793561608,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1914,
+  "prompt_tokens": 191,
+  "total_tokens": 2105,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1837
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 9.56
+}

@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18cf8-6a84-7090-83cd-e2e76d70e478",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": \"4774971915\", \"cause_hint\": \"storm\", \"hazard\": \"none\", \"house_no\": null, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": null, \"summary_en\": \"Account 4774971915 has had no electricity since the storm.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793366452,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1397,
+  "prompt_tokens": 536,
+  "total_tokens": 1933,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1307
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1e9-6caa-7114-b1ea-a7ae3d82d693",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The fault is at the broken conductor on Velachery Bypass Road between B129 and B130 because most of its transformers show no power with 391 customers out. Send a patrol crew there now and prioritize power for the nearby shelter schools and college.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717791,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 327,
+  "prompt_tokens": 189,
+  "total_tokens": 516,
+  "completion_tokens_details": {
+   "reasoning_tokens": 268
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 4.98
+}

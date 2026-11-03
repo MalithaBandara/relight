@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bee-2e93-74e0-ae6f-74090bd5c19c",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Control here, reading back: pole down at Hospital Road near number 52; you need a line crew and a bucket truck. Correct?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617440,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 242,
+  "prompt_tokens": 168,
+  "total_tokens": 410,
+  "completion_tokens_details": {
+   "reasoning_tokens": 205
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.38
+}

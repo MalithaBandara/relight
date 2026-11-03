@@ -1,0 +1,14 @@
+{
+ "sessionId": "relight-1793618694171",
+ "transcript": "Yangal little Thilakmensarampillai Hospital Road",
+ "audioDurationMs": 4640,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 300,
+   "endMs": 4140,
+   "transcript": "Yangal little Thilakmensarampillai Hospital Road"
+  }
+ ],
+ "_latency_s": 2.7
+}

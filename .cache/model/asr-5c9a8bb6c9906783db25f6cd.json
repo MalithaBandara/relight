@@ -1,0 +1,14 @@
+{
+ "sessionId": "relight-1793717686900",
+ "transcript": "On site at Velachery main road near number 13. A tree is lying across the conductors. Clearing it before the line work.",
+ "audioDurationMs": 11840,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 0,
+   "endMs": 10300,
+   "transcript": "On site at Velachery main road near number 13. A tree is lying across the conductors. Clearing it before the line work."
+  }
+ ],
+ "_latency_s": 4.12
+}

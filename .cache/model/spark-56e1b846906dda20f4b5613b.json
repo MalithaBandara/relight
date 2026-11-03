@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d0b-7f06-778e-90b4-6cabe4d3244d",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Crew found the wire down at Lake Road 6-14 where those customers are out while next door has power. Send a crew to repair the service wire there.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367703,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 2441,
+  "prompt_tokens": 155,
+  "total_tokens": 2596,
+  "completion_tokens_details": {
+   "reasoning_tokens": 2399
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

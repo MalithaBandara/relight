@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cc0-5b18-7144-9884-136b821fd3d6",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Srinivasapuram Road Cross Street 1\", \"summary_en\": \"No power at 1, Srinivasapuram Road Cross Street 1, please fix.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631214,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 428,
+  "prompt_tokens": 537,
+  "total_tokens": 965,
+  "completion_tokens_details": {
+   "reasoning_tokens": 327
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.4
+}

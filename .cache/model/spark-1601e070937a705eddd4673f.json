@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cb2-e1d5-76e4-b765-4870c02c1272",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The outage traces to the Taramani Link Road fuse because five of its ten transformers report no power and the other five went silent. Send a pole replacement and restring crew now to restore 1204 customers and critical facilities.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630331,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 407,
+  "prompt_tokens": 246,
+  "total_tokens": 653,
+  "completion_tokens_details": {
+   "reasoning_tokens": 353
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.01
+}

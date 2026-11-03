@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197ea-73ed-7146-b5c8-daeb7b09c45c",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1232, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Glourie Drive\", \"summary_en\": \"Lights went out at house 1232 on Glourie Drive.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550087,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 681,
+  "prompt_tokens": 502,
+  "total_tokens": 1183,
+  "completion_tokens_details": {
+   "reasoning_tokens": 590
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ }
+}

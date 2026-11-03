@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1da-639c-77ee-b5fc-f0a385acd26b",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1132, \"is_junk\": false, \"landmark\": null, \"language\": \"es\", \"street\": \"Long Point Road\", \"summary_en\": \"Power is out at 1132 Long Point Road.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793716806,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 157,
+  "prompt_tokens": 502,
+  "total_tokens": 659,
+  "completion_tokens_details": {
+   "reasoning_tokens": 70
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.43
+}

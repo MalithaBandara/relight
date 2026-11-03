@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18cf8-bbb8-74c6-a140-2eb29405476c",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": \"wind\", \"hazard\": \"none\", \"house_no\": 60, \"is_junk\": false, \"landmark\": \"temple\", \"language\": \"en\", \"street\": \"Temple Road\", \"summary_en\": \"Power outage at No. 60 Temple Road near the temple after wind, no hazard visible.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793366473,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1290,
+  "prompt_tokens": 552,
+  "total_tokens": 1842,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1193
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ }
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19be8-3a6e-7184-aa4d-31746990c0f2",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The fault is inside the Hospital Road recloser zone because the recloser locked out and killed power to all 112 customers past it including the hospital annex. Send a patrol crew to walk that zone now.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617050,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 253,
+  "prompt_tokens": 159,
+  "total_tokens": 412,
+  "completion_tokens_details": {
+   "reasoning_tokens": 201
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 1.95
+}

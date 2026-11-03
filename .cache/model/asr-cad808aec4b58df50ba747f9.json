@@ -1,0 +1,20 @@
+{
+ "sessionId": "relight-1793718091923",
+ "transcript": "On site at Transformer T 067 fuse. No damage found here the line looks healthy.",
+ "audioDurationMs": 9120,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 60,
+   "endMs": 3900,
+   "transcript": "On site at Transformer T 067 fuse."
+  },
+  {
+   "turnId": 1,
+   "startMs": 4540,
+   "endMs": 8380,
+   "transcript": "No damage found here the line looks healthy."
+  }
+ ],
+ "_latency_s": 3.48
+}

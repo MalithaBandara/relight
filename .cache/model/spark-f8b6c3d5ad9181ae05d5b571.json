@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bed-517a-73a3-b1fa-2de53c3b13ba",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"damage\": \"pole_down\", \"description\": \"A wooden utility pole is snapped and leaning into front yard bushes with multiple power and service wires hanging low across the sidewalk and street frontage near a residence.\", \"public_hazard\": true, \"segment_prompts\": [\"standing utility pole\", \"broken utility pole\", \"hanging power line\"], \"severity\": \"high\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617383,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 346,
+  "prompt_tokens": 3677,
+  "total_tokens": 4023,
+  "completion_tokens_details": {
+   "reasoning_tokens": 261
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 4.44
+}

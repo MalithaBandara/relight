@@ -1,0 +1,14 @@
+{
+ "sessionId": "relight-1793618724639",
+ "transcript": "Hospital Road opposite number 52 concrete pole snapped at the base conductors down no sparking need a bucket truck",
+ "audioDurationMs": 10160,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 140,
+   "endMs": 9660,
+   "transcript": "Hospital Road opposite number 52 concrete pole snapped at the base conductors down no sparking need a bucket truck"
+  }
+ ],
+ "_latency_s": 3.33
+}

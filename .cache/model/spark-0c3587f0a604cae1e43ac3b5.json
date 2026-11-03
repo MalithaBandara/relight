@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cc4-a72c-7063-972c-115a8c917816",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"tree_on_line\", \"house_no\": 56, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Brahmin Street\", \"summary_en\": \"Tree has fallen on the power line near 56 Brahmin Street.\", \"symptom\": \"none\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631495,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 472,
+  "prompt_tokens": 527,
+  "total_tokens": 999,
+  "completion_tokens_details": {
+   "reasoning_tokens": 381
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.98
+}

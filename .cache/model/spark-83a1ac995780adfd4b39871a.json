@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a19847-27af-771c-8c05-14ca3855dc31",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Two customers lost power while next door stayed on, so the fault is the service wire at Wirt Road 1040-1060. Send a crew to repair the service wire.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793556162,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1886,
+  "prompt_tokens": 161,
+  "total_tokens": 2047,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1840
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

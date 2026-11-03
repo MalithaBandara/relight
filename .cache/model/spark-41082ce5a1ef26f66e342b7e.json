@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197f2-57ad-7088-aee1-8d6870125e53",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1236, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Burkhart Road\", \"summary_en\": \"Lights out at house 1236 on Burkhart Road, no hazard observed.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550604,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 941,
+  "prompt_tokens": 511,
+  "total_tokens": 1452,
+  "completion_tokens_details": {
+   "reasoning_tokens": 847
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ }
+}

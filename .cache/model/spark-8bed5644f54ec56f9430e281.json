@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cc0-2d51-77e3-a372-22fc21b9d186",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The fault is at the T-002 transformer fuse because both outage calls come from that transformer. Send a crew to replace the fuse and restore power to 15 customers.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631202,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 242,
+  "prompt_tokens": 131,
+  "total_tokens": 373,
+  "completion_tokens_details": {
+   "reasoning_tokens": 199
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.41
+}

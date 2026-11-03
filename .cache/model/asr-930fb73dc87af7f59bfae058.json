@@ -1,0 +1,26 @@
+{
+ "sessionId": "relight-1793561672765",
+ "transcript": "Cinnamon Garden's Gardens lanes ஐம்பத்தேழு என் அருகில் Diran Farmer Deepochchiyam 53 இல் இருக்கிறோம். Thiruvabovat fios போயிருக்கிறது. இப்போது மாற்றுகிறோம்.",
+ "audioDurationMs": 12400,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 300,
+   "endMs": 6540,
+   "transcript": "Cinnamon Garden's Gardens lanes ஐம்பத்தேழு என் அருகில் Diran Farmer Deepochchiyam 53 இல் இருக்கிறோம்."
+  },
+  {
+   "turnId": 1,
+   "startMs": 7340,
+   "endMs": 9420,
+   "transcript": "Thiruvabovat fios போயிருக்கிறது."
+  },
+  {
+   "turnId": 2,
+   "startMs": 10220,
+   "endMs": 11740,
+   "transcript": "இப்போது மாற்றுகிறோம்."
+  }
+ ],
+ "_latency_s": 8.83
+}

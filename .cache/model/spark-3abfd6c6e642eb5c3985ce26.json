@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a19846-99c5-77a7-b227-76e5e4361e9a",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "73 meters lost power past Ronson Road B262-B296 but power stays on next door, so the conductor is broken there. Send a crew to cordon the live wire on the road and repair it.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793556126,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 2257,
+  "prompt_tokens": 186,
+  "total_tokens": 2443,
+  "completion_tokens_details": {
+   "reasoning_tokens": 2206
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

@@ -1,0 +1,239 @@
+{
+ "text": "Hello. There are sparks and a wire lying on the road near the market on Market Street. People are walking past it. Please come quickly.",
+ "events": [
+  {
+   "kind": "partial",
+   "text": "Hello.",
+   "role": "caller",
+   "ms": 12000,
+   "start": 11260,
+   "speaker": null,
+   "at": 1.2
+  },
+  {
+   "kind": "partial",
+   "text": "Hello. There",
+   "role": "caller",
+   "ms": 13280,
+   "start": 11260,
+   "speaker": null,
+   "at": 2.47
+  },
+  {
+   "kind": "partial",
+   "text": "Hello. There are",
+   "role": "caller",
+   "ms": 13680,
+   "start": 11260,
+   "speaker": null,
+   "at": 2.89
+  },
+  {
+   "kind": "partial",
+   "text": "Hello. There are sparks",
+   "role": "caller",
+   "ms": 14000,
+   "start": 11260,
+   "speaker": null,
+   "at": 3.22
+  },
+  {
+   "kind": "partial",
+   "text": "Hello. There are sparks and",
+   "role": "caller",
+   "ms": 14240,
+   "start": 11260,
+   "speaker": null,
+   "at": 3.42
+  },
+  {
+   "kind": "partial",
+   "text": "Hello. There are sparks and a",
+   "role": "caller",
+   "ms": 14720,
+   "start": 11260,
+   "speaker": null,
+   "at": 3.92
+  },
+  {
+   "kind": "partial",
+   "text": "Hello. There are sparks and a wire",
+   "role": "caller",
+   "ms": 14880,
+   "start": 11260,
+   "speaker": null,
+   "at": 4.08
+  },
+  {
+   "kind": "partial",
+   "text": "Hello. There are sparks and a wire lying",
+   "role": "caller",
+   "ms": 15200,
+   "start": 11260,
+   "speaker": null,
+   "at": 4.39
+  },
+  {
+   "kind": "partial",
+   "text": "Hello. There are sparks and a wire lying on",
+   "role": "caller",
+   "ms": 15280,
+   "start": 11260,
+   "speaker": null,
+   "at": 4.45
+  },
+  {
+   "kind": "partial",
+   "text": "Hello. There are sparks and a wire lying on the",
+   "role": "caller",
+   "ms": 15520,
+   "start": 11260,
+   "speaker": null,
+   "at": 4.72
+  },
+  {
+   "kind": "partial",
+   "text": "Hello. There are sparks and a wire lying on the road",
+   "role": "caller",
+   "ms": 16080,
+   "start": 11260,
+   "speaker": null,
+   "at": 5.28
+  },
+  {
+   "kind": "partial",
+   "text": "Hello. There are sparks and a wire lying on the road near",
+   "role": "caller",
+   "ms": 16160,
+   "start": 11260,
+   "speaker": null,
+   "at": 5.36
+  },
+  {
+   "kind": "partial",
+   "text": "Hello. There are sparks and a wire lying on the road near the",
+   "role": "caller",
+   "ms": 16400,
+   "start": 11260,
+   "speaker": null,
+   "at": 5.58
+  },
+  {
+   "kind": "partial",
+   "text": "Hello. There are sparks and a wire lying on the road near the market",
+   "role": "caller",
+   "ms": 16560,
+   "start": 11260,
+   "speaker": null,
+   "at": 5.77
+  },
+  {
+   "kind": "partial",
+   "text": "Hello. There are sparks and a wire lying on the road near the market on",
+   "role": "caller",
+   "ms": 16640,
+   "start": 11260,
+   "speaker": null,
+   "at": 5.84
+  },
+  {
+   "kind": "partial",
+   "text": "Hello. There are sparks and a wire lying on the road near the market on Market",
+   "role": "caller",
+   "ms": 17200,
+   "start": 11260,
+   "speaker": null,
+   "at": 6.38
+  },
+  {
+   "kind": "partial",
+   "text": "Hello. There are sparks and a wire lying on the road near the market on Market Street.",
+   "role": "caller",
+   "ms": 17600,
+   "start": 11260,
+   "speaker": null,
+   "at": 6.83
+  },
+  {
+   "kind": "partial",
+   "text": "Hello. There are sparks and a wire lying on the road near the market on Market Street. People",
+   "role": "caller",
+   "ms": 18880,
+   "start": 11260,
+   "speaker": null,
+   "at": 8.09
+  },
+  {
+   "kind": "partial",
+   "text": "Hello. There are sparks and a wire lying on the road near the market on Market Street. People are",
+   "role": "caller",
+   "ms": 18960,
+   "start": 11260,
+   "speaker": null,
+   "at": 8.16
+  },
+  {
+   "kind": "partial",
+   "text": "Hello. There are sparks and a wire lying on the road near the market on Market Street. People are walking",
+   "role": "caller",
+   "ms": 19360,
+   "start": 11260,
+   "speaker": null,
+   "at": 8.55
+  },
+  {
+   "kind": "partial",
+   "text": "Hello. There are sparks and a wire lying on the road near the market on Market Street. People are walking past it.",
+   "role": "caller",
+   "ms": 20080,
+   "start": 11260,
+   "speaker": null,
+   "at": 9.31
+  },
+  {
+   "kind": "partial",
+   "text": "Hello. There are sparks and a wire lying on the road near the market on Market Street. People are walking past it. Please",
+   "role": "caller",
+   "ms": 20320,
+   "start": 11260,
+   "speaker": null,
+   "at": 9.62
+  },
+  {
+   "kind": "partial",
+   "text": "Hello. There are sparks and a wire lying on the road near the market on Market Street. People are walking past it. Please come",
+   "role": "caller",
+   "ms": 20720,
+   "start": 11260,
+   "speaker": null,
+   "at": 9.97
+  },
+  {
+   "kind": "partial",
+   "text": "Hello. There are sparks and a wire lying on the road near the market on Market Street. People are walking past it. Please come quickly.",
+   "role": "caller",
+   "ms": 20960,
+   "start": 11260,
+   "speaker": null,
+   "at": 10.19
+  },
+  {
+   "kind": "partial",
+   "text": "Hello. There are sparks and a wire lying on the road near the market on Market Street. People are walking past it. Please come quickly.",
+   "role": "caller",
+   "ms": 21760,
+   "start": 11260,
+   "speaker": null,
+   "at": 11.05
+  },
+  {
+   "kind": "final",
+   "text": "Hello. There are sparks and a wire lying on the road near the market on Market Street. People are walking past it. Please come quickly.",
+   "role": "caller",
+   "ms": 21260,
+   "start": 11260,
+   "speaker": "A",
+   "at": 11.05
+  }
+ ]
+}

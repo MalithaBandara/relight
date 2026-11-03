@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197e0-57e0-776c-9ab7-b438a2ead896",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "¿Ve algún poste, cable o árbol caído cerca de usted? Por favor, no se acerque.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793549424,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 704,
+  "prompt_tokens": 171,
+  "total_tokens": 875,
+  "completion_tokens_details": {
+   "reasoning_tokens": 672
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

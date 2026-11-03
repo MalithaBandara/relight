@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197ef-0560-70d1-9792-000a8a08dccc",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1176, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Ronson Road\", \"summary_en\": \"Half the house has power at 1176 Ronson Road.\", \"symptom\": \"partial_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550386,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 676,
+  "prompt_tokens": 501,
+  "total_tokens": 1177,
+  "completion_tokens_details": {
+   "reasoning_tokens": 587
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ }
+}

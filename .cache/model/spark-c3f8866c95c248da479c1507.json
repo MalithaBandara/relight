@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a19842-87a8-7779-81f7-e0dfc6bc968d",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 125, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Main Road\", \"summary_en\": \"No power since morning at 125 Main Road.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793555859,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1629,
+  "prompt_tokens": 506,
+  "total_tokens": 2135,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1545
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

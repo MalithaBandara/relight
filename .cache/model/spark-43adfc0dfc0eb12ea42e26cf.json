@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a19840-86ee-77b4-91e8-1e4cf9d879dd",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 26, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"6th Main Road Cross Street 1\", \"summary_en\": \"No power at 26, 6th Main Road Cross Street 1, please fix it.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793555728,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1888,
+  "prompt_tokens": 535,
+  "total_tokens": 2423,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1788
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

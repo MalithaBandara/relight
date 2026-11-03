@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cc4-81ff-77ad-8397-dade3443f728",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"RajaLaxmi Nagar 1st main Road\", \"summary_en\": \"No power at Door No. 1, RajaLaxmi Nagar 1st Main Road.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631486,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 298,
+  "prompt_tokens": 526,
+  "total_tokens": 824,
+  "completion_tokens_details": {
+   "reasoning_tokens": 195
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.52
+}

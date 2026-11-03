@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bf1-8919-709a-a5f5-fc8df5876bc1",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"line\", \"vegetation\"], \"damage\": \"tree_on_line\", \"device_ok\": false, \"energised\": false, \"house_from\": null, \"house_no\": null, \"house_to\": null, \"landmark\": null, \"street\": \"Hospital Road\", \"summary_en\": \"Tree on line reported on Hospital Road, crew needs line and vegetation clearance.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617660,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 513,
+  "prompt_tokens": 509,
+  "total_tokens": 1022,
+  "completion_tokens_details": {
+   "reasoning_tokens": 420
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.37
+}

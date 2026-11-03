@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bea-f4d1-7442-a0d1-4d73edf64a86",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 200, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Karapitiya Road\", \"summary_en\": \"House at 200 Karapitiya Road has no power while neighbours have lights, no hazard seen.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617228,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 293,
+  "prompt_tokens": 553,
+  "total_tokens": 846,
+  "completion_tokens_details": {
+   "reasoning_tokens": 197
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ },
+ "_latency_s": 2.06
+}

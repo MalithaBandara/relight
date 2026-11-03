@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cb9-5056-7568-8cd0-9d016f3264b4",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"line\", \"bucket_truck\"], \"damage\": \"pole_down\", \"device_ok\": false, \"energised\": false, \"house_from\": null, \"house_no\": null, \"house_to\": null, \"landmark\": null, \"street\": \"Muthu Krishnan Street 11th\", \"summary_en\": \"Near Muthu Krishnan Street 11th a concrete pole is broken with wires fallen across the road. Starting pole replacement.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630752,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 420,
+  "prompt_tokens": 520,
+  "total_tokens": 940,
+  "completion_tokens_details": {
+   "reasoning_tokens": 309
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.41
+}

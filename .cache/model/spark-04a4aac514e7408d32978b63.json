@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19ca5-532a-74d8-9ca1-8e41f7f36702",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 97, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"1st Main Road Cross Street 1\", \"summary_en\": \"No power at 97, 1st Main Road Cross Street 1, please fix it.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629442,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 453,
+  "prompt_tokens": 535,
+  "total_tokens": 988,
+  "completion_tokens_details": {
+   "reasoning_tokens": 353
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.72
+}

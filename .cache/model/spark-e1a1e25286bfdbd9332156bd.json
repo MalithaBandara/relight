@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197f4-c941-76e9-85d7-fe20e73e69b2",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Hemos localizado la avería que le afecta, causada por un fusible fundido, y ya hay un equipo asignado. La hora estimada de restablecimiento es 01:48, gracias por su paciencia.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550764,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 704,
+  "prompt_tokens": 89,
+  "total_tokens": 793,
+  "completion_tokens_details": {
+   "reasoning_tokens": 650
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

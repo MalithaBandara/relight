@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cc2-e44c-762b-9534-2da4f4a565ae",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The fault is at Transformer T-047 because its customers have no power. Send a crew to replace the fuse and restore 40 customers.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631380,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 190,
+  "prompt_tokens": 131,
+  "total_tokens": 321,
+  "completion_tokens_details": {
+   "reasoning_tokens": 153
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.56
+}

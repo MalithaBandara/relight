@@ -1,0 +1,14 @@
+{
+ "sessionId": "relight-1793617250352",
+ "transcript": "Hi, my TV remote is not working. Can you send someone to look at it?",
+ "audioDurationMs": 7360,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 140,
+   "endMs": 5900,
+   "transcript": "Hi, my TV remote is not working. Can you send someone to look at it?"
+  }
+ ],
+ "_latency_s": 4.76
+}

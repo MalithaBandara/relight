@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cb3-5526-70a7-9a3e-ba9992a68521",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": \"tree\", \"hazard\": \"tree_on_line\", \"house_no\": 56, \"is_junk\": false, \"landmark\": null, \"language\": \"hi\", \"street\": \"Brahmin Street\", \"summary_en\": \"Tree has fallen on electric wire near 56 Brahmin Street.\", \"symptom\": \"none\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630360,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 250,
+  "prompt_tokens": 514,
+  "total_tokens": 764,
+  "completion_tokens_details": {
+   "reasoning_tokens": 159
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.02
+}

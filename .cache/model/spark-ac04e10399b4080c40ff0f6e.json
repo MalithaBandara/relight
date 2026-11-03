@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197e3-2a8d-740c-9485-ad10a4f64f8e",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1088, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Flowerdale Street\", \"summary_en\": \"Outage reported at 1088 Flowerdale Street.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793549609,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 702,
+  "prompt_tokens": 501,
+  "total_tokens": 1203,
+  "completion_tokens_details": {
+   "reasoning_tokens": 615
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

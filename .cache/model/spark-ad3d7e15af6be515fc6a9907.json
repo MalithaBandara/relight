@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d8b-a2f9-72c0-a910-f6e7f6c00f11",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"en\": \"We know about this outage (cause still being checked) and a crew is on the way. Estimated restoration around 15:20.\", \"option\": \"status_enroute\", \"say\": \"We know about this outage (cause still being checked) and a crew is on the way. Estimated restoration around 15:20.\", \"why_en\": \"gives outage update and ETA next\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793376101,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1336,
+  "prompt_tokens": 503,
+  "total_tokens": 1839,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1244
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

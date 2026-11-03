@@ -1,0 +1,13 @@
+{
+ "sessionId": "relight-1793555051798",
+ "transcript": "Hola, buenas noches. Le llamo porque no hay electricidad en el mil ciento treinta y dos de Moritz Drive desde la tormenta.",
+ "audioDurationMs": 9120,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 60,
+   "endMs": 8460,
+   "transcript": "Hola, buenas noches. Le llamo porque no hay electricidad en el mil ciento treinta y dos de Moritz Drive desde la tormenta."
+  }
+ ]
+}

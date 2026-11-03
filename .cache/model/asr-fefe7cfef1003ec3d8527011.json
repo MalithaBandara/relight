@@ -1,0 +1,14 @@
+{
+ "sessionId": "relight-1793618505270",
+ "transcript": "El transformador T cero diecisiete de Westview Drive está bien, los los fusibles están intactos. La acometida se cayó en el número mil cincuenta y dos por una rama, así que solo las casas del mil cuarenta al mil sesenta están sin servicio. Necesitamos una cuadrilla de línea para la acometida.",
+ "audioDurationMs": 19920,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 220,
+   "endMs": 19180,
+   "transcript": "El transformador T cero diecisiete de Westview Drive está bien, los los fusibles están intactos. La acometida se cayó en el número mil cincuenta y dos por una rama, así que solo las casas del mil cuarenta al mil sesenta están sin servicio. Necesitamos una cuadrilla de línea para la acometida."
+  }
+ ],
+ "_latency_s": 5.16
+}

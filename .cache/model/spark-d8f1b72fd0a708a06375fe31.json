@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c79-64bb-775b-a32c-2a183a668640",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Entendido, queda registrado. Todavía no hay un apagón que coincida con ese lugar.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793626563,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 196,
+  "prompt_tokens": 153,
+  "total_tokens": 349,
+  "completion_tokens_details": {
+   "reasoning_tokens": 167
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.3
+}

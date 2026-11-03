@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1d9-8fd5-748f-a3a0-c07d50503475",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1180, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Moritz Drive\", \"summary_en\": \"Power is out at 1180 Moritz Drive, no visible hazard.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793716752,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 295,
+  "prompt_tokens": 508,
+  "total_tokens": 803,
+  "completion_tokens_details": {
+   "reasoning_tokens": 204
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.36
+}

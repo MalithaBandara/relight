@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bf0-a60a-764f-b4b2-e32f7585a242",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 97, \"is_junk\": false, \"landmark\": null, \"language\": \"si\", \"street\": \"Hospital Road\", \"summary_en\": \"Neighbours have power back, we still have no power at Hospital Road 97.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617602,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 211,
+  "prompt_tokens": 557,
+  "total_tokens": 768,
+  "completion_tokens_details": {
+   "reasoning_tokens": 120
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ },
+ "_latency_s": 2.2
+}

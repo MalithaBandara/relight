@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c96-d779-7644-a7d9-d250612104be",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"13th Main Road Cross Street 2\", \"summary_en\": \"Power cut at house 1, 13th Main Road Cross Street 2, lineman requested.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793628493,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 198,
+  "prompt_tokens": 517,
+  "total_tokens": 715,
+  "completion_tokens_details": {
+   "reasoning_tokens": 97
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 1.68
+}

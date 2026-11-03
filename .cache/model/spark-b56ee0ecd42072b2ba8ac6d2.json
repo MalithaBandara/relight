@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1e2-0396-7097-ba05-d0ccfad33c4a",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 70, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"TNHB Colony 1st Main Road\", \"summary_en\": \"No power at door No. 70, TNHB Colony 1st Main Road, no hazard observed.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717306,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 246,
+  "prompt_tokens": 547,
+  "total_tokens": 793,
+  "completion_tokens_details": {
+   "reasoning_tokens": 142
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.03
+}

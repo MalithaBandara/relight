@@ -1,0 +1,25 @@
+{
+ "sessionId": "relight-1793550670320",
+ "transcript": "On site at Burkhart Road near number 1212 Concrete pole snapped conductors down across the road. Starting pole replacement. replacement.",
+ "audioDurationMs": 11120,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 140,
+   "endMs": 3420,
+   "transcript": "On site at Burkhart Road near number 1212"
+  },
+  {
+   "turnId": 1,
+   "startMs": 3820,
+   "endMs": 7420,
+   "transcript": "Concrete pole snapped conductors down across the road."
+  },
+  {
+   "turnId": 2,
+   "startMs": 8140,
+   "endMs": 10140,
+   "transcript": "Starting pole replacement. replacement."
+  }
+ ]
+}

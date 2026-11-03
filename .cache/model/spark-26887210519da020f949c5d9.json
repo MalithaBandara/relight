@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bef-afe4-75a6-b23f-f7dd0b74d2d2",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"damage\": \"pole_down\", \"description\": \"Wood utility pole leaning severely over roadway with attached power and streetlight wires under tension, fallen tree debris blocking street below\", \"public_hazard\": true, \"segment_prompts\": [\"leaning utility pole\", \"overhead power lines\", \"fallen tree\"], \"severity\": \"high\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617538,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 265,
+  "prompt_tokens": 3677,
+  "total_tokens": 3942,
+  "completion_tokens_details": {
+   "reasoning_tokens": 187
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 113
+  }
+ },
+ "_latency_s": 4.64
+}

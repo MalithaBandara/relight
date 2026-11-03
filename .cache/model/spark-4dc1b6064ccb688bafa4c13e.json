@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c8d-ba21-7465-94d4-529760e974d5",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 86, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"3rd Street Cross Street\", \"summary_en\": \"No power since morning at 86, 3rd Street Cross Street.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793627896,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 447,
+  "prompt_tokens": 512,
+  "total_tokens": 959,
+  "completion_tokens_details": {
+   "reasoning_tokens": 355
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.33
+}

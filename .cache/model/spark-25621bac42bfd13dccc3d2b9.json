@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18cfa-500e-77ca-bc21-c8451eaaf212",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "We know about this outage, the cause is still being checked, and a crew is on the way. Estimated restoration is around 15:23.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793366577,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1238,
+  "prompt_tokens": 158,
+  "total_tokens": 1396,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1199
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 113
+  }
+ }
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bea-8762-7579-bec3-d89bd07ce371",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 30, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Market Street\", \"summary_en\": \"Half power with dim lights at 30 Market Street, fridge stopped.\", \"symptom\": \"partial_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617200,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 195,
+  "prompt_tokens": 542,
+  "total_tokens": 737,
+  "completion_tokens_details": {
+   "reasoning_tokens": 107
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ },
+ "_latency_s": 1.71
+}

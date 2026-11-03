@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c97-e889-7040-bdc9-f9203fce2494",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 41, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"1st Cross Street Cross Street 3\", \"summary_en\": \"No power at door no 41, 1st Cross Street Cross Street 3.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793628563,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 351,
+  "prompt_tokens": 513,
+  "total_tokens": 864,
+  "completion_tokens_details": {
+   "reasoning_tokens": 253
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.7
+}

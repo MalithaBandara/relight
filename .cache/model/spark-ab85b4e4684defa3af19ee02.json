@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cc0-239b-73cc-b534-920ffe8be720",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The blown fuse affecting your supply has been found and a crew has been assigned. Estimated restoration time is 18:33, thank you for your patience.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631200,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 235,
+  "prompt_tokens": 89,
+  "total_tokens": 324,
+  "completion_tokens_details": {
+   "reasoning_tokens": 195
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.27
+}

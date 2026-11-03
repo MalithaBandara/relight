@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1e6-7f50-77ee-ab3c-f3455edbe01f",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "हमें इस बिजली कटौती की जानकारी है (फ़्यूज़ उड़ना), और जल्द ही टीम भेजी जाएगी। बिजली लगभग 22:49 तक लौटेगी।",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717599,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 290,
+  "prompt_tokens": 165,
+  "total_tokens": 455,
+  "completion_tokens_details": {
+   "reasoning_tokens": 245
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.25
+}

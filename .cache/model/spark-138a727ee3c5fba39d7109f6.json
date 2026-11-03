@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a19847-0955-7060-a232-7a46edba0964",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Two transformers behind the Burkhart Road fuse are out while the neighbor on T-030 still has power. Send a crew to replace the pole and restring for the 26 customers.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793556154,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1780,
+  "prompt_tokens": 154,
+  "total_tokens": 1934,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1734
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

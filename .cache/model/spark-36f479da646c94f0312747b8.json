@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d8f-af97-72ad-acd5-45cb5fa71a75",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": null, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": null, \"summary_en\": \"Caller reports no power at home and the whole road is dark.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793376366,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 627,
+  "prompt_tokens": 553,
+  "total_tokens": 1180,
+  "completion_tokens_details": {
+   "reasoning_tokens": 543
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

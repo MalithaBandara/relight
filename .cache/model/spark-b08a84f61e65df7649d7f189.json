@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197eb-48cc-73e5-9cf5-d0f2d4cf0d56",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1084, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Pech Road\", \"summary_en\": \"Outage at 1084 Pech Road, please help.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550141,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 557,
+  "prompt_tokens": 501,
+  "total_tokens": 1058,
+  "completion_tokens_details": {
+   "reasoning_tokens": 468
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ }
+}

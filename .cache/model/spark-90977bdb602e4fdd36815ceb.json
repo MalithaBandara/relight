@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bed-d41c-76ed-bf61-604c85e3371c",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"damage\": \"pole_down\", \"description\": \"Concrete distribution pole GL-0417 snapped at mid-height, upper section tilted and suspended by attached power lines over roadside. Exposed rebar and debris with low-hanging wires adjacent to public road and house.\", \"public_hazard\": true, \"segment_prompts\": [\"broken utility pole\", \"hanging power lines\"], \"severity\": \"high\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617417,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 290,
+  "prompt_tokens": 2153,
+  "total_tokens": 2443,
+  "completion_tokens_details": {
+   "reasoning_tokens": 198
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 113
+  }
+ },
+ "_latency_s": 4.88
+}

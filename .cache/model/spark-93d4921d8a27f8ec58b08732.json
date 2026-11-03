@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197ec-07ba-770c-b8bf-78939ec6c603",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Dear customer, the pole down fault affecting you has been found and a crew is assigned. Estimated restoration time is 01:20.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550190,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 716,
+  "prompt_tokens": 89,
+  "total_tokens": 805,
+  "completion_tokens_details": {
+   "reasoning_tokens": 680
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bf0-8a31-771b-b114-ad4e0acfff70",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The outage is isolated to Lake Road 6-14 because the neighbors fed from T-090 still have power. Send a crew to repair the downed service wire.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617594,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 232,
+  "prompt_tokens": 155,
+  "total_tokens": 387,
+  "completion_tokens_details": {
+   "reasoning_tokens": 189
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.03
+}

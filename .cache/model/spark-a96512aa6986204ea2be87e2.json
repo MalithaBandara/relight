@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c8a-7523-7447-8a2d-c04c768cabce",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 34, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"4th Cross Street\", \"summary_en\": \"No power at door No. 34, 4th Cross Street.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793627682,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 256,
+  "prompt_tokens": 519,
+  "total_tokens": 775,
+  "completion_tokens_details": {
+   "reasoning_tokens": 165
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ },
+ "_latency_s": 2.46
+}

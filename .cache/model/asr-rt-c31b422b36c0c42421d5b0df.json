@@ -1,0 +1,68 @@
+{
+ "text": "No, nobody here needs that.",
+ "events": [
+  {
+   "kind": "partial",
+   "text": "No,",
+   "role": "caller",
+   "ms": 78320,
+   "start": 77420,
+   "speaker": null,
+   "at": 1.62
+  },
+  {
+   "kind": "partial",
+   "text": "No, nobody",
+   "role": "caller",
+   "ms": 78800,
+   "start": 77420,
+   "speaker": null,
+   "at": 2.12
+  },
+  {
+   "kind": "partial",
+   "text": "No, nobody here",
+   "role": "caller",
+   "ms": 79120,
+   "start": 77420,
+   "speaker": null,
+   "at": 2.41
+  },
+  {
+   "kind": "partial",
+   "text": "No, nobody here needs",
+   "role": "caller",
+   "ms": 79760,
+   "start": 77420,
+   "speaker": null,
+   "at": 3.06
+  },
+  {
+   "kind": "partial",
+   "text": "No, nobody here needs that.",
+   "role": "caller",
+   "ms": 79920,
+   "start": 77420,
+   "speaker": null,
+   "at": 3.22
+  },
+  {
+   "kind": "partial",
+   "text": "No, nobody here needs that.",
+   "role": "caller",
+   "ms": 80960,
+   "start": 77420,
+   "speaker": null,
+   "at": 4.3
+  },
+  {
+   "kind": "final",
+   "text": "No, nobody here needs that.",
+   "role": "caller",
+   "ms": 80460,
+   "start": 77420,
+   "speaker": "A",
+   "at": 4.3
+  }
+ ]
+}

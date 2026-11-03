@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197ec-84b4-758f-964e-f14dc479ed42",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1024, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Wellington Court North\", \"summary_en\": \"Power out at 1024 Wellington Court North.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550222,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 962,
+  "prompt_tokens": 501,
+  "total_tokens": 1463,
+  "completion_tokens_details": {
+   "reasoning_tokens": 874
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ }
+}

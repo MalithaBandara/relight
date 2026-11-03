@@ -1,0 +1,20 @@
+{
+ "sessionId": "relight-1793626511520",
+ "transcript": "Velachery main road, मकान नंबर बारह के सामने कंक्रीट का खंभा टूट गया है, तार सड़क पर गिरे हैं, चिंगारी नहीं है. बकेट ट्रक चाहिए.",
+ "audioDurationMs": 12720,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 60,
+   "endMs": 8620,
+   "transcript": "Velachery main road, मकान नंबर बारह के सामने कंक्रीट का खंभा टूट गया है, तार सड़क पर गिरे हैं, चिंगारी नहीं है."
+  },
+  {
+   "turnId": 1,
+   "startMs": 9980,
+   "endMs": 11180,
+   "transcript": "बकेट ट्रक चाहिए."
+  }
+ ],
+ "_latency_s": 4.78
+}

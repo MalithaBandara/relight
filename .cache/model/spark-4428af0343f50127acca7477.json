@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18cfa-dbd3-73f6-a72f-9751e03d7891",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"damage\": \"pole_down\", \"description\": \"Severely leaning wooden distribution pole with streetlight and multiple sagging attached wires drooping low over a public roadway that has been cordoned off with police tape and a traffic cone during storm conditions.\", \"public_hazard\": true, \"segment_prompts\": [\"leaning utility pole\", \"sagging power lines\"], \"severity\": \"high\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793366612,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 948,
+  "prompt_tokens": 3405,
+  "total_tokens": 4353,
+  "completion_tokens_details": {
+   "reasoning_tokens": 857
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 113
+  }
+ }
+}

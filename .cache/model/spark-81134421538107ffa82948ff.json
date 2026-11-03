@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19ca4-4457-7648-96ed-2f7c9e1a22be",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 55, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"3rd Street Cross Street 2\", \"summary_en\": \"Power cut at house 55, 3rd Street Cross Street 2, requesting lineman.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629373,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 193,
+  "prompt_tokens": 516,
+  "total_tokens": 709,
+  "completion_tokens_details": {
+   "reasoning_tokens": 94
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.36
+}

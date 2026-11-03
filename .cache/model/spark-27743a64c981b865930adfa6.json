@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19ca8-f74d-73c7-a441-8099adf68090",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 178, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Taramani Link Road\", \"summary_en\": \"Power cut at house 178, Taramani Link Road, lineman requested.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629681,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 247,
+  "prompt_tokens": 513,
+  "total_tokens": 760,
+  "completion_tokens_details": {
+   "reasoning_tokens": 153
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.27
+}

@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a19849-e28a-7415-bbb4-32b3cc055dee",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"line\"], \"damage\": \"live_wire\", \"device_ok\": false, \"energised\": true, \"house_from\": null, \"house_no\": 8, \"house_to\": null, \"landmark\": null, \"street\": \"Market Street\", \"summary_en\": \"Live conductor down on the road near No. 8 Market Street. Area has been cordoned off and made safe.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793556341,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1509,
+  "prompt_tokens": 498,
+  "total_tokens": 2007,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1411
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bfb-61f6-74ca-b677-e5a4a246e38f",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Una pregunta para ubicar la falla: ¿las casas de 1144 Bayram Drive tienen luz ahora mismo?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618305,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 205,
+  "prompt_tokens": 160,
+  "total_tokens": 365,
+  "completion_tokens_details": {
+   "reasoning_tokens": 173
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.38
+}

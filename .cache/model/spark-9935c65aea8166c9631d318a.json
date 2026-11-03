@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c85-c9df-708f-9ae3-80841a84c712",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 28, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Lake View Road\", \"summary_en\": \"No power at 28 Lake View Road, fridge stopped.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793627376,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 367,
+  "prompt_tokens": 506,
+  "total_tokens": 873,
+  "completion_tokens_details": {
+   "reasoning_tokens": 280
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.2
+}

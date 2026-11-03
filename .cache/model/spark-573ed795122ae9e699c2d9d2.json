@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cb9-c029-77de-8c72-610623639aad",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"vegetation\", \"line\"], \"damage\": \"tree_on_line\", \"device_ok\": false, \"energised\": false, \"house_from\": null, \"house_no\": 23, \"house_to\": null, \"landmark\": null, \"street\": \"Brahmin Street\", \"summary_en\": \"Tree lying across conductors at Brahmin Street near house 23, vegetation clearing needed before line work.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630781,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 362,
+  "prompt_tokens": 467,
+  "total_tokens": 829,
+  "completion_tokens_details": {
+   "reasoning_tokens": 261
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.17
+}

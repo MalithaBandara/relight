@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d06-f20d-70f7-a699-f3122783b8d4",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"damage\": \"pole_down\", \"description\": \"A wooden utility pole has fallen into floodwater beside the road with power lines down in the water and draped over the guardrail. An adjacent wooden pole is leaning heavily with sagging, low-hanging wires near a public road.\", \"public_hazard\": true, \"segment_prompts\": [\"fallen utility pole\", \"leaning utility pole\", \"downed power line\"], \"severity\": \"high\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367405,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 821,
+  "prompt_tokens": 3176,
+  "total_tokens": 3997,
+  "completion_tokens_details": {
+   "reasoning_tokens": 719
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

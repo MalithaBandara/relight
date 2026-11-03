@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c78-82b7-71e5-be92-49e2008a05fa",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 12, \"is_junk\": false, \"landmark\": null, \"language\": \"hi\", \"street\": \"Velachery main road\", \"summary_en\": \"No power at home since the storm, House No. 12 on Velachery main road.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793626505,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 352,
+  "prompt_tokens": 529,
+  "total_tokens": 881,
+  "completion_tokens_details": {
+   "reasoning_tokens": 255
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.8
+}

@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d01-843b-73b0-b835-b59be8edb351",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "மதிப்பிற்குரிய வாடிக்கையாளரே, உங்கள் மின்தடைக்குக் காரணமான பழுது கண்டறியப்பட்டது - மின் கம்பியில் மரம் விழுந்துள்ளது, அதனைச் சரிசெய்ய குழு நியமிக்கப்பட்டுள்ளது. மதிப்பிடப்பட்ட மீட்பு நேரம்: 18:08, ஏற்பட்ட சிரமத்திற்கு வருந்துகிறோம்.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367049,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1825,
+  "prompt_tokens": 90,
+  "total_tokens": 1915,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1669
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

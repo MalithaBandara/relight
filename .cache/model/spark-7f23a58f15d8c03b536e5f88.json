@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cc3-296d-7150-932a-cda0856f2aba",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Control here, reading back: blown transformer fuse at Srinivasapuram Road cross street 1 near number 1; you need a troubleshooter. Correct?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631398,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 213,
+  "prompt_tokens": 173,
+  "total_tokens": 386,
+  "completion_tokens_details": {
+   "reasoning_tokens": 171
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.0
+}

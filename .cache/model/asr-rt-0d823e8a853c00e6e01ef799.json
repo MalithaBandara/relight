@@ -1,0 +1,149 @@
+{
+ "text": "Can you see any fallen poles, wires or trees near you? Please do not go near them.",
+ "events": [
+  {
+   "kind": "partial",
+   "text": "Can",
+   "role": "taker",
+   "ms": 81520,
+   "start": 80620,
+   "speaker": null,
+   "at": 1.48
+  },
+  {
+   "kind": "partial",
+   "text": "Can you",
+   "role": "taker",
+   "ms": 81840,
+   "start": 80620,
+   "speaker": null,
+   "at": 1.81
+  },
+  {
+   "kind": "partial",
+   "text": "Can you see any",
+   "role": "taker",
+   "ms": 82160,
+   "start": 80620,
+   "speaker": null,
+   "at": 2.14
+  },
+  {
+   "kind": "partial",
+   "text": "Can you see any fallen",
+   "role": "taker",
+   "ms": 82720,
+   "start": 80620,
+   "speaker": null,
+   "at": 2.66
+  },
+  {
+   "kind": "partial",
+   "text": "Can you see any fallen poles,",
+   "role": "taker",
+   "ms": 83200,
+   "start": 80620,
+   "speaker": null,
+   "at": 3.19
+  },
+  {
+   "kind": "partial",
+   "text": "Can you see any fallen poles, wires",
+   "role": "taker",
+   "ms": 83600,
+   "start": 80620,
+   "speaker": null,
+   "at": 3.58
+  },
+  {
+   "kind": "partial",
+   "text": "Can you see any fallen poles, wires or",
+   "role": "taker",
+   "ms": 84160,
+   "start": 80620,
+   "speaker": null,
+   "at": 4.09
+  },
+  {
+   "kind": "partial",
+   "text": "Can you see any fallen poles, wires or trees near",
+   "role": "taker",
+   "ms": 84720,
+   "start": 80620,
+   "speaker": null,
+   "at": 4.69
+  },
+  {
+   "kind": "partial",
+   "text": "Can you see any fallen poles, wires or trees near you?",
+   "role": "taker",
+   "ms": 84800,
+   "start": 80620,
+   "speaker": null,
+   "at": 4.77
+  },
+  {
+   "kind": "partial",
+   "text": "Can you see any fallen poles, wires or trees near you? Please",
+   "role": "taker",
+   "ms": 85760,
+   "start": 80620,
+   "speaker": null,
+   "at": 5.73
+  },
+  {
+   "kind": "partial",
+   "text": "Can you see any fallen poles, wires or trees near you? Please do not",
+   "role": "taker",
+   "ms": 86000,
+   "start": 80620,
+   "speaker": null,
+   "at": 5.97
+  },
+  {
+   "kind": "partial",
+   "text": "Can you see any fallen poles, wires or trees near you? Please do not go",
+   "role": "taker",
+   "ms": 86160,
+   "start": 80620,
+   "speaker": null,
+   "at": 6.14
+  },
+  {
+   "kind": "partial",
+   "text": "Can you see any fallen poles, wires or trees near you? Please do not go near",
+   "role": "taker",
+   "ms": 86400,
+   "start": 80620,
+   "speaker": null,
+   "at": 6.39
+  },
+  {
+   "kind": "partial",
+   "text": "Can you see any fallen poles, wires or trees near you? Please do not go near them.",
+   "role": "taker",
+   "ms": 86640,
+   "start": 80620,
+   "speaker": null,
+   "at": 6.62
+  },
+  {
+   "kind": "partial",
+   "text": "Can you see any fallen poles, wires or trees near you? Please do not go near them.",
+   "role": "taker",
+   "ms": 87200,
+   "start": 80620,
+   "speaker": null,
+   "at": 7.25
+  },
+  {
+   "kind": "final",
+   "text": "Can you see any fallen poles, wires or trees near you? Please do not go near them.",
+   "role": "taker",
+   "ms": 86700,
+   "start": 80620,
+   "speaker": "B",
+   "at": 7.25
+  }
+ ]
+}

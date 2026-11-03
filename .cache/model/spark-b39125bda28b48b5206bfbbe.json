@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197ec-46dc-7778-9b6f-d2de4ced60e2",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "We know about this outage, pole down, and a crew is working on it now. Estimated restoration around 01:08.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550206,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1447,
+  "prompt_tokens": 156,
+  "total_tokens": 1603,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1412
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

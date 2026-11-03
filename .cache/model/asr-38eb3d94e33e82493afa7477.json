@@ -1,0 +1,26 @@
+{
+ "sessionId": "relight-1793717128732",
+ "transcript": "OnOn site at Velachery Upper Flyover near number 26. A tree is lying across the conductors. clearing it before the line work.",
+ "audioDurationMs": 12080,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 60,
+   "endMs": 4780,
+   "transcript": "OnOn site at Velachery Upper Flyover near number 26."
+  },
+  {
+   "turnId": 1,
+   "startMs": 5180,
+   "endMs": 7820,
+   "transcript": "A tree is lying across the conductors."
+  },
+  {
+   "turnId": 2,
+   "startMs": 8540,
+   "endMs": 10620,
+   "transcript": "clearing it before the line work."
+  }
+ ],
+ "_latency_s": 4.37
+}

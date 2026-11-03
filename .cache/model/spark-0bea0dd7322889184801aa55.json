@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c98-54e1-732a-925e-81bcdcb2c3de",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 20, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Mohanapuri 2nd Street\", \"summary_en\": \"No power at 20 Mohanapuri 2nd Street, please fix it.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793628591,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 277,
+  "prompt_tokens": 535,
+  "total_tokens": 812,
+  "completion_tokens_details": {
+   "reasoning_tokens": 180
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.4
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bfc-32ae-7008-b35c-1584d0315381",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1036, \"is_junk\": false, \"landmark\": null, \"language\": \"es\", \"street\": \"Monarch Oaks Street\", \"summary_en\": \"No power at 1036 Monarch Oaks Street.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618358,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 146,
+  "prompt_tokens": 501,
+  "total_tokens": 647,
+  "completion_tokens_details": {
+   "reasoning_tokens": 59
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.62
+}

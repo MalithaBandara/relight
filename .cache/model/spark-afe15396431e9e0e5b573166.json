@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c91-b982-74df-baaf-0f8225e657e6",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 33, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"4th Main Road\", \"summary_en\": \"No power at 33, 4th Main Road, please fix it.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793628158,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 295,
+  "prompt_tokens": 531,
+  "total_tokens": 826,
+  "completion_tokens_details": {
+   "reasoning_tokens": 203
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.52
+}

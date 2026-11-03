@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bf7-7321-7250-8a8d-6fa0d964e587",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1008, \"is_junk\": false, \"landmark\": null, \"language\": \"es\", \"street\": \"Wellington Court North\", \"summary_en\": \"No power at house 1008 on Wellington Court North.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618047,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 171,
+  "prompt_tokens": 501,
+  "total_tokens": 672,
+  "completion_tokens_details": {
+   "reasoning_tokens": 81
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 18.87
+}

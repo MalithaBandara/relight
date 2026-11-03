@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bfe-a735-709f-9ba6-096cc77c31b2",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The outage is only affecting homes on that service wire, with the customer on T-017 confirming no power. Send a crew to Westview Drive 1040-1060 to repair the downed service wire.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618519,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 242,
+  "prompt_tokens": 160,
+  "total_tokens": 402,
+  "completion_tokens_details": {
+   "reasoning_tokens": 190
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.26
+}

@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197eb-5a87-7409-bdf4-3aface5703cf",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": \"storm\", \"hazard\": \"none\", \"house_no\": 1020, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Glenmore Forest Street\", \"summary_en\": \"No electricity at 1020 Glenmore Forest Street since the storm.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550146,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1212,
+  "prompt_tokens": 502,
+  "total_tokens": 1714,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1119
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ }
+}

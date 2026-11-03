@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197ee-d65a-725f-b5d0-7f14c3e70e76",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "73 smart meters died together and callers have partial power, putting the open wire on Ronson Road B262-B296. Send a line crew to walk that span and get 75 customers back.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550374,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 2140,
+  "prompt_tokens": 169,
+  "total_tokens": 2309,
+  "completion_tokens_details": {
+   "reasoning_tokens": 2091
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

@@ -1,0 +1,14 @@
+{
+ "sessionId": "relight-1793717431524",
+ "transcript": "onon site at broken conductor on Velachery main road B to 81 B to 88. No damage found here the line looks healthy.",
+ "audioDurationMs": 12080,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 0,
+   "endMs": 11580,
+   "transcript": "onon site at broken conductor on Velachery main road B to 81 B to 88. No damage found here the line looks healthy."
+  }
+ ],
+ "_latency_s": 4.12
+}

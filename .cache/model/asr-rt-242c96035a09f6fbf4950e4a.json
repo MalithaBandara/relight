@@ -1,0 +1,95 @@
+{
+ "text": "Yes, someone here is on an oxygen machine.",
+ "events": [
+  {
+   "kind": "partial",
+   "text": "Yes,",
+   "role": "caller",
+   "ms": 154960,
+   "start": 154220,
+   "speaker": null,
+   "at": 1.64
+  },
+  {
+   "kind": "partial",
+   "text": "Yes, someone",
+   "role": "caller",
+   "ms": 155600,
+   "start": 154220,
+   "speaker": null,
+   "at": 2.25
+  },
+  {
+   "kind": "partial",
+   "text": "Yes, someone here",
+   "role": "caller",
+   "ms": 156080,
+   "start": 154220,
+   "speaker": null,
+   "at": 2.77
+  },
+  {
+   "kind": "partial",
+   "text": "Yes, someone here is",
+   "role": "caller",
+   "ms": 156240,
+   "start": 154220,
+   "speaker": null,
+   "at": 2.94
+  },
+  {
+   "kind": "partial",
+   "text": "Yes, someone here is on",
+   "role": "caller",
+   "ms": 156400,
+   "start": 154220,
+   "speaker": null,
+   "at": 3.08
+  },
+  {
+   "kind": "partial",
+   "text": "Yes, someone here is on an",
+   "role": "caller",
+   "ms": 156720,
+   "start": 154220,
+   "speaker": null,
+   "at": 3.36
+  },
+  {
+   "kind": "partial",
+   "text": "Yes, someone here is on an oxygen",
+   "role": "caller",
+   "ms": 157280,
+   "start": 154220,
+   "speaker": null,
+   "at": 3.95
+  },
+  {
+   "kind": "partial",
+   "text": "Yes, someone here is on an oxygen machine.",
+   "role": "caller",
+   "ms": 157520,
+   "start": 154220,
+   "speaker": null,
+   "at": 4.19
+  },
+  {
+   "kind": "partial",
+   "text": "Yes, someone here is on an oxygen machine.",
+   "role": "caller",
+   "ms": 159120,
+   "start": 154220,
+   "speaker": null,
+   "at": 5.81
+  },
+  {
+   "kind": "final",
+   "text": "Yes, someone here is on an oxygen machine.",
+   "role": "caller",
+   "ms": 158620,
+   "start": 154220,
+   "speaker": "A",
+   "at": 5.81
+  }
+ ]
+}

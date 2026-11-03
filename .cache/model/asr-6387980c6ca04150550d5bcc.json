@@ -1,0 +1,31 @@
+{
+ "sessionId": "relight-1793367367908",
+ "transcript": "Patrol to add market street by the market. One phase conductor is down on on the road. It is live and arcing on and off. We have cordoned it off. Need a line crew urgently.",
+ "audioDurationMs": 14560,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 60,
+   "endMs": 3020,
+   "transcript": "Patrol to add market street by the market."
+  },
+  {
+   "turnId": 1,
+   "startMs": 3420,
+   "endMs": 8300,
+   "transcript": "One phase conductor is down on on the road. It is live and arcing on and off."
+  },
+  {
+   "turnId": 2,
+   "startMs": 9180,
+   "endMs": 10780,
+   "transcript": "We have cordoned it off."
+  },
+  {
+   "turnId": 3,
+   "startMs": 11500,
+   "endMs": 13260,
+   "transcript": "Need a line crew urgently."
+  }
+ ]
+}

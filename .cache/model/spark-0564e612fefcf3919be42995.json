@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18cfa-101f-7513-abc7-ca42e5e4d1cc",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "I have your address as 0, Pumping Station Road. Is that where the power is out?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793366560,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1080,
+  "prompt_tokens": 155,
+  "total_tokens": 1235,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1050
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

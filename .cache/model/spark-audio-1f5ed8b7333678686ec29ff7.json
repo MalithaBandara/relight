@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1989d-2da9-7298-b826-98c6e74a8eb1",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "හොස්පිටල් රෝඩ් එකසිය ටී පනස්නවය",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793561799,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 577,
+  "prompt_tokens": 128,
+  "total_tokens": 705,
+  "completion_tokens_details": {
+   "reasoning_tokens": 546
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 6.25
+}

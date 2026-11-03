@@ -1,0 +1,59 @@
+{
+ "text": "Thank you for calling.",
+ "events": [
+  {
+   "kind": "partial",
+   "text": "Thank",
+   "role": "taker",
+   "ms": 213520,
+   "start": 213020,
+   "speaker": null,
+   "at": 1.38
+  },
+  {
+   "kind": "partial",
+   "text": "Thank you",
+   "role": "taker",
+   "ms": 213680,
+   "start": 213020,
+   "speaker": null,
+   "at": 1.53
+  },
+  {
+   "kind": "partial",
+   "text": "Thank you for",
+   "role": "taker",
+   "ms": 214080,
+   "start": 213020,
+   "speaker": null,
+   "at": 1.94
+  },
+  {
+   "kind": "partial",
+   "text": "Thank you for calling.",
+   "role": "taker",
+   "ms": 214720,
+   "start": 213020,
+   "speaker": null,
+   "at": 2.59
+  },
+  {
+   "kind": "partial",
+   "text": "Thank you for calling.",
+   "role": "taker",
+   "ms": 215440,
+   "start": 213020,
+   "speaker": null,
+   "at": 3.38
+  },
+  {
+   "kind": "final",
+   "text": "Thank you for calling.",
+   "role": "taker",
+   "ms": 214940,
+   "start": 213020,
+   "speaker": "B",
+   "at": 3.38
+  }
+ ]
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1ed-2c6d-7232-bbc5-cd23b2c4cec4",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "आपको प्रभावित करने वाले खराब फ्यूज की खराबी मिल गई है और मरम्मत के लिए टीम नियुक्त कर दी गई है, बिजली 00:02 तक बहाल होने की उम्मीद है। असुविधा के लिए क्षमा करें।",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793718037,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 317,
+  "prompt_tokens": 89,
+  "total_tokens": 406,
+  "completion_tokens_details": {
+   "reasoning_tokens": 256
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 4.65
+}

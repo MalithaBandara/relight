@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cab-05e7-76af-8a10-2d02738bf281",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 233, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Taramani Link Road\", \"summary_en\": \"No power at 233 Taramani Link Road, fridge stopped.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629816,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 235,
+  "prompt_tokens": 508,
+  "total_tokens": 743,
+  "completion_tokens_details": {
+   "reasoning_tokens": 144
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.67
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bfc-4e94-7020-8ec9-09cd549c05a3",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1136, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Pech Road\", \"summary_en\": \"Outage at 1136 Pech Road, help requested.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618366,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 154,
+  "prompt_tokens": 501,
+  "total_tokens": 655,
+  "completion_tokens_details": {
+   "reasoning_tokens": 65
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.09
+}

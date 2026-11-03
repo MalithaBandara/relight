@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bee-4cca-7387-932d-65bc89b96d76",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"damage\": \"pole_down\", \"description\": \"Multiple utility poles snapped and collapsed across street with tangled power lines on wet roadway and cars; large fallen tree trunk on lines blocking road\", \"public_hazard\": true, \"segment_prompts\": [\"fallen utility pole\", \"downed power line\", \"fallen tree trunk\", \"broken crossarm\"], \"severity\": \"high\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617448,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 215,
+  "prompt_tokens": 3677,
+  "total_tokens": 3892,
+  "completion_tokens_details": {
+   "reasoning_tokens": 128
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 113
+  }
+ },
+ "_latency_s": 4.6
+}

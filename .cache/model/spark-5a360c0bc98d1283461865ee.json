@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a1983e-b6c2-70de-9224-7d4a1445a1bf",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "පාලන මැදිරියෙන් නැවත කියවන්නම්: Cinnamon Gardens Lane 55: හානියක් නැහැ, හරිද?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793555609,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1549,
+  "prompt_tokens": 180,
+  "total_tokens": 1729,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1503
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

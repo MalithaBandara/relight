@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c9e-b69f-73ad-a776-f6dcb7efcc5c",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 67, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Velachery Upper Flyover\", \"summary_en\": \"Power cut at house 67, Velachery Upper Flyover, request for lineman.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629009,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 319,
+  "prompt_tokens": 514,
+  "total_tokens": 833,
+  "completion_tokens_details": {
+   "reasoning_tokens": 222
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.13
+}

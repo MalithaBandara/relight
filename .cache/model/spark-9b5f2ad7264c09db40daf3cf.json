@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a19841-6c98-732f-a105-e2e23affdffb",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 25, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Main Road\", \"summary_en\": \"No power at 25 Main Road, please fix it.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793555786,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1445,
+  "prompt_tokens": 529,
+  "total_tokens": 1974,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1359
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

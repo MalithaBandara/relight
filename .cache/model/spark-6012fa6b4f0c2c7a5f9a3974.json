@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cc3-216d-7623-bac0-e5337b930532",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"troubleshooter\"], \"damage\": \"blown_fuse\", \"device_ok\": false, \"energised\": false, \"house_from\": null, \"house_no\": 1, \"house_to\": null, \"landmark\": \"Transformer T 00\", \"street\": \"Srinivasapuram Road cross street 1\", \"summary_en\": \"Crew on site at Transformer T 00 on Srinivasapuram Road cross street 1 near number 1. Drop-out fuse is blown and being replaced now.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631396,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 407,
+  "prompt_tokens": 475,
+  "total_tokens": 882,
+  "completion_tokens_details": {
+   "reasoning_tokens": 283
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.88
+}

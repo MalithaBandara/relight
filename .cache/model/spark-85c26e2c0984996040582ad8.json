@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197e2-b548-75e0-a50f-da894a7a6170",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1380, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Wirt Road\", \"summary_en\": \"Power is out at 1380 Wirt Road with no visible hazard.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793549579,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 824,
+  "prompt_tokens": 508,
+  "total_tokens": 1332,
+  "completion_tokens_details": {
+   "reasoning_tokens": 733
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

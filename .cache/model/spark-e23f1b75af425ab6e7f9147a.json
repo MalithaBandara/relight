@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cb0-e282-7331-9f7c-4064a87704c0",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 30, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Balamurugan Nagar 3rd Street\", \"summary_en\": \"No power since morning at 30, Balamurugan Nagar 3rd Street.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630200,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 347,
+  "prompt_tokens": 513,
+  "total_tokens": 860,
+  "completion_tokens_details": {
+   "reasoning_tokens": 248
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.39
+}

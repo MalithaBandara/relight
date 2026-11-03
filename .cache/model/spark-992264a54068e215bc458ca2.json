@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bec-93f8-73b4-b059-eebc034f81e2",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "உங்களைப் பாதித்த அறுந்து விழுந்த மின் கம்பி கோளாறு கண்டறியப்பட்டு, பழுதுபார்க்கும் குழு நியமிக்கப்பட்டுள்ளது. மின் விநியோகம் 16:39-க்குள் மீட்கப்படும் என மதிப்பிடப்பட்டுள்ளது, சிரமத்திற்கு வருந்துகிறோம்.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617335,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 541,
+  "prompt_tokens": 89,
+  "total_tokens": 630,
+  "completion_tokens_details": {
+   "reasoning_tokens": 404
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.56
+}

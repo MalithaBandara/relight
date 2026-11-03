@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197f5-3acc-7662-a697-4c8c1bbbaba3",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Control here, reading back: blown transformer fuse at Whittingham Lane; you need a troubleshooter. Correct?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550793,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1779,
+  "prompt_tokens": 164,
+  "total_tokens": 1943,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1746
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

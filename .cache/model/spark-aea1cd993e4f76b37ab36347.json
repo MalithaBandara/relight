@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cbd-9413-70bc-ab86-0eca29aefc3b",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The outage pattern matches a broken conductor on Inner Ring Road Cross Street 5 feeding B16-B21, with one transformer dark and partial power on the other. Send a crew to make the live wire safe and cordon the road then repair the conductor for 140 customers out.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631032,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 256,
+  "prompt_tokens": 172,
+  "total_tokens": 428,
+  "completion_tokens_details": {
+   "reasoning_tokens": 191
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.24
+}

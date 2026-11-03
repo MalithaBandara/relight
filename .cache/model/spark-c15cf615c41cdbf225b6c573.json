@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bea-6daf-709c-aa7b-6438f217e356",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "ඔබට බලපා ඇති විදුලි බිඳවැටීමට හේතුව කණුවක් කඩා වැටීම බව හඳුනාගෙන ඇති අතර අලුත්වැඩියා කණ්ඩායමක් යොදවා ඇත. ඇස්තමේන්තුගත ප්‍රතිසංස්කරණ කාලය 19:21 වේ, සිදුවූ අපහසුතාවයට අපගේ කණගාටුව.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617194,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 287,
+  "prompt_tokens": 90,
+  "total_tokens": 377,
+  "completion_tokens_details": {
+   "reasoning_tokens": 175
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.48
+}

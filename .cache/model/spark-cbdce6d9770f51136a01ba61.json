@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197df-9b46-76bf-b4bb-ea18a58d6589",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "REC-1 locked out at Westview Drive and 332 meters plus 148 transformers went dark in its zone. Send a patrol to the zone for 916 customers and check the Pech Road school shelter.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793549376,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 2122,
+  "prompt_tokens": 167,
+  "total_tokens": 2289,
+  "completion_tokens_details": {
+   "reasoning_tokens": 2071
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

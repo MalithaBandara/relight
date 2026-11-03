@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1989a-b19e-7378-8005-93f26cf8d7c7",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [], \"damage\": \"none\", \"device_ok\": false, \"energised\": false, \"house_from\": null, \"house_no\": null, \"house_to\": null, \"landmark\": null, \"street\": \"Lake Road\", \"summary_en\": \"Crew reports location at Lake Road reference T 089, 10, 614. No damage, outage range, live-wire condition or device health reported.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793561637,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 3082,
+  "prompt_tokens": 487,
+  "total_tokens": 3569,
+  "completion_tokens_details": {
+   "reasoning_tokens": 2981
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 14.83
+}

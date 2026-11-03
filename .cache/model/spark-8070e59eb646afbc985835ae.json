@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d8b-834c-7454-9169-a08eb440e7b8",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": \"9000000000\", \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": null, \"is_junk\": false, \"landmark\": \"Gali Teaching Hospital Annex\", \"language\": \"en\", \"street\": \"Hospital Road\", \"summary_en\": \"Gali Teaching Hospital Annex on Hospital Road reports lost mains power, running on generator, needs power urgently with a patient on oxygen.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793376092,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1691,
+  "prompt_tokens": 585,
+  "total_tokens": 2276,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1582
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

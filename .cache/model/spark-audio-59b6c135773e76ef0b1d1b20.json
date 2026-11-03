@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1989a-77bd-713b-ac95-bfb8027c6325",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "ලේක් රෝඩ් ටී 089, 10, 614",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793561622,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 296,
+  "prompt_tokens": 149,
+  "total_tokens": 445,
+  "completion_tokens_details": {
+   "reasoning_tokens": 270
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 6.72
+}

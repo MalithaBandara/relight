@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18cf5-a21b-72c0-876b-33e3c0ef0ed5",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"at_seconds\": 3.5,\"damage\": \"transformer_failure\",\"description\": \"Distant pole-mounted equipment arcs with intense blue-white then orange flashes during heavy rain, with lingering orange fire glow near road and parked cars.\",\"public_hazard\": true,\"segment_prompts\": [\"utility pole\",\"failing transformer\"],\"severity\": \"high\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793366270,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1100,
+  "prompt_tokens": 2850,
+  "total_tokens": 3950,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1021
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

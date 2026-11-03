@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c96-1809-740c-9426-a86528280a13",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 21, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"4th Main Road\", \"summary_en\": \"No current at 21, 4th Main Road, fridge stopped.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793628444,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 168,
+  "prompt_tokens": 507,
+  "total_tokens": 675,
+  "completion_tokens_details": {
+   "reasoning_tokens": 77
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 1.58
+}

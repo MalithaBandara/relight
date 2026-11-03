@@ -1,0 +1,14 @@
+{
+ "sessionId": "relight-1793626497795",
+ "transcript": "तूफान के बाद से मेरे घर में बिजली नहीं है। मैं Velachery main road पर रहता हूँ, मकान नंबर बारह।",
+ "audioDurationMs": 10160,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 220,
+   "endMs": 9660,
+   "transcript": "तूफान के बाद से मेरे घर में बिजली नहीं है। मैं Velachery main road पर रहता हूँ, मकान नंबर बारह।"
+  }
+ ],
+ "_latency_s": 5.34
+}

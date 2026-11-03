@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cab-e5cc-7644-b57a-2013df8f5054",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "உங்கள் முகவரி 13, Muthu Krishnan Street என்று எங்களிடம் உள்ளது. அங்கேதான் மின்சாரம் இல்லையா?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629873,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 332,
+  "prompt_tokens": 184,
+  "total_tokens": 516,
+  "completion_tokens_details": {
+   "reasoning_tokens": 273
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.08
+}

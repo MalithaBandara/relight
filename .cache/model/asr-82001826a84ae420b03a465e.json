@@ -1,0 +1,13 @@
+{
+ "sessionId": "relight-1793555052068",
+ "transcript": "There's a power line down down and sparking in front of 1132 Ronson Road. it's right across the sidewalk.",
+ "audioDurationMs": 7040,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 0,
+   "endMs": 6540,
+   "transcript": "There's a power line down down and sparking in front of 1132 Ronson Road. it's right across the sidewalk."
+  }
+ ]
+}

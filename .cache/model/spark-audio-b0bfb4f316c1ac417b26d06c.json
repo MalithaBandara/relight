@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a1983e-30f9-718e-ac5d-408c31256081",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "හොස්පිටල් රෝඩ් පනස් දෙක",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793555574,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 424,
+  "prompt_tokens": 110,
+  "total_tokens": 534,
+  "completion_tokens_details": {
+   "reasoning_tokens": 399
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

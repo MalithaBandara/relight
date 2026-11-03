@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1d9-a95a-735f-9b3f-ab1c1799595a",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1072, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Ridgecrest Drive\", \"summary_en\": \"Outage reported at 1072 Ridgecrest Drive.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793716758,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 203,
+  "prompt_tokens": 502,
+  "total_tokens": 705,
+  "completion_tokens_details": {
+   "reasoning_tokens": 114
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.48
+}

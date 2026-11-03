@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cc5-5027-774c-8b0d-86fa7ec88b78",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "கட்டுப்பாட்டு அறை, திரும்பச் சொல்கிறேன்: Kannadasan street 12th N: மின்கம்பம் விழுந்துள்ளது, உங்களுக்கு லைன் குழு மற்றும் பக்கெட் லாரி தேவை. சரியா?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631539,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 586,
+  "prompt_tokens": 230,
+  "total_tokens": 816,
+  "completion_tokens_details": {
+   "reasoning_tokens": 488
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.65
+}

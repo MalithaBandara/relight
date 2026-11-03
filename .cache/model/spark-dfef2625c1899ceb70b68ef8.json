@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19caf-2bca-716d-9eb5-439ba141fd45",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"pole_down\", \"house_no\": 34, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Velachery Upper Flyover\", \"summary_en\": \"Electricity pole has fallen near Velachery Upper Flyover 34.\", \"symptom\": \"none\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630088,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 403,
+  "prompt_tokens": 525,
+  "total_tokens": 928,
+  "completion_tokens_details": {
+   "reasoning_tokens": 310
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.59
+}

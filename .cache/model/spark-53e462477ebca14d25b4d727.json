@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19be9-a95f-722c-8dd9-689ea3338c38",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Thank you, your report is recorded. We are locating the fault and will send you a text with the restoration time.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617144,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 104,
+  "prompt_tokens": 155,
+  "total_tokens": 259,
+  "completion_tokens_details": {
+   "reasoning_tokens": 71
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 1.8
+}

@@ -1,0 +1,13 @@
+{
+ "sessionId": "relight-1793366337650",
+ "transcript": "Hello. Hello? Yes. The current current is gone at my house. The whole road is dark, all the houses. Can you you please check?",
+ "audioDurationMs": 11920,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 140,
+   "endMs": 11180,
+   "transcript": "Hello. Hello? Yes. The current current is gone at my house. The whole road is dark, all the houses. Can you you please check?"
+  }
+ ]
+}

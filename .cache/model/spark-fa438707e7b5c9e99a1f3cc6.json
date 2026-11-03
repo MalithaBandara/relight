@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1e3-8e9e-741f-83f5-4bf89989b692",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "இந்த மின் தடை எங்களுக்குத் தெரியும், மரம் கம்பிகள் மேல் விழுதல் காரணமாக விரைவில் ஒரு குழு அனுப்பப்படும். மின்சாரம் மீண்டும் வர சுமார் 01:09.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717407,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 377,
+  "prompt_tokens": 214,
+  "total_tokens": 591,
+  "completion_tokens_details": {
+   "reasoning_tokens": 281
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.06
+}

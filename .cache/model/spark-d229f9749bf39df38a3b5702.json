@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1e8-47bc-7523-b687-c12a00ac42d2",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Control here. Reading back: no damage found at your location, the device we sent you to is healthy, correct?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717716,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 187,
+  "prompt_tokens": 164,
+  "total_tokens": 351,
+  "completion_tokens_details": {
+   "reasoning_tokens": 154
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.6
+}

@@ -1,0 +1,26 @@
+{
+ "sessionId": "relight-1793618259693",
+ "transcript": "on site a transformer T033 on Voss Road near number 1136 The dropout fuse is blown replacing it now",
+ "audioDurationMs": 11440,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 140,
+   "endMs": 5820,
+   "transcript": "on site a transformer T033 on Voss Road near number 1136"
+  },
+  {
+   "turnId": 1,
+   "startMs": 6300,
+   "endMs": 8380,
+   "transcript": "The dropout fuse is blown"
+  },
+  {
+   "turnId": 2,
+   "startMs": 8620,
+   "endMs": 10940,
+   "transcript": "replacing it now"
+  }
+ ],
+ "_latency_s": 5.24
+}

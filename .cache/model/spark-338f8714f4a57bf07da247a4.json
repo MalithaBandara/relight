@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d03-96cc-73c0-9888-81d561ac7a79",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Outage is below Transformer T-093 while next-door T-090 has power, so the T-093 fuse blew. Send a crew to replace the fuse and restore 23 customers.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367185,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1450,
+  "prompt_tokens": 143,
+  "total_tokens": 1593,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1403
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

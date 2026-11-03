@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cc2-9497-76fa-919b-5fc2c4e7147e",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 12, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"VPG Selva Nagar Extension 3rd Street\", \"summary_en\": \"No power at 12, VPG Selva Nagar Extension 3rd Street, please fix it.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631360,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 320,
+  "prompt_tokens": 537,
+  "total_tokens": 857,
+  "completion_tokens_details": {
+   "reasoning_tokens": 217
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.47
+}

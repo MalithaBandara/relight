@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c82-cf7c-7526-94ad-458e3b6e4081",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "நன்றி, உங்கள் புகார் பதிவு செய்யப்பட்டது. கோளாறைக் கண்டறிந்து வருகிறோம்; மின்சாரம் வரும் நேரத்தை குறுஞ்செய்தியில் அனுப்புவோம்.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793627180,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 357,
+  "prompt_tokens": 213,
+  "total_tokens": 570,
+  "completion_tokens_details": {
+   "reasoning_tokens": 266
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.73
+}

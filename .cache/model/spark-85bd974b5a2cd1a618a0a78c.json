@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bf0-0ec8-7536-889a-6a4864195e80",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"damage\": \"blown_fuse\", \"description\": \"Central fuse cutout on pole-mounted transformer has blown with visible black scorching and hanging fuse tube; pole and transformer remain upright with wires intact.\", \"public_hazard\": false, \"segment_prompts\": [\"utility pole\", \"blown fuse\", \"transformer\"], \"severity\": \"high\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617563,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 347,
+  "prompt_tokens": 3089,
+  "total_tokens": 3436,
+  "completion_tokens_details": {
+   "reasoning_tokens": 264
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 5.04
+}

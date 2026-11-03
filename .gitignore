@@ -9,8 +9,7 @@ venv/
 .env
 .env.*
 
-# Model response cache and local data
-.cache/
+# Local data (the model response cache in .cache/ is committed so a fresh clone replays the live runs)
 *.sqlite3
 *.db
 

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bfc-0904-734b-9408-b4e81aa834b5",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"confidence\": \"high\", \"note\": \"No pole identification plate is visible or legible in the image; poles are shown but plates are not discernible.\", \"readable\": false, \"tag\": null}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618348,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 104,
+  "prompt_tokens": 3364,
+  "total_tokens": 3468,
+  "completion_tokens_details": {
+   "reasoning_tokens": 51
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 6.24
+}

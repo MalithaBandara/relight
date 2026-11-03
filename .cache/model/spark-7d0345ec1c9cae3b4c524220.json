@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bb3-8522-7369-9147-39248e5aa551",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"damage\": \"blown_fuse\", \"description\": \"Center phase dropout fuse cutout on concrete pole is blackened with soot and burn marks with fuse tube hanging open, indicating a blown/operated fuse. Pole remains upright, transformer tank intact, and overhead wires intact.\", \"public_hazard\": false, \"segment_prompts\": [\"burned fuse cutout\", \"concrete utility pole\", \"distribution transformer\", \"crossarm\"], \"severity\": \"medium\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793613595,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 873,
+  "prompt_tokens": 3089,
+  "total_tokens": 3962,
+  "completion_tokens_details": {
+   "reasoning_tokens": 767
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 8.83
+}

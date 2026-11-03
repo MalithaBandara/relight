@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19beb-0881-76c3-bbf8-b3318da027d9",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "உங்கள் பகுதியில் விழுந்த மின் கம்பத்தால் ஏற்பட்ட பழுது கண்டறியப்பட்டு, பணிக்குழு நியமிக்கப்பட்டுள்ளது. மின்சாரம் 19:18-க்குள் மீட்கப்படும் என எதிர்பார்க்கப்படுகிறது, சிரமத்திற்கு வருந்துகிறோம்.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617234,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 361,
+  "prompt_tokens": 89,
+  "total_tokens": 450,
+  "completion_tokens_details": {
+   "reasoning_tokens": 240
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.89
+}

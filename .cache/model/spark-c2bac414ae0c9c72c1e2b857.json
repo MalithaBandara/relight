@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19be8-6219-7310-acda-0cf10c863dfe",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "මෙම විදුලි බිඳවැටීම ගැන අප දන්නවා, හේතුව තවමත් සොයා බලමින් සිටිනවා. අපේ කණ්ඩායමක් එමින් සිටිනවා, විදුලිය නැවත ලැබීමට ආසන්න වේලාව 15:20.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617060,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 440,
+  "prompt_tokens": 192,
+  "total_tokens": 632,
+  "completion_tokens_details": {
+   "reasoning_tokens": 357
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.78
+}

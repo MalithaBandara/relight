@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c84-ed09-73eb-a5fd-b22d5a95cbbf",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 255, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"6th Main Road Cross Street 1\", \"summary_en\": \"Power cut at house 255 on 6th Main Road Cross Street 1, lineman requested.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793627319,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 252,
+  "prompt_tokens": 517,
+  "total_tokens": 769,
+  "completion_tokens_details": {
+   "reasoning_tokens": 151
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 1.92
+}

@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a19837-8fc5-772d-8880-2bfbaeb4ce3a",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"confidence\": \"high\", \"note\": \"A leaning electricity distribution pole is visible but distant and obscured by rain on windshield; no identification plate characters can be discerned.\", \"readable\": false, \"tag\": null}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793555140,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 545,
+  "prompt_tokens": 3386,
+  "total_tokens": 3931,
+  "completion_tokens_details": {
+   "reasoning_tokens": 489
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 113
+  }
+ }
+}

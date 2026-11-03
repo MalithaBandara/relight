@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bed-4026-7099-ae26-418f9336588d",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"pole_down\", \"house_no\": 70, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Hospital Road\", \"summary_en\": \"No power at No. 70 Hospital Road, broken pole down the road (photo sent).\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617379,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 166,
+  "prompt_tokens": 547,
+  "total_tokens": 713,
+  "completion_tokens_details": {
+   "reasoning_tokens": 71
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ },
+ "_latency_s": 2.52
+}

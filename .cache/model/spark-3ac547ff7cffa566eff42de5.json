@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1de-d75b-70de-960e-b16380f36585",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 50, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"JagannathaPuram 2nd Street\", \"summary_en\": \"No power at door No 50, JagannathaPuram 2nd Street, no visible cause reported.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717098,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 404,
+  "prompt_tokens": 547,
+  "total_tokens": 951,
+  "completion_tokens_details": {
+   "reasoning_tokens": 300
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 15.67
+}

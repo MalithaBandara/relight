@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a1983f-92cf-7383-8420-8cc0c4ae4fb9",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Both outage calls trace to transformer T-017 so the blown fuse is there. Send a crew to replace the fuse and restore the 7 customers.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793555665,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1149,
+  "prompt_tokens": 131,
+  "total_tokens": 1280,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1110
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

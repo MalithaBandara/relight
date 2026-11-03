@@ -1,0 +1,167 @@
+{
+ "text": "we know about this outage, still being checked. A crew is on the way, estimated restoration around 15 20.",
+ "events": [
+  {
+   "kind": "partial",
+   "text": "we know",
+   "role": "taker",
+   "ms": 85760,
+   "start": 84780,
+   "speaker": null,
+   "at": 1.42
+  },
+  {
+   "kind": "partial",
+   "text": "we know about",
+   "role": "taker",
+   "ms": 86240,
+   "start": 84780,
+   "speaker": null,
+   "at": 1.92
+  },
+  {
+   "kind": "partial",
+   "text": "we know about this",
+   "role": "taker",
+   "ms": 86560,
+   "start": 84780,
+   "speaker": null,
+   "at": 2.22
+  },
+  {
+   "kind": "partial",
+   "text": "we know about this outage,",
+   "role": "taker",
+   "ms": 86960,
+   "start": 84780,
+   "speaker": null,
+   "at": 2.61
+  },
+  {
+   "kind": "partial",
+   "text": "we know about this outage, still",
+   "role": "taker",
+   "ms": 87840,
+   "start": 84780,
+   "speaker": null,
+   "at": 3.48
+  },
+  {
+   "kind": "partial",
+   "text": "we know about this outage, still being",
+   "role": "taker",
+   "ms": 88240,
+   "start": 84780,
+   "speaker": null,
+   "at": 3.89
+  },
+  {
+   "kind": "partial",
+   "text": "we know about this outage, still being checked.",
+   "role": "taker",
+   "ms": 88560,
+   "start": 84780,
+   "speaker": null,
+   "at": 4.23
+  },
+  {
+   "kind": "partial",
+   "text": "we know about this outage, still being checked. A",
+   "role": "taker",
+   "ms": 89280,
+   "start": 84780,
+   "speaker": null,
+   "at": 4.92
+  },
+  {
+   "kind": "partial",
+   "text": "we know about this outage, still being checked. A crew",
+   "role": "taker",
+   "ms": 89360,
+   "start": 84780,
+   "speaker": null,
+   "at": 5.02
+  },
+  {
+   "kind": "partial",
+   "text": "we know about this outage, still being checked. A crew is",
+   "role": "taker",
+   "ms": 89680,
+   "start": 84780,
+   "speaker": null,
+   "at": 5.33
+  },
+  {
+   "kind": "partial",
+   "text": "we know about this outage, still being checked. A crew is on the",
+   "role": "taker",
+   "ms": 89760,
+   "start": 84780,
+   "speaker": null,
+   "at": 5.44
+  },
+  {
+   "kind": "partial",
+   "text": "we know about this outage, still being checked. A crew is on the way,",
+   "role": "taker",
+   "ms": 90480,
+   "start": 84780,
+   "speaker": null,
+   "at": 6.14
+  },
+  {
+   "kind": "partial",
+   "text": "we know about this outage, still being checked. A crew is on the way, estimated",
+   "role": "taker",
+   "ms": 91440,
+   "start": 84780,
+   "speaker": null,
+   "at": 7.06
+  },
+  {
+   "kind": "partial",
+   "text": "we know about this outage, still being checked. A crew is on the way, estimated restoration",
+   "role": "taker",
+   "ms": 92320,
+   "start": 84780,
+   "speaker": null,
+   "at": 7.97
+  },
+  {
+   "kind": "partial",
+   "text": "we know about this outage, still being checked. A crew is on the way, estimated restoration around",
+   "role": "taker",
+   "ms": 92480,
+   "start": 84780,
+   "speaker": null,
+   "at": 8.14
+  },
+  {
+   "kind": "partial",
+   "text": "we know about this outage, still being checked. A crew is on the way, estimated restoration around 15 20.",
+   "role": "taker",
+   "ms": 94080,
+   "start": 84780,
+   "speaker": null,
+   "at": 9.8
+  },
+  {
+   "kind": "partial",
+   "text": "we know about this outage, still being checked. A crew is on the way, estimated restoration around 15 20.",
+   "role": "taker",
+   "ms": 94240,
+   "start": 84780,
+   "speaker": null,
+   "at": 9.94
+  },
+  {
+   "kind": "final",
+   "text": "we know about this outage, still being checked. A crew is on the way, estimated restoration around 15 20.",
+   "role": "taker",
+   "ms": 93740,
+   "start": 84780,
+   "speaker": "A",
+   "at": 9.94
+  }
+ ]
+}

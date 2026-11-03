@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a1983f-7f37-7535-bd25-37410b9ea68b",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Two separate transformers past the Burkhart Road fuse are out while T-042 next door stays on. Send a patrol to walk that fuse zone for the 26 customers out.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793555660,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 2289,
+  "prompt_tokens": 156,
+  "total_tokens": 2445,
+  "completion_tokens_details": {
+   "reasoning_tokens": 2244
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

@@ -1,0 +1,25 @@
+{
+ "sessionId": "relight-1793367753247",
+ "transcript": "Hospital Road, Nooriyan Arail, Dhrans Pharma, Deepochcha 19. இல் இருக்கிறோம். Thirabhavat Fuse போயிருக்கிறது. இப்போது மாற்றுகிறோம்.",
+ "audioDurationMs": 11360,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 60,
+   "endMs": 5660,
+   "transcript": "Hospital Road, Nooriyan Arail, Dhrans Pharma, Deepochcha 19. இல் இருக்கிறோம்."
+  },
+  {
+   "turnId": 1,
+   "startMs": 6220,
+   "endMs": 8300,
+   "transcript": "Thirabhavat Fuse போயிருக்கிறது."
+  },
+  {
+   "turnId": 2,
+   "startMs": 8940,
+   "endMs": 10620,
+   "transcript": "இப்போது மாற்றுகிறோம்."
+  }
+ ]
+}

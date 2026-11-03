@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197e2-440e-75c7-8eda-621f36eec743",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1316, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Pech Road\", \"summary_en\": \"Power outage at 1316 Pech Road.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793549550,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 721,
+  "prompt_tokens": 499,
+  "total_tokens": 1220,
+  "completion_tokens_details": {
+   "reasoning_tokens": 635
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ }
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bfb-4a43-748c-bf11-02a397d0645b",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": null, \"is_junk\": true, \"landmark\": null, \"language\": \"en\", \"street\": null, \"summary_en\": \"Spam message about winning a $500 gift card.\", \"symptom\": \"none\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618299,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 136,
+  "prompt_tokens": 502,
+  "total_tokens": 638,
+  "completion_tokens_details": {
+   "reasoning_tokens": 56
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 1.49
+}

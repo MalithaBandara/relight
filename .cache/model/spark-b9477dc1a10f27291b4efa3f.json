@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bf1-a249-70e1-b16f-3e35fdab2f17",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"troubleshooter\"], \"damage\": \"blown_fuse\", \"device_ok\": false, \"energised\": false, \"house_from\": null, \"house_no\": 100, \"house_to\": null, \"landmark\": \"Transformer T-059\", \"street\": \"Hospital Road\", \"summary_en\": \"Crew at Transformer T-059 near No. 100 Hospital Road reports a blown drop-out fuse and is now replacing it.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617666,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 493,
+  "prompt_tokens": 605,
+  "total_tokens": 1098,
+  "completion_tokens_details": {
+   "reasoning_tokens": 385
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.15
+}

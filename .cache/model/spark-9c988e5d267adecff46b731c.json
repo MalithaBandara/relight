@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c78-caac-77c9-9a63-753979053586",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "ठीक है, दर्ज कर लिया। उस जगह से मिलती कोई बिजली कटौती अभी नहीं है।",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793626524,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 128,
+  "prompt_tokens": 154,
+  "total_tokens": 282,
+  "completion_tokens_details": {
+   "reasoning_tokens": 98
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 1.84
+}

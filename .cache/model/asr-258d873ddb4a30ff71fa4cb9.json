@@ -1,0 +1,19 @@
+{
+ "sessionId": "relight-1793554983029",
+ "transcript": "What role do at Market Street by the market? One phase conductor is down on the road. It is live and arcing on and off. We have have cordoned it off. Need a line crew urgently.",
+ "audioDurationMs": 14560,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 0,
+   "endMs": 2620,
+   "transcript": "What role do at Market Street by the market?"
+  },
+  {
+   "turnId": 1,
+   "startMs": 3260,
+   "endMs": 13820,
+   "transcript": "One phase conductor is down on the road. It is live and arcing on and off. We have have cordoned it off. Need a line crew urgently."
+  }
+ ]
+}

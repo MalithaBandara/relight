@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c99-50d1-730c-a942-2199ac3566ac",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 11, \"is_junk\": false, \"landmark\": null, \"language\": \"hi\", \"street\": \"Major Mukund Varadharajan Salai\", \"summary_en\": \"No power at house no. 11 on Major Mukund Varadharajan Salai.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793628655,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 287,
+  "prompt_tokens": 516,
+  "total_tokens": 803,
+  "completion_tokens_details": {
+   "reasoning_tokens": 187
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.75
+}

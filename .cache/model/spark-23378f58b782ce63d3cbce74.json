@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cc2-4517-73ad-afdc-883cd041846f",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 11, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"A.G.S. Colony 2nd Street Cross Street 1\", \"summary_en\": \"Low voltage at house 11, fan running slow.\", \"symptom\": \"partial_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631339,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 432,
+  "prompt_tokens": 518,
+  "total_tokens": 950,
+  "completion_tokens_details": {
+   "reasoning_tokens": 336
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.33
+}

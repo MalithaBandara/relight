@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bfd-cec3-7525-98f3-3216f8375faa",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1228, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Burkhart Road\", \"summary_en\": \"Outage reported at 1228 Burkhart Road.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618464,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 187,
+  "prompt_tokens": 502,
+  "total_tokens": 689,
+  "completion_tokens_details": {
+   "reasoning_tokens": 98
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.34
+}

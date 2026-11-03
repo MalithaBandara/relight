@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197eb-2b00-77dd-8a10-955b0bc21eb7",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Calls and meter alerts show the outage is limited to T-033 affecting 11 customers. Send a crew with a replacement fuse.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550134,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1791,
+  "prompt_tokens": 141,
+  "total_tokens": 1932,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1756
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

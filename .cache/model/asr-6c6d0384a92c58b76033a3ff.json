@@ -1,0 +1,26 @@
+{
+ "sessionId": "relight-1793631527369",
+ "transcript": "Kannadasan street 12th N அருகில் இருக்கிறோம் Concrete Kambam உடைந்து கம்பிகள் சாலையின் குறுக்கே விழுந்துள்ளன. கம்பத்தை மாற்றத் தொடங்குகிறோம்.",
+ "audioDurationMs": 12640,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 60,
+   "endMs": 3580,
+   "transcript": "Kannadasan street 12th N அருகில் இருக்கிறோம்"
+  },
+  {
+   "turnId": 1,
+   "startMs": 4300,
+   "endMs": 8940,
+   "transcript": "Concrete Kambam உடைந்து கம்பிகள் சாலையின் குறுக்கே விழுந்துள்ளன."
+  },
+  {
+   "turnId": 2,
+   "startMs": 9660,
+   "endMs": 12060,
+   "transcript": "கம்பத்தை மாற்றத் தொடங்குகிறோம்."
+  }
+ ],
+ "_latency_s": 5.5
+}

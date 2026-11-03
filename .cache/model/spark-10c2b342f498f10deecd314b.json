@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d9a-1471-741a-bd50-2f809c90af7f",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"pole_down\", \"house_no\": 75, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Hospital Road\", \"summary_en\": \"Caller at 75 Hospital Road reports no power; an electricity pole has fallen near house No. 52.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793377047,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 2233,
+  "prompt_tokens": 612,
+  "total_tokens": 2845,
+  "completion_tokens_details": {
+   "reasoning_tokens": 2136
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ }
+}

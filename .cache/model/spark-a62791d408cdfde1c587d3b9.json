@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bef-7895-721c-8458-0448c2e908ee",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "හරි, I5 යටතේ සටහන් කළා.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617524,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 236,
+  "prompt_tokens": 152,
+  "total_tokens": 388,
+  "completion_tokens_details": {
+   "reasoning_tokens": 211
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.1
+}

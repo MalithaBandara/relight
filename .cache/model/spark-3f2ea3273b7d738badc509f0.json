@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bef-9608-727c-968c-7b0be375c79e",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Control here. Reading back: tree on the line at Temple Road; you need the vegetation crew and a line crew. Correct?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617532,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 187,
+  "prompt_tokens": 166,
+  "total_tokens": 353,
+  "completion_tokens_details": {
+   "reasoning_tokens": 152
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.45
+}

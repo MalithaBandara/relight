@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19be9-5cc7-74ee-b2e6-a8f59f1f44d7",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"confidence\": \"high\", \"note\": \"No identification plate is visible/legible on the fallen utility pole in the image.\", \"readable\": false, \"tag\": null}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617124,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 157,
+  "prompt_tokens": 3157,
+  "total_tokens": 3314,
+  "completion_tokens_details": {
+   "reasoning_tokens": 110
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 4.61
+}

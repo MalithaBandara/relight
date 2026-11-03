@@ -1,0 +1,19 @@
+{
+ "sessionId": "relight-1793554989501",
+ "transcript": "Temple Road near the temple a large Bo tree is across the lines two spans down. Need the vegetation vegetation crew before any line work.",
+ "audioDurationMs": 11200,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 60,
+   "endMs": 5980,
+   "transcript": "Temple Road near the temple a large Bo tree is across the lines two spans down."
+  },
+  {
+   "turnId": 1,
+   "startMs": 6540,
+   "endMs": 9740,
+   "transcript": "Need the vegetation vegetation crew before any line work."
+  }
+ ]
+}

@@ -1,0 +1,14 @@
+{
+ "sessionId": "relight-1793717852179",
+ "transcript": "onon site at Transformer T058 fuse. No No damage found here, the line looks looks healthy.",
+ "audioDurationMs": 9120,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 60,
+   "endMs": 8620,
+   "transcript": "onon site at Transformer T058 fuse. No No damage found here, the line looks looks healthy."
+  }
+ ],
+ "_latency_s": 3.8
+}

@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d01-dbe5-76cb-a0ac-ea1f56386978",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": \"wind\", \"hazard\": \"none\", \"house_no\": 9, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Lake Road\", \"summary_en\": \"Power off at No. 9 Lake Road, neighbouring houses still have lights.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367071,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 825,
+  "prompt_tokens": 548,
+  "total_tokens": 1373,
+  "completion_tokens_details": {
+   "reasoning_tokens": 734
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

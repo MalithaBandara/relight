@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cb4-8432-7229-9cfc-68bbd6b7bc50",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 59, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Film Street\", \"summary_en\": \"No power at 59 Film Street, please fix it.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630438,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 298,
+  "prompt_tokens": 529,
+  "total_tokens": 827,
+  "completion_tokens_details": {
+   "reasoning_tokens": 212
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.73
+}

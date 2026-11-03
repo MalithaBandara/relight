@@ -1,0 +1,13 @@
+{
+ "sessionId": "relight-1793554982269",
+ "transcript": "Hello. There are sparks and a wire lying on the road near the market on Market Street. People are walking past it please come quickly.",
+ "audioDurationMs": 10720,
+ "turns": [
+  {
+   "turnId": 0,
+   "startMs": 0,
+   "endMs": 9340,
+   "transcript": "Hello. There are sparks and a wire lying on the road near the market on Market Street. People are walking past it please come quickly."
+  }
+ ]
+}

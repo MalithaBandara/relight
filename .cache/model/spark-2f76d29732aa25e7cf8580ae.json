@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cbe-f400-777a-8d2d-10575ec901a2",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 43, \"is_junk\": false, \"landmark\": null, \"language\": \"hi\", \"street\": \"Film Street\", \"summary_en\": \"No power at house number 43 on Film Street.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631122,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 177,
+  "prompt_tokens": 509,
+  "total_tokens": 686,
+  "completion_tokens_details": {
+   "reasoning_tokens": 92
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.19
+}

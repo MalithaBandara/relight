@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bea-41a0-75c1-a12b-9dfc7f3c339a",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "පාලන මැදිරියෙන් කියවන්නම්, Hospital Road අංක 52 අසල කණුවක් වැටිලා ඔබට ලයින් කණ්ඩායමක් සහ බකට් ට්‍රක් එකක් අවශ්‍යයි, හරිද?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617183,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 386,
+  "prompt_tokens": 211,
+  "total_tokens": 597,
+  "completion_tokens_details": {
+   "reasoning_tokens": 314
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.13
+}

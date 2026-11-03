@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cc1-d8b1-7788-b0a3-cf13ebb17101",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 21, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"VGP Selva Nagar Extn 1st Main Road Cross Street 1\", \"summary_en\": \"No power at door No 21, VGP Selva Nagar Extn 1st Main Road Cross Street 1.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631312,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 392,
+  "prompt_tokens": 531,
+  "total_tokens": 923,
+  "completion_tokens_details": {
+   "reasoning_tokens": 279
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ },
+ "_latency_s": 2.93
+}

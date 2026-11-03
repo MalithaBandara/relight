@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1e4-8da8-7286-bb20-03492a16b1e2",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "நீங்கள் இதை ஏற்கனவே 22:06 மணிக்குத் தெரிவித்துள்ளீர்கள், நன்றி.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717472,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 325,
+  "prompt_tokens": 180,
+  "total_tokens": 505,
+  "completion_tokens_details": {
+   "reasoning_tokens": 270
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.27
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cb4-ace7-76cc-bc06-4dd3e06fd575",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": null, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Film Street 9\", \"summary_en\": \"No electricity on Film Street 9, please fix it.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630448,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 251,
+  "prompt_tokens": 529,
+  "total_tokens": 780,
+  "completion_tokens_details": {
+   "reasoning_tokens": 164
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.82
+}

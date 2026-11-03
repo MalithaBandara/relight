@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19ca3-6a93-757d-a84a-e363327fc5af",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"Ram Nagar Main Road Cross Street 2\", \"summary_en\": \"No power at 1, Ram Nagar Main Road Cross Street 2, please fix.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793629317,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 340,
+  "prompt_tokens": 535,
+  "total_tokens": 875,
+  "completion_tokens_details": {
+   "reasoning_tokens": 242
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 2.38
+}

@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1ed-af65-7632-949a-98c5ff6faeb1",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "प्रिय ग्राहक, आपको प्रभावित करने वाला फ्यूज खराबी मिल गया है और हमारी टीम नियुक्त कर दी गई है। अनुमानित बहाली समय 00:04 है।",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793718071,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 217,
+  "prompt_tokens": 89,
+  "total_tokens": 306,
+  "completion_tokens_details": {
+   "reasoning_tokens": 170
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.23
+}

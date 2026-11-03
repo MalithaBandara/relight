@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bfd-5a2b-7088-8e9c-e76331f2f4d3",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"line\", \"bucket_truck\"], \"damage\": \"wire_down\", \"device_ok\": false, \"energised\": true, \"house_from\": null, \"house_no\": 1132, \"house_to\": null, \"landmark\": null, \"street\": \"Ronson Road\", \"summary_en\": \"Crew on site on Ronson Road near number 1132. Downed conductor is energized. Area cordoned off and being secured.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618434,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 507,
+  "prompt_tokens": 469,
+  "total_tokens": 976,
+  "completion_tokens_details": {
+   "reasoning_tokens": 398
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.78
+}

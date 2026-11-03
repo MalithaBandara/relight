@@ -1,0 +1,185 @@
+{
+ "text": "Thank you. Your report is recorded. We are locating the fault and will send you a text with the restoration time.",
+ "events": [
+  {
+   "kind": "partial",
+   "text": "Thank",
+   "role": "taker",
+   "ms": 96320,
+   "start": 95580,
+   "speaker": null,
+   "at": 1.45
+  },
+  {
+   "kind": "partial",
+   "text": "Thank you. Your",
+   "role": "taker",
+   "ms": 96960,
+   "start": 95580,
+   "speaker": null,
+   "at": 2.16
+  },
+  {
+   "kind": "partial",
+   "text": "Thank you. Your report",
+   "role": "taker",
+   "ms": 97360,
+   "start": 95580,
+   "speaker": null,
+   "at": 2.5
+  },
+  {
+   "kind": "partial",
+   "text": "Thank you. Your report is",
+   "role": "taker",
+   "ms": 97520,
+   "start": 95580,
+   "speaker": null,
+   "at": 2.66
+  },
+  {
+   "kind": "partial",
+   "text": "Thank you. Your report is recorded.",
+   "role": "taker",
+   "ms": 98240,
+   "start": 95580,
+   "speaker": null,
+   "at": 3.39
+  },
+  {
+   "kind": "partial",
+   "text": "Thank you. Your report is recorded. We are",
+   "role": "taker",
+   "ms": 99200,
+   "start": 95580,
+   "speaker": null,
+   "at": 4.36
+  },
+  {
+   "kind": "partial",
+   "text": "Thank you. Your report is recorded. We are locating",
+   "role": "taker",
+   "ms": 99520,
+   "start": 95580,
+   "speaker": null,
+   "at": 4.62
+  },
+  {
+   "kind": "partial",
+   "text": "Thank you. Your report is recorded. We are locating the",
+   "role": "taker",
+   "ms": 100000,
+   "start": 95580,
+   "speaker": null,
+   "at": 5.14
+  },
+  {
+   "kind": "partial",
+   "text": "Thank you. Your report is recorded. We are locating the fault",
+   "role": "taker",
+   "ms": 100160,
+   "start": 95580,
+   "speaker": null,
+   "at": 5.3
+  },
+  {
+   "kind": "partial",
+   "text": "Thank you. Your report is recorded. We are locating the fault and",
+   "role": "taker",
+   "ms": 100240,
+   "start": 95580,
+   "speaker": null,
+   "at": 5.36
+  },
+  {
+   "kind": "partial",
+   "text": "Thank you. Your report is recorded. We are locating the fault and will",
+   "role": "taker",
+   "ms": 100400,
+   "start": 95580,
+   "speaker": null,
+   "at": 5.53
+  },
+  {
+   "kind": "partial",
+   "text": "Thank you. Your report is recorded. We are locating the fault and will send you",
+   "role": "taker",
+   "ms": 101120,
+   "start": 95580,
+   "speaker": null,
+   "at": 6.27
+  },
+  {
+   "kind": "partial",
+   "text": "Thank you. Your report is recorded. We are locating the fault and will send you a",
+   "role": "taker",
+   "ms": 101360,
+   "start": 95580,
+   "speaker": null,
+   "at": 6.5
+  },
+  {
+   "kind": "partial",
+   "text": "Thank you. Your report is recorded. We are locating the fault and will send you a text",
+   "role": "taker",
+   "ms": 101440,
+   "start": 95580,
+   "speaker": null,
+   "at": 6.56
+  },
+  {
+   "kind": "partial",
+   "text": "Thank you. Your report is recorded. We are locating the fault and will send you a text with",
+   "role": "taker",
+   "ms": 101600,
+   "start": 95580,
+   "speaker": null,
+   "at": 6.73
+  },
+  {
+   "kind": "partial",
+   "text": "Thank you. Your report is recorded. We are locating the fault and will send you a text with the",
+   "role": "taker",
+   "ms": 101680,
+   "start": 95580,
+   "speaker": null,
+   "at": 6.81
+  },
+  {
+   "kind": "partial",
+   "text": "Thank you. Your report is recorded. We are locating the fault and will send you a text with the restoration",
+   "role": "taker",
+   "ms": 102640,
+   "start": 95580,
+   "speaker": null,
+   "at": 7.77
+  },
+  {
+   "kind": "partial",
+   "text": "Thank you. Your report is recorded. We are locating the fault and will send you a text with the restoration time.",
+   "role": "taker",
+   "ms": 102720,
+   "start": 95580,
+   "speaker": null,
+   "at": 7.88
+  },
+  {
+   "kind": "partial",
+   "text": "Thank you. Your report is recorded. We are locating the fault and will send you a text with the restoration time.",
+   "role": "taker",
+   "ms": 103680,
+   "start": 95580,
+   "speaker": null,
+   "at": 8.89
+  },
+  {
+   "kind": "final",
+   "text": "Thank you. Your report is recorded. We are locating the fault and will send you a text with the restoration time.",
+   "role": "taker",
+   "ms": 103180,
+   "start": 95580,
+   "speaker": "B",
+   "at": 8.89
+  }
+ ]
+}

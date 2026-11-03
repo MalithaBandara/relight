@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1da-ca9a-747b-9bd0-38db587f6f72",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The fault is at the Bingle Road fuse where 14 customers across 11 transformers lost power. Send a tree crew to clear the line and repair the spans to restore 163 customers including the Pech Road police station.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793716832,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 330,
+  "prompt_tokens": 172,
+  "total_tokens": 502,
+  "completion_tokens_details": {
+   "reasoning_tokens": 276
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.47
+}

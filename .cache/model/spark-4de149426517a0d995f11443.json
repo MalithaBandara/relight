@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bf0-6a03-75be-ba2e-064d59167956",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"line\"], \"damage\": \"service_wire\", \"device_ok\": true, \"energised\": false, \"house_from\": 6, \"house_no\": null, \"house_to\": 14, \"landmark\": null, \"street\": \"Lake Road\", \"summary_en\": \"Lake Road Grand transformer and fuses are healthy. A branch fell near No 10 breaking the service wire, leaving houses 6 to 14 without supply. Line crew needed for service wire.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617586,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 759,
+  "prompt_tokens": 611,
+  "total_tokens": 1370,
+  "completion_tokens_details": {
+   "reasoning_tokens": 645
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 5.11
+}

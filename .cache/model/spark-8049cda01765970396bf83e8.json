@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cc3-4728-711a-b8c2-9efaf2a5c014",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 25, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Kannadasan street\", \"summary_en\": \"No power at door no 25, Kannadasan street.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793631405,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 223,
+  "prompt_tokens": 508,
+  "total_tokens": 731,
+  "completion_tokens_details": {
+   "reasoning_tokens": 134
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 497
+  }
+ },
+ "_latency_s": 1.97
+}

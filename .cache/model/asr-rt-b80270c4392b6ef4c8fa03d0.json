@@ -1,0 +1,104 @@
+{
+ "text": "Hey, the lights just went out at my place. The whole house is dark.",
+ "events": [
+  {
+   "kind": "partial",
+   "text": "Hey,",
+   "role": "caller",
+   "ms": 11360,
+   "start": 10700,
+   "speaker": null,
+   "at": 1.45
+  },
+  {
+   "kind": "partial",
+   "text": "Hey, the",
+   "role": "caller",
+   "ms": 11440,
+   "start": 10700,
+   "speaker": null,
+   "at": 1.48
+  },
+  {
+   "kind": "partial",
+   "text": "Hey, the lights just",
+   "role": "caller",
+   "ms": 12000,
+   "start": 10700,
+   "speaker": null,
+   "at": 2.06
+  },
+  {
+   "kind": "partial",
+   "text": "Hey, the lights just went out at",
+   "role": "caller",
+   "ms": 12480,
+   "start": 10700,
+   "speaker": null,
+   "at": 2.58
+  },
+  {
+   "kind": "partial",
+   "text": "Hey, the lights just went out at my place.",
+   "role": "caller",
+   "ms": 12880,
+   "start": 10700,
+   "speaker": null,
+   "at": 2.94
+  },
+  {
+   "kind": "partial",
+   "text": "Hey, the lights just went out at my place. The whole",
+   "role": "caller",
+   "ms": 13840,
+   "start": 10700,
+   "speaker": null,
+   "at": 4.3
+  },
+  {
+   "kind": "partial",
+   "text": "Hey, the lights just went out at my place. The whole house",
+   "role": "caller",
+   "ms": 13920,
+   "start": 10700,
+   "speaker": null,
+   "at": 4.3
+  },
+  {
+   "kind": "partial",
+   "text": "Hey, the lights just went out at my place. The whole house is",
+   "role": "caller",
+   "ms": 14160,
+   "start": 10700,
+   "speaker": null,
+   "at": 4.3
+  },
+  {
+   "kind": "partial",
+   "text": "Hey, the lights just went out at my place. The whole house is dark.",
+   "role": "caller",
+   "ms": 14800,
+   "start": 10700,
+   "speaker": null,
+   "at": 4.91
+  },
+  {
+   "kind": "partial",
+   "text": "Hey, the lights just went out at my place. The whole house is dark.",
+   "role": "caller",
+   "ms": 15040,
+   "start": 10700,
+   "speaker": null,
+   "at": 5.45
+  },
+  {
+   "kind": "final",
+   "text": "Hey, the lights just went out at my place. The whole house is dark.",
+   "role": "caller",
+   "ms": 14540,
+   "start": 10700,
+   "speaker": "B",
+   "at": 5.45
+  }
+ ]
+}

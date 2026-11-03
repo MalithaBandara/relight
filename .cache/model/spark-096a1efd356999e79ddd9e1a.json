@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a19846-bd8d-75c9-a33e-053e1cc13da8",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Two transformers under the Burkhart Road fuse are out while T-030 next door has power. Send a patrol crew to that fuse zone for the 26 customers out.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793556135,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1791,
+  "prompt_tokens": 156,
+  "total_tokens": 1947,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1747
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

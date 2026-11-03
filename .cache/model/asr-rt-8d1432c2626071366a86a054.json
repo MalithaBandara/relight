@@ -1,0 +1,32 @@
+{
+ "text": "Yes,",
+ "events": [
+  {
+   "kind": "partial",
+   "text": "Yes,",
+   "role": "caller",
+   "ms": 61040,
+   "start": 59980,
+   "speaker": null,
+   "at": 1.73
+  },
+  {
+   "kind": "partial",
+   "text": "Yes,",
+   "role": "caller",
+   "ms": 62240,
+   "start": 59980,
+   "speaker": null,
+   "at": 2.97
+  },
+  {
+   "kind": "final",
+   "text": "Yes,",
+   "role": "caller",
+   "ms": 61740,
+   "start": 59980,
+   "speaker": "B",
+   "at": 2.97
+  }
+ ]
+}

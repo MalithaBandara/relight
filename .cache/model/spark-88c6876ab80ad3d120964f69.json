@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19cbb-9aef-7735-9169-1822bd3bab20",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 18, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"A.G.S. Colony 2nd Street Cross Street 1\", \"summary_en\": \"Low voltage at house 18, A.G.S. Colony 2nd Street Cross Street 1.\", \"symptom\": \"partial_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793630902,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 368,
+  "prompt_tokens": 531,
+  "total_tokens": 899,
+  "completion_tokens_details": {
+   "reasoning_tokens": 262
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 3.0
+}

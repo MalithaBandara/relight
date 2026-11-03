@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19bf6-b72b-75c9-8fa5-ecc4c1bc038c",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 1088, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Auline Lane\", \"summary_en\": \"Outage reported at 1088 Auline Lane.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793617999,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 224,
+  "prompt_tokens": 501,
+  "total_tokens": 725,
+  "completion_tokens_details": {
+   "reasoning_tokens": 137
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 241
+  }
+ },
+ "_latency_s": 1.77
+}

@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d0c-869f-707e-a7de-6dd73a64fc44",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"troubleshooter\"], \"damage\": \"blown_fuse\", \"device_ok\": false, \"energised\": false, \"house_from\": null, \"house_no\": 19, \"house_to\": null, \"landmark\": \"Dhrans Pharma, Nooriyan Arail\", \"street\": \"Hospital Road\", \"summary_en\": \"Crew at Door No 19, Hospital Road near Dhrans Pharma, Nooriyan Arail reports a blown transformer fuse and is replacing it now.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367770,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 2543,
+  "prompt_tokens": 526,
+  "total_tokens": 3069,
+  "completion_tokens_details": {
+   "reasoning_tokens": 2425
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

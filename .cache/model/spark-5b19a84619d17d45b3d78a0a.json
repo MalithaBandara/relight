@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a19c01-b27f-73c0-a6cb-163f06bd122d",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "මෙම විදුලි බිඳවැටීම (pole down) ගැන අප දන්නවා, කණ්ඩායමක් දැන් එහි වැඩ කරනවා. විදුලිය නැවත ලැබීමට ආසන්න වේලාව 19:18.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793618719,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 440,
+  "prompt_tokens": 190,
+  "total_tokens": 630,
+  "completion_tokens_details": {
+   "reasoning_tokens": 372
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.95
+}

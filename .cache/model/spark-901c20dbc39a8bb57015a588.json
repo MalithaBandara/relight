@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d06-4321-7494-8c15-0a6e6b4bba54",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 30, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": \"Market Street\", \"summary_en\": \"House No. 30 on Market Street still has half power.\", \"symptom\": \"partial_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367360,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1049,
+  "prompt_tokens": 535,
+  "total_tokens": 1584,
+  "completion_tokens_details": {
+   "reasoning_tokens": 962
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a197eb-ea9f-76a2-8cc9-9dccfad5d2fb",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The downed pole is at the Winningham Lane fuse because 19 meters cut out together and the 12 transformers below it went silent. Send a pole crew to replace the pole and restring the line for 90 customers.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793550183,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 1864,
+  "prompt_tokens": 136,
+  "total_tokens": 2000,
+  "completion_tokens_details": {
+   "reasoning_tokens": 1810
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}

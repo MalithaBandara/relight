@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1ed-eeaa-7086-b5f5-4b118f20a07a",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Control here, reading back: tree on the line at Marudupandi Street near number 9; you need the vegetation crew and a line crew. Correct?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793718087,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 234,
+  "prompt_tokens": 173,
+  "total_tokens": 407,
+  "completion_tokens_details": {
+   "reasoning_tokens": 192
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.14
+}

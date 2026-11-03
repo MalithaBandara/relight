@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1e5-d467-74ae-ae3a-56aa30ca59f1",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "Hello, we found a tree on the line affecting your power and a crew has been assigned. Estimated restoration time is 01:12. Thank you for your patience.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717556,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 168,
+  "prompt_tokens": 90,
+  "total_tokens": 258,
+  "completion_tokens_details": {
+   "reasoning_tokens": 125
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.68
+}

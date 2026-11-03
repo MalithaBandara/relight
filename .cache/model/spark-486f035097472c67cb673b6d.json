@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1ee-d792-7325-af2c-f0efcbeb615a",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "The outage is isolated to Transformer T-017 because its customers are dark while the neighbor on T-029 still has power. Send a line crew with a replacement fuse to restore the 7 customers out.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793718146,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 289,
+  "prompt_tokens": 154,
+  "total_tokens": 443,
+  "completion_tokens_details": {
+   "reasoning_tokens": 239
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 4.05
+}

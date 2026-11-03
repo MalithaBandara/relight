@@ -1,0 +1,30 @@
+{
+ "id": "chatcmpl-01a1a1dd-59d3-74bf-816b-c5df7cde91b5",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": 31, \"is_junk\": false, \"landmark\": null, \"language\": \"ta\", \"street\": \"3rd Main Road\", \"summary_en\": \"No power at 31, 3rd Main Road, please fix it.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793717000,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 339,
+  "prompt_tokens": 531,
+  "total_tokens": 870,
+  "completion_tokens_details": {
+   "reasoning_tokens": 247
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 369
+  }
+ },
+ "_latency_s": 4.18
+}

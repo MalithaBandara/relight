@@ -1,0 +1,29 @@
+{
+ "id": "chatcmpl-01a18d0a-ba08-7769-a516-b25f02b7e026",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"line\"], \"damage\": \"service_wire\", \"device_ok\": true, \"energised\": false, \"house_from\": 6, \"house_no\": 10, \"house_to\": 16, \"landmark\": \"Grand Farmer depot\", \"street\": \"Lake Road\", \"summary_en\": \"Transformer and fuses at Grand Farmer depot on Lake Road are healthy. A branch fell near No 10 breaking the service wire, leaving houses 6 to 16 without supply. Line crew needed for the service wire.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793367652,
+ "model": "muse-spark-1.3",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 2175,
+  "prompt_tokens": 606,
+  "total_tokens": 2781,
+  "completion_tokens_details": {
+   "reasoning_tokens": 2052
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ }
+}
