@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import asyncio
 import hashlib
+import heapq
 import json
 from pathlib import Path
 
@@ -103,6 +104,7 @@ class Control(BaseModel):
     action: str  # start | pause | reset | speed | live_calls | handover
     speed: float | None = None
     on: bool | None = None
+    target: float | None = None
 
 
 class ScenarioChoice(BaseModel):
@@ -176,6 +178,14 @@ async def control(c: Control):
         replayer.reset()
         engine.reset()
         await broadcast({"type": "reset"})
+    elif c.action == "advance":
+        replayer.running = False
+        target = float(c.target or 0)
+        while replayer.queue and replayer.queue[0][0] <= target:
+            _, _, e = heapq.heappop(replayer.queue)
+            replayer.clock = e["t"]
+            await replayer.deliver(e)
+        replayer.clock = max(replayer.clock, target)
     await tick(replayer.clock)
     return {"ok": True, "running": replayer.running, "speed": replayer.speed}
 
