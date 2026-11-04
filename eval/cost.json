@@ -3,17 +3,17 @@
   {
    "scenario": "galle_storm",
    "messages": 72,
-   "unique_requests": 218,
+   "unique_requests": 217,
    "bill_usd": {
-    "spark": 0.327,
+    "spark": 0.325,
     "voice_transcribe": 0.006,
-    "sam": 0.499,
-    "total": 0.83
+    "sam": 0.435,
+    "total": 0.77
    },
-   "per_message_cents": 1.16,
+   "per_message_cents": 1.06,
    "sam_usage": {
     "images": 40,
-    "video_frames": 1997
+    "video_frames": 1677
    },
    "per_channel_cents": {
     "call": {
@@ -51,9 +51,9 @@
   {
    "scenario": "houston_hurricane",
    "messages": 222,
-   "unique_requests": 260,
+   "unique_requests": 262,
    "bill_usd": {
-    "spark": 0.385,
+    "spark": 0.388,
     "voice_transcribe": 0.002,
     "sam": 0.545,
     "total": 0.93
@@ -86,7 +86,7 @@
     },
     "crew_note": {
      "n": 7,
-     "mean": 0.37,
+     "mean": 0.39,
      "max": 0.57
     },
     "scada": {
@@ -101,7 +101,7 @@
     },
     "whatsapp": {
      "n": 5,
-     "mean": 0.26,
+     "mean": 0.29,
      "max": 0.5
     }
    }
@@ -233,9 +233,9 @@
   {
    "scenario": "hospital_generator",
    "messages": 294,
-   "unique_requests": 317,
+   "unique_requests": 316,
    "bill_usd": {
-    "spark": 0.52,
+    "spark": 0.519,
     "voice_transcribe": 0.0,
     "sam": 0.0,
     "total": 0.52

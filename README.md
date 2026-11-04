@@ -32,7 +32,8 @@
 > [!IMPORTANT]
 > **Relight is a prototype and everything shown is synthetic.** It runs on a simulated utility and has not been used by
 > a real one. Every customer, address, phone number and account is fictional. Caller and crew voices are synthetic. Maps
-> come from OpenStreetMap. Damage photos and clips are third-party and credited in the repository.
+> come from OpenStreetMap. Damage photos and clips are third-party and credited in the repository. The clips themselves
+> are not in the repository: see [Videos](#videos).
 
 ## Overview
 
@@ -131,6 +132,7 @@ every fault found and nobody dark.
 - [Highlights](#highlights)
 - [Quick start](#quick-start)
 - [Usage](#usage)
+- [Videos](#videos)
 - [How it works](#how-it-works)
 - [Results](#results)
 - [Cost](#cost)
@@ -182,6 +184,11 @@ Relight is developed and tested on Windows 11. The macOS and Linux commands are 
 
 Open <http://localhost:8000>, pick a scenario in the header and press **Run**.
 
+> [!NOTE]
+> **The five storm video clips are not in this repository, so they won't show up in a fresh clone.** Their events show
+> "video not added yet" and a `mock` label. Everything else replays normally. To see the clips analysed, or to try your
+> own, see [Videos](#videos).
+
 ## Usage
 
 ### Pages
@@ -223,6 +230,94 @@ operator approves every plan. A run ends by printing what is still dark, for exa
 What-if customer-minutes: Relight 68,940 vs first-call-first-served 98,129; live wire made safe after 2 vs 90 min
 Still dark at the end: 0 customers (believed); world says 0
 ```
+
+## Videos
+
+**The five storm clips are not in this repository.** They are third-party footage whose pages state no licence, so they
+aren't ours to redistribute. You can see them in the [demo video](https://youtu.be/Wdf_SaKpP8I).
+
+| Clip (where it goes) | Used in | Source |
+|---|---|---|
+| `media/drone/temple_road_span.mp4` | Galle: drone patrol `D1` | [11Alive, YouTube](https://www.youtube.com/watch?v=ChaqvH8k02g) |
+| `media/videos/tree_on_live_line.mp4` | Galle: message `C24`, portal sample | [Jahangir Alam (Linemanbd15), Facebook](https://www.facebook.com/watch/?v=1033433662993562) |
+| `media/videos/limb_on_pole.mp4` | Houston: message `C41`, portal sample | [Neil Sackman, Facebook](https://www.facebook.com/watch/?v=2942484986199463) |
+| `media/videos/salina_tree_on_pole.mp4` | Houston: message `C282` | [Megan Brandon via KOTV News On 6, Facebook](https://www.facebook.com/watch/?v=1084130850192135) |
+| `media/videos/indonesia_tree_explosion.mp4` | Chennai: message `C408`, portal sample | [VBear media, YouTube](https://www.youtube.com/shorts/T0CASmx3fkU) |
+
+### What you see without them
+
+The storms still replay and end the same way: the same faults are found and everyone is restored. For the five events
+above:
+
+- The event log shows `mock (ground truth)` and "video not added yet", and the damage type comes from the scenario's label.
+- The map marker's popup has no video, no Muse Spark description, no SAM 3.1 tracking and no drone survey.
+- The portal's three video sample buttons fill in the message but can't attach a clip, and show "Attach a photo or a video."
+- `scripts/cost_report.py` counts no video requests, so its totals come out lower than the [Cost](#cost) table.
+
+### See the clips analysed by the models
+
+This needs a [Meta Model API key](https://dev.meta.ai), `ffmpeg` on the PATH and an internet connection.
+
+1. Add your key as described in [Configuration](#configuration).
+2. Download and trim the clips into the paths above (commands for Windows; on macOS or Linux use `.venv/bin/`):
+
+   ```powershell
+   .venv\Scripts\pip install yt-dlp
+   .venv\Scripts\python scripts\fetch_videos.py
+   ```
+
+   If a source has gone offline, the script prints `FAILED` for that clip and carries on. That event stays as a placeholder.
+3. Start the server, pick the scenario and press **Run**. When a clip's event comes up, the log shows
+   `Muse Spark + SAM 3.1` with what the models read. Click the marker on the map to see the clip and the results.
+
+> [!WARNING]
+> The script re-encodes each clip, so a file may not match the committed responses byte for byte. Any clip that doesn't
+> match goes to the API as new requests, which are billed. From the runs behind the [Cost](#cost) table, that comes to
+> about $0.36 for Galle's two clips, $0.55 for Houston's two and $0.30 for Chennai's one. New results are cached, so later
+> replays are free, but they may differ slightly from the figures in this README.
+
+To draw SAM 3.1's outlines over the drone clip after a run (no API calls; it can take a few minutes):
+
+```powershell
+.venv\Scripts\python scripts\build_overlays.py media\drone\temple_road_span.mp4
+```
+
+### Try your own video
+
+Analysis needs a key. Without one, your clip still goes through, but its result reads "(mock) not analysed yet".
+
+First make the clip small, because SAM 3.1 limits the request size: a 2.9 MB clip passed and a 7.6 MB one was rejected. If
+a clip is rejected, the event log shows `video analysis failed`. At $0.20 per 1,000 frames, tracking up to four kinds of
+object through 30 seconds at 10 frames per second costs about 25¢.
+
+```bash
+ffmpeg -i my_clip.mp4 -an -vf "scale='min(854,iw)':-2,fps=10" -t 30 -c:v libx264 -crf 30 -preset slow my_clip_small.mp4
+```
+
+**From the customer portal (no files to edit):**
+
+1. Start the server, pick a scenario in the console and press **Run**.
+2. Open <http://localhost:8000/customer> and go to **Report a problem**.
+3. Type a message that names an address on that scenario's feeder. In Galle, for example:
+   `Tree on the wires at 20 Hospital Road. Video attached.`
+4. Add your clip (MP4, MOV or WebM, up to 60 MB) and send it.
+
+The result appears under your report, and the clip appears as a marker on the console's map.
+
+**As part of a scenario:** put the clip anywhere under `media/`, restart the server after each edit, and use a path relative
+to the repository root.
+
+- For a customer message, edit `"videos"` in `scenarios/calls/<scenario>.json`, using a message's `id` from the scenario:
+
+  ```json
+  "videos": {"C24": {"file": "media/videos/my_clip_small.mp4", "damage": "tree_on_line"}}
+  ```
+
+  `damage` is only the label used when no model reads the clip.
+- For the drone patrol, change the `"file"` of event `D1` in `scenarios/galle_storm.json`.
+
+What the models read from a clip counts as damage evidence, so a different clip can change a run from the numbers in
+[Results](#results).
 
 ## How it works
 
@@ -324,12 +419,14 @@ running it would probably cost more, and we have not estimated that.
 ### Measured: the storms in this repository
 
 What one run costs in model calls at [Meta's published prices](https://dev.meta.ai/docs/pricing-rate-limits), with each
-unique request counted once. `python scripts/cost_report.py` reproduces this from the cache without calling the API, and
-the results are in [eval/cost.json](eval/cost.json). Totals can move by a cent between replays.
+unique request counted once. These runs included the storm clips, and the results are in [eval/cost.json](eval/cost.json).
+`python scripts/cost_report.py` works from the cache without calling the API, and totals can move by a cent between
+replays. It needs the original clips to reach these totals. In a fresh clone, without them, it gives $0.41 for Galle, $0.38
+for Houston and $2.76 for Chennai, and overwrites `eval/cost.json` with those figures (see [Videos](#videos)).
 
 | Scenario | Customers | Messages | Spark | Voice Transcribe | SAM 3.1 | **Total** | Per message |
 |---|---|---|---|---|---|---|---|
-| Galle | 1,951 | 72 | $0.33 | $0.01 | $0.50 | **$0.83** | 1.2¢ |
+| Galle | 1,951 | 72 | $0.33 | $0.01 | $0.44 | **$0.77** | 1.1¢ |
 | Houston | 3,044 | 222 | $0.39 | under $0.01 | $0.55 | **$0.93** | 0.4¢ |
 | Chennai | 24,559 | 2,378 | $2.73 | under $0.01 | $0.33 | **$3.06** | 0.13¢ |
 | Hospital generator | 24,559 | 294 | $0.52 | none | none | **$0.52** | 0.18¢ |
@@ -502,22 +599,13 @@ The last line of each must read `Still dark at the end: 0 customers (believed); 
 |---|---|
 | `scripts/make_storm.py` | Regenerate storms on OpenStreetMap feeders (fixed seeds) |
 | `scripts/make_calls.py` | Synthesise the voiced calls |
-| `scripts/fetch_videos.py` | Download the third-party clips (see below) |
+| `scripts/fetch_videos.py` | Download the third-party clips (see [Videos](#videos)) |
 | `scripts/ablate.py` | Measure fault finding with each evidence source removed |
 | `scripts/sensitivity.py` | Sweep crews, reporting delays and patrol times against the baseline |
 | `scripts/eval_extraction.py` | Score Spark's extraction; `--replay` scores cached readings for free |
 | `scripts/cost_report.py` | Measure model cost per storm and per channel from the cache, and work out the utility estimate; makes no API calls |
 | `scripts/smoke_test.py` | One small live call per Meta model (needs a key) |
 | `scripts/draw_architecture.py` | Redraw the "How it works" diagram from `docs/img/architecture.mmd` (needs Playwright) |
-
-### Third-party clips
-
-The storm clips are not ours to redistribute, so they are not in the repository. Scenarios still replay without them. To
-fetch them, with `yt-dlp` installed and `ffmpeg` on the PATH:
-
-```bash
-python scripts/fetch_videos.py
-```
 
 ## Troubleshooting
 
@@ -526,6 +614,7 @@ python scripts/fetch_videos.py
 | Calls show as text, with no audio | Put `ffmpeg` on the PATH. Agent speech also needs internet access for `edge-tts` |
 | The microphone doesn't work on the portal or crew page | Browsers allow it only on `localhost` or HTTPS. Speech also needs a key; without one, type the message |
 | Lines tagged `mock` in the console | That request is not in the cache and there is no key, so the scenario's labels were used |
+| "video not added yet" in the event log, or "Attach a photo or a video." on a portal video sample | The storm clips are not in the repository. See [Videos](#videos) |
 | Lookups don't match the map after changing a network or customer settings | Stop the server, delete the matching `data/*.db` file and restart. It is rebuilt on first use |
 | `UnicodeEncodeError` printing non-Latin text on Windows | Set `PYTHONIOENCODING=utf-8` |
 | Python changes have no effect | The commands above run without `--reload`, so restart the server |
