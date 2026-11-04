@@ -140,6 +140,7 @@ media/photos, videos      damage photos and clips (see their CREDITS.md)
 media/audio/calls/       synthetic caller recordings (committed); media/audio/tts/ is a git-ignored cache
 .cache/model/            cached model responses (committed since 2026-11-03: a keyless clone replays the live runs)
 PROJECT_BRIEF.md         original plan, research, judging notes and ideas (historical; keep)
+LICENSE                  Apache License 2.0 for the project's code (added 2026-11-04); third-party material keeps its own terms (README)
 ```
 
 ---
@@ -228,6 +229,12 @@ scenario JSON --> Replayer (clock) --> Engine.handle(event)
   finished work in time order and accumulates customer minutes interrupted (`cmi`).
 - `_complete`: undo switching (tie switches first, never parallel feeders), close the incident's
   device, recompute live transformers, send "power restored" notices, tell the World (follow-ups).
+- **Estimate updates** (`Engine._notify_change`, 2026-11-04): `_notify` tells each reporter a restoration time once; `told_eta`
+  holds what each was told. After every re-trace and crew transition, a reporter whose time is `NOTICE_MOVED_S` (15 min) out
+  gets a `notice_update` SMS (`kind: "eta_update"`), at most one round per incident every `NOTICE_GAP_S` (30 min), because
+  a queued job's estimate slides with the clock. Fixed templates (`Code (template)`), so no model call, and replays match.
+  It works out the estimate afresh but must **not** write `inc["eta"]`: call-agent lines quote it, and a changed time would
+  miss the Spark cache. Most update texts one customer gets: 5 in Galle, Houston and Chennai, 7 in `hospital_generator` (measured 2026-11-04).
 
 ### 5.5 Switching safety (`network.restoration_plans`, `check_plan`)
 - Offered per incident with a known faulted section: reclose the device, close the tie, and
@@ -328,7 +335,7 @@ scenario JSON --> Replayer (clock) --> Engine.handle(event)
 
 ---
 
-## 6. The three scenarios and the regression baseline
+## 6. The scenarios and the regression baseline
 
 | Scenario | Network | Customers | Messages | Faults | Shows |
 |---|---|---|---|---|---|
@@ -339,9 +346,9 @@ scenario JSON --> Replayer (clock) --> Engine.handle(event)
 | `tree_on_line` | same feeder (no meters) | 3,044 | ~58 | 1 | one tree on a lateral: ~160 customers, a tree crew then a line crew |
 | `ieee123_storm` | IEEE 123-node test feeder (EPRI OpenDSS file, BSD 3-clause), synthetic customers, 3 ties | 1,658 | 13 | 5 | independent benchmark: 4 of 5 found in mock mode, F1 missed, 16 customers dark (a measurement, not a pass mark; `tests/test_regression.py` pins it) |
 | `two_tie_demo` | invented feeder with two ties (`grid_twotie.py`) | 229 | ~21 | 1 | multi-tie switching: one pole down, three safe plans (east, north, both), the one restoring most is `recommended` |
-| `hospital_generator` | OSM, Velachery, Chennai (no meters) | 24,559 | ~215 | 3 | three trees on lines, one tree crew; at +90 s after the hospital's fault its generator fails and it calls (`backup_failed`): its outage outranks a larger one and is restored 64 min sooner (01:44 vs 02:48) |
+| `hospital_generator` | OSM, Velachery, Chennai (no meters) | 24,559 | ~215 | 3 | three trees on lines, one tree crew; at +90 s after the hospital's fault its generator fails and it calls (`backup_failed`): on scenario labels its outage outranks a larger one and is restored 64 min sooner (01:44 vs 02:48); on the cached live readings the crew goes to it next either way (01:44 both, checked 2026-11-04) |
 
-**Before every commit that touches `relight/` or `scenarios/`, run all three and check every real fault
+**Before every commit that touches `relight/` or `scenarios/`, run the three main scenarios and check every real fault
 is found and everyone is restored:**
 
 ```bash
@@ -356,6 +363,7 @@ minutes, something reintroduced per-call graph rebuilding or per-event re-tracin
 Use `--timeline` to see the full event log; `--no-switching` to skip auto-approval.
 
 The three small scenarios must also end with every fault `found=True` and 0 dark (`house_fuse`, `tree_on_line`, `hospital_generator`).
+`tests/test_regression.py` also covers `two_tie_demo` and pins the `ieee123_storm` result.
 
 Regenerating generated scenarios (deterministic seeds):
 ```bash
@@ -496,9 +504,9 @@ All writes to the engine go through one `asyncio.Lock` in `server.py` (replay, o
 
 ---
 
-## 12. Status and open work (as of 2026-10-30)
+## 12. Status and open work (headings updated 2026-11-04; checklist items carry their own dates)
 
-Done (mock mode, verified headless and in the browser):
+Done (verified headless and in the browser; what has also run live is recorded in 12.1 and 12.3):
 - multilingual complaint pipeline, dedup, junk, SMS codes, landmarks
 - probabilistic tracer with agent questions; incidents with claim/merge; hidden faults after restoration
 - crew lifecycle, diagnosis change from site reports, patrol extension, call-backs
@@ -508,10 +516,11 @@ Done (mock mode, verified headless and in the browser):
   customer portal
 - AI call agent (2026-10-30, owner's choice): answers every call in en/si/ta/es/hi with context from engine
   state, safety lines, escalation, next-door questions; 18 synthetic voiced calls across the three
-  scenarios; "Agent calls" console tab with per-line and whole-call playback. Mock mode only so far.
+  scenarios; "Agent calls" console tab with per-line and whole-call playback. Run live with the scenarios (12.1).
 - Realtime call agent and call-taker copilot (2026-10-30, owner's choice): "Live calls" switch plays voiced calls
   in real time with partial transcripts; hard calls (live wire, fire, critical customer) go to a human call-taker
-  panel with live fields and suggested lines. Verified in mock mode (headless driver and browser); see 12.3.
+  panel with live fields and suggested lines. Verified in mock mode (headless driver and browser) and live on three
+  calls; see 12.3.
 - Crew reports by voice with read-back before acting (all crew reports; Galle patrol notes recorded);
   crews in Sinhala, Tamil, Hindi, Spanish and English; Spark words every non-safety agent line with a
   fact check (mock: templates). Untested live parts are listed in 12.3.
@@ -558,13 +567,15 @@ Blocked until the owner provides something
 - [x] *(needs GO)* Run all three scenarios live: **Galle done 2026-10-30, Houston done 2026-11-01 (7/7, 0 dark, 184
       Spark entries, 25 Spark-worded agent lines, 0 fact-check rejects; both cached); Chennai done 2026-11-02 (9/9, 0 dark, ~1,400 requests, ~$3, six 9-minute foreground chunks, cached;
       replays are free)**. Keep the regression baseline green.
-- [x] Extraction accuracy measured 2026-11-01 for Galle and Houston with `scripts/eval_extraction.py <scenario>
-      --replay` (scores the engine's own cached Spark readings; free). Muse Spark vs scenario labels, fields right:
-      Galle (46 scored; re-measured after the Sinhala listening fix) street 91%, house_no 94%, symptom 94%, hazard 94%,
-      junk 100% (en 29, si 11, ta 6); Houston (161 scored) street 97%, house_no 98%, symptom 99%, hazard 99%,
-      junk 100% (en 117, es 44). Not scored: SMS codes (no model) and complaints that made no message of their own.
+- [x] Extraction accuracy measured with `scripts/eval_extraction.py <scenario> --replay` (scores the engine's own cached
+      Spark readings; free); latest results (2026-11-02, after the minimal-effort re-runs) are in `eval/extraction-*.json`.
+      Muse Spark vs scenario labels, fields right:
+      Galle (47 scored) street 92%, house_no 94%, symptom 92%, hazard 94%, junk 100% (en 30, si 11, ta 6);
+      Houston (161 scored) street 98%, house_no 98%, symptom 99%, hazard 99%, junk 100% (en 117, es 44);
+      Chennai (1,692 scored) street 93%, house_no 98%, symptom 97%, hazard 100%, junk 100% (en 821, ta 745, hi 126).
+      Not scored: SMS codes (no model) and complaints that made no message of their own.
       Misses on calls are mostly facts the caller gave only later or that come from caller ID (labels hold them), and
-      the Sinhala call C02 (now read well enough to be filed as a fallen wire, not junk). Put the table in the README. Not run for Chennai or without `--replay`
+      the Sinhala call C02 (now read well enough to be filed as a fallen wire, not junk). The table is in the README. Not run without `--replay`
       (that mode sends fresh requests: ~$2.6 for Galle+Houston; it refuses to score mock output).
 - Gate gotcha: GO opens the API only for the turn that carries it. A background task's completion notice starts a new
   turn with the gate closed, so a long run must be polled in the foreground until it ends.
@@ -589,7 +600,7 @@ Can start now
       button), fictional/synthetic footer line, `/?run=<speed>` autorun for recording. Wait times only exist for live calls
       made after 2026-11-02 (`_latency_s` in the cache file).
 - [x] Shot list, voice-over and captions: `docs/DEMO.md`.
-- [x] README rewritten (architecture diagram, model table, accuracy, limits). Still missing: screenshots.
+- [x] README rewritten (architecture diagram, model table, accuracy, limits, screenshots in `docs/img/`).
 - [x] Submission text and final checklist: `docs/SUBMISSION.md`.
 
 ### 12.2 Optional features (owner chooses; agent builds)
@@ -698,9 +709,14 @@ Crew page (`crewreport.py`, `web/crew.html`)
 - [x] Typed path, correction, confirmation, empty/unknown crew: tested in mock mode and in the browser (`scripts/check_offline.py`).
 - [x] Live 2026-11-02, Hindi and Spanish crew voice reports (synthetic speech): heard, read back by Spark in the crew's language, confirmed; no incident was open, so the acknowledgement said no outage matches.
 - [x] Live 2026-11-02, English voice report from synthetic speech: heard exactly, read back by Spark, correction read back, confirmed, filed to I1.
+- [ ] Tamil and Sinhala voice reports through the crew page: no live test is recorded. Both languages have run live only as the storms'
+      scripted crew calls (`_crew_note`; in Galle's cached run Voice Transcribe hears Tamil and Spark listens to Sinhala).
 - [ ] Voice from a real microphone in a real crew's language (Voice Transcribe en/ta/hi/es, Spark for Sinhala), live read-back wording by
       Spark, photo upload from a phone, and crews in the field with a poor connection.
 - [ ] Keyword reader (`_crew_keyword_fields`) is English only; other languages need the API.
+
+Estimate updates (`Engine._notify_change`)
+- [ ] Native-speaker check of the `notice_update` lines (si, ta, es, hi; `docs/LANGUAGE_CHECK_KINDS.md`). Written 2026-11-04, not reviewed.
 
 Photos and videos (`vision.py`, `models.py`)
 - [x] Spark and SAM 3.1 on the nine Commons photos, live (2026-11-01): outlines, lean 3-13 degrees on the leaning poles;
@@ -713,8 +729,8 @@ Photos and videos (`vision.py`, `models.py`)
       reported; on Houston's tree photo SAM found a plate box and Spark said it was too blurred, so no guess. Still open:
       the owner's photographed tag (needs the photo, `pack.pole_aliases`). Stand-in tests: `scripts/check_offline.py`.
 - [x] Voice Transcribe `keywords` on the file endpoint measured 2026-11-01 (`scripts/eval_keywords.py`, results in
-      section 8): 11 of 13 vs 6 of 13. **Not adopted in the engine yet**: it changes every transcript and so every
-      downstream Spark request (re-run Galle ~$1.1 and Houston ~$1.5). The realtime line already uses them.
+      section 8): 11 of 13 vs 6 of 13. **Adopted in the engine 2026-11-02** (section 8), with Galle and Houston re-run live;
+      the realtime line already used them.
 - [ ] Drone survey on a second clip.
 
 ### 12.4 Order that saves the most time
