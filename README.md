@@ -45,8 +45,8 @@ with or without smart meters: where a utility has none, the customers' own compl
 
 The design rests on one rule:
 
-**Meta models read and speak. Deterministic code locates and decides. The agent acts. Only the operator can take critical
-decisions.**
+**Meta models read, watch, hear and speak. Deterministic code locates and decides. The agent acts. Critical decisions are
+forwarded to the operator.**
 
 A model never guesses where a fault is and never approves a switching action. Muse Spark, Muse Voice Transcribe and
 SAM 3.1 turn messy human evidence (speech, text, photos, video) into structured facts. A probabilistic tracer then
