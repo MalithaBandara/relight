@@ -296,12 +296,10 @@ To draw SAM 3.1's outlines over the drone clip after a run (no API calls; it can
 
 Analysis needs a key. Without one, your clip still goes through, but its result reads "(mock) not analysed yet".
 
-First make the clip small. Meta's limit for a video sent inline, which is how Relight sends it, is
-[50 MB](https://dev.meta.ai/docs/file-handling#size-limits). A clip can be rejected well below that, because SAM 3.1
-[returns a 413](https://dev.meta.ai/docs/sam/segmenting) when a long clip's results are too large for the API to store.
-That point depends on the clip, so it has no fixed file size: our drone clip got a 413 at 7.6 MB and passed at 2.9 MB. If a
-clip is rejected, the event log shows `video analysis failed`. At $0.20 per 1,000 frames, tracking up to four kinds of
-object through 30 seconds at 10 frames per second costs about 25¢.
+First make the clip small with the command below. Meta's limit for a video sent inline, which is how Relight sends it, is
+[50 MB](https://dev.meta.ai/docs/file-handling#size-limits), and short clips work best: our drone clip is 2.3 MB at 10
+frames per second. If the event log shows `video analysis failed`, try a shorter clip. At $0.20 per 1,000 frames, tracking
+up to four kinds of object through 30 seconds at 10 frames per second costs about 25¢.
 
 ```bash
 ffmpeg -i my_clip.mp4 -an -vf "scale='min(854,iw)':-2,fps=10" -t 30 -c:v libx264 -crf 30 -preset slow my_clip_small.mp4

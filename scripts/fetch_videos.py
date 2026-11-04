@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 # target: (url, start_s, length_s or None, max width). Clips are re-encoded small to keep model requests cheap;
-# the drone clip also drops to 10 fps, because SAM 3.1 refused it at 7.6 MB (HTTP 413) and bills per frame, and its
+# the drone clip also drops to 10 fps, because SAM 3.1 bills per frame, and its
 # right edge is cropped to take out a broadcaster's logo (the source stays credited in media/videos/CREDITS.md).
 CLIPS = {
     "media/drone/temple_road_span.mp4": ("https://www.youtube.com/watch?v=ChaqvH8k02g", 30, 32, 854),
