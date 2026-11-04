@@ -1,0 +1,31 @@
+{
+ "id": "chatcmpl-01a1a627-f7c6-738c-9c6e-a31d19e6c994",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [], \"damage\": \"none\", \"device_ok\": true, \"energised\": false, \"house_from\": 10, \"house_no\": null, \"house_to\": 614, \"landmark\": \"T 089\", \"street\": \"Lake Road\", \"summary_en\": \"Crew reports Lake Road transformer T089, houses 10 and 614 with no damage stated.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793788999,
+ "model": "muse-spark-1.3",
+ "service_tier": "default",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 679,
+  "prompt_tokens": 487,
+  "total_tokens": 1166,
+  "completion_tokens_details": {
+   "reasoning_tokens": 585
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 4.94
+}

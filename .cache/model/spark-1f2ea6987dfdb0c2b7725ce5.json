@@ -1,0 +1,31 @@
+{
+ "id": "chatcmpl-01a1a628-144d-7548-997c-a59ceda4a059",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"crew_needs\": [\"line\"], \"damage\": \"service_wire\", \"device_ok\": true, \"energised\": false, \"house_from\": 6, \"house_no\": 10, \"house_to\": 14, \"landmark\": \"T-089\", \"street\": \"Lake Road\", \"summary_en\": \"Transformer T-089 on Lake Road is healthy, fuse OK. A branch near No. 10 has broken the service wire, leaving houses 6 to 14 without supply. Line crew needed for service wire.\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793789006,
+ "model": "muse-spark-1.3",
+ "service_tier": "default",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 343,
+  "prompt_tokens": 607,
+  "total_tokens": 950,
+  "completion_tokens_details": {
+   "reasoning_tokens": 221
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.36
+}

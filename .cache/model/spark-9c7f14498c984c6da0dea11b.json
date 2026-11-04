@@ -1,0 +1,31 @@
+{
+ "id": "chatcmpl-01a1a627-cd3c-74d8-ae13-14efd9342f6b",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "வணக்கம், உங்கள் மின்தடைக்குக் காரணமான blown fuse பழுது கண்டறியப்பட்டு பணிக்குழு நியமிக்கப்பட்டுள்ளது. மின் விநியோகம் 15:40-க்குள் சீராகும் என எதிர்பார்க்கிறோம், சிரமத்திற்கு மன்னிக்கவும்.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793788988,
+ "model": "muse-spark-1.3",
+ "service_tier": "default",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 711,
+  "prompt_tokens": 89,
+  "total_tokens": 800,
+  "completion_tokens_details": {
+   "reasoning_tokens": 595
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 4.75
+}

@@ -1,0 +1,140 @@
+{
+ "text": "Hi. My TV remote is not working. Can you send someone to look at it?",
+ "events": [
+  {
+   "kind": "partial",
+   "text": "Hi.",
+   "role": "caller",
+   "ms": 12240,
+   "start": 11260,
+   "speaker": null,
+   "at": 1.02
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. My",
+   "role": "caller",
+   "ms": 12960,
+   "start": 11260,
+   "speaker": null,
+   "at": 1.73
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. My TV",
+   "role": "caller",
+   "ms": 13040,
+   "start": 11260,
+   "speaker": null,
+   "at": 1.83
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. My TV remote",
+   "role": "caller",
+   "ms": 13520,
+   "start": 11260,
+   "speaker": null,
+   "at": 2.27
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. My TV remote is",
+   "role": "caller",
+   "ms": 13600,
+   "start": 11260,
+   "speaker": null,
+   "at": 2.36
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. My TV remote is not",
+   "role": "caller",
+   "ms": 13920,
+   "start": 11260,
+   "speaker": null,
+   "at": 2.72
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. My TV remote is not working.",
+   "role": "caller",
+   "ms": 14480,
+   "start": 11260,
+   "speaker": null,
+   "at": 3.28
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. My TV remote is not working. Can",
+   "role": "caller",
+   "ms": 15840,
+   "start": 11260,
+   "speaker": null,
+   "at": 4.64
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. My TV remote is not working. Can you send",
+   "role": "caller",
+   "ms": 16320,
+   "start": 11260,
+   "speaker": null,
+   "at": 5.53
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. My TV remote is not working. Can you send someone to",
+   "role": "caller",
+   "ms": 16640,
+   "start": 11260,
+   "speaker": null,
+   "at": 5.53
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. My TV remote is not working. Can you send someone to look",
+   "role": "caller",
+   "ms": 17040,
+   "start": 11260,
+   "speaker": null,
+   "at": 5.86
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. My TV remote is not working. Can you send someone to look at",
+   "role": "caller",
+   "ms": 17520,
+   "start": 11260,
+   "speaker": null,
+   "at": 6.31
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. My TV remote is not working. Can you send someone to look at it?",
+   "role": "caller",
+   "ms": 17600,
+   "start": 11260,
+   "speaker": null,
+   "at": 6.41
+  },
+  {
+   "kind": "partial",
+   "text": "Hi. My TV remote is not working. Can you send someone to look at it?",
+   "role": "caller",
+   "ms": 18080,
+   "start": 11260,
+   "speaker": null,
+   "at": 6.89
+  },
+  {
+   "kind": "final",
+   "text": "Hi. My TV remote is not working. Can you send someone to look at it?",
+   "role": "caller",
+   "ms": 17580,
+   "start": 11260,
+   "speaker": "A",
+   "at": 6.89
+  }
+ ]
+}

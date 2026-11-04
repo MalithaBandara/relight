@@ -1,0 +1,31 @@
+{
+ "id": "chatcmpl-01a1a628-21c4-73ba-b572-d5fe3c227171",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "පාලන මැදිරියෙන් නැවත කියවන්නම්, Lake Road අංක 10 අසල සර්විස් වයරය කැඩිලා, අපි ඔබව යැවූ උපකරණය හොඳ තත්ත්වයේ, නිවාස 6 සිට 14 දක්වා විදුලිය නැහැ, ඔබට ලයින් කණ්ඩායමක් අවශ්‍යයි, හරිද?",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793789010,
+ "model": "muse-spark-1.3",
+ "service_tier": "default",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 596,
+  "prompt_tokens": 245,
+  "total_tokens": 841,
+  "completion_tokens_details": {
+   "reasoning_tokens": 486
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.35
+}

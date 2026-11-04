@@ -1,0 +1,31 @@
+{
+ "id": "chatcmpl-01a1a627-b839-7609-ae2d-853999c338ba",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": \"9000000001\", \"cause_hint\": null, \"hazard\": \"none\", \"house_no\": null, \"is_junk\": false, \"landmark\": null, \"language\": \"en\", \"street\": null, \"summary_en\": \"Pumping station manager reports still no power, reservoir at 60 percent.\", \"symptom\": \"no_power\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793788983,
+ "model": "muse-spark-1.3",
+ "service_tier": "default",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 148,
+  "prompt_tokens": 548,
+  "total_tokens": 696,
+  "completion_tokens_details": {
+   "reasoning_tokens": 58
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 1.53
+}

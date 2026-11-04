@@ -1,0 +1,31 @@
+{
+ "id": "chatcmpl-01a1a627-43aa-711b-bdd9-87d331341364",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "வணக்கம், சாலையில் விழுந்த உயிருள்ள மின் கம்பியால் ஏற்பட்ட பழுது கண்டறியப்பட்டு, பணிக்குழு நியமிக்கப்பட்டுள்ளது. மின்சாரம் 16:53 மணிக்குள் சீராகும் என எதிர்பார்க்கப்படுகிறது.",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793788953,
+ "model": "muse-spark-1.3",
+ "service_tier": "default",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 357,
+  "prompt_tokens": 91,
+  "total_tokens": 448,
+  "completion_tokens_details": {
+   "reasoning_tokens": 245
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 2.9
+}

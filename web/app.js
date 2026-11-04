@@ -557,7 +557,9 @@ function liveStart(id, call, listener) {
 function liveTurn(msg) {
   const call = liveCalls.get(msg.id) || (copilots.get(msg.id) && copilotCall.get(msg.id));
   if (!call) return;
-  const turn = msg.listening ? { ...msg.turn, partial: "" } : msg.turn;
+  // A line being heard is tagged with what is hearing it: the server's "mock" placeholder only stands until the line is final.
+  const listener = liveListener.get(msg.id), placeholder = /^mock/.test(msg.turn.model || "");
+  const turn = msg.listening ? { ...msg.turn, partial: "", model: placeholder && listener ? listener : msg.turn.model } : msg.turn;
   call.turns[msg.i] = turn;
   if (msg.listening || msg.speaking) playLive(msg.id, msg.i);  // the server paces the call by the same clip
   if (liveCalls.has(msg.id)) addAgentCall(liveMessage(msg.id, call));

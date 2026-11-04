@@ -1,0 +1,31 @@
+{
+ "id": "chatcmpl-01a1a626-9218-776b-99a7-ad353e035559",
+ "choices": [
+  {
+   "finish_reason": "stop",
+   "index": 0,
+   "message": {
+    "content": "{\"account_no\": null, \"cause_hint\": null, \"hazard\": \"live_wire\", \"house_no\": null, \"is_junk\": false, \"landmark\": \"market\", \"language\": \"en\", \"street\": \"Market Street\", \"summary_en\": \"Sparks and a wire lying on the road near the market on Market Street with people walking past.\", \"symptom\": \"none\"}",
+    "refusal": null,
+    "role": "assistant"
+   },
+   "logprobs": null
+  }
+ ],
+ "created": 1793788907,
+ "model": "muse-spark-1.3",
+ "service_tier": "default",
+ "object": "chat.completion",
+ "usage": {
+  "completion_tokens": 258,
+  "prompt_tokens": 554,
+  "total_tokens": 812,
+  "completion_tokens_details": {
+   "reasoning_tokens": 164
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "_latency_s": 3.37
+}
