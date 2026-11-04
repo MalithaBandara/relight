@@ -1,7 +1,5 @@
 # Relight: Project Brief and Build Plan
 
-> Working title was GridMedic; renamed Relight on 30 Oct 2026 to keep it distinct from the earlier Jaseci-hackathon project of that name.
-
 29 Oct 2026 · Malitha
 
 ## Pitch and scope
@@ -9,7 +7,7 @@
 Relight is an outage-triage agent: when a storm hits, it turns a flood of customer complaints (calls, WhatsApp, SMS), feeder breaker trips, crew voice notes and damage photos into located faults on the grid, and tells dispatch who to send where first.
 
 - **Theme:** Push the Frontier (energy; understanding and controlling a physical system).
-- **Track:** Indie. All code is new from Oct 26. The earlier Jaseci-hackathon GridMedic is a reference for the idea only: no reused code, built solo.
+- **Track:** Indie. All code is new from Oct 26, built solo.
 - **Core input:** customer complaints. Most of the world's utilities have few or no smart meters (US ~72%, Latin America ~10%, and lower still across much of Asia and Africa), so complaints are how outages are found. Smart-meter data is an optional extra signal.
 - **The gap we own:** existing utility AI works from SCADA and smart-meter data or only handles customer comms. Relight turns messy, multilingual complaints and field reports into fault locations on the grid model.
 
@@ -49,7 +47,7 @@ Meta Global AI Developer Hackathon 2026, run by Meta and Cerebral Valley: virtua
 
 ### Rules that shape the build
 
-- **New work only:** everything presented must be built during the event and this must be clear in the submission. Only the Startup track may build on existing products. Relight (Indie) is a fresh codebase; the earlier Jaseci-hackathon team version is not reused.
+- **New work only:** everything presented must be built during the event and this must be clear in the submission. Only the Startup track may build on existing products. Relight (Indie) is a fresh codebase.
 - **One track** per person and per project.
 - **Must use Meta's models:** Muse Spark series, Muse Wonder, Muse Image, Muse Voice Transcribe and SAM 3.1 via Meta Model API; open weights Muse Glimmer and Muse Spark Open; Muse Code coding agent.
 - **Must fit a problem statement:** *Build for Your World* (bring Meta's models into your domain) or *Push the Frontier* (software, robotics, manufacturing, energy, materials; give a machine a new capability or better understand and control a physical system). Relight targets Push the Frontier.

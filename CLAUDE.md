@@ -20,10 +20,7 @@ without smart meters**; without them, customer complaints are the main signal.
 Core principle: **Meta models read, deterministic code locates and decides.** No model ever guesses a
 fault location or approves a switching action on its own. The operator approves every switching plan.
 
-The product was called **GridMedic** until 2026-10-30. It was renamed because an earlier, public project
-of the same name exists (https://github.com/MalithaBandara/gridmedic, Jac + Gemini, Jaseci Labs
-hackathon, 17 Oct 2026). Refer to the product only as **Relight**. Mention GridMedic only when
-describing that earlier project.
+Refer to the product only as **Relight**.
 
 ---
 
@@ -34,8 +31,7 @@ describing that earlier project.
 - **Deadline:** Nov 4 2026, 9:00 PM ET = **Thu Nov 5, 7:30 AM Sri Lanka time**. Target: submit by Nov 4,
   10:00 PM local. Oct 31 to Nov 1 are off (IEEEXtreme). Nov 3 is reserved for recording the demo video.
 - **New work only.** Everything shown must be built during the event (from Oct 26; this repo starts
-  Oct 29). **Never copy code from the old GridMedic repo or any pre-event code.** Ideas may be reused;
-  the submission form discloses the earlier project (`docs/SUBMISSION.md`), not the README (owner's choice, 2026-11-04).
+  Oct 29). **Never copy any pre-event code.**
 - **Must use Meta's models:** Muse Spark, Muse Voice Transcribe, SAM 3.1 (Meta Model API). The rules also allow
   open-weights Muse Glimmer, Muse Image, Muse Wonder and Muse Code; all are unused (Glimmer dropped 2026-11-01:
   offline mode removed, it only did text extraction and the owner chose to spend the time on the Meta Model API models).
