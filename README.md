@@ -470,7 +470,12 @@ set above the highest channel averages we measured: 1.5¢ of Spark per call (the
 | 10,000 calls, 10,000 texts and $10 of damage photos and clips | **$555 to $960** |
 | 1,000 hard calls answered by people, at $8.01 each | $8,010 |
 | **Storm total** | **about $8,600 to $9,000** |
-| For comparison: all 10,000 calls answered by people, at $8.01 each | $80,100 |
+
+For comparison, the same storm with people answering every call:
+
+| Item | Cost |
+|---|---|
+| All 10,000 calls answered by people, at $8.01 each | $80,100 |
 
 How that compares with what a utility already pays for:
 
