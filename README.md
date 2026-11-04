@@ -37,8 +37,8 @@
 ## Overview
 
 Relight works an outage on its own, whether one house is dark or a storm has taken out a whole feeder. It reads what
-people send (calls, SMS and chat in English, Spanish, Hindi etc.; crew voice reports; damage photos and drone clips) and
-acts on it: it answers callers, questions customers when the evidence is unclear, finds the failed device on the grid,
+people send (calls, SMS and chat in their own language; crew voice reports; damage photos and drone clips) and acts on
+it: it answers callers, questions customers when the evidence is unclear, finds the failed device on the grid,
 dispatches crews, changes its diagnosis when a crew reports something different, and keeps customers updated. It works
 with or without smart meters: where a utility has none, the customers' own complaints are the sensor.
 
