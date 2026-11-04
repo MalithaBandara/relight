@@ -106,8 +106,8 @@ every fault found and nobody dark.
 
 ## Highlights
 
-- **Calls in five languages.** An AI call agent answers every call in the caller's language, warns about hazards,
-  escalates live wires and critical customers, and asks a neighbour when the tracer is torn between two explanations.
+- **Calls in the caller's native language.** An AI call agent answers every call, warns about hazards, escalates live
+  wires and critical customers, and asks a neighbour when the tracer is torn between two explanations.
 - **Realtime calls with a human in the loop.** Voiced calls play in real time on a Voice Transcribe realtime line; hard
   calls are handed to a call-taker with a copilot that fills the report live and suggests the next line.
 - **Crews report by voice.** The agent reads each report back and nothing changes until the crew confirms. A crew can say
