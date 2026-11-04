@@ -296,8 +296,11 @@ To draw SAM 3.1's outlines over the drone clip after a run (no API calls; it can
 
 Analysis needs a key. Without one, your clip still goes through, but its result reads "(mock) not analysed yet".
 
-First make the clip small, because SAM 3.1 limits the request size: a 2.9 MB clip passed and a 7.6 MB one was rejected. If
-a clip is rejected, the event log shows `video analysis failed`. At $0.20 per 1,000 frames, tracking up to four kinds of
+First make the clip small. Meta's limit for a video sent inline, which is how Relight sends it, is
+[50 MB](https://dev.meta.ai/docs/file-handling#size-limits). A clip can be rejected well below that, because SAM 3.1
+[returns a 413](https://dev.meta.ai/docs/sam/segmenting) when a long clip's results are too large for the API to store.
+That point depends on the clip, so it has no fixed file size: our drone clip got a 413 at 7.6 MB and passed at 2.9 MB. If a
+clip is rejected, the event log shows `video analysis failed`. At $0.20 per 1,000 frames, tracking up to four kinds of
 object through 30 seconds at 10 frames per second costs about 25¢.
 
 ```bash
@@ -310,7 +313,8 @@ ffmpeg -i my_clip.mp4 -an -vf "scale='min(854,iw)':-2,fps=10" -t 30 -c:v libx264
 2. Open <http://localhost:8000/customer> and go to **Report a problem**.
 3. Type a message that names an address on that scenario's feeder. In Galle, for example:
    `Tree on the wires at 20 Hospital Road. Video attached.`
-4. Add your clip (MP4, MOV or WebM, up to 60 MB) and send it.
+4. Add your clip and send it. Use the MP4 from the command above: the portal also takes MOV and WebM, up to 60 MB, but Meta's
+   docs [list only MP4](https://dev.meta.ai/docs/file-handling#supported-file-types) for video.
 
 The result appears under your report, and the clip appears as a marker on the console's map.
 
