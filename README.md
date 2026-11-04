@@ -65,9 +65,16 @@ control a physical system).
 - **Customers and crews as users.** A customer can check their supply, report a problem or talk to the outage desk by
   voice; a crew has its own page.
 
-| Customer portal (`/customer`) | Crew page (`/crew`) |
-|---|---|
-| ![The customer portal: check my supply, report a problem, talk to the outage desk](docs/img/customer.png) | ![The crew page: pick a crew, say or type a report, the agent reads it back](docs/img/crew.png) |
+<table>
+  <tr>
+    <th width="50%">Customer portal (<code>/customer</code>)</th>
+    <th width="50%">Crew page (<code>/crew</code>)</th>
+  </tr>
+  <tr>
+    <td><img src="docs/img/customer.png" alt="The customer portal: check my supply, report a problem, talk to the outage desk"></td>
+    <td><img src="docs/img/crew.png" alt="The crew page: pick a crew, say or type a report, the agent reads it back"></td>
+  </tr>
+</table>
 
 ## Contents
 
