@@ -35,7 +35,7 @@ describing that earlier project.
   10:00 PM local. Oct 31 to Nov 1 are off (IEEEXtreme). Nov 3 is reserved for recording the demo video.
 - **New work only.** Everything shown must be built during the event (from Oct 26; this repo starts
   Oct 29). **Never copy code from the old GridMedic repo or any pre-event code.** Ideas may be reused;
-  the README discloses the earlier project and lists what is different.
+  the submission form discloses the earlier project (`docs/SUBMISSION.md`), not the README (owner's choice, 2026-11-04).
 - **Must use Meta's models:** Muse Spark, Muse Voice Transcribe, SAM 3.1 (Meta Model API). The rules also allow
   open-weights Muse Glimmer, Muse Image, Muse Wonder and Muse Code; all are unused (Glimmer dropped 2026-11-01:
   offline mode removed, it only did text extraction and the owner chose to spend the time on the Meta Model API models).

@@ -83,7 +83,6 @@ control a physical system).
 - [What's next](#whats-next)
 - [Security](#security)
 - [Contributing](#contributing)
-- [Built during the hackathon](#built-during-the-hackathon)
 - [Credits and data](#credits-and-data)
 - [License](#license)
 
@@ -419,16 +418,6 @@ This is a solo hackathon entry. Bug reports are welcome through
 [GitHub Issues](https://github.com/MalithaBandara/relight/issues). Before suggesting a change to the engine, run the
 [tests and regression baseline](#development).
 
-## Built during the hackathon
-
-All code in this repository was written from Oct 29, 2026, during the event. Relight grew out of an idea first explored
-in [GridMedic](https://github.com/MalithaBandara/gridmedic), an earlier team project built in Jac with Gemini at the Jaseci
-Labs AI Hackathon (17 Oct 2026). Relight is a new project with a new name and codebase; no code from GridMedic is
-reused. What is different: it is written from scratch in Python on Meta's models; it has a probabilistic tracer that asks
-customers the question that best separates two explanations; feeders are built from real OpenStreetMap roads; and it adds
-a call agent in five languages, crew voice reports with read-back, damage assessment from photos and drone clips, and a
-console modelled on commercial outage-management work agendas.
-
 ## Credits and data
 
 - **Maps:** © OpenStreetMap contributors (ODbL). Feeders for Houston and Chennai run along real streets; real facilities
@@ -438,8 +427,9 @@ console modelled on commercial outage-management work agendas.
   The IEEE 34-bus feeder used for Galle is the same family of published test feeders.
 - **Photos and clips:** third-party, credited in [media/photos/CREDITS.md](media/photos/CREDITS.md) and
   [media/videos/CREDITS.md](media/videos/CREDITS.md). Two images are AI-generated and labelled as such.
-- **Voices:** Microsoft edge-tts, synthetic. **Models:** Muse Spark, Muse Voice Transcribe and SAM 3.1 through the Meta
-  Model API; SAM masks decoded with Meta's `meta-sam-parser`.
+- **Voices:** Microsoft edge-tts, synthetic.
+- **Models:** Muse Spark, Muse Voice Transcribe and SAM 3.1 through the Meta Model API; SAM masks decoded with Meta's
+  `meta-sam-parser`.
 
 ## License
 
