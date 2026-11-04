@@ -343,7 +343,7 @@ What the models read from a clip counts as damage evidence, so a different clip 
 
 | Model | Job in Relight | Measured |
 |---|---|---|
-| **Muse Spark** (`muse-spark-1.3`) | Reads every complaint and crew report into a JSON schema (street, house number, symptom, hazard, junk) in five languages. Words the call agent's replies and the dispatcher's explanations. Classifies damage photos and watches drone clips. **Listens directly to calls in a language Voice Transcribe doesn't cover.** Reads pole-number plates. | Accuracy below. `reasoning_effort: minimal` cut extraction latency from 4.4 to 2.4 s and agent-line wording in that language from 9.9 to 2.8 s. |
+| **Muse Spark** (`muse-spark-1.3`) | Reads every complaint and crew report into a JSON schema (street, house number, symptom, hazard, junk), in whatever language it was sent. Words the call agent's replies and the dispatcher's explanations. Classifies damage photos and watches drone clips. **Listens directly to calls in a language Voice Transcribe doesn't cover.** Reads pole-number plates. | Accuracy below. `reasoning_effort: minimal` cut extraction latency from 4.4 to 2.4 s and agent-line wording in that language from 9.9 to 2.8 s. |
 | **Muse Voice Transcribe** | Phone calls to text (English, Spanish, Hindi etc.), through the file endpoint and a realtime WebSocket line with speaker diarization. The feeder's street names go in as `keywords`. | Street heard right in 11 of 13 clips with keywords against 6 of 13 without. $0.18 per hour of audio. |
 | **SAM 3.1** | Outlines poles, wires and fallen trees in photos and tracks them through drone clips. Finds the pole-number plate for Spark to read. Pixel masks (decoded with Meta's `meta-sam-parser`) give pole lean, wire sag and where a fallen tree actually touches the wires. | Temple Road clip: 3 poles and 5 wires followed; the trunk touches 3 of 7 wire tracks by mask. |
 
@@ -419,8 +419,8 @@ caller.
 
 ### The fact check
 
-Of the agent lines Spark worded in the cached runs, none was rejected: Galle 59 lines, Houston 142 and Chennai 25, across
-five languages. Median wait per line was 2.0 to 2.9 s.
+Of the agent lines Spark worded in the cached runs, none was rejected: Galle 59 lines, Houston 142 and Chennai 25, in the
+callers' own languages. Median wait per line was 2.0 to 2.9 s.
 
 ## Cost
 
@@ -506,8 +506,9 @@ once per team, which is about 5,000 three-minute calls an hour. A larger utility
 
 ## Limits
 
-- Customers, callers and voices are synthetic. The portal call was tested live with synthetic speech in all five
-  languages, and the crew page in English, Hindi and Spanish. Crew reports in the other two languages ran live only as scripted crew calls in the storm scenarios.
+- Customers, callers and voices are synthetic. The portal call was tested live with synthetic speech in every
+  language the scenarios use, and the crew page in English, Hindi and Spanish. Crew reports in Tamil and Sinhala ran live
+  only as scripted crew calls in the storm scenarios.
 - Samples are small. The Voice Transcribe keyword test used 13 clips; two of the language samples in Galle are a handful
   of calls each.
 - Lean and wire sag are estimates from one camera view.
