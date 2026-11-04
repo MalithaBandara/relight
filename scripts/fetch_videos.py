@@ -14,7 +14,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 # target: (url, start_s, length_s or None, max width). Clips are re-encoded small to keep model requests cheap;
-# the drone clip also drops to 10 fps, because SAM 3.1 refused it at 7.6 MB (HTTP 413) and bills per frame.
+# the drone clip also drops to 10 fps, because SAM 3.1 refused it at 7.6 MB (HTTP 413) and bills per frame, and its
+# right edge is cropped to take out a broadcaster's logo (the source stays credited in media/videos/CREDITS.md).
 CLIPS = {
     "media/drone/temple_road_span.mp4": ("https://www.youtube.com/watch?v=ChaqvH8k02g", 30, 32, 854),
     "media/videos/tree_on_live_line.mp4": ("https://www.facebook.com/watch/?v=1033433662993562", 0, None, 720),
@@ -33,7 +34,7 @@ def fetch(target: Path, url: str, start: int, length: int | None, width: int) ->
         cut = ["-ss", str(start)] + (["-t", str(length)] if length else [])
         drone = "drone" in target.parts
         audio = ["-an"] if drone else ["-c:a", "aac", "-b:a", "64k"]
-        vf = f"scale='min({width},iw)':-2" + (",fps=10" if drone else "")
+        vf = f"scale='min({width},iw)':-2" + (",fps=10,crop=752:ih:0:0" if drone else "")
         target.parent.mkdir(parents=True, exist_ok=True)
         subprocess.run(["ffmpeg", "-v", "error", "-y", *cut, "-i", str(raw), "-vf", vf, "-c:v", "libx264",
                         "-crf", "30" if drone else "28", "-preset", "slow", *audio, str(target)], check=True)

@@ -631,13 +631,13 @@ Can start now
   (a real deployment must identify crews).
 - **Drone damage assessment** (finished 2026-11-01): `vision.drone_survey` counts from SAM 3.1's tracks: poles and
   wires followed (a wire counts if its track spans 40% of the clip; SAM splits wires into pieces), poles lying (box
-  wider than tall), and which wires an obstruction (fallen tree) crosses. Galle's Temple Road clip: 3 poles, 6 wires
-  followed, trunk crosses 4 of 6. The survey is shown in the timeline detail and the map popup; it flags, it does not
+  wider than tall), and which wires an obstruction (fallen tree) crosses. Galle's Temple Road clip (cropped 2026-11-04 to remove a logo, re-read live): 3 poles, 5 wires
+  followed. The survey is shown in the timeline detail and the map popup; it flags, it does not
   move the fault. **Masks** (added 2026-11-01, owner approved the dependency): `masks.py` decodes SAM's base85 lossless
   masks with Meta's `meta-sam-parser` 0.1.0 (read before use: pure Python, no network or process calls; ~4 us per pixel,
   so decodes are cached in `.cache/masks` and the survey samples 12 frames). From masks: pole lean (long thin masks only:
   a pole seen from above is a blob and gets none), wire sag as a share of its span, real pixel contact between a fallen
-  tree and the wires (Temple Road: touches 6 of 10 wire tracks), and the outlines drawn over the clip
+  tree and the wires (Temple Road: touches 3 of 7 wire tracks), and the outlines drawn over the clip
   (`media/overlays/temple_road_span_sam.mp4`, built by `scripts/build_overlays.py`) and over photos (built on first
   analysis). Photos also get the largest pole's lean (street-level estimate).
 - **Paper-to-grid** (dropped 2026-11-02, owner's choice): the simple diagram digitiser (`diagram.py`, `/api/diagram`, the
