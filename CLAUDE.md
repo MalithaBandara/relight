@@ -131,6 +131,7 @@ scripts/
   fetch_osm.py           download roads/buildings/landmarks from Overpass into data/osm/
   smoke_test.py          one small live call per Meta model (needs MODEL_API_KEY)
   eval_extraction.py     per-language extraction accuracy vs scenario labels (Spark; `--replay` scores cached engine readings)
+  draw_architecture.py   docs/img/architecture.mmd -> the README's light and dark PNGs (needs Playwright; GitHub draws controls over Mermaid blocks)
 web/                     index.html + app.js + style.css (console), customer.html (portal), analysis.js (hidden UI for
                          planned analyses; see its header; `?uipreview=1` shows sample layout)
 data/osm/*.json          cached OpenStreetMap extracts (committed; ODbL attribution in README)

@@ -1,0 +1,25 @@
+flowchart TB
+  subgraph In["What arrives"]
+    A["Calls and crew<br>voice reports"]
+    B["SMS, chat, portal,<br>BD codes"]
+    C["Photos and<br>drone clips"]
+    D["SCADA lockouts,<br>smart meters"]
+  end
+  subgraph Meta["Meta Model API"]
+    VT["Muse Voice Transcribe"]
+    SAM["SAM 3.1"]
+    SP["Muse Spark"]
+  end
+  A --> VT --> SP
+  A -. "Sinhala:<br>no Voice Transcribe" .-> SP
+  B --> SP
+  C --> SAM --> SP
+  SP -->|"structured reports, damage"| E["Engine: place on transformer, claim evidence"]
+  D --> E
+  E --> T["Fault tracer: likelihood search over the feeder"]
+  T --> I["Incidents, priority, crews"]
+  I --> S["Switching plans, safety-checked"]
+  S -->|"operator approves"| O["Console"]
+  I --> AG["Call agent: Spark words the reply,<br>code chooses the facts"]
+  AG --> N["Callers and customers,<br>in their language"]
+  I --> O

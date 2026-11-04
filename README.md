@@ -168,33 +168,11 @@ Still dark at the end: 0 customers (believed); world says 0
 
 ## How it works
 
-```mermaid
-flowchart LR
-  subgraph In[What arrives]
-    A[Calls and crew voice reports]
-    B[SMS, chat, portal, BD codes]
-    C[Photos and drone clips]
-    D[SCADA lockouts, smart meters]
-  end
-  subgraph Meta[Meta Model API]
-    VT[Muse Voice Transcribe]
-    SP[Muse Spark]
-    SAM[SAM 3.1]
-  end
-  A --> VT --> SP
-  A -. Sinhala: no Voice Transcribe .-> SP
-  B --> SP
-  C --> SAM --> SP
-  SP -->|structured reports, damage| E[Engine: place on transformer, claim evidence]
-  D --> E
-  E --> T[Fault tracer: likelihood search over the feeder]
-  T --> I[Incidents, priority, crews]
-  I --> S[Switching plans, safety-checked]
-  S -->|operator approves| O[Console]
-  I --> AG[Call agent: Spark words the reply, code chooses the facts]
-  AG --> N[Callers and customers, in their language]
-  I --> O
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/img/architecture-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/img/architecture-light.png">
+  <img alt="How Relight works. Calls and crew voice reports go to Muse Voice Transcribe, then Muse Spark; Sinhala calls go straight to Muse Spark. SMS, chat, portal messages and BD codes go to Muse Spark. Photos and drone clips go to SAM 3.1, then Muse Spark. Muse Spark's structured reports and damage findings, with SCADA lockouts and smart meters, go to the engine, then the fault tracer, then incidents, priority and crews. From there, safety-checked switching plans reach the console once the operator approves them, and the call agent replies to callers and customers in their language." src="docs/img/architecture-light.png">
+</picture>
 
 ### What each Meta model does
 
@@ -214,7 +192,7 @@ code, and by the agent or operator, for the run on screen.
 | Places each complaint on its service transformer (account, caller ID, address, landmark) | [customers.py](relight/customers.py) |
 | Finds which device opened or which line broke: a likelihood search over every protective device, transformer fuse and line, using calls, neighbours' silence, probe answers, meters, SCADA and located damage. Each located device shows the evidence behind it, source by source. | [tracer.py](relight/tracer.py) |
 | Asks a customer the question that best separates two explanations; dispatches crews by priority and travel; revises a diagnosis from a crew's report; finds hidden faults after a repair | [engine.py](relight/engine.py), [planner.py](relight/planner.py) |
-| Proposes restoration switching (reclose, close a tie, isolate then restore, with several ties) and blocks any plan that would energise a fault, an unconfirmed fault zone or a crew's work zone | [network.py](relight/network.py) |
+| Proposes restoration switching (reclose, close a tie, isolate then restore, with several ties) and blocks any plan that would energise a known fault, an unconfirmed fault zone or a crew's work zone | [network.py](relight/network.py) |
 | Fact-checks every agent line that Spark words: if a number, time, street or id was dropped or changed, the template is spoken instead | [callagent.py](relight/callagent.py) |
 | Looks up a pole from its tag, tolerating look-alike characters (O/0, I/1, S/5, B/8) | [poles.py](relight/poles.py) |
 | Texts customers again when their restoration estimate moves by 15 minutes or more, at most once every 30 minutes per event. The message is a fixed template, so a model can't reword the time. | [engine.py](relight/engine.py) |
@@ -396,6 +374,7 @@ The last line of each must read `Still dark at the end: 0 customers (believed); 
 | `scripts/sensitivity.py` | Sweep crews, reporting delays and patrol times against the baseline |
 | `scripts/eval_extraction.py` | Score Spark's extraction; `--replay` scores cached readings for free |
 | `scripts/smoke_test.py` | One small live call per Meta model (needs a key) |
+| `scripts/draw_architecture.py` | Redraw the "How it works" diagram from `docs/img/architecture.mmd` (needs Playwright) |
 
 ### Third-party clips
 
