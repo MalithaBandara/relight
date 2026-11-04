@@ -11,15 +11,17 @@ flowchart TB
     SP["Muse Spark"]
   end
   A --> VT --> SP
-  A -. "Sinhala:<br>no Voice Transcribe" .-> SP
+  A -. "languages Voice<br>Transcribe lacks" .-> SP
   B --> SP
   C --> SAM --> SP
   SP -->|"structured reports, damage"| E["Engine: place on transformer, claim evidence"]
   D --> E
   E --> T["Fault tracer: likelihood search over the feeder"]
-  T --> I["Incidents, priority, crews"]
-  I --> S["Switching plans, safety-checked"]
+  T --> I["Incidents and priority"]
+  I --> AG["Agent answers calls, asks questions,<br>sends updates: Spark words it,<br>code chooses the facts"]
+  I --> CR["Agent dispatches crews,<br>replans the work"]
+  AG --> P["Customers and field crews"]
+  CR --> P
+  P -. "answers, call-backs and<br>site reports feed back" .-> A
+  I --> S["Switching plans,<br>safety-checked"]
   S -->|"operator approves"| O["Console"]
-  I --> AG["Call agent: Spark words the reply,<br>code chooses the facts"]
-  AG --> N["Callers and customers,<br>in their language"]
-  I --> O

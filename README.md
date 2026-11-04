@@ -1,8 +1,9 @@
 <h1 align="center">Relight</h1>
 
 <p align="center">
-  <strong>An AI outage agent for electric utilities.</strong><br>
-  Reads what people report after a storm, finds the failed device on the grid, and plans safe restoration.
+  <strong>An autonomous AI outage agent for electric utilities.</strong><br>
+  After a storm it answers every call, finds the failed device on the grid, dispatches crews, keeps customers updated,<br>
+  and prepares safe restoration switching for the operator to approve.
 </p>
 
 <p align="center">
@@ -14,6 +15,7 @@
 </p>
 
 <p align="center">
+  <a href="#what-the-agent-does-on-its-own">The agent</a> ·
   <a href="#quick-start">Quick start</a> ·
   <a href="#how-it-works">How it works</a> ·
   <a href="#results">Results</a> ·
@@ -34,24 +36,71 @@
 
 ## Overview
 
-After a storm, Relight reads what people send (calls, SMS and chat in English, Sinhala, Tamil, Hindi and Spanish; crew
-voice reports; damage photos and drone clips), finds the failed device on the grid, plans safe restoration switching,
-dispatches crews and keeps customers informed. It works with or without smart meters: where a utility has none, the
-customers' own complaints are the sensor.
+After a storm, Relight works the outage on its own. It reads what people send (calls, SMS and chat in English, Spanish,
+Hindi etc.; crew voice reports; damage photos and drone clips) and acts on it: it answers callers, questions customers
+when the evidence is unclear, finds the failed device on the grid, dispatches crews, changes its diagnosis when a crew
+reports something different, and keeps customers updated. It works with or without smart meters: where a utility has
+none, the customers' own complaints are the sensor.
 
 The design rests on one rule:
 
-**Meta models read. Deterministic code locates and decides. The operator approves.**
+**Meta models read and speak. Deterministic code locates and decides. The agent acts. Only the operator can approve grid
+switching.**
 
 A model never guesses where a fault is and never approves a switching action. Muse Spark, Muse Voice Transcribe and
 SAM 3.1 turn messy human evidence (speech, text, photos, video) into structured facts. A probabilistic tracer then
 decides which device opened or which line broke, and a safety-checked planner proposes how to restore power. Every
-switching plan waits for the operator.
+switching plan waits for the operator; the rest of the response doesn't wait for the control room.
 
 Built solo for the **Meta Global AI Developer Hackathon 2026** (Indie track, theme *Push the Frontier*: understand and
 control a physical system).
 
-### Highlights
+## What the agent does on its own
+
+Each new report runs the same cycle, and what the agent does next produces the evidence for the following one:
+
+1. **Read.** Spark, Voice Transcribe and SAM 3.1 turn each call, message, photo and crew report into structured facts.
+2. **Decide.** The tracer works out what failed and how sure it is, and the planner ranks the work.
+3. **Act.** The agent asks a question, sends a crew, answers a caller or sends customers an update.
+4. **Check the result.** Answers, crew reports and calls from people still in the dark go back into step 1, so the agent
+   corrects itself.
+
+| When this happens | The agent does this, without being told |
+|---|---|
+| A call comes in | Answers in the caller's language, confirms the address, warns about hazards and gives the current status |
+| The evidence fits two explanations | Finds the customer whose answer separates them, asks by text or during a call, and traces again |
+| One house is dark and nobody else reports it | After 150 seconds, asks a neighbour on the same transformer; if the neighbour has power, opens a service-wire job |
+| A fault reaches 80% confidence | Opens an incident, ranks it, sends the nearest idle crew with the right skills, and tells the people who reported it when power should be back |
+| A crew finds something different | Reads the report back; once the crew confirms, changes the diagnosis, replans the work, and releases the crew if it can't do the repair |
+| A patrol finds nothing and the device is still locked out | Extends the patrol, up to three patrols |
+| People are still dark after a repair | Treats their calls as new evidence and finds the fault hidden behind the first |
+| A hospital's backup generator fails | Raises that outage's priority |
+| A restoration estimate moves by 15 minutes or more | Texts the affected customers the new time |
+| A caller reports a live wire or fire, or a critical customer calls | Gives the safety line and flags the call to the control room; in live-call mode it can put the call through to a call-taker |
+| Restoration switching could help | Proposes plans, blocks any unsafe one, and **stops for the operator** |
+
+### Measured: a storm with nobody at the console
+
+`python scripts/run_headless.py galle_storm --no-switching --timeline` replays a storm with no operator action and no
+plan approved. Every fault was found and everyone was restored:
+
+| Storm | Calls answered | Crew reports read back | Questions asked | Crews dispatched | Updates sent | Faults found | Dark at the end | Operator actions |
+|---|---|---|---|---|---|---|---|---|
+| Galle | 25 | 11 | 4 | 12 | 131 | 6 of 6 | 0 | **0** |
+| Houston | 84 | 7 | 5 | 13 | 713 | 7 of 7 | 0 | **0** |
+| Chennai | 883 | 9 | 2 | 15 | 6,563 | 9 of 9 | 0 | **0** |
+
+The three small storms (`house_fuse`, `tree_on_line`, `hospital_generator`) offer no plan to approve and also end with
+every fault found and nobody dark.
+
+- **What the operator adds.** The agent can finish a storm alone, but switching gets people back sooner. With the one plan
+  approved per storm, customer-minutes interrupted fall by 24% in Galle (94,264 to 71,618), 49% in Houston (223,936 to
+  115,002) and 54% in Chennai (3,536,841 to 1,621,162).
+- **What these runs are.** Crews and customers are simulated, and a finished repair closes the device in the simulation.
+  Slower restoration also brings call-backs that never ran live, so 72 of Houston's 330 messages and 735 of Chennai's 3,741
+  use the scenario's labels instead of a live reading, tagged `mock`. Galle has none.
+
+## Highlights
 
 - **Calls in five languages.** An AI call agent answers every call in the caller's language, warns about hazards,
   escalates live wires and critical customers, and asks a neighbour when the tracer is torn between two explanations.
@@ -78,6 +127,8 @@ control a physical system).
 
 ## Contents
 
+- [What the agent does on its own](#what-the-agent-does-on-its-own)
+- [Highlights](#highlights)
 - [Quick start](#quick-start)
 - [Usage](#usage)
 - [How it works](#how-it-works)
@@ -147,9 +198,9 @@ Eight scenarios run on the same engine. Pick one in the console header, or repla
 
 | ID | What it shows |
 |---|---|
-| `galle_storm` | The full story: Sinhala, Tamil and English messages, a changed diagnosis, switching around a fault, a hidden fuse |
+| `galle_storm` | The full story: messages in three languages, a changed diagnosis, switching around a fault, a hidden fuse |
 | `houston_hurricane` | Smart meters that fail mid-storm; English and Spanish |
-| `chennai_cyclone` | Scale: about 2,400 messages in English, Tamil and Hindi |
+| `chennai_cyclone` | Scale: about 2,400 messages in three languages |
 | `house_fuse` | One house dark: one caller, a neighbour asked, a service fault found by elimination |
 | `tree_on_line` | One tree on a lateral: about 160 customers, a tree crew then a line crew |
 | `hospital_generator` | A hospital's backup generator fails and it calls |
@@ -162,7 +213,7 @@ Eight scenarios run on the same engine. Pick one in the console header, or repla
 python scripts/run_headless.py galle_storm               # incidents and a check against the scenario's truth
 python scripts/run_headless.py galle_storm --timeline    # also print the full event log
 python scripts/run_headless.py galle_storm --calls       # also print every voiced call and crew report
-python scripts/run_headless.py galle_storm --no-switching
+python scripts/run_headless.py galle_storm --no-switching  # nobody approves anything: the agent works the storm alone
 ```
 
 Headless runs approve safe switching plans automatically to exercise that path. The server never does: there, the
@@ -178,15 +229,15 @@ Still dark at the end: 0 customers (believed); world says 0
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/img/architecture-dark.png">
   <source media="(prefers-color-scheme: light)" srcset="docs/img/architecture-light.png">
-  <img alt="How Relight works. Calls and crew voice reports go to Muse Voice Transcribe, then Muse Spark; Sinhala calls go straight to Muse Spark. SMS, chat, portal messages and BD codes go to Muse Spark. Photos and drone clips go to SAM 3.1, then Muse Spark. Muse Spark's structured reports and damage findings, with SCADA lockouts and smart meters, go to the engine, then the fault tracer, then incidents, priority and crews. From there, safety-checked switching plans reach the console once the operator approves them, and the call agent replies to callers and customers in their language." src="docs/img/architecture-light.png">
+  <img alt="How Relight works. Calls and crew voice reports go to Muse Voice Transcribe, then Muse Spark; calls in languages Voice Transcribe lacks go straight to Muse Spark. SMS, chat, portal messages and BD codes go to Muse Spark. Photos and drone clips go to SAM 3.1, then Muse Spark. Muse Spark's structured reports and damage findings, with SCADA lockouts and smart meters, go to the engine, then the fault tracer, then incidents and priority. From there the agent answers calls, asks questions and sends updates, and it dispatches crews and replans the work. Customers' answers and call-backs and crews' site reports feed back in at the top. Safety-checked switching plans reach the console once the operator approves them." src="docs/img/architecture-light.png">
 </picture>
 
 ### What each Meta model does
 
 | Model | Job in Relight | Measured |
 |---|---|---|
-| **Muse Spark** (`muse-spark-1.3`) | Reads every complaint and crew report into a JSON schema (street, house number, symptom, hazard, junk) in five languages. Words the call agent's replies and the dispatcher's explanations. Classifies damage photos and watches drone clips. **Listens to Sinhala calls directly from the audio.** Reads pole-number plates. | Accuracy below. `reasoning_effort: minimal` cut extraction latency from 4.4 to 2.4 s and Sinhala line wording from 9.9 to 2.8 s. |
-| **Muse Voice Transcribe** | Phone calls to text (Tamil, Hindi, Spanish, English), through the file endpoint and a realtime WebSocket line with speaker diarization. The feeder's street names go in as `keywords`. | Street heard right in 11 of 13 clips with keywords against 6 of 13 without. $0.18 per hour of audio. |
+| **Muse Spark** (`muse-spark-1.3`) | Reads every complaint and crew report into a JSON schema (street, house number, symptom, hazard, junk) in five languages. Words the call agent's replies and the dispatcher's explanations. Classifies damage photos and watches drone clips. **Listens directly to calls in a language Voice Transcribe doesn't cover.** Reads pole-number plates. | Accuracy below. `reasoning_effort: minimal` cut extraction latency from 4.4 to 2.4 s and agent-line wording in that language from 9.9 to 2.8 s. |
+| **Muse Voice Transcribe** | Phone calls to text (English, Spanish, Hindi etc.), through the file endpoint and a realtime WebSocket line with speaker diarization. The feeder's street names go in as `keywords`. | Street heard right in 11 of 13 clips with keywords against 6 of 13 without. $0.18 per hour of audio. |
 | **SAM 3.1** | Outlines poles, wires and fallen trees in photos and tracks them through drone clips. Finds the pole-number plate for Spark to read. Pixel masks (decoded with Meta's `meta-sam-parser`) give pole lean, wire sag and where a fallen tree actually touches the wires. | Temple Road clip: 3 poles and 5 wires followed; the trunk touches 3 of 7 wire tracks by mask. |
 
 The console's **Meta models** panel shows requests, tokens, cost and the share of decisions made by each model, by
@@ -215,7 +266,7 @@ the same faults; small details, such as which neighbour is asked, can vary betwe
 |---|---|---|---|---|---|
 | **Galle**, Sri Lanka | IEEE 34-bus feeder over Galle | 1,951 | ~69 | 6 of 6 | 0 |
 | **Houston**, USA | OpenStreetMap, smart meters that fail mid-storm | 3,044 | ~221 | 7 of 7 | 0 |
-| **Chennai**, India | OpenStreetMap, 2,400 messages in English, Tamil and Hindi | 24,559 | ~2,400 | 9 of 9 | 0 |
+| **Chennai**, India | OpenStreetMap, 2,400 messages in three languages | 24,559 | ~2,400 | 9 of 9 | 0 |
 | One house dark | one caller; the agent asks a neighbour | 3,044 | ~4 | 1 of 1 | 0 |
 | Tree on a line | one lateral, about 160 customers | 3,044 | ~58 | 1 of 1 | 0 |
 | Hospital generator | the hospital's backup power fails and it calls | 24,559 | ~294 | 3 of 3 | 0 |
@@ -252,17 +303,17 @@ Scored against the scenario's labels on the engine's own live readings. Results 
 
 | Scenario | Scored | Street | House no. | Symptom | Hazard | Junk |
 |---|---|---|---|---|---|---|
-| Galle (en 30, si 11, ta 6) | 47 | 92% | 94% | 92% | 94% | 100% |
-| Houston (en 117, es 44) | 161 | 98% | 98% | 99% | 99% | 100% |
-| Chennai (en 821, ta 745, hi 126) | 1,692 | 93% | 98% | 97% | 100% | 100% |
+| Galle (3 languages) | 47 | 92% | 94% | 92% | 94% | 100% |
+| Houston (2 languages) | 161 | 98% | 98% | 99% | 99% | 100% |
+| Chennai (3 languages) | 1,692 | 93% | 98% | 97% | 100% | 100% |
 
 Most misses are facts the caller gave only later, or that come from caller ID; the agent confirms each address with the
 caller.
 
 ### The fact check
 
-Of the agent lines Spark worded in the cached runs, none was rejected: Galle 59 lines (English 40, Sinhala 6, Tamil 13),
-Houston 142 (English 101, Spanish 41), Chennai 25 (Tamil 9, English 7, Hindi 9). Median wait per line was 2.0 to 2.9 s.
+Of the agent lines Spark worded in the cached runs, none was rejected: Galle 59 lines, Houston 142 and Chennai 25, across
+five languages. Median wait per line was 2.0 to 2.9 s.
 
 ## Cost
 
@@ -342,10 +393,10 @@ once per team, which is about 5,000 three-minute calls an hour. A larger utility
 ## Limits
 
 - Customers, callers and voices are synthetic. The portal call was tested live with synthetic speech in all five
-  languages, and the crew page in English, Hindi and Spanish; neither has been tested live with a human microphone. Tamil
-  and Sinhala crew reports ran live only as scripted crew calls in the storm scenarios.
-- Samples are small. The Voice Transcribe keyword test used 13 clips; the Sinhala and Tamil samples in Galle are a
-  handful of calls each.
+  languages, and the crew page in English, Hindi and Spanish; neither has been tested live with a human microphone. Crew
+  reports in the other two languages ran live only as scripted crew calls in the storm scenarios.
+- Samples are small. The Voice Transcribe keyword test used 13 clips; two of the language samples in Galle are a handful
+  of calls each.
 - Lean and wire sag are estimates from one camera view.
 - Smart meters are optional and simulated: only Houston has them, and the meter messages are generated, not read from a
   meter data system.
@@ -476,7 +527,7 @@ python scripts/fetch_videos.py
 | The microphone doesn't work on the portal or crew page | Browsers allow it only on `localhost` or HTTPS. Speech also needs a key; without one, type the message |
 | Lines tagged `mock` in the console | That request is not in the cache and there is no key, so the scenario's labels were used |
 | Lookups don't match the map after changing a network or customer settings | Stop the server, delete the matching `data/*.db` file and restart. It is rebuilt on first use |
-| `UnicodeEncodeError` printing Sinhala or Tamil on Windows | Set `PYTHONIOENCODING=utf-8` |
+| `UnicodeEncodeError` printing non-Latin text on Windows | Set `PYTHONIOENCODING=utf-8` |
 | Python changes have no effect | The commands above run without `--reload`, so restart the server |
 
 ## What's next
