@@ -2,8 +2,8 @@
 
 <p align="center">
   <strong>An autonomous AI outage agent for electric utilities.</strong><br>
-  After a storm it answers every call, finds the failed device on the grid, dispatches crews, keeps customers updated,<br>
-  and prepares safe restoration switching for the operator to approve.
+  From one dark house to a major storm, it answers every call, finds the failed device on the grid, dispatches crews,<br>
+  keeps customers updated, and prepares safe restoration switching for the operator to approve.
 </p>
 
 <p align="center">
@@ -36,11 +36,11 @@
 
 ## Overview
 
-After a storm, Relight works the outage on its own. It reads what people send (calls, SMS and chat in English, Spanish,
-Hindi etc.; crew voice reports; damage photos and drone clips) and acts on it: it answers callers, questions customers
-when the evidence is unclear, finds the failed device on the grid, dispatches crews, changes its diagnosis when a crew
-reports something different, and keeps customers updated. It works with or without smart meters: where a utility has
-none, the customers' own complaints are the sensor.
+Relight works an outage on its own, whether one house is dark or a storm has taken out a whole feeder. It reads what
+people send (calls, SMS and chat in English, Spanish, Hindi etc.; crew voice reports; damage photos and drone clips) and
+acts on it: it answers callers, questions customers when the evidence is unclear, finds the failed device on the grid,
+dispatches crews, changes its diagnosis when a crew reports something different, and keeps customers updated. It works
+with or without smart meters: where a utility has none, the customers' own complaints are the sensor.
 
 The design rests on one rule:
 
@@ -90,7 +90,7 @@ plan approved. Every fault was found and everyone was restored:
 | Houston | 84 | 7 | 5 | 13 | 713 | 7 of 7 | 0 | **0** |
 | Chennai | 883 | 9 | 2 | 15 | 6,563 | 9 of 9 | 0 | **0** |
 
-The three small storms (`house_fuse`, `tree_on_line`, `hospital_generator`) offer no plan to approve and also end with
+The three smaller outages (`house_fuse`, `tree_on_line`, `hospital_generator`) offer no plan to approve and also end with
 every fault found and nobody dark.
 
 - **What the operator adds.** The agent can finish a storm alone, but switching gets people back sooner. With the one plan
