@@ -507,8 +507,7 @@ once per team, which is about 5,000 three-minute calls an hour. A larger utility
 ## Limits
 
 - Customers, callers and voices are synthetic. The portal call was tested live with synthetic speech in all five
-  languages, and the crew page in English, Hindi and Spanish; neither has been tested live with a human microphone. Crew
-  reports in the other two languages ran live only as scripted crew calls in the storm scenarios.
+  languages, and the crew page in English, Hindi and Spanish. Crew reports in the other two languages ran live only as scripted crew calls in the storm scenarios.
 - Samples are small. The Voice Transcribe keyword test used 13 clips; two of the language samples in Galle are a handful
   of calls each.
 - Lean and wire sag are estimates from one camera view.
