@@ -67,6 +67,7 @@ class Line:
         self.mode = "DIARIZATION" if diarize else "ENDPOINTING"
         self.ws = None
         self.live = False
+        self.replay = False  # this call's opening was heard in an earlier live session: its cached words replay at the same pace
         self.error: str | None = None
         self._out: bytearray = bytearray()  # audio waiting to go down the line (a clip being played)
         self._mic: bytearray = bytearray()  # call-taker microphone, mixed into the same frames
@@ -204,8 +205,7 @@ class Line:
             await self._pace(script, role, seconds, "mock (script)")
             return script, "mock (script)"
         data = Path(path).read_bytes()
-        key = self.client._key("asr-rt", {"audio_sha": hashlib.sha256(data).hexdigest(), "lang": self.lang,
-                                          "mode": self.mode, "keywords": self.keywords})
+        key = self._clip_key(data)
         if key.exists():
             cached = json.loads(key.read_text(encoding="utf-8"))
             await self._replay(cached["events"], role, seconds)
@@ -265,6 +265,15 @@ class Line:
                 await self.on_event({"kind": "partial", "text": " ".join(shown), "role": role, "model": model})
         if self.on_event:
             await self.on_event({"kind": "final", "text": script, "role": role, "model": model})
+
+    def _clip_key(self, data: bytes) -> Path:
+        return self.client._key("asr-rt", {"audio_sha": hashlib.sha256(data).hexdigest(), "lang": self.lang,
+                                           "mode": self.mode, "keywords": self.keywords})
+
+    def heard_before(self, path: Path) -> bool:
+        """Has a live session already heard this clip? Then what this line shows is Voice Transcribe's words, not the script."""
+        self.replay = path.exists() and self._clip_key(path.read_bytes()).exists()
+        return self.replay
 
     async def _replay(self, events: list[dict], role: str, seconds: float) -> None:
         t0 = time.monotonic()

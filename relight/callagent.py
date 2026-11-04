@@ -116,7 +116,7 @@ class CallAgent:
                 "voices": {"agent": voices["agent"][lang], "caller": caller,
                            "taker": voices.get("taker", {}).get(lang, voices["agent"][lang])}}
         if self.e.live_calls and e.get("audio") and self.e.sim is not None:
-            await self._open_line(call)
+            await self._open_line(call, e["audio"])
         await self.say(call, "greet")
         if text is not None:
             await self.hear(call, text, model, e.get("audio"))
@@ -131,7 +131,7 @@ class CallAgent:
             self._keywords = [lm["name"] for lm in self.e.db.landmarks][:20] + [r[0] for r in rows]
         return self._keywords
 
-    async def _open_line(self, call: dict) -> None:
+    async def _open_line(self, call: dict, opening: str) -> None:
         line = Line(self.e.client, call["id"], call["language"], self.keywords(), self._on_line(call))
         await line.open()
         call["live"] = True
@@ -139,7 +139,8 @@ class CallAgent:
         if line.error:
             await self.e.log("Code", f"{call['id']}: live call without realtime transcription", line.error, call["id"])
         await self.e.broadcast({"type": "live_call", "event": "start", "id": call["id"], "call": call,
-                                "listener": "Voice Transcribe (realtime)" if line.live else "mock (script)"})
+                                "listener": "Voice Transcribe (realtime)" if line.live or line.heard_before(config.ROOT / opening)
+                                else "mock (script)"})
 
     def _on_line(self, call: dict):
         async def on_event(ev: dict) -> None:

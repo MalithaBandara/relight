@@ -104,7 +104,7 @@ class Copilot:
                 "suggestion": self.suggestion, "options": [{k: o[k] for k in ("act", "why", "fixed")}
                                                            for o in self.options],
                 "incident": (self.msg or {}).get("incident"), "mic": bool(self.line and self.line.live),
-                "listener": "Voice Transcribe (realtime, diarization)" if self.line and self.line.live
+                "listener": "Voice Transcribe (realtime, diarization)" if self.line and (self.line.live or self.line.replay)
                 else "mock (script)", "mic_partial": self.mic_partial}
 
     async def _push(self) -> None:
