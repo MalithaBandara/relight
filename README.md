@@ -48,10 +48,13 @@ The design rests on one rule:
 **Meta models read, watch, hear and speak. Deterministic code locates and decides. The agent acts. Critical decisions are
 forwarded to the operator.**
 
-A model never guesses where a fault is and never approves a switching action. Muse Spark, Muse Voice Transcribe and
-SAM 3.1 turn messy human evidence (speech, text, photos, video) into structured facts. A probabilistic tracer then
-decides which device opened or which line broke, and a safety-checked planner proposes how to restore power. Every
-switching plan waits for the operator; the rest of the response doesn't wait for the control room.
+Relight runs the response without waiting to be told what to do. Muse Spark, Muse Voice Transcribe and SAM 3.1 turn messy
+human evidence (speech, text, photos, video) into structured facts, and a probabilistic tracer decides which device opened
+or which line broke. From there the agent takes the initiative: it asks customers for the evidence it is missing, sends
+crews, revises its diagnosis when they report back, finds faults hidden behind the first, and keeps customers updated.
+
+Its autonomy has deliberate limits. A model never guesses where a fault is, and the agent never applies a switching plan by
+itself: a safety-checked planner works out how to restore power and forwards each plan to the operator to approve.
 
 Built solo for the **Meta Global AI Developer Hackathon 2026** (Indie track, theme *Push the Frontier*: understand and
 control a physical system).
