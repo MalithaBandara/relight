@@ -21,7 +21,7 @@
   <a href="#development">Development</a>
 </p>
 
-<!-- DEMO-VIDEO-LINK: add the video link here at submission -->
+<p align="center"><strong><a href="https://youtu.be/Wdf_SaKpP8I">▶ Watch the 3-minute demo video</a></strong></p>
 
 ![The Relight control-room console during the Galle storm: feeder map, work agenda, event details with switching plans, and event log](docs/img/console.png)
 
