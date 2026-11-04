@@ -1,0 +1,295 @@
+{
+ "runs": [
+  {
+   "scenario": "galle_storm",
+   "messages": 72,
+   "unique_requests": 218,
+   "bill_usd": {
+    "spark": 0.327,
+    "voice_transcribe": 0.006,
+    "sam": 0.499,
+    "total": 0.83
+   },
+   "per_message_cents": 1.16,
+   "sam_usage": {
+    "images": 40,
+    "video_frames": 1997
+   },
+   "per_channel_cents": {
+    "call": {
+     "n": 25,
+     "mean": 0.57,
+     "max": 1.45
+    },
+    "crew_note": {
+     "n": 11,
+     "mean": 0.83,
+     "max": 1.55
+    },
+    "drone": {
+     "n": 1,
+     "mean": 0.0,
+     "max": 0.0
+    },
+    "scada": {
+     "n": 10,
+     "mean": 0.0,
+     "max": 0.0
+    },
+    "sms": {
+     "n": 18,
+     "mean": 0.14,
+     "max": 0.33
+    },
+    "whatsapp": {
+     "n": 18,
+     "mean": 0.41,
+     "max": 1.3
+    }
+   }
+  },
+  {
+   "scenario": "houston_hurricane",
+   "messages": 222,
+   "unique_requests": 260,
+   "bill_usd": {
+    "spark": 0.385,
+    "voice_transcribe": 0.002,
+    "sam": 0.545,
+    "total": 0.93
+   },
+   "per_message_cents": 0.42,
+   "sam_usage": {
+    "images": 9,
+    "video_frames": 2613
+   },
+   "per_channel_cents": {
+    "ami": {
+     "n": 12,
+     "mean": 0.02,
+     "max": 0.16
+    },
+    "ami_status": {
+     "n": 1,
+     "mean": 0.0,
+     "max": 0.0
+    },
+    "app": {
+     "n": 52,
+     "mean": 0.19,
+     "max": 0.36
+    },
+    "call": {
+     "n": 53,
+     "mean": 0.49,
+     "max": 1.4
+    },
+    "crew_note": {
+     "n": 7,
+     "mean": 0.37,
+     "max": 0.57
+    },
+    "scada": {
+     "n": 3,
+     "mean": 0.0,
+     "max": 0.0
+    },
+    "sms": {
+     "n": 104,
+     "mean": 0.12,
+     "max": 0.84
+    },
+    "whatsapp": {
+     "n": 5,
+     "mean": 0.26,
+     "max": 0.5
+    }
+   }
+  },
+  {
+   "scenario": "chennai_cyclone",
+   "messages": 2378,
+   "unique_requests": 1408,
+   "bill_usd": {
+    "spark": 2.726,
+    "voice_transcribe": 0.003,
+    "sam": 0.328,
+    "total": 3.06
+   },
+   "per_message_cents": 0.13,
+   "sam_usage": {
+    "images": 15,
+    "video_frames": 1452
+   },
+   "per_channel_cents": {
+    "call": {
+     "n": 560,
+     "mean": 0.21,
+     "max": 0.81
+    },
+    "crew_note": {
+     "n": 9,
+     "mean": 0.7,
+     "max": 1.4
+    },
+    "scada": {
+     "n": 3,
+     "mean": 0.0,
+     "max": 0.0
+    },
+    "sms": {
+     "n": 1271,
+     "mean": 0.09,
+     "max": 1.24
+    },
+    "whatsapp": {
+     "n": 538,
+     "mean": 0.2,
+     "max": 1.2
+    }
+   }
+  },
+  {
+   "scenario": "house_fuse",
+   "messages": 4,
+   "unique_requests": 9,
+   "bill_usd": {
+    "spark": 0.011,
+    "voice_transcribe": 0.0,
+    "sam": 0.0,
+    "total": 0.01
+   },
+   "per_message_cents": 0.29,
+   "sam_usage": {
+    "images": 0,
+    "video_frames": 0
+   },
+   "per_channel_cents": {
+    "call": {
+     "n": 1,
+     "mean": 0.51,
+     "max": 0.51
+    },
+    "crew_note": {
+     "n": 1,
+     "mean": 0.07,
+     "max": 0.07
+    },
+    "sms": {
+     "n": 1,
+     "mean": 0.14,
+     "max": 0.14
+    },
+    "whatsapp": {
+     "n": 1,
+     "mean": 0.42,
+     "max": 0.42
+    }
+   }
+  },
+  {
+   "scenario": "tree_on_line",
+   "messages": 58,
+   "unique_requests": 58,
+   "bill_usd": {
+    "spark": 0.09,
+    "voice_transcribe": 0.0,
+    "sam": 0.0,
+    "total": 0.09
+   },
+   "per_message_cents": 0.16,
+   "sam_usage": {
+    "images": 0,
+    "video_frames": 0
+   },
+   "per_channel_cents": {
+    "app": {
+     "n": 16,
+     "mean": 0.16,
+     "max": 0.27
+    },
+    "call": {
+     "n": 12,
+     "mean": 0.49,
+     "max": 0.64
+    },
+    "crew_note": {
+     "n": 1,
+     "mean": 0.42,
+     "max": 0.42
+    },
+    "sms": {
+     "n": 28,
+     "mean": 0.11,
+     "max": 0.34
+    },
+    "whatsapp": {
+     "n": 1,
+     "mean": 0.43,
+     "max": 0.43
+    }
+   }
+  },
+  {
+   "scenario": "hospital_generator",
+   "messages": 294,
+   "unique_requests": 317,
+   "bill_usd": {
+    "spark": 0.52,
+    "voice_transcribe": 0.0,
+    "sam": 0.0,
+    "total": 0.52
+   },
+   "per_message_cents": 0.18,
+   "sam_usage": {
+    "images": 0,
+    "video_frames": 0
+   },
+   "per_channel_cents": {
+    "call": {
+     "n": 67,
+     "mean": 0.47,
+     "max": 1.03
+    },
+    "crew_note": {
+     "n": 15,
+     "mean": 0.25,
+     "max": 0.65
+    },
+    "sms": {
+     "n": 137,
+     "mean": 0.15,
+     "max": 0.86
+    },
+    "whatsapp": {
+     "n": 74,
+     "mean": 0.29,
+     "max": 0.72
+    }
+   }
+  }
+ ],
+ "utility_estimate": {
+  "assumptions": {
+   "customers": 100000,
+   "report_rate": 0.2,
+   "call_share": 0.5,
+   "handed_to_human": 0.1,
+   "call_minutes": 3
+  },
+  "calls": 10000,
+  "texts": 10000,
+  "model_per_call_cents": 2.4,
+  "local_line": {
+   "per_call_cents": 5.0,
+   "usage_usd": 555,
+   "with_handovers_usd": 8565
+  },
+  "toll_free_line": {
+   "per_call_cents": 9.0,
+   "usage_usd": 960,
+   "with_handovers_usd": 8970
+  },
+  "all_calls_live_usd": 80100
+ }
+}

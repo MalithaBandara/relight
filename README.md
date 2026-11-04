@@ -75,6 +75,7 @@ control a physical system).
 - [Usage](#usage)
 - [How it works](#how-it-works)
 - [Results](#results)
+- [Cost](#cost)
 - [Limits](#limits)
 - [Configuration](#configuration)
 - [HTTP API](#http-api)
@@ -210,7 +211,7 @@ the same faults; small details, such as which neighbour is asked, can vary betwe
 | **Chennai**, India | OpenStreetMap, 2,400 messages in English, Tamil and Hindi | 24,559 | ~2,400 | 9 of 9 | 0 |
 | One house dark | one caller; the agent asks a neighbour | 3,044 | ~4 | 1 of 1 | 0 |
 | Tree on a line | one lateral, about 160 customers | 3,044 | ~58 | 1 of 1 | 0 |
-| Hospital generator | the hospital's backup power fails and it calls | 24,559 | ~215 | 3 of 3 | 0 |
+| Hospital generator | the hospital's backup power fails and it calls | 24,559 | ~294 | 3 of 3 | 0 |
 | **Pine Valley**, independent test | IEEE 123-node test feeder, faults from a separate script | 1,658 | 13 | **4 of 5** | **16** |
 | Two-tie demo | invented feeder with two ties, one pole down | 229 | 21 | 1 of 1 | 0 |
 
@@ -255,6 +256,81 @@ caller.
 
 Of the agent lines Spark worded in the cached runs, none was rejected: Galle 59 lines (English 40, Sinhala 6, Tamil 13),
 Houston 142 (English 101, Spanish 41), Chennai 25 (Tamil 9, English 7, Hindi 9). Median wait per line was 2.0 to 2.9 s.
+
+## Cost
+
+Usage charges are a small part of what Relight would cost a utility: on the estimate below, model calls and phone lines
+come to about $600 to $1,000 for a major storm on a 100,000-customer network. Connecting it to the utility's systems and
+running it would probably cost more, and we have not estimated that.
+
+### Measured: the storms in this repository
+
+What one run costs in model calls at [Meta's published prices](https://dev.meta.ai/docs/pricing-rate-limits), with each
+unique request counted once. `python scripts/cost_report.py` reproduces this from the cache without calling the API, and
+the results are in [eval/cost.json](eval/cost.json). Totals can move by a cent between replays.
+
+| Scenario | Customers | Messages | Spark | Voice Transcribe | SAM 3.1 | **Total** | Per message |
+|---|---|---|---|---|---|---|---|
+| Galle | 1,951 | 72 | $0.33 | $0.01 | $0.50 | **$0.83** | 1.2¢ |
+| Houston | 3,044 | 222 | $0.39 | under $0.01 | $0.55 | **$0.93** | 0.4¢ |
+| Chennai | 24,559 | 2,378 | $2.73 | under $0.01 | $0.33 | **$3.06** | 0.13¢ |
+| Hospital generator | 24,559 | 294 | $0.52 | none | none | **$0.52** | 0.18¢ |
+| Tree on a line | 3,044 | 58 | $0.09 | none | none | **$0.09** | 0.16¢ |
+| One house dark | 3,044 | 4 | $0.01 | none | none | **$0.01** | 0.3¢ |
+
+- **Why it is cheap:** the tracer, the safety checks and the planner are code, so they make no model calls. SMS codes need
+  no model either, and Spark runs at minimal reasoning effort.
+- **Don't read Chennai's rate as a real-world rate.** Only 6 of its 560 calls have audio, and during the surge the agent
+  uses templates for the others. Most of the SAM cost is video.
+- **The console shows different figures.** Its Meta models panel counts a repeated request each time and shows no cost for
+  SAM.
+
+### Estimate: a utility with 100,000 customers
+
+> [!NOTE]
+> This is arithmetic on the assumptions below, not a measurement. No utility has run Relight, and real call lengths and
+> reporting rates will differ.
+
+**Assumptions for one major storm:** 20% of customers report once (20,000 reports; Chennai's scenario has about 10%), half
+by phone and half by text; calls last 3 minutes; and the agent hands 10% of calls to a person. The per-request figures are
+set above the highest channel averages we measured: 1.5¢ of Spark per call (the costliest call measured was 1.45¢) and
+0.5¢ per text.
+
+| Item | Cost |
+|---|---|
+| Model calls for one 3-minute call: Spark 1.5¢, Voice Transcribe 0.9¢ | 2.4¢ |
+| The same call with its phone line ([$0.0085 local or $0.022 toll-free per minute](https://www.twilio.com/en-us/voice/pricing/us)) | 5¢ to 9¢ |
+| 10,000 calls, 10,000 texts and $10 of damage photos and clips | **$555 to $960** |
+| 1,000 hard calls answered by people, at $8.01 each | $8,010 |
+| **Storm total** | **about $8,600 to $9,000** |
+| For comparison: all 10,000 calls answered by people, at $8.01 each | $80,100 |
+
+How that compares with what a utility already pays for:
+
+- **Answering calls.** [Gartner's 2019 poll](https://www.mactech.com/2019/10/18/gartner-only-9-of-customers-report-solving-issues-via-self-service/)
+  put live channels at $8.01 per contact and self-service at about $0.10. These are figures across industries, not for
+  utilities. At 5¢ to 9¢, an agent call costs about the same as self-service, yet the caller can speak freely in their own
+  language. It only saves money if staffing changes. In a storm, the more likely gain is answering calls that would
+  otherwise wait or get a busy tone.
+- **Sending crews.** Published estimates for one truck roll run [from $150 to over $1,000](https://blitzz.co/blog/the-real-cost-of-a-truck-roll-and-how-to-avoid-it),
+  though these come from a vendor and aren't specific to electric utilities. The $555 to $960 is about the price of one to
+  six trips. We have not measured how many wasted trips Relight would prevent at a real utility.
+- **Smart meters.** Projects in the US Department of Energy's grant program reported
+  [$130 to $1,895 per meter](https://www.energy.gov/sites/prod/files/2016/12/f34/AMI%20Summary%20Report_09-26-16.pdf),
+  or at least $13 million for 100,000 customers. At five major storms a year, Relight's calls and messages would cost about
+  $2,800 to $4,800 a year. It doesn't replace meters, which also handle billing and report outages directly, but a utility
+  without them could start from the phone lines it already has.
+- **Outages themselves.** Oak Ridge National Laboratory puts the cost of major outages to US customers at
+  [more than $67 billion a year on average for 2018 to 2024](https://www.eurekalert.org/news-releases/1118431). The US
+  average was [11 hours without power per customer in 2024](https://www.eia.gov/todayinEnergy/detail.php?id=66744). Our
+  simulated 22% to 30% cut in customer-minutes comes from synthetic storms, so we don't turn it into a dollar saving.
+
+**Not included:** connecting to the utility's network model, customer records, SCADA and phone system; hosting; licensed
+speech synthesis (edge-tts is a demo voice); SMS delivery; security and privacy review; training and support. Any price a
+vendor would charge is also left out. A pilot with a utility is the way to measure these.
+
+**Capacity:** [Meta's standard limits](https://dev.meta.ai/docs/pricing-rate-limits) allow 256 Voice Transcribe streams at
+once per team, which is about 5,000 three-minute calls an hour. A larger utility would need a higher limit or a queue.
 
 ## Limits
 
@@ -372,6 +448,7 @@ The last line of each must read `Still dark at the end: 0 customers (believed); 
 | `scripts/ablate.py` | Measure fault finding with each evidence source removed |
 | `scripts/sensitivity.py` | Sweep crews, reporting delays and patrol times against the baseline |
 | `scripts/eval_extraction.py` | Score Spark's extraction; `--replay` scores cached readings for free |
+| `scripts/cost_report.py` | Measure model cost per storm and per channel from the cache, and work out the utility estimate; makes no API calls |
 | `scripts/smoke_test.py` | One small live call per Meta model (needs a key) |
 | `scripts/draw_architecture.py` | Redraw the "How it works" diagram from `docs/img/architecture.mmd` (needs Playwright) |
 
