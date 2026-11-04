@@ -186,7 +186,10 @@ python3.12 -m venv .venv
 .venv/bin/python -m uvicorn relight.server:app --port 8000
 ```
 
-Relight is developed and tested on Windows 11. The macOS and Linux commands are untested.
+Relight is developed on Windows 11. The macOS and Linux commands above were also run on a fresh clone on GitHub's hosted
+machines (2026-11-05), with no key and no `ffmpeg`: every scenario, the offline checks and the unit tests passed, and the
+pages and their scripts loaded. That check did not cover using the pages in a browser, voice playback, microphones or new
+model calls.
 
 Open <http://localhost:8000>, pick a scenario in the header and press **Run**.
 
