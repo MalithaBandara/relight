@@ -513,8 +513,8 @@ once per team, which is about 5,000 three-minute calls an hour. A larger utility
 - Lean and wire sag are estimates from one camera view.
 - Smart meters are optional and simulated: only Houston has them, and the meter messages are generated, not read from a
   meter data system.
-- There is no power-flow model. Relight does not check voltage, current or line capacity, so a plan that uses several
-  ties assumes the neighbouring feeder can carry the load.
+- A power-flow model isn't included right now, but one can be added when needed. For now, Relight does not check voltage,
+  current or line capacity, so a plan that uses several ties assumes the neighbouring feeder can carry the load.
 - Priority weights (for example hospital 400, failed backup power 1,500) are our own choices, not a utility's rules.
 - The independent IEEE 123-node test is one synthetic storm run in mock mode, with invented customers and a made-up
   location. It tests the tracer and switching logic on a network shape we did not design; it is not a validation on a
