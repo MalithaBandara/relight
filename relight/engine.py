@@ -37,6 +37,8 @@ from . import voice
 LOCATED_AT = 0.8  # confidence at which a suspected fault becomes an incident
 ASK_BELOW = 0.85  # confidence below which the agent asks a customer to disambiguate
 PROBE_GAP_S = 120
+NOTICE_MOVED_S = 15 * 60  # a smaller change to a restoration estimate is not worth another SMS
+NOTICE_GAP_S = 30 * 60  # the estimate of a job waiting for a crew slides with the clock: at most one update in this time
 BACKUP_WORDS = ("generator", "generador", "genset", "ஜெனரேட்டர்", "जनरेटर", "ජෙනරේටර්")  # a critical caller's own backup
 ISOLATED_AFTER_S = 150  # a lone report that no wider fault explains by now may be one house's own service fault
 SPEED_KMH = 25
@@ -783,6 +785,7 @@ class Engine:
             "reports": [], "damage": list(L.damage), "out": sorted(c.out), "customers_out": 0, "critical": [],
             "mind_changed": False, "after_restore": after_restore, "restored_at": None, "switching": [],
             "plans": [], "explanation": None, "explanation_model": None, "explained_kind": None, "notified": [],
+            "told_eta": {}, "eta_update_t": None,
             "first_t": self.elapsed, "priority": 0.0, "breakdown": {}, "eta": None,
             "why": L.why,
         }
@@ -868,6 +871,7 @@ class Engine:
                 await self._explain(inc)
             if inc["kind"] != "unknown":
                 await self._notify(inc)
+                await self._notify_change(inc)
         await self.broadcast({"type": "state", "state": self.snapshot(include_log=False)})
 
     def _score_and_plan(self) -> None:
@@ -1000,6 +1004,8 @@ class Engine:
             self._refresh_outages()
             self._score_and_plan()
             await self._dispatch()
+            for active in self._active():
+                await self._notify_change(active)
         self._tick_cmi(until)
         self.elapsed = max(self.elapsed, until)
         if not self._dirty and any(p is None or p.get("answer") == "power ON" for _, _, p in self._isolated_reports()):
@@ -1115,6 +1121,7 @@ class Engine:
         for m in recipients:
             by_lang.setdefault(m["language"] if m["language"] in self.loc["notice"] else "en", []).append(m["from"])
             inc["notified"].append(m["from"])
+            inc["told_eta"][m["from"]] = inc["eta"]
         for lang, to in by_lang.items():
             kind = KIND_TITLE[inc["kind"]].lower()
             text, model = None, "Muse Spark"
@@ -1133,6 +1140,36 @@ class Engine:
         if first:
             await self.log("Agent", f"Restoration time sent to {len(recipients)} customers",
                            f"{inc['title']}: back around {eta}; languages {', '.join(sorted(by_lang))}", inc["id"])
+
+    async def _notify_change(self, inc: dict) -> None:
+        """Tell customers when the time they were given has moved. The status page follows the estimate by itself, but an
+        SMS stays as sent. A fixed template, like the restored notice: code owns the time, and replays need no model."""
+        last = inc["eta_update_t"]
+        if inc["kind"] == "unknown" or (last is not None and self.elapsed - last < NOTICE_GAP_S):
+            return
+        # Worked out afresh, as a crew may just have been sent; inc["eta"] stays as it is until the next scoring.
+        new_eta = self._eta(inc)
+        stale = {who for who, told in inc["told_eta"].items() if abs(new_eta - told) >= NOTICE_MOVED_S}
+        if not stale:
+            return
+        by_lang: dict[str, list[str]] = {}
+        for m in self.messages:
+            if m.get("from") in stale and m["id"] in inc["reports"]:
+                stale.discard(m["from"])
+                by_lang.setdefault(m["language"] if m["language"] in self.loc["notice_update"] else "en", []).append(m["from"])
+                inc["told_eta"][m["from"]] = new_eta
+        if not by_lang:
+            return
+        inc["eta_update_t"] = self.elapsed
+        eta, kind = self.clock(new_eta), KIND_TITLE[inc["kind"]].lower()
+        for lang, to in by_lang.items():
+            notice = {"id": f"U{len(self.notices) + 1}", "t": round(self.elapsed), "fault": inc["id"], "language": lang,
+                      "text": self.loc["notice_update"][lang].format(kind=self.agent.local_kind(kind, lang), eta=eta),
+                      "to": sorted(to), "model": "Code (template)", "kind": "eta_update"}
+            self.notices.append(notice)
+            await self.broadcast({"type": "notice", "notice": notice})
+        await self.log("Agent", f"Restoration time update sent to {sum(map(len, by_lang.values()))} customers",
+                       f"{inc['title']}: now around {eta}; languages {', '.join(sorted(by_lang))}", inc["id"])
 
     async def _maybe_ask(self, located) -> None:
         """Ask the customer whose answer best separates the top explanation from its rival."""
@@ -1254,7 +1291,8 @@ class Engine:
             "status": "located", "steps": [], "history": [], "reports": [m["id"]], "damage": [], "out": [],
             "customers_out": 0, "critical": [], "mind_changed": False, "after_restore": False, "restored_at": None,
             "switching": [], "plans": [], "explanation": None, "explanation_model": None, "explained_kind": None,
-            "notified": [], "first_t": m["t"], "priority": 0.0, "breakdown": {}, "eta": None,
+            "notified": [], "told_eta": {}, "eta_update_t": None,
+            "first_t": m["t"], "priority": 0.0, "breakdown": {}, "eta": None,
             "why": None,
         }
         if self.sim:

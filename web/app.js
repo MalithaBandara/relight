@@ -738,6 +738,8 @@ function addMessage(m) {
   if (m.call) addAgentCall(m);  // crew reports are calls too: read back by the agent
 }
 
+const noticeLabel = (n) => ({ restored: "Restored", eta_update: "ETR update" })[n.kind] || "ETR";
+
 function addOutbound(kind, x) {
   prepend("outbound", `<td class="mono">${clockOf(x.t)}</td><td>${kind}</td><td class="lang">${esc(x.language)}</td>
     <td>${x.to.length ? `${x.to.length} customer${x.to.length > 1 ? "s" : ""}` : esc(x.street)}</td><td class="msg">${esc(x.text)}</td><td>${badge(x.model || "Agent")}</td>`);
@@ -842,7 +844,7 @@ function connect() {
         resetUI();
         msg.state.timeline.slice(-MAX_ROWS).forEach(addLog);
         msg.state.messages.forEach(addMessage);
-        (msg.state.notices || []).forEach((n) => addOutbound(n.kind === "restored" ? "Restored" : "ETR", n));
+        (msg.state.notices || []).forEach((n) => addOutbound(noticeLabel(n), n));
         msg.state.probes.forEach((p) => addOutbound("Question", { ...p, to: [] }));
         (msg.state.media || []).forEach(addPhoto);
         applyState(msg.state);
@@ -865,7 +867,7 @@ function connect() {
         if (m) addAgentCall({ ...m, call: msg.call, incident: msg.incident || m.incident });
         break;
       }
-      case "notice": addOutbound(msg.notice.kind === "restored" ? "Restored" : "ETR", msg.notice); break;
+      case "notice": addOutbound(noticeLabel(msg.notice), msg.notice); break;
       case "messages": $("#calls").innerHTML = ""; layers.messages.clearLayers(); s_messages = []; msg.messages.forEach(addMessage); break;
       case "clock":
         $("#clock").textContent = msg.clock;

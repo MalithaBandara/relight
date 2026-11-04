@@ -25,3 +25,13 @@ Example lines to read in context:
 - Hindi: `हमें इस बिजली कटौती की जानकारी है (खंभा गिरना)। टीम रास्ते में है।`
 
 Mark any phrase to change and send it back; it is a one-line edit in `KIND_NAME`.
+
+## Restoration estimate update SMS (added 2026-11-04, not reviewed)
+
+Sent when a customer's restoration time has moved (`notice_update` in `relight/locales.py`). `{kind}` is a fault name from
+the table above and `{eta}` is a time such as 17:18.
+
+- Sinhala: `විදුලි දෝෂ අංශය: ඔබේ සැපයුමට බලපාන දෝෂය ගැන යාවත්කාලීන තොරතුරක් ({kind}). විදුලිය නැවත ලැබීමට දැන් ආසන්න වේලාව {eta}.`
+- Tamil: `மின் தடை பிரிவு: உங்கள் மின் விநியோகத்தை பாதித்த கோளாறு பற்றிய புதிய தகவல் ({kind}). மின்சாரம் மீண்டும் வர இப்போது சுமார் {eta}.`
+- Spanish: `Equipo de apagones: novedades sobre la falla que afecta su servicio ({kind}). El restablecimiento estimado ahora es {eta}.`
+- Hindi: `बिजली शिकायत केंद्र: आपकी बिजली को प्रभावित करने वाली खराबी की नई जानकारी ({kind})। बिजली अब लगभग {eta} तक लौटेगी।`

@@ -453,6 +453,11 @@ SRI_LANKA = {
         "si": "විදුලි දෝෂ අංශය: ඔබේ සැපයුමට බලපාන දෝෂය සොයාගෙන ඇත ({kind}). කණ්ඩායමක් යොදවා ඇත. විදුලිය නැවත ලැබීමට ආසන්න වේලාව {eta}.",
         "ta": "மின் தடை பிரிவு: உங்கள் மின் விநியோகத்தை பாதித்த கோளாறு கண்டறியப்பட்டது ({kind}). குழு அனுப்பப்பட்டுள்ளது. மின்சாரம் மீண்டும் வர சுமார் {eta}.",
     },
+    "notice_update": {
+        "en": "Outage desk: update on the fault affecting your supply ({kind}). Estimated restoration is now around {eta}.",
+        "si": "විදුලි දෝෂ අංශය: ඔබේ සැපයුමට බලපාන දෝෂය ගැන යාවත්කාලීන තොරතුරක් ({kind}). විදුලිය නැවත ලැබීමට දැන් ආසන්න වේලාව {eta}.",
+        "ta": "மின் தடை பிரிவு: உங்கள் மின் விநியோகத்தை பாதித்த கோளாறு பற்றிய புதிய தகவல் ({kind}). மின்சாரம் மீண்டும் வர இப்போது சுமார் {eta}.",
+    },
     "restored": {
         "en": "Outage desk: power has been restored in your area. If you are still without power, reply to this message.",
         "si": "විදුලි දෝෂ අංශය: ඔබේ ප්‍රදේශයට විදුලිය නැවත ලබා දී ඇත. තවමත් විදුලිය නැත්නම් මෙම පණිවිඩයට පිළිතුරු දෙන්න.",
@@ -495,6 +500,10 @@ US = {
     "notice": {
         "en": "Outage team: we found the problem affecting your power ({kind}). A crew is assigned. Estimated restoration {eta}.",
         "es": "Equipo de apagones: encontramos la falla que afecta su servicio ({kind}). Una cuadrilla está asignada. Restablecimiento estimado {eta}.",
+    },
+    "notice_update": {
+        "en": "Outage team: update on the problem affecting your power ({kind}). Estimated restoration is now {eta}.",
+        "es": "Equipo de apagones: novedades sobre la falla que afecta su servicio ({kind}). El restablecimiento estimado ahora es {eta}.",
     },
     "restored": {
         "en": "Outage team: power has been restored in your area. Still out? Reply to this message.",
@@ -544,6 +553,11 @@ INDIA = {
         "en": "Power outage desk: the fault affecting your supply has been found ({kind}). A crew is assigned. Expected restoration around {eta}.",
         "ta": "மின் தடை பிரிவு: உங்கள் மின் விநியோகத்தை பாதித்த கோளாறு கண்டறியப்பட்டது ({kind}). குழு அனுப்பப்பட்டுள்ளது. மின்சாரம் மீண்டும் வர சுமார் {eta}.",
         "hi": "बिजली शिकायत केंद्र: आपकी बिजली को प्रभावित करने वाली खराबी मिल गई है ({kind})। टीम भेजी गई है। बिजली लगभग {eta} तक लौटेगी।",
+    },
+    "notice_update": {
+        "en": "Power outage desk: update on the fault affecting your supply ({kind}). Expected restoration is now around {eta}.",
+        "ta": "மின் தடை பிரிவு: உங்கள் மின் விநியோகத்தை பாதித்த கோளாறு பற்றிய புதிய தகவல் ({kind}). மின்சாரம் மீண்டும் வர இப்போது சுமார் {eta}.",
+        "hi": "बिजली शिकायत केंद्र: आपकी बिजली को प्रभावित करने वाली खराबी की नई जानकारी ({kind})। बिजली अब लगभग {eta} तक लौटेगी।",
     },
     "restored": {
         "en": "Power outage desk: supply has been restored in your area. If you still have no power, reply to this message.",
