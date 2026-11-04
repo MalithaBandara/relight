@@ -72,3 +72,11 @@ scripts/record_adjusted_shots.py
 !media/audio/calls/**/*.wav
 
 /whatsnext.md
+
+# Development notes and local tooling, kept on the owner's machine only
+/CLAUDE.md
+/PROJECT_BRIEF.md
+/docs/LANGUAGE_CHECK_*.md
+/media/CANDIDATES.md
+.claude/
+*.stackdump
