@@ -781,6 +781,67 @@ function poleTagHtml(t) {
   return `<br>${crop}<b>Pole tag ${esc(t.tag)}</b> · ${where}`;
 }
 
+// Drag handles between the panels. Sizes are CSS variables on the page, kept in this browser; double-click puts one back.
+(function panelGrips() {
+  const root = document.documentElement, KEY = "relight.panels";
+  let sizes = {};
+  try { sizes = JSON.parse(localStorage.getItem(KEY)) || {}; } catch { /* a damaged value just means the default sizes */ }
+  const fitMap = () => map.invalidateSize({ animate: false });
+  const clamp = (v, lo, hi) => Math.round(Math.min(Math.max(v, lo), Math.max(lo, hi)));
+  const bottom = () => document.querySelector(".dock").getBoundingClientRect();
+  const PANELS = {
+    "grip-dock": { name: "dock", axis: "row", read: () => bottom().height, from: (e) => bottom().bottom - e.clientY,
+      fit: (v) => clamp(v, 120, innerHeight - 320), set: (v) => root.style.setProperty("--dock-h", `${v}px`), clear: () => root.style.removeProperty("--dock-h") },
+    "grip-side": { name: "side", axis: "col", read: () => document.querySelector(".agenda").getBoundingClientRect().width, from: (e) => innerWidth - e.clientX,
+      fit: (v) => clamp(v, 360, innerWidth - 360), set: (v) => root.style.setProperty("--side-w", `${v}px`), clear: () => root.style.removeProperty("--side-w") },
+    "grip-details": { name: "details", axis: "row", read: () => document.querySelector("#agenda-wrap").getBoundingClientRect().height,
+      from: (e) => e.clientY - document.querySelector("#agenda-wrap").getBoundingClientRect().top,
+      fit: (v) => clamp(v, 60, document.querySelector(".agenda").getBoundingClientRect().height - 150),
+      set: (v) => root.style.setProperty("--agenda-tracks", `${v}px 0 minmax(0, 1fr)`), clear: () => root.style.removeProperty("--agenda-tracks") },
+  };
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(sizes)); } catch { /* private mode: sizes last this visit */ } };
+  // The dock changes how tall the agenda is, so the saved details height is fitted last.
+  for (const id of ["grip-dock", "grip-side", "grip-details"]) {
+    const p = PANELS[id], v = sizes[p.name];
+    if (typeof v === "number") p.set(p.fit(v));
+  }
+  fitMap();
+  for (const [id, p] of Object.entries(PANELS)) {
+    const grip = document.getElementById(id);
+    const resize = (v) => { sizes[p.name] = p.fit(v); p.set(sizes[p.name]); fitMap(); };
+    grip.addEventListener("pointerdown", (e) => {
+      e.preventDefault();
+      grip.setPointerCapture(e.pointerId);
+      grip.classList.add("dragging");
+      document.body.classList.add("resizing", p.axis);
+    });
+    grip.addEventListener("pointermove", (e) => { if (grip.hasPointerCapture(e.pointerId)) resize(p.from(e)); });
+    const end = (e) => {
+      if (grip.hasPointerCapture(e.pointerId)) grip.releasePointerCapture(e.pointerId);
+      grip.classList.remove("dragging");
+      document.body.classList.remove("resizing", p.axis);
+      save();
+    };
+    grip.addEventListener("pointerup", end);
+    grip.addEventListener("pointercancel", end);
+    grip.addEventListener("dblclick", () => { delete sizes[p.name]; p.clear(); fitMap(); save(); });
+    grip.addEventListener("keydown", (e) => {  // the arrow keys move the handle the way they point
+      const grow = { row: { ArrowUp: id === "grip-dock" ? 16 : -16, ArrowDown: id === "grip-dock" ? -16 : 16 },
+        col: { ArrowLeft: 16, ArrowRight: -16 } }[p.axis][e.key];
+      if (!grow) return;
+      e.preventDefault();
+      resize(p.read() + grow);
+      save();
+    });
+  }
+  addEventListener("resize", () => {
+    for (const id of ["grip-dock", "grip-side", "grip-details"]) {
+      const p = PANELS[id];
+      if (typeof sizes[p.name] === "number") p.set(p.fit(sizes[p.name]));
+    }
+  });
+})();
+
 // Photos and videos from customers and crews, and drone patrol clips: a marker whose popup shows the media and
 // what the models made of it.
 function addPhoto(ph) {

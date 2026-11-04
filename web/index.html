@@ -73,6 +73,7 @@
     </section>
 
     <section class="agenda">
+      <div class="grip grip-col" id="grip-side" role="separator" aria-orientation="vertical" aria-label="Resize the map and the work agenda" tabindex="0" title="Drag to resize. Double-click to reset."></div>
       <div class="pane-head"><span>Work agenda</span><span class="sub" id="agenda-sub">0 events</span></div>
       <div class="table-wrap" id="agenda-wrap">
         <table class="grid" id="agenda">
@@ -86,11 +87,13 @@
           <tbody></tbody>
         </table>
       </div>
+      <div class="grip-track"><div class="grip grip-row" id="grip-details" role="separator" aria-orientation="horizontal" aria-label="Resize the event details" tabindex="0" title="Drag to resize. Double-click to reset."></div></div>
       <div class="details" id="details"><div class="empty">Select an event to see its details.</div></div>
     </section>
   </main>
 
   <section class="dock">
+    <div class="grip grip-row" id="grip-dock" role="separator" aria-orientation="horizontal" aria-label="Resize the bottom panel" tabindex="0" title="Drag to resize. Double-click to reset."></div>
     <nav class="tabs" id="dock-tabs">
       <button data-tab="log" class="on">Event log</button>
       <button data-tab="calls">Trouble calls</button>
